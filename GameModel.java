@@ -35,9 +35,11 @@ public class GameModel implements Serializable {
         state = new GameModel();
     }
     
-    public static void load(InputStream in) throws IOException, ClassNotFoundException {
+    public static void load(InputStream in) throws IOException {
         try (ObjectInputStream objectIn = new ObjectInputStream(in)) {
             state = GameModel.class.cast(objectIn.readObject());
+        } catch (ClassNotFoundException e) {
+            throw new IOException("Saved game in incompatible format.", e);
         }
     }
     
