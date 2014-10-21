@@ -9,7 +9,6 @@ import spacetrader.ui.Point;
 
 public class Player implements Serializable {
     private String name;
-    private List<Planet> knownPlanets;
     private List<Skill> skills;
     // Used to determine player's location in the universe as a whole
     private Point coord;
@@ -21,7 +20,6 @@ public class Player implements Serializable {
     public Player() {
         name = "NoName";
         skills = new ArrayList<>();
-        knownPlanets = new ArrayList<>();
         coord = new Point(0, 0);
         ship = new Ship(Ship.ShipType.Gnat, null, null);
         money = 10000;
@@ -71,14 +69,6 @@ public class Player implements Serializable {
                 skill.setValue(value);
             }
         }
-    }
-
-    public boolean knowsPlanet(Planet planet) {
-        return knownPlanets.contains(planet);
-    }
-
-    public void addKnownPlanet(Planet planet) {
-        knownPlanets.add(planet);
     }
 
     public void setShip(Ship ship){
