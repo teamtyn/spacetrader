@@ -16,6 +16,10 @@ public class MenuController implements Initializable, ControlledScreen {
     private void startButtonAction(ActionEvent event) {
         parentController.setScreen("SkillSetup");
     }
+    
+    @FXML
+    private void loadButtonAction(ActionEvent event) {
+    }
 
     @FXML
     private void exitButtonAction(ActionEvent event) {
