@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import spacetrader.persist.Persistence;
 
 /**
  * @author TYN
@@ -19,6 +20,9 @@ public class MenuController implements Initializable, ControlledScreen {
     
     @FXML
     private void loadButtonAction(ActionEvent event) {
+        if (Persistence.loadGame()) {
+            parentController.setScreen("StarMap");
+        }
     }
 
     @FXML

@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import spacetrader.items.CargoBay;
 import spacetrader.market.MarketPlace;
+import spacetrader.persist.Persistence;
 import spacetrader.player.Player;
 import spacetrader.star_system.Planet;
 import spacetrader.star_system.Planet.TechLevel;
@@ -423,6 +424,11 @@ public class StarMapController implements ControlledScreen {
     private void viewPlayerCardButtonAction(ActionEvent event) {
         // TODO
         //parentController.setScreen("PlayerCard");
+    }
+    
+    @FXML
+    private void saveGameButtonAction(ActionEvent event) {
+        Persistence.saveGame();
     }
 
     @Override

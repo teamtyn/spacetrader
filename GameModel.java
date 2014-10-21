@@ -1,7 +1,7 @@
 package spacetrader;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import javafx.stage.Stage;
 import spacetrader.player.Player;
 import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemNames;
@@ -21,6 +22,7 @@ import spacetrader.ui.Point;
 public class GameModel implements Serializable {
     private static GameModel state;
     private static final Random random = new Random();
+    private static Stage stage;
 
     private int day;
     private Player player;
@@ -30,9 +32,14 @@ public class GameModel implements Serializable {
         // Cannot be instantiated outside of this class
         systems = generateSystems();
     }
+
+    public static Stage getStage() {
+        return stage;
+    }
     
-    public static void initialize() {
+    public static void initialize(Stage stage) {
         state = new GameModel();
+        GameModel.stage = stage;
     }
     
     public static void load(InputStream in) throws IOException {
