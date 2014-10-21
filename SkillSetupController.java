@@ -206,7 +206,9 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         }
         System.out.println(closingMessage.toString());
         GameModel.setPlayer(player);
-        parentController.setScreen("StarMap");
+        GameModel.generateSystems();
+        
+        parentController.setScreen("UniverseMap");
     }
     @FXML
     private void plusButtonAction(ActionEvent event) {

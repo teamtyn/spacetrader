@@ -14,7 +14,9 @@ import spacetrader.ui.SerializableColor;
  */
 public class Planet implements Serializable {
     private final String name;
-    private final int orbitDistance;
+    private final double orbitDistance;
+    private final double orbitSpeed;
+    private final double axialTilt;
     private final Government government;
 
     public enum TechLevel {PREAGRICULTURAL, AGRICULTURAL, 
@@ -31,22 +33,24 @@ public class Planet implements Serializable {
     private TechLevel techLevel;
     private final MarketPlace market;
     private final SerializableColor color;
-    private final int size;
+    private final double size;
     public boolean hasPlayer;
 
-    public Planet() {
+    public Planet(double orbitDistance, double size) {
         resourceLevel = ResourceLevel.values()[GameModel.getRandom().nextInt(ResourceLevel.values().length)];
         techLevel = TechLevel.values()[GameModel.getRandom().nextInt(TechLevel.values().length)];
         circumstance = new Circumstance();
-        size = GameModel.getRandom().nextInt(5) + 1;
+        this.size = size;
         color = new SerializableColor(Color.rgb(GameModel.getRandom().nextInt(256),
                 GameModel.getRandom().nextInt(256),
-                GameModel.getRandom().nextInt(256))); // TODO: Josh make fancier
-        orbitDistance = GameModel.getRandom().nextInt(30) + 20; // Distance between planet and star, TODO: need to ensure orbits are unique
+                GameModel.getRandom().nextInt(256)));
+        this.orbitDistance = orbitDistance;
         government = new Government();
         name = PlanetNames.getName(government);
         hasPlayer = false;
         market = new MarketPlace(this);
+        axialTilt = 45 * GameModel.getRandom().nextDouble();
+        orbitSpeed = Math.sqrt(1 / (20 * orbitDistance));
     }
 
     public MarketPlace getMarket() {
@@ -57,11 +61,19 @@ public class Planet implements Serializable {
         return color.getColor();
     }
 
-    public int getOrbitDistance(){
+    public double getOrbitDistance(){
         return orbitDistance;
     }
 
-    public int getSize() {
+    public double getOrbitSpeed() {
+        return  orbitSpeed;
+    }
+
+    public double getAxialTilt() {
+        return axialTilt;
+    }
+
+    public double getSize() {
         return size;
     }
 
