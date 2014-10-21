@@ -58,21 +58,21 @@ public class TradeGood implements Serializable {
         govPrice = Collections.unmodifiableMap(govPrice2);
     }
     // Quantity multipliers from government type of the planet
-    private final static Map<Government.Type, Integer> govQuantity;
+    private final static Map<Government.Type, Double> govQuantity;
     static {
-        Map<Government.Type, Integer> govQuantity2 = new HashMap<>();
-        govQuantity2.put(Government.Type.ANARCHY, 1);
-        govQuantity2.put(Government.Type.ARISTOCRACY, 1);
-        govQuantity2.put(Government.Type.CAPITALIST, 1);
-        govQuantity2.put(Government.Type.COMMUNIST, 1);
-        govQuantity2.put(Government.Type.CORPORATE, 1);
-        govQuantity2.put(Government.Type.DEMOCRACY, 1);
-        govQuantity2.put(Government.Type.FASCIST, 1);
-        govQuantity2.put(Government.Type.MERITOCRACY, 1);
-        govQuantity2.put(Government.Type.MONARCHY, 1);
-        govQuantity2.put(Government.Type.OLIGARCHY, 1);
-        govQuantity2.put(Government.Type.TECHNOCRACY, 1);
-        govQuantity2.put(Government.Type.THEOCRACY, 1);
+        Map<Government.Type, Double> govQuantity2 = new HashMap<>();
+        govQuantity2.put(Government.Type.ANARCHY, 1.0);
+        govQuantity2.put(Government.Type.ARISTOCRACY, 1.0);
+        govQuantity2.put(Government.Type.CAPITALIST, 1.0);
+        govQuantity2.put(Government.Type.COMMUNIST, 1.0);
+        govQuantity2.put(Government.Type.CORPORATE, 1.0);
+        govQuantity2.put(Government.Type.DEMOCRACY, 1.0);
+        govQuantity2.put(Government.Type.FASCIST, 1.0);
+        govQuantity2.put(Government.Type.MERITOCRACY, 1.0);
+        govQuantity2.put(Government.Type.MONARCHY, 1.0);
+        govQuantity2.put(Government.Type.OLIGARCHY, 1.0);
+        govQuantity2.put(Government.Type.TECHNOCRACY, 1.0);
+        govQuantity2.put(Government.Type.THEOCRACY, 1.0);
         govQuantity = Collections.unmodifiableMap(govQuantity2);
     }
 
@@ -134,7 +134,7 @@ public class TradeGood implements Serializable {
      * @return The price of this good in this specific situation
      */
     public final int calcPrice() {
-        int thisPrice = (type.basePrice + (type.ipl * (planet.getTechLevelOrdinality() - type.mtlp))) * type.var;
+        double thisPrice = (type.basePrice + (type.ipl * (planet.getTechLevelOrdinality() - type.mtlp))) * type.var;
         if (type.cr == planet.getResourceLevelOrdinality()) {
             thisPrice *= .75;
         }
@@ -145,7 +145,7 @@ public class TradeGood implements Serializable {
             thisPrice *= 1.5;
         }
         thisPrice *= govPrice.get(planet.getGovernment().getType());
-        return thisPrice;
+        return (int)thisPrice;
     }
 
     public static GoodType fromNameToType(String name) {
