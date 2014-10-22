@@ -26,11 +26,10 @@ public class GameModel implements Serializable {
 
     private int day;
     private Player player;
-    private final StarSystem[] systems;
+    private StarSystem[] systems;
 
     private GameModel() {
         // Cannot be instantiated outside of this class
-        systems = generateSystems();
     }
 
     public static Stage getStage() {
@@ -80,18 +79,23 @@ public class GameModel implements Serializable {
         state.day = day;
     }
 
-    private StarSystem[] generateSystems() {
-        StarSystem[] generatedSystems = new StarSystem[random.nextInt(5) + 7];
+    public static void generateSystems() {
         List<Point> positions = new ArrayList<>();
-        for (int x = 100; x <= 860; x += 190) {
-            for (int y = 200; y <= 500; y += 150) {
+        for (int x = 0; x <= 2000; x += 350) {
+            for (int y = 0; y <= 2000; y += 350) {
                 positions.add(new Point(x + random.nextInt(100) - 50, y + random.nextInt(100) - 50));
             }
         }
         Collections.shuffle(positions, random);
-        for (int i = 0; i < generatedSystems.length; i++) {
-            generatedSystems[i] = new StarSystem(StarSystemNames.getName(), positions.remove(0));
+        
+        state.systems = new StarSystem[10];
+        for (int i = 0; i < state.systems.length; i++) {
+            state.systems[i] = new StarSystem(StarSystemNames.getName(), positions.remove(0));
         }
-        return generatedSystems;
+        state.player.setSystem(state.systems[0]);
+        //System.out.println(state.player.getSystem());
+        state.player.setPlanet(state.player.getSystem().getPlanets()[0]);
+        //System.out.println(state.player.getPlanet());
+        state.player.addKnownPlanet(state.player.getPlanet());
     }
 }
