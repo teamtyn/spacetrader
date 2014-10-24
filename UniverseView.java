@@ -40,6 +40,8 @@ public class UniverseView {
     private final Xform topXform;
     private final Xform baseXform;
     private final PerspectiveCamera camera;
+    private Timeline toSystem;
+    private Timeline toPlanet;
     private final Sphere highlight;
     private final Box updater;
 
@@ -119,8 +121,15 @@ public class UniverseView {
     }
     
     public void cameraToSystem(StarSystemView system) {
+        if (toSystem != null) {   
+            toSystem.stop();
+        }
+        if (toPlanet != null) {
+            toPlanet.stop();
+        }
+        
         topXform.rz.angleProperty().unbind();
-        Timeline toSystem = new Timeline(
+        toSystem = new Timeline(
             new KeyFrame(Duration.seconds(2),
                 new KeyValue(baseXform.t.xProperty(), 0),
                 new KeyValue(baseXform.t.yProperty(), 0),
@@ -144,9 +153,16 @@ public class UniverseView {
     }
     
     public void cameraToPlanet(StarSystemView system, PlanetView planet) {
+        if (toSystem != null) {   
+            toSystem.stop();
+        }
+        if (toPlanet != null) {
+            toPlanet.stop();
+        }
+        
         DoubleProperty angleOffset = new SimpleDoubleProperty(topXform.rz.getAngle() - planet.getRz());
         topXform.rz.angleProperty().bind(planet.getOrbitXform().rz.angleProperty().add(angleOffset));
-        Timeline toPlanet = new Timeline(
+        toPlanet = new Timeline(
             new KeyFrame(Duration.seconds(2),
                 new KeyValue(topXform.rx.angleProperty(), system.getRx()),
                 new KeyValue(topXform.ry.angleProperty(), system.getRy()),

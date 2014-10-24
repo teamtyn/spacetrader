@@ -214,6 +214,12 @@ public class UniverseMapController extends AnimationTimer implements Initializab
             camera.setTranslateZ(camera.getTranslateZ() + event.getDeltaY()/40);
         });
     }
+//    public void updateSystemInfo(StarSystemView system) {
+//        NumberFormat nf = NumberFormat.getInstance();
+//        nf.setMaximumFractionDigits(2);
+//        
+//    }
+    
     
     public void hideInfo() {
         Timeline hideInfo = new Timeline(
