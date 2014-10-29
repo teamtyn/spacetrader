@@ -20,6 +20,9 @@ import spacetrader.ui.Point;
  * Acts as the singleton for the game, notably holding the universal player
  */
 public class GameModel implements Serializable {
+    public static final int UNIVERSE_WIDTH = 2000;
+    public static final int UNIVERSE_HEIGHT = 2000;
+    
     private static GameModel state;
     private static final Random random = new Random();
     private static Stage stage;
@@ -81,8 +84,8 @@ public class GameModel implements Serializable {
 
     public static void generateSystems() {
         List<Point> positions = new ArrayList<>();
-        for (int x = 0; x <= 2000; x += 350) {
-            for (int y = 0; y <= 2000; y += 350) {
+        for (int x = 0; x <= UNIVERSE_WIDTH; x += 350) {
+            for (int y = 0; y <= UNIVERSE_HEIGHT; y += 350) {
                 positions.add(new Point(x + random.nextInt(100) - 50, y + random.nextInt(100) - 50));
             }
         }
@@ -93,9 +96,7 @@ public class GameModel implements Serializable {
             state.systems[i] = new StarSystem(StarSystemNames.getName(), positions.remove(0));
         }
         state.player.setSystem(state.systems[0]);
-        //System.out.println(state.player.getSystem());
         state.player.setPlanet(state.player.getSystem().getPlanets()[0]);
-        //System.out.println(state.player.getPlanet());
         state.player.addKnownPlanet(state.player.getPlanet());
     }
 }

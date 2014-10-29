@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.AmbientLight;
+import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
@@ -18,6 +19,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.CullFace;
 import javafx.scene.shape.MeshView;
+import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.Sphere;
 import javafx.scene.shape.TriangleMesh;
 import javafx.util.Duration;
@@ -35,13 +37,14 @@ public class UniverseView {
     public static final AmbientLight AMBIENT = new AmbientLight(Color.rgb(20, 20, 20));
     
     private final SubScene subScene;
-//    private final ExecutorService texGenExe;
     private final ArrayList<StarSystemView> systemViews;
+    private final PerspectiveCamera camera;
     private final Xform topXform;
     private final Xform baseXform;
-    private final PerspectiveCamera camera;
+    private Timeline toUniverse;
     private Timeline toSystem;
     private Timeline toPlanet;
+    private final MeshView skybox;
     private final Sphere highlight;
     private final Box updater;
 
@@ -52,36 +55,39 @@ public class UniverseView {
                 SceneAntialiasing.BALANCED);
         subScene.setFill(Color.BLACK);
         
-//        texGenExe = new 
-        
         systemViews = new ArrayList<>();
-        
-        topXform = new Xform(RotateOrder.ZYX);
-        baseXform = new Xform();
+        buildSystems(root);
         
         camera = new PerspectiveCamera(true);
         camera.setFieldOfView(45);
         camera.setNearClip(1);
-        camera.setFarClip(10000);
+        camera.setFarClip(20000);
         subScene.setCamera(camera);
         
-        updater = new Box(1,1,1);
-        updater.setTranslateX(200000);
-        Timeline update = new Timeline(new KeyFrame(Duration.seconds(0), new KeyValue(updater.rotateProperty(), 0)), new KeyFrame(Duration.seconds(1), new KeyValue(updater.rotateProperty(),360)));
-        update.setCycleCount(Timeline.INDEFINITE);
-        update.play();
+        topXform = new Xform(RotateOrder.ZYX);
+        baseXform = new Xform();
+        buildCamera(root);
+        
+        skybox = new MeshView();
+        buildSkybox(root);
         
         highlight = new Sphere();
         highlight.setMaterial(new PhongMaterial(Color.WHITE));
         highlight.setCullFace(CullFace.FRONT);
         NO_SHADE.getScope().add(highlight);
         highlight.setVisible(false);
-        highlight.setCache(false);
+        
+        updater = new Box(1,1,1);
+        updater.setTranslateX(200000);
+        Timeline update = new Timeline(
+            new KeyFrame(Duration.seconds(0),
+                new KeyValue(updater.rotateProperty(), 0)),
+            new KeyFrame(Duration.seconds(1),
+                new KeyValue(updater.rotateProperty(),360)));
+        update.setCycleCount(Timeline.INDEFINITE);
+        update.play();
 
         root.getChildren().addAll(NO_SHADE, AMBIENT, highlight, updater);
-        buildCamera(root);
-        buildSystems(root);
-        buildSkybox(root);
         Bloom bloom = new Bloom();
         bloom.setThreshold(0.9);
         subScene.setEffect(bloom);
@@ -107,12 +113,25 @@ public class UniverseView {
         return camera;
     }
     
+    public MeshView getSkybox() {
+        return skybox;
+    }
+    
     public Sphere getHighlight() {
         return highlight;
     }
+    
+    private void buildSystems(Group root) {        
+        StarSystem[] systems = GameModel.getSystems();
+        for (StarSystem system : systems) {
+            StarSystemView systemView = new StarSystemView(system);
+            root.getChildren().add(systemView.getSystemXform());
+            systemViews.add(systemView);
+        }
+    }
 
     private void buildCamera(Group root) {
-        topXform.setTranslate(UniverseMapController.UNIVERSE_WIDTH, UniverseMapController.UNIVERSE_HEIGHT);
+        topXform.setTranslate(GameModel.UNIVERSE_WIDTH / 2, GameModel.UNIVERSE_HEIGHT / 2);
         camera.setTranslateZ(-2000);
         
         baseXform.getChildren().add(camera);
@@ -120,7 +139,42 @@ public class UniverseView {
         root.getChildren().add(topXform);
     }
     
+    public void cameraToUniverse() {
+        if (toUniverse != null) {   
+            toUniverse.stop();
+        }
+        if (toSystem != null) {   
+            toSystem.stop();
+        }
+        if (toPlanet != null) {
+            toPlanet.stop();
+        }
+        
+        topXform.rz.angleProperty().unbind();
+        toUniverse = new Timeline(
+            new KeyFrame(Duration.seconds(2),
+                new KeyValue(baseXform.t.xProperty(), 0),
+                new KeyValue(baseXform.t.yProperty(), 0),
+                new KeyValue(baseXform.t.zProperty(), 0),
+                
+                new KeyValue(baseXform.rx.angleProperty(), 0),
+                new KeyValue(baseXform.ry.angleProperty(), 0),
+                new KeyValue(baseXform.rz.angleProperty(), 0),
+                    
+                new KeyValue(camera.translateZProperty(), -2000),
+                
+                new KeyValue(topXform.rx.angleProperty(), 0),
+                new KeyValue(topXform.ry.angleProperty(), 0),
+                new KeyValue(topXform.rz.angleProperty(), 0)
+            )
+        );
+        toUniverse.play();
+    }
+    
     public void cameraToSystem(StarSystemView system) {
+        if (toUniverse != null) {   
+            toUniverse.stop();
+        }
         if (toSystem != null) {   
             toSystem.stop();
         }
@@ -153,6 +207,9 @@ public class UniverseView {
     }
     
     public void cameraToPlanet(StarSystemView system, PlanetView planet) {
+        if (toUniverse != null) {   
+            toUniverse.stop();
+        }
         if (toSystem != null) {   
             toSystem.stop();
         }
@@ -160,6 +217,7 @@ public class UniverseView {
             toPlanet.stop();
         }
         
+        topXform.rz.angleProperty().unbind();
         DoubleProperty angleOffset = new SimpleDoubleProperty(topXform.rz.getAngle() - planet.getRz());
         topXform.rz.angleProperty().bind(planet.getOrbitXform().rz.angleProperty().add(angleOffset));
         toPlanet = new Timeline(
@@ -171,7 +229,7 @@ public class UniverseView {
                 new KeyValue(baseXform.t.xProperty(), planet.getAxisXform().t.getX()),
                 new KeyValue(baseXform.t.yProperty(), planet.getAxisXform().t.getY()),
                 new KeyValue(baseXform.t.zProperty(), planet.getAxisXform().t.getZ()),
-                new KeyValue(camera.translateZProperty(), -30),
+                new KeyValue(camera.translateZProperty(), -13),
                     
                 new KeyValue(baseXform.rx.angleProperty(), 90),
                 new KeyValue(baseXform.ry.angleProperty(), 0),
@@ -179,15 +237,6 @@ public class UniverseView {
             )
         );
         toPlanet.play();
-    }
-    
-    private void buildSystems(Group root) {        
-        StarSystem[] systems = GameModel.getSystems();
-        for (StarSystem system : systems) {
-            StarSystemView systemView = new StarSystemView(system);
-            root.getChildren().add(systemView.getSystemXform());
-            systemViews.add(systemView);
-        }
     }
     
     private void buildSkybox(Group root) {
@@ -232,7 +281,7 @@ public class UniverseView {
             1, 10, 3, 12, 7, 11,
             7, 11, 3, 12, 5, 13
         );
-        MeshView skybox = new MeshView(skyboxMesh);
+        skybox.setMesh(skyboxMesh);
         skybox.setScaleX(5000);
         skybox.setScaleY(5000);
         skybox.setScaleZ(5000);
