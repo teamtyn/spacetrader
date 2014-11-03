@@ -77,10 +77,6 @@ public class Player implements Serializable {
         return knownPlanets.contains(planet);
     }
 
-    public void addKnownPlanet(Planet planet) {
-        knownPlanets.add(planet);
-    }
-
     public void setShip(Ship ship){
         this.ship = ship;
     }
@@ -96,6 +92,7 @@ public class Player implements Serializable {
     
     public void setPlanet(Planet planet) {
         this.planet = planet;
+        knownPlanets.add(planet);
     }
 
     // Increase the level of a skill by the specified value

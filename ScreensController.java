@@ -175,4 +175,12 @@ public class ScreensController extends StackPane {
             return true;
         }
     }
+    
+    public String toString() {
+        String str = "";
+            for(String s: screens.keySet()){
+                    str += s + '\n';
+            }
+        return str;
+    }
 }

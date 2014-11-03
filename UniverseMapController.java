@@ -256,6 +256,8 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                 if (camera.getTranslateZ() < -17) {
                     selectedPlanet.updateTextures(1000, 500, null);
                     selectedPlanet = null;
+                    updateSystemInfo(selectedSystem);
+                    systemInfo.play();
                     universeView.cameraToSystem(selectedSystem);
                 }
             } else if (selectedSystem != null) {
@@ -265,6 +267,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                     selectedSystem.updateTextures(100, 50);
                     selectedSystem.setLightOn(false);
                     selectedSystem = null;
+                    hideInfo.play();
                     universeView.cameraToUniverse();
                 }
             } else {
@@ -284,6 +287,10 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         systemField.setText(system.getSystem().getName());
         distanceField.setText(nf.format(distance) + " pc");
         fuelCostField.setText(nf.format(fuelCost) + " gallons");
+        
+        travelButton.setDisable(true);
+        marketButton.setDisable(true);
+        spaceStationButton.setDisable(true);
     }
     
     public void updatePlanetInfo(PlanetView planet) {
@@ -294,6 +301,8 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         }
         if (player.getPlanet() == planet.getPlanet()) {
             travelButton.setText("To Surface");
+            marketButton.setDisable(false);
+            spaceStationButton.setDisable(false);
         } else {
             travelButton.setText("Travel");
         }
@@ -323,21 +332,22 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         player.setPlanet(planet);
         updateSystemInfo(selectedSystem);
         updatePlanetInfo(selectedPlanet);
-
-        marketButton.setDisable(false);
-        spaceStationButton.setDisable(false);
         // TODO: Remove fuel, potentially disable button
     }
 
     @FXML
     private void marketButtonAction(ActionEvent event) {
-        
+        if (ScreensController.isInitialized("Market")) {
+            ((MarketController)ScreensController.getController("Market")).display();
+        }
+        parentController.setScreen("Market");
     }
 
     @FXML
     private void spaceStationButtonAction(ActionEvent event) {
-        
+        parentController.setScreen("SpaceStation");
     }
+    
     @Override
     public void setScreenParent(ScreensController parentController) {
         this.parentController = parentController;

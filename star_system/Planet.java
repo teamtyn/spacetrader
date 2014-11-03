@@ -28,26 +28,22 @@ public class Planet implements Serializable {
                                POORSOIL, RICHFAUNA, LIFELESS,
                                WEIRDMUSHROOMS, LOTSOFHERBS,
                                ARTISTIC, WARLIKE};
+    public enum Environment {EARTH, LAVA, ICE, DESERT, ALIEN, ROCKY};
     private final Circumstance circumstance;
     private ResourceLevel resourceLevel;
     private TechLevel techLevel;
+    private Environment environment;
     private final MarketPlace market;
-    private final SerializableColor color;
     private final double size;
-    public boolean hasPlayer;
 
     public Planet(double orbitDistance, double size) {
         resourceLevel = ResourceLevel.values()[GameModel.getRandom().nextInt(ResourceLevel.values().length)];
         techLevel = TechLevel.values()[GameModel.getRandom().nextInt(TechLevel.values().length)];
         circumstance = new Circumstance();
         this.size = size;
-        color = new SerializableColor(Color.rgb(GameModel.getRandom().nextInt(256),
-                GameModel.getRandom().nextInt(256),
-                GameModel.getRandom().nextInt(256)));
         this.orbitDistance = orbitDistance;
         government = new Government();
         name = PlanetNames.getName(government);
-        hasPlayer = false;
         market = new MarketPlace(this);
         axialTilt = 45 * GameModel.getRandom().nextDouble();
         orbitSpeed = Math.sqrt(1 / (20 * orbitDistance));
@@ -55,10 +51,6 @@ public class Planet implements Serializable {
 
     public MarketPlace getMarket() {
         return market;
-    }
-    
-    public Color getColor() {
-        return color.getColor();
     }
 
     public double getOrbitDistance(){
