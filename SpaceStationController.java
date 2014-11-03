@@ -48,7 +48,6 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     @FXML private Pane otherShipPicturePane;
     @FXML private Label hullStrength;
     @FXML private Label fuelCapacity;
-    @FXML private Label gadgetSlots;
     @FXML private Label shieldSlots;
     @FXML private Label weaponSlots;
     @FXML private Label cargoBaySlots;
@@ -58,7 +57,6 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     @FXML private Pane myShipPicturePane;
     @FXML private Label myHullStrength;
     @FXML private Label myFuelCapacity;
-    @FXML private Label myGadgetSlots;
     @FXML private Label myShieldSlots;
     @FXML private Label myWeaponSlots;
     @FXML private Label myCargoBaySlots;
@@ -93,7 +91,6 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     public void myShipStats() {
         myHullStrength.setText(Integer.toString(myShip.getHull()));
         myFuelCapacity.setText(Double.toString(myShip.getFuelCapacity()));
-        myGadgetSlots.setText(Integer.toString(myShip.getGadgetSlots()));
         myShieldSlots.setText(Integer.toString(myShip.getShieldSlots()));
         myWeaponSlots.setText(Integer.toString(myShip.getWeaponSlots()));
         myCargoBaySlots.setText(Integer.toString(myShip.getCargoBaySlots()));
@@ -113,7 +110,6 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         otherShipLabel.setText(otherShip.type.name());
         hullStrength.setText(Integer.toString(otherShip.getHull()));
         fuelCapacity.setText(Double.toString(otherShip.getFuelCapacity()));
-        gadgetSlots.setText(Integer.toString(otherShip.getGadgetSlots()));
         shieldSlots.setText(Integer.toString(otherShip.getShieldSlots()));
         weaponSlots.setText(Integer.toString(otherShip.getWeaponSlots()));
         cargoBaySlots.setText(Integer.toString(otherShip.getCargoBaySlots()));
@@ -166,9 +162,6 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         otherShip.addEscapePod(player.getShip().getEscapePod());
         otherShip.addInsurance(player.getShip().getInsurance());
         // TODO: 
-        for (Gadget gadget: player.getShip().getGadgets()) {
-            otherShip.addGadget(gadget);
-        }
         for (Shield shield: player.getShip().getShields()) {
             otherShip.addShield(shield);
         }

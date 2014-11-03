@@ -2,6 +2,8 @@ package spacetrader.items;
 
 import java.io.Serializable;
 import javafx.scene.paint.Color;
+import spacetrader.items.Shield;
+import spacetrader.items.Weapon;
 import spacetrader.ui.SerializableColor;
 
 /**
@@ -10,36 +12,34 @@ import spacetrader.ui.SerializableColor;
  */
 public class Ship implements Serializable {
     public ShipType type;
-    private final Gadget[] gadgets;
     private final Shield[] shields;
     private final Weapon[] weapons;
     private final CargoBay cargoBay;
     private EscapePod escapePod;
     private Insurance insurance;
     private int hull;
+    private int shield;
     private Color color;
     private double fuel;
 
     /**
-     * ShipType contains TYPE(hullStrength, gadgetSlots, shieldSlots, weaponSlots, cargoBaySlots, fuelCapacity)
+     * ShipType contains TYPE(hullStrength, shieldSlots, weaponSlots, cargoBaySlots, fuelCapacity)
      */
     public enum ShipType {
-        // TODO: Make numbers more better?
-        //Name      hull  fuelC G  S  W  C   fuelE cost  color
-        Flea        (10,  30,   0, 0, 0, 10, 30,   100,  Color.BLUE), 
-        Gnat        (100, 100,  1, 0, 1, 15, 10,   200,  Color.RED), 
-        Firefly     (100, 200,  1, 0, 1, 20, 20,   500,  Color.GREEN), 
-        Mosquito    (300, 100,  1, 1, 2, 15, 10,   750,  Color.ORANGE), 
-        Bumblebee   (100, 200,  1, 1, 2, 20, 15,   750,  Color.YELLOW),
-        Beetle      (100, 1000, 1, 1, 0, 50, 5,    1000, Color.PURPLE),
-        Hornet      (400, 100,  1, 2, 3, 20, 15,   1000, Color.BROWN), 
-        Grasshopper (100, 200,  3, 2, 2, 30, 15,   1000, Color.GREY), 
-        Termite     (500, 1000, 2, 3, 1, 60, 5,    5000, Color.WHITE), 
-        Wasp        (500, 300,  2, 2, 4, 35, 20,   5000, Color.ALICEBLUE);
+        //Name      hull  fuelC S  W  C   fuelE cost  color
+        Flea        (10,  30,   0, 0, 10, 30,   100,  Color.BLUE), 
+        Gnat        (100, 100,  0, 1, 15, 10,   200,  Color.RED), 
+        Firefly     (100, 200,  0, 1, 20, 20,   500,  Color.GREEN), 
+        Mosquito    (300, 100,  1, 2, 15, 10,   750,  Color.ORANGE), 
+        Bumblebee   (100, 200,  1, 2, 20, 15,   750,  Color.YELLOW),
+        Beetle      (100, 1000, 1, 0, 50, 5,    1000, Color.PURPLE),
+        Hornet      (400, 100,  2, 3, 20, 15,   1000, Color.BROWN), 
+        Grasshopper (100, 200,  2, 2, 30, 15,   1000, Color.GREY), 
+        Termite     (500, 1000, 3, 1, 60, 5,    5000, Color.WHITE), 
+        Wasp        (500, 300,  2, 4, 35, 20,   5000, Color.ALICEBLUE);
 
         private int hullStrength;
         private final double fuelCapacity;
-        private int gadgetSlots;
         private int shieldSlots;
         private int weaponSlots;
         private int cargoBaySlots;
@@ -47,10 +47,9 @@ public class Ship implements Serializable {
         private final int cost;
         private final SerializableColor color;
 
-        ShipType(int hullStrength, double fuelCapacity, int gadgetSlots, int shieldSlots, int weaponSlots, int cargoBaySlots, double fuelEfficiency, int cost, Color color) {
+        ShipType(int hullStrength, double fuelCapacity, int shieldSlots, int weaponSlots, int cargoBaySlots, double fuelEfficiency, int cost, Color color) {
             this.hullStrength = hullStrength;
             this.fuelCapacity = fuelCapacity;
-            this.gadgetSlots = gadgetSlots;
             this.shieldSlots = shieldSlots;
             this.weaponSlots = weaponSlots;
             this.cargoBaySlots = cargoBaySlots;
@@ -68,7 +67,6 @@ public class Ship implements Serializable {
 
     public Ship(ShipType type, EscapePod escapePod, Insurance insurance) {
         this.type = type;
-        gadgets = new Gadget[type.gadgetSlots];
         shields = new Shield[type.shieldSlots];
         weapons = new Weapon[type.weaponSlots];
         cargoBay = new CargoBay(type.cargoBaySlots);
@@ -76,20 +74,11 @@ public class Ship implements Serializable {
         fuel = 0;
         this.escapePod = escapePod;
         this.insurance = insurance;
+        this.shield = 0;
     }
 
     //Add things to ship
 
-    public boolean addGadget(Gadget newGadget) {
-        boolean success = false;
-        for (Gadget gadget: gadgets) {
-            if (gadget == null && !success) {
-                gadget = newGadget;
-                success = true;
-            }
-        }
-        return success;
-    }
     public boolean addShield(Shield newShield) {
         boolean success = false;
         for (Shield shield: shields) {
@@ -125,15 +114,7 @@ public class Ship implements Serializable {
     }
 
     //Remove things from ship
-
-    public Gadget removeGadget(int position) {
-        Gadget removed = null;
-        if (position < gadgets.length) {
-            removed = gadgets[position];
-            gadgets[position] = null;
-        }
-        return removed;
-    }   
+  
     public Shield removeShield(int position) {
         Shield removed = null;
         if (position < shields.length) {
@@ -162,13 +143,6 @@ public class Ship implements Serializable {
     }
 
     // Getters
-
-    public Gadget[] getGadgets() {
-        return gadgets;
-    }
-    public int getGadgetSlots() {
-        return gadgets.length;
-    }
     public Shield[] getShields() {
         return shields;
     }
@@ -222,7 +196,7 @@ public class Ship implements Serializable {
         }
         return success;
     }
-
+    
     public int takeDamage(int damage) {
         // Shields???
         if (hull - damage >= 0) {
