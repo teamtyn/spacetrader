@@ -97,6 +97,5 @@ public class GameModel implements Serializable {
         }
         state.player.setSystem(state.systems[0]);
         state.player.setPlanet(state.player.getSystem().getPlanets()[0]);
-        state.player.addKnownPlanet(state.player.getPlanet());
     }
 }

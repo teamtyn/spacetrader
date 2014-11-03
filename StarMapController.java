@@ -93,11 +93,11 @@ public class StarMapController implements ControlledScreen {
                 // Draw circle for planet
                 double planetX = system.getCoordinateX() + (planet.getOrbitDistance() * Math.cos(degrees * 0.0174532925));
                 double planetY = system.getCoordinateY() + (planet.getOrbitDistance() * Math.sin(degrees * 0.0174532925));
-                Circle planetCircle = new Circle(planetX, planetY, planet.getSize(), planet.getColor());
+                Circle planetCircle = new Circle(planetX, planetY, planet.getSize(), Color.BLUE);//planet.getColor());
                 systemPane.getChildren().add(planetCircle);
-                if (planet.hasPlayer) {
-                    drawPlayer(planetX - 5, planetY - 5);
-                }
+//                if (planet.hasPlayer) {
+//                    drawPlayer(planetX - 5, planetY - 5);
+//                }
                 degrees += 360 / numPlanets;
             }
 
@@ -168,7 +168,7 @@ public class StarMapController implements ControlledScreen {
             // Draw circle for planet
             double planetX = star.getCenterX() + (5 * planet.getOrbitDistance() * Math.cos(degrees * 0.0174532925));
             double planetY = star.getCenterY() + (5 * planet.getOrbitDistance() * Math.sin(degrees * 0.0174532925));
-            Circle planetCircle = new Circle(planetX, planetY, planet.getSize() * Math.sqrt(5), planet.getColor());
+            Circle planetCircle = new Circle(planetX, planetY, planet.getSize() * Math.sqrt(5), Color.BLUE);//planet.getColor());
             planetCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
                 viewPlanet(planet, system);
             }); 
@@ -181,7 +181,7 @@ public class StarMapController implements ControlledScreen {
             systemPane.getChildren().add(planetText);
 
             // If the player is in this system and not already at this planet, allow travel to this planet
-            if (system.hasPlayer && !planet.hasPlayer) {
+            //if (system.hasPlayer && !planet.hasPlayer) {
 
                 // Button to travel to this planet from inside system
                 Button travelButton = new Button("Travel to " + planet.getName());
@@ -191,7 +191,7 @@ public class StarMapController implements ControlledScreen {
                 travelButton.setLayoutX(planetX - 50);
                 travelButton.setLayoutY(planetY - 75);
                 systemPane.getChildren().add(travelButton);
-            }
+            //}
             
             // Space station for player to buy things for their ship, not clickable from here
             Rectangle spaceStation = new Rectangle(5, 5);
@@ -203,9 +203,9 @@ public class StarMapController implements ControlledScreen {
             }
 
             // If the player is at this planet, draw the player
-            if (planet.hasPlayer) {
-                drawPlayer(planetX - (planet.getSize() + 3) * Math.sqrt(5), planetY - (planet.getSize() + 3) * Math.sqrt(5));
-            }
+//            if (planet.hasPlayer) {
+//                drawPlayer(planetX - (planet.getSize() + 3) * Math.sqrt(5), planetY - (planet.getSize() + 3) * Math.sqrt(5));
+//            }
             degrees += 360 / numPlanets;
         }
     }
@@ -224,9 +224,9 @@ public class StarMapController implements ControlledScreen {
         hullLabel.setText(Integer.toString(player.getShip().getHull()));
 
         // If the player is at this planet, draw them in
-        if (planet.hasPlayer) {
-            drawPlayer(100, 100);
-        }
+//        if (planet.hasPlayer) {
+//            drawPlayer(100, 100);
+//        }
 
         // Button to return to system view
         backButton = new Button("GO BACK");
@@ -243,7 +243,7 @@ public class StarMapController implements ControlledScreen {
 
         // Draw a circle to represent the planet
         // TODO: Make better? 3D?
-        Circle planetCircle = new Circle(300, 300, 50, planet.getColor());
+        Circle planetCircle = new Circle(300, 300, 50, Color.BLUE);//planet.getColor());
         systemPane.getChildren().add(planetCircle);
 
         // Write some more details about the planet such as government and circumstance
@@ -277,7 +277,7 @@ public class StarMapController implements ControlledScreen {
         });
         marketButton.setLayoutX(100);
         marketButton.setLayoutY(300);
-        marketButton.setDisable(!planet.hasPlayer);
+        //marketButton.setDisable(!planet.hasPlayer);
         systemPane.getChildren().add(marketButton);
     }
 
@@ -327,7 +327,7 @@ public class StarMapController implements ControlledScreen {
                 player.getSystem().hasPlayer = false;
             }
             if (player.getPlanet() != null) {
-                player.getPlanet().hasPlayer = false;
+                //player.getPlanet().hasPlayer = false;
             }
 
             GameModel.setDay(GameModel.getDay() + 5);
@@ -354,7 +354,7 @@ public class StarMapController implements ControlledScreen {
 
         // Make sure past planet no longer has player.  System shouldn't change
         if (player.getPlanet() != null) {
-            player.getPlanet().hasPlayer = false;
+            //player.getPlanet().hasPlayer = false;
         }
 
         GameModel.setDay(GameModel.getDay() + 1);
@@ -362,7 +362,7 @@ public class StarMapController implements ControlledScreen {
         randomEvents();
 
         // Planet you are traveling to has player
-        planet.hasPlayer = true;
+        //planet.hasPlayer = true;
         player.setPlanet(planet);
         viewPlanet(planet, system);
     }

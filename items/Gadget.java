@@ -6,6 +6,8 @@ import java.io.Serializable;
  *
  * @author David Purcell
  */
-class EscapePod implements Serializable {
+public class Gadget implements Serializable {
+    public Gadget() {
 
+    }
 }

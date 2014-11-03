@@ -14,10 +14,10 @@ public class Xform extends Group{
     public enum RotateOrder {
         XYZ, XZY, YXZ, YZX, ZXY, ZYX
     }
-    
-    public final Translate t  = new Translate(); 
-    public final Translate p  = new Translate(); 
-    public final Translate ip = new Translate(); 
+
+    public final Translate t  = new Translate();
+    public final Translate p  = new Translate();
+    public final Translate ip = new Translate();
     public final Rotate rx = new Rotate();
     { rx.setAxis(Rotate.X_AXIS); }
     public final Rotate ry = new Rotate();
@@ -26,36 +26,36 @@ public class Xform extends Group{
     { rz.setAxis(Rotate.Z_AXIS); }
     public final Scale s = new Scale();
 
-    public Xform() { 
-        super(); 
-        getTransforms().addAll(t, rz, ry, rx, s); 
+    public Xform() {
+        super();
+        getTransforms().addAll(t, rz, ry, rx, s);
     }
-    
-    public Xform(RotateOrder rotateOrder) { 
-        super(); 
+
+    public Xform(RotateOrder rotateOrder) {
+        super();
         // choose the order of rotations based on the rotateOrder
         switch (rotateOrder) {
         case XYZ:
-            getTransforms().addAll(t, p, rz, ry, rx, s, ip); 
+            getTransforms().addAll(t, p, rz, ry, rx, s, ip);
             break;
         case XZY:
-            getTransforms().addAll(t, p, ry, rz, rx, s, ip); 
+            getTransforms().addAll(t, p, ry, rz, rx, s, ip);
             break;
         case YXZ:
-            getTransforms().addAll(t, p, rz, rx, ry, s, ip); 
+            getTransforms().addAll(t, p, rz, rx, ry, s, ip);
             break;
         case YZX:
             getTransforms().addAll(t, p, rx, rz, ry, s, ip);  // For Camera
             break;
         case ZXY:
-            getTransforms().addAll(t, p, ry, rx, rz, s, ip); 
+            getTransforms().addAll(t, p, ry, rx, rz, s, ip);
             break;
         case ZYX:
-            getTransforms().addAll(t, p, rx, ry, rz, s, ip); 
+            getTransforms().addAll(t, p, rx, ry, rz, s, ip);
             break;
         }
     }
-    
+
     public void setTranslate(double x, double y, double z) {
         t.setX(x);
         t.setY(y);
@@ -95,7 +95,7 @@ public class Xform extends Group{
         s.setY(y);
         s.setZ(z);
     }
-    
+
     public void setSx(double x) { s.setX(x); }
     public void setSy(double y) { s.setY(y); }
     public void setSz(double z) { s.setZ(z); }

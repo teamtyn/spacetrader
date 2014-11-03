@@ -11,9 +11,20 @@ import javafx.stage.Stage;
  */
 public class SpaceTrader extends Application {
 
+    /**
+     * 
+     */
     public static final int SCREEN_WIDTH = 960;
+    /**
+     * 
+     */
     public static final int SCREEN_HEIGHT = 720;
 
+    /**
+     * 
+     * @param stage
+     * @throws Exception 
+     */
     @Override
     public void start(Stage stage) throws Exception {
         ScreensController mainContainer = new ScreensController();
@@ -26,14 +37,18 @@ public class SpaceTrader extends Application {
         mainContainer.loadScreen("SpaceStation", "SpaceStation.fxml");
         mainContainer.setScreen("Menu");
 
-        Group root = new Group();
+        final Group root = new Group();
         root.getChildren().addAll(mainContainer);
 
-        Scene scene = new Scene(root);
+        final Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * 
+     * @param args 
+     */
     public static void main(String[] args) {
         launch(args);
     }

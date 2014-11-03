@@ -60,7 +60,7 @@ public class MarketController implements Initializable, ControlledScreen {
         ft.setAutoReverse(true);
         ft.setCycleCount(2);
     }
-    
+
     @Override
     public void lazyInitialize() {
         player = GameModel.getPlayer();
@@ -92,7 +92,7 @@ public class MarketController implements Initializable, ControlledScreen {
 
     @FXML
     private void backButtonAction(ActionEvent event) {
-        parentController.setScreen("StarMap");
+        parentController.setScreen("UniverseMap");
     }
 
     /**

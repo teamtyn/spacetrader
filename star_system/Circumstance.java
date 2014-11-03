@@ -13,8 +13,12 @@ public class Circumstance implements Serializable {
     private int curLevel;
     private final int maxLevel;
     private boolean ascending;
-    public enum Type {NONE, DROUGHT, COLD, CROPFAIL, WAR, BOREDOM, PLAGUE, LACKOFWORKERS};
+    public enum Type {NONE, DROUGHT, COLD, CROPFAIL, WAR,
+                            BOREDOM, PLAGUE, LACKOFWORKERS};
 
+    /**
+     * 
+     */
     public Circumstance() {
         type = Type.values()[GameModel.getRandom().nextInt(Type.values().length)];
         curLevel = 0;
@@ -22,22 +26,41 @@ public class Circumstance implements Serializable {
         ascending = true;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Type getType() {
         return type;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getCurLevel() {
         return curLevel;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getMaxLevel() {
         return maxLevel;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getOrdinality() {
         return type.ordinal();
     }
 
+    /**
+     * 
+     */
     public void tickCurLevel() {
         if (ascending) {
             curLevel++;

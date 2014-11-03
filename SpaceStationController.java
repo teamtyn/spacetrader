@@ -222,7 +222,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
 
     @FXML
     private void backButtonAction(ActionEvent event) {
-        parentController.setScreen("StarMap");
+        parentController.setScreen("UniverseMap");
     }
 
     @FXML
