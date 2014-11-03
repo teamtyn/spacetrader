@@ -81,9 +81,9 @@ public class Ship implements Serializable {
 
     public boolean addShield(Shield newShield) {
         boolean success = false;
-        for (Shield shield: shields) {
-            if (shield == null && !success) {
-                shield = newShield;
+        for (int i=0; i<shields.length; i++) {
+            if (shields[i] == null && !success) {
+                shields[i] = newShield;
                 success = true;
             }
         }
@@ -91,9 +91,9 @@ public class Ship implements Serializable {
     }
     public boolean addWeapon(Weapon newWeapon) {
         boolean success = false;
-        for (Weapon weapon: weapons) {
-            if (weapon == null && !success) {
-                weapon = newWeapon;
+        for (int i=0; i<weapons.length; i++) {
+            if (weapons[i] == null && !success) {
+                weapons[i] = newWeapon;
                 success = true;
             }
         }

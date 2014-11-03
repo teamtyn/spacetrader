@@ -20,7 +20,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import spacetrader.items.*;
+import spacetrader.items.Shield.ShieldType;
 import spacetrader.items.Ship.ShipType;
+import spacetrader.items.Weapon.WeaponType;
 import spacetrader.player.Player;
 
 /**
@@ -28,6 +30,9 @@ import spacetrader.player.Player;
  * @author Purcell7
  */
 public class SpaceStationController implements Initializable, ControlledScreen {
+    @FXML private Pane shipPane;
+    @FXML private Pane gadgetPane;
+    
     @FXML private Button buyShip;
     @FXML private TextField confirmationField;
     @FXML private VBox shipList;
@@ -62,6 +67,23 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     @FXML private Label myCargoBaySlots;
     @FXML private Label myFuelEfficiency;
     @FXML private Label myShipValue;
+    
+    @FXML private Pane gadgetShipViewer;
+    @FXML private VBox gadgetWeaponsViewer;
+    @FXML private VBox gadgetShieldsViewer;
+    @FXML private Button gadgetWeaponsButton;
+    @FXML private Button gadgetShieldsButton;
+    @FXML private Pane gadgetDetailsPane;
+    @FXML private VBox gadgetList;
+    @FXML private Button gadgetBuyButton;
+    @FXML private Pane gadgetPicture;
+    @FXML private Label gadgetTypeLabel;
+    @FXML private Label gadgetNameLabel1;
+    @FXML private Label gadgetNameLabel2;
+    @FXML private Label gadgetValueLabel1;
+    @FXML private Label gadgetValueLabel2;
+    @FXML private Label gadgetCostLabel;
+    @FXML private TextField confirmationGadgetField;
 
     private Ship myShip;
     private Ship otherShip;
@@ -70,6 +92,11 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     private Player player;
     private FadeTransition ft;
     private ScreensController parentController;
+    private String currentGadgetType;
+    private Weapon selectedWeapon;
+    private Shield selectedShield;
+    
+    
 
     /**
      * Determines which fuel buttons should currently be disabled
@@ -216,6 +243,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             });
             shipList.getChildren().add(row);
         }
+        gadgetPane.setVisible(false);
     }
 
     // All button handlers below here
@@ -233,8 +261,130 @@ public class SpaceStationController implements Initializable, ControlledScreen {
 
     @FXML
     private void shopForPartsButtonAction(ActionEvent event) {
-        // TODO
-        System.out.println("Shopping for parts.");
+        if(shipPane.isVisible()){
+            shipPane.setVisible(false);
+            gadgetPane.setVisible(true);
+            shopForPartsButton.setText("Shop for Ships");   
+            initializeGadgets();
+        } else{
+            shipPane.setVisible(true);
+            gadgetPane.setVisible(false);
+            shopForPartsButton.setText("ShopForParts");
+        }
+    }
+    
+    private void initializeGadgets(){
+        shipDialogueField.setText("");
+        gadgetShipViewer.getChildren().removeAll();
+        Rectangle shipPicture = new Rectangle(25, 25, 100, 100);
+        shipPicture.setFill(myShip.type.getColor());
+        gadgetShipViewer.getChildren().add(shipPicture);
+        
+        updatePlayerWeapons();
+        updatePlayerShields();
+    }
+    
+    @FXML
+    private void viewWeapons(ActionEvent event) {
+        currentGadgetType = "Weapon";
+        gadgetTypeLabel.setText("Weapons");
+        gadgetList.getChildren().clear();
+        for (WeaponType type: WeaponType.values()) {
+            int mult = type.ordinal();
+            HBox row = new HBox();
+            Label label = new Label(type.name());
+            label.setPrefSize(200, 25);
+            label.setAlignment(Pos.CENTER);
+            row.getChildren().add(label);
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                selectedWeapon = new Weapon(type);
+                for (Node node: gadgetList.getChildren()) {
+                    node.setStyle("-fx-background-color: #FFFFFF;");
+                }
+                row.setStyle("-fx-background-color: #EEEEEE;");
+                row.setPrefSize(200, 25);
+                row.setLayoutY(mult * 25);
+                gadgetNameLabel1.setText("Damage ");
+                gadgetNameLabel2.setText("Rate of Fire");
+                gadgetValueLabel1.setText("" + selectedWeapon.getType().damage);
+                gadgetValueLabel2.setText("" + selectedWeapon.getType().rateOfFire);
+                gadgetCostLabel.setText("" + selectedWeapon.getType().cost);
+                gadgetPicture.getChildren().clear();
+                Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                myGadgetPicture.setFill(selectedWeapon.getType().color.getColor());
+                gadgetPicture.getChildren().add(myGadgetPicture);
+            });
+            gadgetList.getChildren().add(row);
+        }
+    }
+    
+    @FXML
+    private void viewShields(ActionEvent event) {
+        currentGadgetType = "Shield";
+        gadgetTypeLabel.setText("Shields");
+        gadgetList.getChildren().clear();
+        for (ShieldType type: ShieldType.values()) {
+            int mult = type.ordinal();
+            HBox row = new HBox();
+            Label label = new Label(type.name());
+            label.setPrefSize(200, 25);
+            label.setAlignment(Pos.CENTER);
+            row.getChildren().add(label);
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                selectedShield = new Shield(type);
+                for (Node node: gadgetList.getChildren()) {
+                    node.setStyle("-fx-background-color: #FFFFFF;");
+                }
+                row.setStyle("-fx-background-color: #EEEEEE;");
+                row.setPrefSize(200, 25);
+                row.setLayoutY(mult * 25);
+                gadgetNameLabel1.setText("Strength ");
+                gadgetNameLabel2.setText("Recharge Rate");
+                gadgetValueLabel1.setText("" + selectedShield.getStrength());
+                gadgetValueLabel2.setText("" + selectedShield.getRechargeRate());
+                gadgetCostLabel.setText("" + selectedShield.getType().cost);
+                gadgetPicture.getChildren().clear();
+                Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                myGadgetPicture.setFill(selectedShield.getType().color.getColor());
+                gadgetPicture.getChildren().add(myGadgetPicture);
+            });
+            gadgetList.getChildren().add(row);
+        }
+    }
+    
+    private void updatePlayerWeapons(){
+        gadgetWeaponsViewer.getChildren().clear();
+        for (Weapon weapon: player.getShip().getWeapons()) {
+            HBox row = new HBox();
+            Label label;
+            if(weapon != null){
+                label = new Label(weapon.getName());
+            } else {
+                label = new Label("Empty slot");
+            }
+            label.setPrefSize(200, 25);
+            label.setAlignment(Pos.CENTER);
+            row.getChildren().add(label);
+            gadgetWeaponsViewer.getChildren().add(row);
+        }
+    }
+    
+    private void updatePlayerShields(){
+        gadgetShieldsViewer.getChildren().clear();
+        for (Shield shield: player.getShip().getShields()) {
+            System.out.println(shield);
+            HBox row = new HBox();
+            Label label;
+            if(shield != null){
+                label = new Label(shield.getName());
+            } else {
+                label = new Label("Empty slot");
+            }
+            label.setPrefSize(200, 25);
+            label.setAlignment(Pos.CENTER);
+            row.getChildren().add(label);
+            gadgetShieldsViewer.getChildren().add(row);
+        }
     }
 
     @FXML
@@ -248,6 +398,60 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         } else {
             shipDialogueField.setText("Please confirm the price of your new ship.");
         }
+    }
+    
+    @FXML
+    private void buyGadgetButtonAction(ActionEvent event) {
+        if(currentGadgetType == "Weapon"){
+            if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedWeapon.getType().cost))) {
+                shipDialogueField.setText("");
+                confirmationGadgetField.setText("");
+                buyWeapon();
+            } else {
+                shipDialogueField.setText("Please confirm the price of your new weapon.");
+            }
+        } else if(currentGadgetType == "Shield"){
+            if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedShield.getType().cost))) {
+                shipDialogueField.setText("");
+                confirmationGadgetField.setText("");
+                buyShield();
+            } else {
+                shipDialogueField.setText("Please confirm the price of your new shield.");
+            }
+        }
+    }
+    
+    public void buyWeapon(){
+        if(player.getMoney() >= selectedWeapon.getType().cost){
+            player.subtractMoney(selectedWeapon.getType().cost);
+            if(player.getShip().addWeapon(selectedWeapon)){
+                shipDialogueField.setText("Purchase complete");
+            } else {
+                shipDialogueField.setText("Purchase failed, cost refunded");
+                player.addMoney(selectedWeapon.getType().cost);
+            }
+        } else {
+            shipDialogueField.setText("Not enough money");
+        }
+        updatePlayerWeapons();
+        moneyLabel.setText(Integer.toString(player.getMoney()));
+    }
+    
+        
+    public void buyShield(){
+        if(player.getMoney() >= selectedShield.getType().cost){
+            player.subtractMoney(selectedShield.getType().cost);
+            if(player.getShip().addShield(selectedShield)){
+                shipDialogueField.setText("Purchase complete");
+            } else {
+                shipDialogueField.setText("Purchase failed, cost refunded");
+                player.addMoney(selectedShield.getType().cost);
+            }
+        } else {
+            shipDialogueField.setText("Not enough money");
+        }
+        updatePlayerShields();
+        moneyLabel.setText(Integer.toString(player.getMoney()));
     }
 
     @FXML

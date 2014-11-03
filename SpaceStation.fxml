@@ -10,318 +10,368 @@
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.SpaceStationController">
    <children>
-      <Pane fx:id="myShipDetails" layoutX="10.0" layoutY="35.0" prefHeight="555.0" prefWidth="300.0" style="-fx-background-color: gainsboro;">
+      <Pane fx:id="gadgetPane" prefHeight="599.0" prefWidth="960.0" style="-fx-background-color: black;">
          <children>
-            <Pane layoutY="370.0" prefHeight="185.0" prefWidth="300.0">
+            <Pane fx:id="gadgetShipPane" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="932.0" style="-fx-background-color: grey;">
                <children>
-                  <VBox prefHeight="185.0" prefWidth="300.0">
-                     <children>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Hull Strength:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="myHullStrength" prefHeight="20.0" prefWidth="140.0">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Fuel Capacity:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="myFuelCapacity" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Shield Slots:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="myShieldSlots" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Gadget Slots:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="myGadgetSlots" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Weapon Slots:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="myWeaponSlots" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Cargo Bay Slots:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="myCargoBaySlots" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Fuel Efficiency:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="myFuelEfficiency" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="45.0" prefWidth="200.0">
-                           <children>
-                              <Label prefHeight="45.0" prefWidth="140.0" text="Value: ">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="myShipValue" prefHeight="45.0" prefWidth="140.0">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                  <Pane fx:id="gadgetShipViewer" layoutX="21.0" layoutY="14.0" prefHeight="163.0" prefWidth="180.0" style="-fx-background-color: white;" />
+                  <VBox fx:id="gadgetWeaponsViewer" layoutX="246.0" layoutY="43.0" prefHeight="134.0" prefWidth="140.0" style="-fx-background-color: white;" />
+                  <VBox fx:id="gadgetShieldsViewer" layoutX="440.0" layoutY="43.0" prefHeight="134.0" prefWidth="140.0" style="-fx-background-color: white;" />
+                  <VBox layoutX="634.0" layoutY="43.0" prefHeight="134.0" prefWidth="140.0" style="-fx-background-color: white;" />
+                  <Label layoutX="246.0" layoutY="14.0" text="Weapons" />
+                  <Label layoutX="440.0" layoutY="14.0" text="Shields" />
+                  <Label layoutX="634.0" layoutY="14.0" text="Other?" />
                </children>
             </Pane>
-            <Label alignment="CENTER" prefHeight="70.0" prefWidth="300.0" text="My Ship">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Pane fx:id="myShipPicturePane" layoutY="70.0" prefHeight="300.0" prefWidth="300.0" />
-         </children></Pane>
-      <Pane layoutY="600.0" prefHeight="120.0" prefWidth="960.0" style="-fx-background-color: grey;">
-         <children>
-            <HBox alignment="CENTER_LEFT" layoutX="220.0" prefHeight="120.0" prefWidth="320.0" spacing="40.0">
+            <Pane layoutX="14.0" layoutY="226.0" prefHeight="363.0" prefWidth="300.0" style="-fx-background-color: grey;">
                <children>
-                  <Button fx:id="viewPlayerCardButton" mnemonicParsing="false" onAction="#viewPlayerCardButtonAction" prefWidth="110.0" text="View Player Card">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="shopForPartsButton" mnemonicParsing="false" onAction="#shopForPartsButtonAction" prefWidth="110.0" text="Shop for Parts" />
-               </children>
-            </HBox>
-            <VBox layoutX="20.0" prefHeight="120.0" prefWidth="180.0">
-               <children>
-                  <HBox prefHeight="120.0" prefWidth="180.0">
-                     <children>
-                        <Label prefHeight="120.0" prefWidth="90.0" text="Money:">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="moneyLabel" prefHeight="120.0" prefWidth="90.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <ScrollPane layoutX="550.0" layoutY="10.0" prefHeight="100.0" prefWidth="400.0">
-               <content>
-                  <VBox prefHeight="80.0" prefWidth="380.0">
-                     <children>
-                        <Label fx:id="shipDialogueField" prefHeight="40.0" prefWidth="380.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="fuelDialogueField" prefHeight="40.0" prefWidth="380.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </content></ScrollPane>
-         </children>
-      </Pane>
-      <Pane fx:id="viewShipDetails" layoutX="650.0" layoutY="35.0" prefHeight="555.0" prefWidth="300.0" style="-fx-background-color: gainsboro;">
-         <children>
-            <Pane fx:id="otherShipPicturePane" layoutY="70.0" prefHeight="300.0" prefWidth="300.0" />
-            <Pane layoutY="370.0" prefHeight="185.0" prefWidth="300.0">
-               <children>
-                  <VBox prefHeight="185.0" prefWidth="300.0">
-                     <children>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Hull Strength:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="hullStrength" prefHeight="20.0" prefWidth="140.0">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Fuel Capacity:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="fuelCapacity" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Shield Slots:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="shieldSlots" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Gadget Slots:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="gadgetSlots" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Weapon Slots:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="weaponSlots" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Cargo Bay Slots:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="cargoBaySlots" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="140.0" text="Fuel Efficiency:">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="fuelEfficiency" prefHeight="20.0" prefWidth="140.0" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="45.0" prefWidth="200.0">
-                           <children>
-                              <Label prefHeight="45.0" prefWidth="140.0" text="Cost: ">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="shipCost" prefHeight="45.0" prefWidth="140.0">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                  <Button fx:id="gadgetWeaponsButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#viewWeapons" text="Weapons" />
+                  <Button fx:id="gadgetShieldsButton" layoutX="122.0" layoutY="14.0" mnemonicParsing="false" onAction="#viewShields" text="Shields" />
+                  <Button layoutX="232.0" layoutY="14.0" mnemonicParsing="false" text="Other?" />
                </children>
             </Pane>
-            <Label fx:id="otherShipLabel" alignment="CENTER" prefHeight="70.0" prefWidth="300.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane layoutX="330.0" layoutY="35.0" prefHeight="555.0" prefWidth="300.0">
-         <children>
-            <Pane fx:id="fuelPane" layoutY="370.0" prefHeight="185.0" prefWidth="300.0" style="-fx-background-color: gainsboro;">
+            <Pane layoutX="325.0" layoutY="226.0" prefHeight="363.0" prefWidth="622.0" style="-fx-background-color: grey;">
                <children>
-                  <ProgressBar fx:id="fuelProgress" layoutX="10.0" layoutY="110.0" prefHeight="20.0" prefWidth="280.0" progress="0.0" />
-                  <Label fx:id="fuelLabel" alignment="CENTER" layoutX="100.0" layoutY="110.0" prefHeight="20.0" prefWidth="100.0" text="x/x" />
-                  <HBox alignment="CENTER" layoutY="135.0" prefHeight="50.0" prefWidth="300.0" spacing="40.0">
-                     <children>
-                        <Button fx:id="fillFuelButton" mnemonicParsing="false" onAction="#fillFuelButtonAction" prefHeight="30.0" prefWidth="60.0" text="Fill" />
-                        <Button fx:id="cancelFuelButton" mnemonicParsing="false" onAction="#cancelFuelButtonAction" prefHeight="30.0" prefWidth="60.0" text="Cancel" />
-                        <Button fx:id="confirmFuelButton" mnemonicParsing="false" onAction="#confirmFuelButtonAction" prefHeight="30.0" prefWidth="60.0" text="Confirm" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutY="70.0" prefHeight="40.0" prefWidth="300.0">
-                     <children>
-                        <Label prefHeight="40.0" prefWidth="90.0" text="Price Per Gallon:">
-                           <HBox.margin>
-                              <Insets left="95.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="fuelCostLabel" prefHeight="40.0" prefWidth="80.0" />
-                     </children>
-                  </HBox>
-                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="300.0" text="Fueling Station">
+                  <Label fx:id="gadgetTypeLabel" layoutX="229.0" layoutY="14.0" text="Gadget Type">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="29.0" />
                      </font>
                   </Label>
-               </children>
-            </Pane>
-            <Pane fx:id="shipsToBuy" layoutX="50.0" prefHeight="250.0" prefWidth="200.0">
-               <children>
-                  <VBox fx:id="shipList" prefHeight="250.0" prefWidth="200.0" style="-fx-background-color: gainsboro;">
+                  <VBox fx:id="gadgetList" layoutX="28.0" layoutY="57.0" prefHeight="250.0" prefWidth="193.0" style="-fx-background-color: white;" />
+                  <Button fx:id="gadgetBuyButton" layoutX="28.0" layoutY="324.0" mnemonicParsing="false" onAction="#buyGadgetButtonAction" text="purchase" />
+                  <Pane fx:id="gadgetDetailsPane" layoutX="249.0" layoutY="57.0" prefHeight="250.0" prefWidth="344.0" style="-fx-background-color: white;">
                      <children>
-                        <HBox prefHeight="25.0" prefWidth="200.0" />
-                     </children></VBox>
+                        <Label fx:id="gadgetNameLabel1" layoutX="14.0" layoutY="142.0" text="Label 1" />
+                        <Label fx:id="gadgetNameLabel2" layoutX="14.0" layoutY="169.0" text="Label 2" />
+                        <Label fx:id="gadgetValueLabel1" layoutX="123.0" layoutY="142.0" text="Numbers" />
+                        <Label fx:id="gadgetValueLabel2" layoutX="123.0" layoutY="169.0" text="Numbers" />
+                        <Pane fx:id="gadgetPicture" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="320.0" />
+                        <Label layoutX="14.0" layoutY="197.0" text="Cost" />
+                        <Label fx:id="gadgetCostLabel" layoutX="119.0" layoutY="197.0" text="Gadget Cost" />
+                     </children></Pane>
+                  <TextField fx:id="confirmationGadgetField" layoutX="111.0" layoutY="324.0" prefHeight="25.0" prefWidth="180.0" />
                </children>
             </Pane>
-            <HBox alignment="CENTER" layoutY="290.0" prefHeight="50.0" prefWidth="300.0" spacing="10.0">
-               <children>
-                  <TextField fx:id="confirmationField" />
-                  <Button fx:id="buyShip" mnemonicParsing="false" onAction="#buyShipButtonAction" prefHeight="30.0" prefWidth="66.0" text="Buy Ship" />
-               </children>
-            </HBox>
+         </children></Pane>
+   <Pane layoutY="599.0" prefHeight="120.0" prefWidth="960.0" style="-fx-background-color: grey;">
+      <children>
+         <HBox alignment="CENTER_LEFT" layoutX="220.0" prefHeight="120.0" prefWidth="320.0" spacing="40.0">
+            <children>
+               <Button fx:id="viewPlayerCardButton" mnemonicParsing="false" onAction="#viewPlayerCardButtonAction" prefWidth="110.0" text="View Player Card">
+                  <HBox.margin>
+                     <Insets left="30.0" />
+                  </HBox.margin>
+               </Button>
+               <Button fx:id="shopForPartsButton" mnemonicParsing="false" onAction="#shopForPartsButtonAction" prefWidth="110.0" text="Shop for Parts" />
+            </children>
+         </HBox>
+         <VBox layoutX="20.0" prefHeight="120.0" prefWidth="180.0">
+            <children>
+               <HBox prefHeight="120.0" prefWidth="180.0">
+                  <children>
+                     <Label prefHeight="120.0" prefWidth="90.0" text="Money:">
+                        <font>
+                           <Font size="18.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="moneyLabel" prefHeight="120.0" prefWidth="90.0">
+                        <font>
+                           <Font size="18.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
+         <ScrollPane layoutX="550.0" layoutY="10.0" prefHeight="100.0" prefWidth="400.0">
+            <content>
+               <VBox prefHeight="80.0" prefWidth="380.0">
+                  <children>
+                     <Label fx:id="shipDialogueField" prefHeight="40.0" prefWidth="380.0">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="fuelDialogueField" prefHeight="40.0" prefWidth="380.0">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+            </content>
+            </ScrollPane>
+      </children>
+   </Pane>
+      <Pane fx:id="shipPane">
+         <children>
+         <Pane fx:id="myShipDetails" layoutX="10.0" layoutY="35.0" prefHeight="555.0" prefWidth="300.0" style="-fx-background-color: gainsboro;">
+            <children>
+               <Pane layoutY="370.0" prefHeight="185.0" prefWidth="300.0">
+                  <children>
+                     <VBox prefHeight="185.0" prefWidth="300.0">
+                        <children>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Hull Strength:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="myHullStrength" prefHeight="20.0" prefWidth="140.0">
+                                    <HBox.margin>
+                                       <Insets />
+                                    </HBox.margin>
+                                 </Label>
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Fuel Capacity:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="myFuelCapacity" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Shield Slots:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="myShieldSlots" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Gadget Slots:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="myGadgetSlots" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Weapon Slots:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="myWeaponSlots" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Cargo Bay Slots:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="myCargoBaySlots" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Fuel Efficiency:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="myFuelEfficiency" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox prefHeight="45.0" prefWidth="200.0">
+                              <children>
+                                 <Label prefHeight="45.0" prefWidth="140.0" text="Value: ">
+                                    <font>
+                                       <Font size="18.0" />
+                                    </font>
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="myShipValue" prefHeight="45.0" prefWidth="140.0">
+                                    <font>
+                                       <Font size="18.0" />
+                                    </font>
+                                 </Label>
+                              </children>
+                           </HBox>
+                        </children>
+                     </VBox>
+                  </children>
+               </Pane>
+               <Label alignment="CENTER" prefHeight="70.0" prefWidth="300.0" text="My Ship">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Pane fx:id="myShipPicturePane" layoutY="70.0" prefHeight="300.0" prefWidth="300.0" />
+            </children>
+            </Pane>
+         <Pane fx:id="viewShipDetails" layoutX="650.0" layoutY="35.0" prefHeight="555.0" prefWidth="300.0" style="-fx-background-color: gainsboro;">
+            <children>
+               <Pane fx:id="otherShipPicturePane" layoutY="70.0" prefHeight="300.0" prefWidth="300.0" />
+               <Pane layoutY="370.0" prefHeight="185.0" prefWidth="300.0">
+                  <children>
+                     <VBox prefHeight="185.0" prefWidth="300.0">
+                        <children>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Hull Strength:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="hullStrength" prefHeight="20.0" prefWidth="140.0">
+                                    <HBox.margin>
+                                       <Insets />
+                                    </HBox.margin>
+                                 </Label>
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Fuel Capacity:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="fuelCapacity" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Shield Slots:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="shieldSlots" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Gadget Slots:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="gadgetSlots" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Weapon Slots:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="weaponSlots" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Cargo Bay Slots:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="cargoBaySlots" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0">
+                              <children>
+                                 <Label prefHeight="20.0" prefWidth="140.0" text="Fuel Efficiency:">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="fuelEfficiency" prefHeight="20.0" prefWidth="140.0" />
+                              </children>
+                           </HBox>
+                           <HBox prefHeight="45.0" prefWidth="200.0">
+                              <children>
+                                 <Label prefHeight="45.0" prefWidth="140.0" text="Cost: ">
+                                    <font>
+                                       <Font size="18.0" />
+                                    </font>
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <Label fx:id="shipCost" prefHeight="45.0" prefWidth="140.0">
+                                    <font>
+                                       <Font size="18.0" />
+                                    </font>
+                                 </Label>
+                              </children>
+                           </HBox>
+                        </children>
+                     </VBox>
+                  </children>
+               </Pane>
+               <Label fx:id="otherShipLabel" alignment="CENTER" prefHeight="70.0" prefWidth="300.0">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
+         <Pane layoutX="330.0" layoutY="35.0" prefHeight="555.0" prefWidth="300.0">
+            <children>
+               <Pane fx:id="fuelPane" layoutY="370.0" prefHeight="185.0" prefWidth="300.0" style="-fx-background-color: gainsboro;">
+                  <children>
+                     <ProgressBar fx:id="fuelProgress" layoutX="10.0" layoutY="110.0" prefHeight="20.0" prefWidth="280.0" progress="0.0" />
+                     <Label fx:id="fuelLabel" alignment="CENTER" layoutX="100.0" layoutY="110.0" prefHeight="20.0" prefWidth="100.0" text="x/x" />
+                     <HBox alignment="CENTER" layoutY="135.0" prefHeight="50.0" prefWidth="300.0" spacing="40.0">
+                        <children>
+                           <Button fx:id="fillFuelButton" mnemonicParsing="false" onAction="#fillFuelButtonAction" prefHeight="30.0" prefWidth="60.0" text="Fill" />
+                           <Button fx:id="cancelFuelButton" mnemonicParsing="false" onAction="#cancelFuelButtonAction" prefHeight="30.0" prefWidth="60.0" text="Cancel" />
+                           <Button fx:id="confirmFuelButton" mnemonicParsing="false" onAction="#confirmFuelButtonAction" prefHeight="30.0" prefWidth="60.0" text="Confirm" />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER_LEFT" layoutY="70.0" prefHeight="40.0" prefWidth="300.0">
+                        <children>
+                           <Label prefHeight="40.0" prefWidth="90.0" text="Price Per Gallon:">
+                              <HBox.margin>
+                                 <Insets left="95.0" />
+                              </HBox.margin>
+                           </Label>
+                           <Label fx:id="fuelCostLabel" prefHeight="40.0" prefWidth="80.0" />
+                        </children>
+                     </HBox>
+                     <Label alignment="CENTER" prefHeight="60.0" prefWidth="300.0" text="Fueling Station">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </Pane>
+               <Pane fx:id="shipsToBuy" layoutX="50.0" prefHeight="250.0" prefWidth="200.0">
+                  <children>
+                     <VBox fx:id="shipList" prefHeight="250.0" prefWidth="200.0" style="-fx-background-color: gainsboro;">
+                        <children>
+                           <HBox prefHeight="25.0" prefWidth="200.0" />
+                        </children>
+                        </VBox>
+                  </children>
+               </Pane>
+               <HBox alignment="CENTER" layoutY="290.0" prefHeight="50.0" prefWidth="300.0" spacing="10.0">
+                  <children>
+                     <TextField fx:id="confirmationField" />
+                     <Button fx:id="buyShip" mnemonicParsing="false" onAction="#buyShipButtonAction" prefHeight="30.0" prefWidth="66.0" text="Buy Ship" />
+                  </children>
+               </HBox>
+            </children>
+         </Pane>
+         <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="GO BACK" />
          </children>
       </Pane>
-      <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="GO BACK" />
    </children>
 </AnchorPane>
