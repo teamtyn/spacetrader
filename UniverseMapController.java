@@ -40,7 +40,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     private StarSystemView selectedSystem;
     private PlanetView selectedPlanet;
     private ScreensController parentController;
-    private UniverseView universeView;
+    private UniverseMapSubScene universeMapSubScene;
 
     private SubScene subScene;
     private ArrayList<StarSystemView> systemViews;
@@ -96,14 +96,14 @@ public class UniverseMapController extends AnimationTimer implements Initializab
 
     @Override
     public void lazyInitialize() {
-        universeView = new UniverseView();
-        subScene = universeView.getSubScene();
-        systemViews = universeView.getSystemViews();
-        camera = universeView.getCamera();
-        topXform = universeView.getTopXform();
-        baseXform = universeView.getBaseXform();
-        skybox = universeView.getSkybox();
-        highlight = universeView.getHighlight();
+        universeMapSubScene = new UniverseMapSubScene();
+        subScene = universeMapSubScene.getSubScene();
+        systemViews = universeMapSubScene.getSystemViews();
+        camera = universeMapSubScene.getCamera();
+        topXform = universeMapSubScene.getTopXform();
+        baseXform = universeMapSubScene.getBaseXform();
+        skybox = universeMapSubScene.getSkybox();
+        highlight = universeMapSubScene.getHighlight();
 
         subScenePane.getChildren().add(subScene);
         handleMouse();
@@ -210,12 +210,12 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                             selectedSystem.expand();
                             selectedSystem.updateTextures(1000, 500);
                             selectedSystem.setLightOn(true);
-                            universeView.cameraToSystem(selectedSystem);
+                            universeMapSubScene.cameraToSystem(selectedSystem);
                         }
                     } else if (system == selectedSystem) {
                         selectedPlanet.updateTextures(1000, 500, null);
                         selectedPlanet = null;
-                        universeView.cameraToSystem(selectedSystem);
+                        universeMapSubScene.cameraToSystem(selectedSystem);
                     }
                 } else if (intersect instanceof PlanetView) {
                     PlanetView planet = (PlanetView) intersect;
@@ -223,7 +223,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                         if (selectedSystem.containsPlanet(planet)) {
                             selectedPlanet = planet;
                             selectedPlanet.updateTextures(2000, 1000, null);
-                            universeView.cameraToPlanet(selectedSystem, selectedPlanet);
+                            universeMapSubScene.cameraToPlanet(selectedSystem, selectedPlanet);
                         }
                     }
                 }
@@ -256,7 +256,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                     selectedPlanet = null;
                     updateSystemInfo(selectedSystem);
                     systemInfo.play();
-                    universeView.cameraToSystem(selectedSystem);
+                    universeMapSubScene.cameraToSystem(selectedSystem);
                 }
             } else if (selectedSystem != null) {
                 camera.setTranslateZ(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -100));
@@ -266,7 +266,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                     selectedSystem.setLightOn(false);
                     selectedSystem = null;
                     hideInfo.play();
-                    universeView.cameraToUniverse();
+                    universeMapSubScene.cameraToUniverse();
                 }
             } else {
                 camera.setTranslateZ(Math.max(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -1000), -3000));
