@@ -49,8 +49,8 @@ public class StarSystemView extends Sphere {
         systemXform.getChildren().addAll(this, planetsXform, light);
         
         light.getScope().add(planetsXform);
-        UniverseView.AMBIENT.getScope().add(planetsXform);
-        UniverseView.NO_SHADE.getScope().add(this);
+        UniverseMapSubScene.AMBIENT.getScope().add(planetsXform);
+        UniverseMapSubScene.NO_SHADE.getScope().add(this);
         
         
         light.getScope().add(planetsXform);
