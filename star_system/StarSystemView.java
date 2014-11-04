@@ -8,7 +8,7 @@ import javafx.scene.PointLight;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-import spacetrader.UniverseView;
+import spacetrader.UniverseMapSubScene;
 import spacetrader.Xform;
 import spacetrader.Xform.RotateOrder;
 
@@ -54,8 +54,8 @@ public class StarSystemView extends Sphere {
         
         
         light.getScope().add(planetsXform);
-        UniverseView.AMBIENT.getScope().add(planetsXform);
-        UniverseView.NO_SHADE.getScope().add(this);
+        UniverseMapSubScene.AMBIENT.getScope().add(planetsXform);
+        UniverseMapSubScene.NO_SHADE.getScope().add(this);
     }
     
     public StarSystem getSystem() {
