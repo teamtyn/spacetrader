@@ -115,5 +115,6 @@
       <Button fx:id="travelButton" disable="true" mnemonicParsing="false" onAction="#travelButtonAction" prefHeight="27.0" prefWidth="113.0" text="Travel" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="300.0" />
       <Button fx:id="spaceStationButton" disable="true" mnemonicParsing="false" onAction="#spaceStationButtonAction" text="Space Station" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="64.0" />
       <Button fx:id="marketButton" disable="true" mnemonicParsing="false" onAction="#marketButtonAction" text="Market" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0" />
+      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="112.0" />
    </children>
 </AnchorPane>

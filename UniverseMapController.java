@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Sphere;
 import javafx.util.Duration;
+import spacetrader.persist.Persistence;
 import spacetrader.player.Player;
 import spacetrader.star_system.Planet;
 import spacetrader.star_system.PlanetView;
@@ -343,6 +344,11 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     @FXML
     private void spaceStationButtonAction(ActionEvent event) {
         parentController.setScreen("SpaceStation");
+    }
+    
+    @FXML
+    private void saveButtonAction(ActionEvent event) {
+        Persistence.saveGame();
     }
 
     @Override
