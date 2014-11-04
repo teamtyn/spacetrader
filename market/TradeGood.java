@@ -19,18 +19,14 @@ import spacetrader.star_system.Planet;
  * ER = When this condition is present, the resource is expensive
  * MTL = Min price offered in space trade with random trader (not on a planet)
  * MTH = Max price offered in space trade with random trader (not on a planet)
- * 
- * TechLevel {PREAGRICULTURAL [0], AGRICULTURAL [1], MEDIEVAL [2], RENAISSANCE [3], 
+ * TechLevel {PREAGRICULTURAL [0], AGRICULTURAL [1], MEDIEVAL [2], RENAISSANCE [3],
  *            EARLYINDUSTRIAL [4], INDUSTRIAL [5], POSTINDUSTRIAL [6], HIGHTECH [7]};
- * 
  * ResourceLevel {NOSPECIALRESOURCES [0], MINERALRICH [1], MINERALPOOR [2],
  *                DESERT [3], LOTSOFWATER [4], RICHSOIL [5], POORSOIL [6],
  *                RICHFAUNA [7], LIFELESS [8], WEIRDMUSHROOMS [9],
  *                LOTSOFHERBS [10], ARTISTIC [11], WARLIKE [12]};
- * 
  * Circumstance {NONE [0], DROUGHT [1], COLD [2], CROPFAIL [3], WAR [4],
                  BOREDOM [5], PLAGUE [6], LACKOFWORKERS [7]};
- * 
  * If ie, cr, or er == -1, means never
  * @author Ryan Burns
  */
@@ -129,8 +125,7 @@ public class TradeGood implements Serializable {
     }
 
     /*
-     * 
-     *   
+     * Calculates the price of the good
      * @return The price of this good in this specific situation
      */
     public final int calcPrice() {

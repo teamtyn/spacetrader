@@ -86,7 +86,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         len = labelArray.length;
         setUp();
     }
-    
+
     @Override
     public void lazyInitialize() {}
 
@@ -94,7 +94,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     private void updatePlayerSkills() {
         for (int i = 0; i < len; i++) {
            player.getSkills().get(i).setValue(skillPointArray[i]);
-       } 
+       }
     }
 
     @Override
@@ -174,7 +174,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         pointLabelArray[index].setText(Integer.toString(points));
     }
 
-    // Helper method which updates a selected progress 
+    // Helper method which updates a selected progress
     private void updateProgressBar(int index, int points) {
         barsArray[index].setProgress((float)points / barMax);
         updateTotalDisplays();
@@ -207,7 +207,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         System.out.println(closingMessage.toString());
         GameModel.setPlayer(player);
         GameModel.generateSystems();
-        
+
         parentController.setScreen("UniverseMap");
     }
     @FXML
