@@ -1,5 +1,6 @@
 package spacetrader.items;
 
+import java.io.Serializable;
 import javafx.scene.paint.Color;
 import spacetrader.ui.SerializableColor;
 
@@ -7,7 +8,7 @@ import spacetrader.ui.SerializableColor;
  *
  * @author Purcell7
  */
-public class Weapon{
+public class Weapon implements Serializable {
     private WeaponType type;
     private int damage;
     private int rateOfFire;
