@@ -311,9 +311,20 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             shopForPartsButton.setText("Shop for Ships");   
             initializeGadgets();
         } else{
-            shipPane.setVisible(true);
-            gadgetPane.setVisible(false);
-            shopForPartsButton.setText("ShopForParts");
+            int engineCount = 0;
+            for(Engine engine : player.getShip().getEngines()){
+                if(engine != null){
+                    engineCount++;
+                }
+            }
+            if(engineCount > 0){
+                shipPane.setVisible(true);
+                gadgetPane.setVisible(false);
+                shopForPartsButton.setText("Shop for Parts");
+            } else {
+                shipDialogueField.setText("Hey buddy, I can't let you leave with no engine");
+                viewEngines(new ActionEvent());
+            }
         }
     }
     
@@ -587,12 +598,14 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         if(currentGadgetType == "My Weapon"){
             System.out.println("SELLING Weapon");
             player.addMoney(selectedWeapon.getType().cost / 2);
+            shipDialogueField.setText("Weapon sold for " + selectedWeapon.getType().cost / 2);
             player.getShip().removeWeapon(gadgetIndex);
             updatePlayerWeapons();
             gadgetIndex = -1;
             currentGadgetType = "None";
         } else if(currentGadgetType == "My Shield"){
             System.out.println("SELLING shield");
+            shipDialogueField.setText("Shield sold for " + selectedShield.getType().cost / 2);
             player.addMoney(selectedShield.getType().cost / 2);
             player.getShip().removeShield(gadgetIndex);
             updatePlayerShields();
@@ -601,6 +614,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         } else if(currentGadgetType == "My Engine"){
             System.out.println("SELLING engine");
             player.addMoney(selectedEngine.getType().cost / 2);
+            shipDialogueField.setText("Engine sold for " + selectedEngine.getType().cost / 2);
             player.getShip().removeEngine(gadgetIndex);
             updatePlayerEngines();
             gadgetIndex = -1;
