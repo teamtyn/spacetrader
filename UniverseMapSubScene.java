@@ -7,7 +7,6 @@ import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.AmbientLight;
-import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
@@ -19,7 +18,6 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.CullFace;
 import javafx.scene.shape.MeshView;
-import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.Sphere;
 import javafx.scene.shape.TriangleMesh;
 import javafx.util.Duration;
@@ -150,22 +148,22 @@ public class UniverseMapSubScene {
             toPlanet.stop();
         }
         
-        topXform.rz.angleProperty().unbind();
+        topXform.rzProperty().unbind();
         toUniverse = new Timeline(
             new KeyFrame(Duration.seconds(2),
-                new KeyValue(baseXform.t.xProperty(), 0),
-                new KeyValue(baseXform.t.yProperty(), 0),
-                new KeyValue(baseXform.t.zProperty(), 0),
+                new KeyValue(baseXform.xProperty(), 0),
+                new KeyValue(baseXform.yProperty(), 0),
+                new KeyValue(baseXform.zProperty(), 0),
                 
-                new KeyValue(baseXform.rx.angleProperty(), 0),
-                new KeyValue(baseXform.ry.angleProperty(), 0),
-                new KeyValue(baseXform.rz.angleProperty(), 0),
+                new KeyValue(baseXform.rxProperty(), 0),
+                new KeyValue(baseXform.ryProperty(), 0),
+                new KeyValue(baseXform.rzProperty(), 0),
                     
                 new KeyValue(camera.translateZProperty(), -2000),
                 
-                new KeyValue(topXform.rx.angleProperty(), 0),
-                new KeyValue(topXform.ry.angleProperty(), 0),
-                new KeyValue(topXform.rz.angleProperty(), 0)
+                new KeyValue(topXform.rxProperty(), 0),
+                new KeyValue(topXform.ryProperty(), 0),
+                new KeyValue(topXform.rzProperty(), 0)
             )
         );
         toUniverse.play();
@@ -182,25 +180,25 @@ public class UniverseMapSubScene {
             toPlanet.stop();
         }
         
-        topXform.rz.angleProperty().unbind();
+        topXform.rzProperty().unbind();
         toSystem = new Timeline(
             new KeyFrame(Duration.seconds(2),
-                new KeyValue(baseXform.t.xProperty(), 0),
-                new KeyValue(baseXform.t.yProperty(), 0),
-                new KeyValue(baseXform.t.zProperty(), 0),
+                new KeyValue(baseXform.xProperty(), 0),
+                new KeyValue(baseXform.yProperty(), 0),
+                new KeyValue(baseXform.zProperty(), 0),
                 
-                new KeyValue(baseXform.rx.angleProperty(), 0),
-                new KeyValue(baseXform.ry.angleProperty(), 0),
-                new KeyValue(baseXform.rz.angleProperty(), 0),
+                new KeyValue(baseXform.rxProperty(), 0),
+                new KeyValue(baseXform.ryProperty(), 0),
+                new KeyValue(baseXform.rzProperty(), 0),
                     
-                new KeyValue(topXform.t.xProperty(), system.getX()),
-                new KeyValue(topXform.t.yProperty(), system.getY()),
-                new KeyValue(topXform.t.zProperty(), system.getZ()),
+                new KeyValue(topXform.xProperty(), system.getX()),
+                new KeyValue(topXform.yProperty(), system.getY()),
+                new KeyValue(topXform.zProperty(), system.getZ()),
                 new KeyValue(camera.translateZProperty(), -200),
                 
-                new KeyValue(topXform.rx.angleProperty(), system.getRx()),
-                new KeyValue(topXform.ry.angleProperty(), system.getRy()),
-                new KeyValue(topXform.rz.angleProperty(), system.getRz())
+                new KeyValue(topXform.rxProperty(), system.getRx()),
+                new KeyValue(topXform.ryProperty(), system.getRy()),
+                new KeyValue(topXform.rzProperty(), system.getRz())
             )
         );
         toSystem.play();
@@ -217,23 +215,23 @@ public class UniverseMapSubScene {
             toPlanet.stop();
         }
         
-        topXform.rz.angleProperty().unbind();
-        DoubleProperty angleOffset = new SimpleDoubleProperty(topXform.rz.getAngle() - planet.getRz());
-        topXform.rz.angleProperty().bind(planet.getOrbitXform().rz.angleProperty().add(angleOffset));
+        topXform.rzProperty().unbind();
+        DoubleProperty angleOffset = new SimpleDoubleProperty(topXform.getRz() - planet.getRz());
+        topXform.rzProperty().bind(planet.getOrbitXform().rzProperty().add(angleOffset));
         toPlanet = new Timeline(
             new KeyFrame(Duration.seconds(2),
-                new KeyValue(topXform.rx.angleProperty(), system.getRx()),
-                new KeyValue(topXform.ry.angleProperty(), system.getRy()),
+                new KeyValue(topXform.rxProperty(), system.getRx()),
+                new KeyValue(topXform.ryProperty(), system.getRy()),
                 
                 new KeyValue(angleOffset, 0),
-                new KeyValue(baseXform.t.xProperty(), planet.getAxisXform().t.getX()),
-                new KeyValue(baseXform.t.yProperty(), planet.getAxisXform().t.getY()),
-                new KeyValue(baseXform.t.zProperty(), planet.getAxisXform().t.getZ()),
+                new KeyValue(baseXform.xProperty(), planet.getOffsetX()),
+                new KeyValue(baseXform.yProperty(), planet.getOffsetY()),
+                new KeyValue(baseXform.zProperty(), planet.getOffsetZ()),
                 new KeyValue(camera.translateZProperty(), -13),
                     
-                new KeyValue(baseXform.rx.angleProperty(), 90),
-                new KeyValue(baseXform.ry.angleProperty(), 0),
-                new KeyValue(baseXform.rz.angleProperty(), 0)
+                new KeyValue(baseXform.rxProperty(), 90),
+                new KeyValue(baseXform.ryProperty(), 0),
+                new KeyValue(baseXform.rzProperty(), 0)
             )
         );
         toPlanet.play();

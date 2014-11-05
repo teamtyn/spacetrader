@@ -1,5 +1,6 @@
 package spacetrader;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
@@ -15,16 +16,16 @@ public class Xform extends Group{
         XYZ, XZY, YXZ, YZX, ZXY, ZYX
     }
 
-    public final Translate t  = new Translate();
-    public final Translate p  = new Translate();
-    public final Translate ip = new Translate();
-    public final Rotate rx = new Rotate();
+    private final Translate t  = new Translate();
+    private final Translate p  = new Translate();
+    private final Translate ip = new Translate();
+    private final Rotate rx = new Rotate();
     { rx.setAxis(Rotate.X_AXIS); }
-    public final Rotate ry = new Rotate();
+    private final Rotate ry = new Rotate();
     { ry.setAxis(Rotate.Y_AXIS); }
-    public final Rotate rz = new Rotate();
+    private final Rotate rz = new Rotate();
     { rz.setAxis(Rotate.Z_AXIS); }
-    public final Scale s = new Scale();
+    private final Scale s = new Scale();
 
     public Xform() {
         super();
@@ -67,9 +68,41 @@ public class Xform extends Group{
         t.setY(y);
     }
 
-    public void setTx(double x) { t.setX(x); }
-    public void setTy(double y) { t.setY(y); }
-    public void setTz(double z) { t.setZ(z); }
+    public void setTx(double x) {
+        t.setX(x);
+    }
+    
+    public void setTy(double y) {
+        t.setY(y);
+    }
+    
+    public void setTz(double z) {
+        t.setZ(z);
+    }
+    
+    public double getTx() {
+        return t.getTx();
+    }
+    
+    public double getTy() {
+        return t.getTy();
+    }
+    
+    public double getTz() {
+        return t.getTz();
+    }
+    
+    public DoubleProperty xProperty() {
+        return t.xProperty();
+    }
+    
+    public DoubleProperty yProperty() {
+        return t.yProperty();
+    }
+    
+    public DoubleProperty zProperty() {
+        return t.zProperty();
+    }
 
     public void setRotate(double x, double y, double z) {
         rx.setAngle(x);
@@ -77,12 +110,41 @@ public class Xform extends Group{
         rz.setAngle(z);
     }
 
-//    public void setRotateX(double x) { rx.setAngle(x); }
-//    public void setRotateY(double y) { ry.setAngle(y); }
-//    public void setRotateZ(double z) { rz.setAngle(z); }
-    public void setRx(double x) { rx.setAngle(x); }
-    public void setRy(double y) { ry.setAngle(y); }
-    public void setRz(double z) { rz.setAngle(z); }
+    public void setRx(double x) {
+        rx.setAngle(x);
+    }
+    
+    public void setRy(double y) {
+        ry.setAngle(y);
+    }
+    
+    public void setRz(double z) {
+        rz.setAngle(z);
+    }
+    
+    public double getRx() {
+        return rx.getAngle();
+    }
+    
+    public double getRy() {
+        return ry.getAngle();
+    }
+    
+    public double getRz() {
+        return rz.getAngle();
+    }
+    
+    public DoubleProperty rxProperty() {
+        return rx.angleProperty();
+    }
+    
+    public DoubleProperty ryProperty() {
+        return ry.angleProperty();
+    }
+    
+    public DoubleProperty rzProperty() {
+        return rz.angleProperty();
+    }
 
     public void setScale(double scaleFactor) {
         s.setX(scaleFactor);
@@ -96,17 +158,40 @@ public class Xform extends Group{
         s.setZ(z);
     }
 
-    public void setSx(double x) { s.setX(x); }
-    public void setSy(double y) { s.setY(y); }
-    public void setSz(double z) { s.setZ(z); }
-
-    public void setPivot(double x, double y, double z) {
-        p.setX(x);
-        p.setY(y);
-        p.setZ(z);
-        ip.setX(-x);
-        ip.setY(-y);
-        ip.setZ(-z);
+    public void setSx(double x) {
+        s.setX(x);
+    }
+    
+    public void setSy(double y) {
+        s.setY(y);
+    }
+    
+    public void setSz(double z) {
+        s.setZ(z);
+    }
+    
+    public double getSx() {
+        return s.getX();
+    }
+    
+    public double getSy() {
+        return s.getY();
+    }
+    
+    public double getSz() {
+        return s.getZ();
+    }
+    
+    public DoubleProperty sxProperty() {
+        return s.xProperty();
+    }
+    
+    public DoubleProperty syProperty() {
+        return s.yProperty();
+    }
+    
+    public DoubleProperty szProperty() {
+        return s.zProperty();
     }
 
     public void reset() {
@@ -119,26 +204,5 @@ public class Xform extends Group{
         s.setX(1.0);
         s.setY(1.0);
         s.setZ(1.0);
-        p.setX(0.0);
-        p.setY(0.0);
-        p.setZ(0.0);
-        ip.setX(0.0);
-        ip.setY(0.0);
-        ip.setZ(0.0);
-    }
-
-    public void resetTSP() {
-        t.setX(0.0);
-        t.setY(0.0);
-        t.setZ(0.0);
-        s.setX(1.0);
-        s.setY(1.0);
-        s.setZ(1.0);
-        p.setX(0.0);
-        p.setY(0.0);
-        p.setZ(0.0);
-        ip.setX(0.0);
-        ip.setY(0.0);
-        ip.setZ(0.0);
     }
 }

@@ -79,27 +79,27 @@ public class StarSystemView extends Sphere {
     }
     
     public double getX() {
-        return systemXform.t.getX();
+        return systemXform.getTx();
     }
     
     public double getY() {
-        return systemXform.t.getY();
+        return systemXform.getTy();
     }
     
     public double getZ() {
-        return systemXform.t.getZ();
+        return systemXform.getTz();
     }
     
     public double getRx() {
-        return systemXform.rx.getAngle();
+        return systemXform.getRx();
     }
     
     public double getRy() {
-        return systemXform.ry.getAngle();
+        return systemXform.getRy();
     }
     
     public double getRz() {
-        return systemXform.rz.getAngle();
+        return systemXform.getRz();
     }
     
     public void setLightOn(boolean on) {

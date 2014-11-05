@@ -80,6 +80,18 @@ public class PlanetView extends Sphere {
         return getLocalToSceneTransform().getTx();
     }
     
+    public double getOffsetX() {
+        return axisXform.getTx();
+    }
+    
+    public double getOffsetY() {
+        return axisXform.getTy();
+    }
+    
+    public double getOffsetZ() {
+        return axisXform.getTz();
+    }
+    
     public double getY() {
         return getLocalToSceneTransform().getTy();
     }
@@ -89,24 +101,24 @@ public class PlanetView extends Sphere {
     }
     
     public double getRx() {
-        return orbitXform.rx.getAngle();
+        return orbitXform.getRx();
     }
     
     public double getRy() {
-        return orbitXform.ry.getAngle();
+        return orbitXform.getRy();
     }
     
     public double getRz() {
-        return orbitXform.rz.getAngle();
+        return orbitXform.getRz();
     }
     
     public void expand() {
         Timeline expand = new Timeline(
             new KeyFrame(Duration.seconds(2),
-                new KeyValue(axisXform.t.xProperty(), planet.getOrbitDistance()),
-                new KeyValue(axisXform.s.xProperty(), 1),
-                new KeyValue(axisXform.s.yProperty(), 1),
-                new KeyValue(axisXform.s.zProperty(), 1)
+                new KeyValue(axisXform.xProperty(), planet.getOrbitDistance()),
+                new KeyValue(axisXform.sxProperty(), 1),
+                new KeyValue(axisXform.syProperty(), 1),
+                new KeyValue(axisXform.szProperty(), 1)
             )
         );
         expand.play();
@@ -115,10 +127,10 @@ public class PlanetView extends Sphere {
     public void collapse() {
         Timeline collapse = new Timeline(
             new KeyFrame(Duration.seconds(2),
-                new KeyValue(axisXform.t.xProperty(), 0),
-                new KeyValue(axisXform.s.xProperty(), 0),
-                new KeyValue(axisXform.s.yProperty(), 0),
-                new KeyValue(axisXform.s.zProperty(), 0)
+                new KeyValue(axisXform.xProperty(), 0),
+                new KeyValue(axisXform.sxProperty(), 0),
+                new KeyValue(axisXform.syProperty(), 0),
+                new KeyValue(axisXform.szProperty(), 0)
             )
         );
         collapse.play();
@@ -176,7 +188,7 @@ public class PlanetView extends Sphere {
     }
     
     public void incrementOrbit() {
-        orbitXform.setRz((orbitXform.rz.getAngle() + planet.getOrbitSpeed()) % 360);
+        orbitXform.setRz((orbitXform.getRz() + planet.getOrbitSpeed()) % 360);
         setRotate(getRotate() + 0.1);
     }
     

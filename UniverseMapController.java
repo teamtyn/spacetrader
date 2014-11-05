@@ -27,6 +27,7 @@ import javafx.util.Duration;
 import spacetrader.persist.Persistence;
 import spacetrader.player.Player;
 import spacetrader.star_system.Planet;
+import spacetrader.star_system.Planet.TechLevel;
 import spacetrader.star_system.PlanetView;
 import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemView;
@@ -237,14 +238,14 @@ public class UniverseMapController extends AnimationTimer implements Initializab
             mousePosY = event.getSceneY();
 
             if (selectedPlanet != null) {
-                baseXform.setRz((baseXform.rz.getAngle() + (mousePosX - mouseOldX) / 2) % 360);
-                baseXform.setRx(Math.max(Math.min(baseXform.rx.getAngle() - (mousePosY - mouseOldY) / 2, 180), 0));
+                baseXform.setRz((baseXform.getRz() + (mousePosX - mouseOldX) / 2) % 360);
+                baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY) / 2, 180), 0));
             } else if (selectedSystem != null) {
-                baseXform.setRy((baseXform.ry.getAngle() + (mousePosX - mouseOldX) / 2) % 360);
-                baseXform.setRx(Math.max(Math.min(baseXform.rx.getAngle() - (mousePosY - mouseOldY)/2, 90), -90));
+                baseXform.setRy((baseXform.getRy() + (mousePosX - mouseOldX) / 2) % 360);
+                baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY)/2, 90), -90));
             } else {
-                topXform.setTx(Math.max(Math.min(topXform.t.getX() - (mousePosX - mouseOldX) * 1.5, GameModel.UNIVERSE_WIDTH), 0));
-                topXform.setTy(Math.max(Math.min(topXform.t.getY() - (mousePosY - mouseOldY) * 1.5, GameModel.UNIVERSE_HEIGHT), 0));
+                topXform.setTx(Math.max(Math.min(topXform.getTx() - (mousePosX - mouseOldX) * 1.5, GameModel.UNIVERSE_WIDTH), 0));
+                topXform.setTy(Math.max(Math.min(topXform.getTy() - (mousePosY - mouseOldY) * 1.5, GameModel.UNIVERSE_HEIGHT), 0));
             }
         });
 
@@ -300,7 +301,9 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         if (player.getPlanet() == planet.getPlanet()) {
             travelButton.setText("To Surface");
             marketButton.setDisable(false);
-            spaceStationButton.setDisable(false);
+            if (player.getPlanet().getTechLevel() == TechLevel.HIGHTECH) {
+                spaceStationButton.setDisable(false);
+            }
         } else {
             travelButton.setText("Travel");
         }
