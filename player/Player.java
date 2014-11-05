@@ -24,6 +24,7 @@ public class Player implements Serializable {
         knownPlanets = new ArrayList<>();
         coord = new Point(0, 0);
         ship = new Ship(Ship.ShipType.Gnat, null, null);
+        ship.addEngine(new Engine());
         money = 10000;
     }
 

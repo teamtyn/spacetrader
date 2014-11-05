@@ -2,6 +2,7 @@ package spacetrader.items;
 
 import java.io.Serializable;
 import javafx.scene.paint.Color;
+import spacetrader.items.Engine.EngineType;
 import spacetrader.items.Shield;
 import spacetrader.items.Weapon;
 import spacetrader.ui.SerializableColor;
@@ -14,6 +15,7 @@ public class Ship implements Serializable {
     public ShipType type;
     private final Shield[] shields;
     private final Weapon[] weapons;
+    private final Engine[] engines;
     private final CargoBay cargoBay;
     private EscapePod escapePod;
     private Insurance insurance;
@@ -26,34 +28,34 @@ public class Ship implements Serializable {
      * ShipType contains TYPE(hullStrength, shieldSlots, weaponSlots, cargoBaySlots, fuelCapacity)
      */
     public enum ShipType {
-        //Name      hull  fuelC S  W  C   fuelE cost  color
-        Flea        (10,  30,   0, 0, 10, 30,   100,  Color.BLUE), 
-        Gnat        (100, 100,  0, 1, 15, 10,   200,  Color.RED), 
-        Firefly     (100, 200,  0, 1, 20, 20,   500,  Color.GREEN), 
-        Mosquito    (300, 100,  1, 2, 15, 10,   750,  Color.ORANGE), 
-        Bumblebee   (100, 200,  1, 2, 20, 15,   750,  Color.YELLOW),
-        Beetle      (100, 1000, 1, 0, 50, 5,    1000, Color.PURPLE),
-        Hornet      (400, 100,  2, 3, 20, 15,   1000, Color.BROWN), 
-        Grasshopper (100, 200,  2, 2, 30, 15,   1000, Color.GREY), 
-        Termite     (500, 1000, 3, 1, 60, 5,    5000, Color.WHITE), 
-        Wasp        (500, 300,  2, 4, 35, 20,   5000, Color.ALICEBLUE);
+        //Name      hull  fuelC S  W  C   E     cost  color
+        Flea        (10,  30,   0, 0, 10, 1,   100,  Color.BLUE), 
+        Gnat        (100, 100,  0, 1, 15, 1,   200,  Color.RED), 
+        Firefly     (100, 200,  0, 1, 20, 2,   500,  Color.GREEN), 
+        Mosquito    (300, 100,  1, 2, 15, 2,   750,  Color.ORANGE), 
+        Bumblebee   (100, 200,  1, 2, 20, 2,   750,  Color.YELLOW),
+        Beetle      (100, 1000, 1, 0, 50, 3,   1000, Color.PURPLE),
+        Hornet      (400, 100,  2, 3, 20, 3,   1000, Color.BROWN), 
+        Grasshopper (100, 200,  2, 2, 30, 3,   1000, Color.GREY), 
+        Termite     (500, 1000, 3, 1, 60, 4,   5000, Color.WHITE), 
+        Wasp        (500, 300,  2, 4, 35, 4,   5000, Color.ALICEBLUE);
 
         private int hullStrength;
         private final double fuelCapacity;
-        private int shieldSlots;
         private int weaponSlots;
+        private int shieldSlots;
+        private int engineSlots;
         private int cargoBaySlots;
-        private final double fuelEfficiency;
         private final int cost;
         private final SerializableColor color;
 
-        ShipType(int hullStrength, double fuelCapacity, int shieldSlots, int weaponSlots, int cargoBaySlots, double fuelEfficiency, int cost, Color color) {
+        ShipType(int hullStrength, double fuelCapacity, int shieldSlots, int weaponSlots, int cargoBaySlots, int engineSlots, int cost, Color color) {
             this.hullStrength = hullStrength;
             this.fuelCapacity = fuelCapacity;
             this.shieldSlots = shieldSlots;
             this.weaponSlots = weaponSlots;
             this.cargoBaySlots = cargoBaySlots;
-            this.fuelEfficiency = fuelEfficiency;
+            this.engineSlots = engineSlots;
             this.cost = cost;
             this.color = new SerializableColor(color);
         }
@@ -69,6 +71,7 @@ public class Ship implements Serializable {
         this.type = type;
         shields = new Shield[type.shieldSlots];
         weapons = new Weapon[type.weaponSlots];
+        engines = new Engine[type.engineSlots];
         cargoBay = new CargoBay(type.cargoBaySlots);
         hull = type.hullStrength;
         fuel = 0;
@@ -94,6 +97,16 @@ public class Ship implements Serializable {
         for (int i=0; i<weapons.length; i++) {
             if (weapons[i] == null && !success) {
                 weapons[i] = newWeapon;
+                success = true;
+            }
+        }
+        return success;
+    }
+    public boolean addEngine(Engine newEngine) {
+        boolean success = false;
+        for (int i=0; i<engines.length; i++) {
+            if (engines[i] == null && !success) {
+                engines[i] = newEngine;
                 success = true;
             }
         }
@@ -130,7 +143,15 @@ public class Ship implements Serializable {
             weapons[position] = null;
         }
         return removed;
-    }   
+    }
+    public Engine removeEngine(int position) {
+        Engine removed = null;
+        if (position < engines.length) {
+            removed = engines[position];
+            engines[position] = null;
+        }
+        return removed;
+    }  
     public EscapePod removeEscapePod() {
         EscapePod removed = escapePod;
         escapePod = null;
@@ -155,6 +176,12 @@ public class Ship implements Serializable {
     public int getWeaponSlots() {
         return weapons.length;
     }
+    public Engine[] getEngines() {
+        return engines;
+    }
+    public int getEngineSlots() {
+        return engines.length;
+    }
     public CargoBay getCargoBay() {
         return cargoBay;
     }
@@ -177,13 +204,17 @@ public class Ship implements Serializable {
         return type.fuelCapacity;
     }
     public double getFuelEfficiency() {
-        return type.fuelEfficiency;
+        double fuelEfficiency = 0;
+        for (Engine engine : engines){
+            fuelEfficiency += engine.getFuelEfficiency();
+        }
+        return fuelEfficiency;
     }
     public double getMissingFuel() {
         return type.fuelCapacity - fuel;
     }
     public int getRange() {
-        return (int)(fuel * type.fuelEfficiency);
+        return (int)(fuel * getFuelEfficiency());
     }
 
     // Other functionality
@@ -191,7 +222,7 @@ public class Ship implements Serializable {
     public boolean travelDistance(int distance) {
         boolean success = false;
         if (distance <= getRange()) {
-            fuel = fuel - distance / type.fuelEfficiency;
+            fuel = fuel - distance / getFuelEfficiency();
             success = true;
         }
         return success;

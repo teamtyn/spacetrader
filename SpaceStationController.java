@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import spacetrader.items.*;
+import spacetrader.items.Engine.EngineType;
 import spacetrader.items.Shield.ShieldType;
 import spacetrader.items.Ship.ShipType;
 import spacetrader.items.Weapon.WeaponType;
@@ -53,26 +54,28 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     @FXML private Pane otherShipPicturePane;
     @FXML private Label hullStrength;
     @FXML private Label fuelCapacity;
-    @FXML private Label shieldSlots;
     @FXML private Label weaponSlots;
+    @FXML private Label shieldSlots;
+    @FXML private Label engineSlots;
     @FXML private Label cargoBaySlots;
-    @FXML private Label fuelEfficiency;
     @FXML private Label shipCost;
 
     @FXML private Pane myShipPicturePane;
     @FXML private Label myHullStrength;
     @FXML private Label myFuelCapacity;
-    @FXML private Label myShieldSlots;
     @FXML private Label myWeaponSlots;
+    @FXML private Label myShieldSlots;
+    @FXML private Label myEngineSlots;
     @FXML private Label myCargoBaySlots;
-    @FXML private Label myFuelEfficiency;
     @FXML private Label myShipValue;
     
     @FXML private Pane gadgetShipViewer;
     @FXML private VBox gadgetWeaponsViewer;
     @FXML private VBox gadgetShieldsViewer;
+    @FXML private VBox gadgetEnginesViewer;
     @FXML private Button gadgetWeaponsButton;
     @FXML private Button gadgetShieldsButton;
+    @FXML private Button gadgetEnginessButton;
     @FXML private Pane gadgetDetailsPane;
     @FXML private VBox gadgetList;
     @FXML private Button gadgetBuyButton;
@@ -95,7 +98,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     private String currentGadgetType;
     private Weapon selectedWeapon;
     private Shield selectedShield;
-    
+    private Engine selectedEngine;
+    private int gadgetIndex;
     
 
     /**
@@ -118,10 +122,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     public void myShipStats() {
         myHullStrength.setText(Integer.toString(myShip.getHull()));
         myFuelCapacity.setText(Double.toString(myShip.getFuelCapacity()));
-        myShieldSlots.setText(Integer.toString(myShip.getShieldSlots()));
         myWeaponSlots.setText(Integer.toString(myShip.getWeaponSlots()));
+        myShieldSlots.setText(Integer.toString(myShip.getShieldSlots()));
+        myEngineSlots.setText(Integer.toString(myShip.getWeaponSlots()));
         myCargoBaySlots.setText(Integer.toString(myShip.getCargoBaySlots()));
-        myFuelEfficiency.setText(Double.toString(myShip.getFuelEfficiency()));
         myShipValue.setText(Integer.toString(myShip.type.getCost()));
         myShipPicturePane.getChildren().removeAll();
         Rectangle myShipPicture = new Rectangle(100, 10, 100, 100);
@@ -137,10 +141,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         otherShipLabel.setText(otherShip.type.name());
         hullStrength.setText(Integer.toString(otherShip.getHull()));
         fuelCapacity.setText(Double.toString(otherShip.getFuelCapacity()));
-        shieldSlots.setText(Integer.toString(otherShip.getShieldSlots()));
         weaponSlots.setText(Integer.toString(otherShip.getWeaponSlots()));
+        shieldSlots.setText(Integer.toString(otherShip.getShieldSlots()));
+        engineSlots.setText(Integer.toString(otherShip.getEngineSlots()));
         cargoBaySlots.setText(Integer.toString(otherShip.getCargoBaySlots()));
-        fuelEfficiency.setText(Double.toString(otherShip.getFuelEfficiency()));
         otherShipPicturePane.getChildren().removeAll();
         Rectangle otherShipPicture = new Rectangle(100, 10, 100, 100);
         otherShipPicture.setFill(otherShip.type.getColor());
@@ -189,11 +193,51 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         otherShip.addEscapePod(player.getShip().getEscapePod());
         otherShip.addInsurance(player.getShip().getInsurance());
         // TODO: 
-        for (Shield shield: player.getShip().getShields()) {
-            otherShip.addShield(shield);
+        int i=0;
+        for (; i < player.getShip().getWeapons().length; i++) {
+            if(otherShip.addWeapon(player.getShip().getWeapons()[i])){
+                player.getShip().removeWeapon(i);
+            }
         }
-        for (Weapon weapon: player.getShip().getWeapons()) {
-            otherShip.addWeapon(weapon);
+        for(Weapon weapon : player.getShip().getWeapons()){
+            if(weapon != null){
+                player.addMoney(weapon.getType().cost / 2);
+                System.out.println("Excess weapon sold for: " + weapon.getType().cost / 2);
+            }
+        }
+        i=0;
+        for (; i < player.getShip().getShields().length; i++) {
+            if(otherShip.addShield(player.getShip().getShields()[i])){
+                player.getShip().removeShield(i);
+            }
+        }
+        for(Shield shield : player.getShip().getShields()){
+            if(shield != null){
+                player.addMoney(shield.getType().cost / 2);
+                System.out.println("Excess shield sold for: " + shield.getType().cost / 2);
+            }
+        }
+        i=0;
+        for (; i < player.getShip().getEngines().length; i++) {
+            if(otherShip.addEngine(player.getShip().getEngines()[i])){
+                player.getShip().removeEngine(i);
+            }
+        }
+        for(Engine engine : player.getShip().getEngines()){
+            if(engine != null){
+                player.addMoney(engine.getType().cost / 2);
+                System.out.println("Excess weapon sold for: " + engine.getType().cost / 2);
+            }
+        }
+        boolean hasEngine = false; 
+        for(Engine engine : otherShip.getEngines()){
+            if(engine != null){
+                hasEngine = true;
+            }
+        }
+        if(!hasEngine){
+            System.out.println("Complimentary engine yay");
+            otherShip.addEngine(new Engine(EngineType.Hackney));
         }
         HashMap<String, Integer> goods = player.getShip().getCargoBay().getGoods();
         for (String goodName: goods.keySet()) {
@@ -282,11 +326,11 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         
         updatePlayerWeapons();
         updatePlayerShields();
+        updatePlayerEngines();
     }
     
     @FXML
     private void viewWeapons(ActionEvent event) {
-        currentGadgetType = "Weapon";
         gadgetTypeLabel.setText("Weapons");
         gadgetList.getChildren().clear();
         for (WeaponType type: WeaponType.values()) {
@@ -297,10 +341,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                currentGadgetType = "Weapon";
                 selectedWeapon = new Weapon(type);
-                for (Node node: gadgetList.getChildren()) {
-                    node.setStyle("-fx-background-color: #FFFFFF;");
-                }
+                resetSelected();
                 row.setStyle("-fx-background-color: #EEEEEE;");
                 row.setPrefSize(200, 25);
                 row.setLayoutY(mult * 25);
@@ -320,7 +363,6 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     
     @FXML
     private void viewShields(ActionEvent event) {
-        currentGadgetType = "Shield";
         gadgetTypeLabel.setText("Shields");
         gadgetList.getChildren().clear();
         for (ShieldType type: ShieldType.values()) {
@@ -331,10 +373,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                currentGadgetType = "Shield";
                 selectedShield = new Shield(type);
-                for (Node node: gadgetList.getChildren()) {
-                    node.setStyle("-fx-background-color: #FFFFFF;");
-                }
+                resetSelected();
                 row.setStyle("-fx-background-color: #EEEEEE;");
                 row.setPrefSize(200, 25);
                 row.setLayoutY(mult * 25);
@@ -352,6 +393,38 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         }
     }
     
+    @FXML
+    private void viewEngines(ActionEvent event) {
+        gadgetTypeLabel.setText("Engines");
+        gadgetList.getChildren().clear();
+        for (EngineType type: EngineType.values()) {
+            int mult = type.ordinal();
+            HBox row = new HBox();
+            Label label = new Label(type.name());
+            label.setPrefSize(200, 25);
+            label.setAlignment(Pos.CENTER);
+            row.getChildren().add(label);
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                currentGadgetType = "Engine";
+                selectedEngine = new Engine(type);
+                resetSelected();
+                row.setStyle("-fx-background-color: #EEEEEE;");
+                row.setPrefSize(200, 25);
+                row.setLayoutY(mult * 25);
+                gadgetNameLabel1.setText("Acceleration ");
+                gadgetNameLabel2.setText("Fuel Efficiency");
+                gadgetValueLabel1.setText("" + selectedEngine.getType().acceleration);
+                gadgetValueLabel2.setText("" + selectedEngine.getType().fuelEfficiency);
+                gadgetCostLabel.setText("" + selectedEngine.getType().cost);
+                gadgetPicture.getChildren().clear();
+                Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                myGadgetPicture.setFill(selectedEngine.getType().color.getColor());
+                gadgetPicture.getChildren().add(myGadgetPicture);
+            });
+            gadgetList.getChildren().add(row);
+        }
+    }
+    
     private void updatePlayerWeapons(){
         gadgetWeaponsViewer.getChildren().clear();
         for (Weapon weapon: player.getShip().getWeapons()) {
@@ -359,6 +432,22 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if(weapon != null){
                 label = new Label(weapon.getName());
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                    currentGadgetType = "My Weapon";
+                    selectedWeapon = weapon;
+                    resetSelected();
+                    row.setStyle("-fx-background-color: #EEEEEE;");
+                    gadgetNameLabel1.setText("Damage ");
+                    gadgetNameLabel2.setText("Rate of Fire");
+                    gadgetValueLabel1.setText("" + selectedWeapon.getType().damage);
+                    gadgetValueLabel2.setText("" + selectedWeapon.getType().rateOfFire);
+                    gadgetCostLabel.setText("" + (selectedWeapon.getType().cost / 2));
+                    gadgetPicture.getChildren().clear();
+                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                    myGadgetPicture.setFill(selectedWeapon.getType().color.getColor());
+                    gadgetPicture.getChildren().add(myGadgetPicture);
+                    gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                });
             } else {
                 label = new Label("Empty slot");
             }
@@ -377,16 +466,80 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if(shield != null){
                 label = new Label(shield.getName());
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                    currentGadgetType = "My Shield";
+                    selectedShield = shield;
+                    resetSelected();
+                    row.setStyle("-fx-background-color: #EEEEEE;");
+                    gadgetNameLabel1.setText("Strength ");
+                    gadgetNameLabel2.setText("Recharge Rate");
+                    gadgetValueLabel1.setText("" + selectedShield.getStrength());
+                    gadgetValueLabel2.setText("" + selectedShield.getRechargeRate());
+                    gadgetCostLabel.setText("" + (selectedShield.getType().cost / 2));
+                    gadgetPicture.getChildren().clear();
+                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                    myGadgetPicture.setFill(selectedShield.getType().color.getColor());
+                    gadgetPicture.getChildren().add(myGadgetPicture);
+                    gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                });
+            } else {
+                label = new Label("Empty slot");
+            }
+            label.setPrefSize(200, 25);
+            label.setAlignment(Pos.CENTER);
+            row.getChildren().add(label);         
+            gadgetShieldsViewer.getChildren().add(row);
+        }
+    }
+    
+    private void updatePlayerEngines(){
+        gadgetEnginesViewer.getChildren().clear();
+        for (Engine engine: player.getShip().getEngines()) {
+            HBox row = new HBox();
+            Label label;
+            if(engine != null){
+                label = new Label(engine.getName());
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                    currentGadgetType = "My Engine";
+                    selectedEngine = engine;
+                    resetSelected();
+                    row.setStyle("-fx-background-color: #EEEEEE;");
+                    gadgetNameLabel1.setText("Acceleration ");
+                    gadgetNameLabel2.setText("Fuel Efficiency");
+                    gadgetValueLabel1.setText("" + selectedEngine.getAcceleration());
+                    gadgetValueLabel2.setText("" + selectedEngine.getFuelEfficiency());
+                    gadgetCostLabel.setText("" + (selectedEngine.getType().cost / 2));
+                    gadgetPicture.getChildren().clear();
+                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                    myGadgetPicture.setFill(selectedEngine.getType().color.getColor());
+                    gadgetPicture.getChildren().add(myGadgetPicture);
+                    gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                });
             } else {
                 label = new Label("Empty slot");
             }
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            gadgetShieldsViewer.getChildren().add(row);
+            gadgetEnginesViewer.getChildren().add(row);
         }
     }
 
+    private void resetSelected(){
+        for (Node node: gadgetList.getChildren()) {
+            node.setStyle("-fx-background-color: #FFFFFF;");
+        }
+        for (Node node: gadgetWeaponsViewer.getChildren()) {
+            node.setStyle("-fx-background-color: #FFFFFF;");
+        }
+        for (Node node: gadgetShieldsViewer.getChildren()) {
+            node.setStyle("-fx-background-color: #FFFFFF;");
+        }
+        for (Node node: gadgetEnginesViewer.getChildren()) {
+            node.setStyle("-fx-background-color: #FFFFFF;");
+        }
+    }
+    
     @FXML
     private void buyShipButtonAction(ActionEvent event) {
         if (confirmationField.getText().trim().equals(Integer.toString(otherShip.type.getCost()))) {
@@ -418,7 +571,44 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             } else {
                 shipDialogueField.setText("Please confirm the price of your new shield.");
             }
+        } else if(currentGadgetType == "Engine"){
+            if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedEngine.getType().cost))) {
+                shipDialogueField.setText("");
+                confirmationGadgetField.setText("");
+                buyEngine();
+            } else {
+                shipDialogueField.setText("Please confirm the price of your new engine.");
+            }
         }
+    }
+    
+     @FXML
+    private void sellGadgetButtonAction(ActionEvent event) {
+        if(currentGadgetType == "My Weapon"){
+            System.out.println("SELLING Weapon");
+            player.addMoney(selectedWeapon.getType().cost / 2);
+            player.getShip().removeWeapon(gadgetIndex);
+            updatePlayerWeapons();
+            gadgetIndex = -1;
+            currentGadgetType = "None";
+        } else if(currentGadgetType == "My Shield"){
+            System.out.println("SELLING shield");
+            player.addMoney(selectedShield.getType().cost / 2);
+            player.getShip().removeShield(gadgetIndex);
+            updatePlayerShields();
+            gadgetIndex = -1;
+            currentGadgetType = "None";
+        } else if(currentGadgetType == "My Engine"){
+            System.out.println("SELLING engine");
+            player.addMoney(selectedEngine.getType().cost / 2);
+            player.getShip().removeEngine(gadgetIndex);
+            updatePlayerEngines();
+            gadgetIndex = -1;
+            currentGadgetType = "None";
+        } else {
+            shipDialogueField.setText("Please select a valid part to sell.");
+        }
+        moneyLabel.setText(Integer.toString(player.getMoney()));
     }
     
     public void buyWeapon(){
@@ -451,6 +641,22 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             shipDialogueField.setText("Not enough money");
         }
         updatePlayerShields();
+        moneyLabel.setText(Integer.toString(player.getMoney()));
+    }
+    
+    public void buyEngine(){
+        if(player.getMoney() >= selectedEngine.getType().cost){
+            player.subtractMoney(selectedEngine.getType().cost);
+            if(player.getShip().addEngine(selectedEngine)){
+                shipDialogueField.setText("Purchase complete");
+            } else {
+                shipDialogueField.setText("Purchase failed, cost refunded");
+                player.addMoney(selectedEngine.getType().cost);
+            }
+        } else {
+            shipDialogueField.setText("Not enough money");
+        }
+        updatePlayerEngines();
         moneyLabel.setText(Integer.toString(player.getMoney()));
     }
 
