@@ -206,7 +206,9 @@ public class Ship implements Serializable {
     public double getFuelEfficiency() {
         double fuelEfficiency = 0;
         for (Engine engine : engines){
-            fuelEfficiency += engine.getFuelEfficiency();
+            if(engine != null){
+                fuelEfficiency += engine.getFuelEfficiency();
+            }
         }
         return fuelEfficiency;
     }
