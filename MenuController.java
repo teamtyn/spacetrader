@@ -21,7 +21,7 @@ public class MenuController implements Initializable, ControlledScreen {
     @FXML
     private void loadButtonAction(ActionEvent event) {
         if (Persistence.loadGame()) {
-            parentController.setScreen("StarMap");
+            parentController.setScreen("UniverseMap");
         }
     }
 
