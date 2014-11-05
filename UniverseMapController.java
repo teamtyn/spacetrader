@@ -338,9 +338,6 @@ public class UniverseMapController extends AnimationTimer implements Initializab
 
     @FXML
     private void marketButtonAction(ActionEvent event) {
-        if (ScreensController.isInitialized("Market")) {
-            ((MarketController)ScreensController.getController("Market")).display();
-        }
         parentController.setScreen("Market");
     }
 

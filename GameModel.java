@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import javafx.stage.Stage;
+import spacetrader.observer.ObserverRegistry;
 import spacetrader.player.Player;
 import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemNames;
@@ -25,6 +26,7 @@ public class GameModel implements Serializable {
     
     private static GameModel state;
     private static final Random random = new Random();
+    private static final ObserverRegistry observerRegistry = new ObserverRegistry();
     private static Stage stage;
 
     private int day;
@@ -33,6 +35,10 @@ public class GameModel implements Serializable {
 
     private GameModel() {
         // Cannot be instantiated outside of this class
+    }
+
+    public static ObserverRegistry getObserverRegistry() {
+        return observerRegistry;
     }
 
     public static Stage getStage() {

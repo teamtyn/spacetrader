@@ -1,5 +1,6 @@
 package spacetrader;
 
+import spacetrader.observer.Observer;
 import spacetrader.market.MarketPlace;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ import spacetrader.player.Player;
  * FXML Controller for the generation of a market
  * @author Clayton Kucera
  */
-public class MarketController implements Initializable, ControlledScreen {
+public class MarketController implements
+        Initializable, ControlledScreen, Observer<ControlledScreen> {
     @FXML private VBox buyGoodsVBox;
     @FXML private AnchorPane chartPane;
     @FXML private VBox sellGoodsVBox;
@@ -64,6 +66,7 @@ public class MarketController implements Initializable, ControlledScreen {
     @Override
     public void lazyInitialize() {
         player = GameModel.getPlayer();
+        GameModel.getObserverRegistry().registerObserver(this);
         display();
     }
 
@@ -158,6 +161,13 @@ public class MarketController implements Initializable, ControlledScreen {
             market.changeQuantity(good, 1);
         }
         display();
+    }
+
+    @Override
+    public void notifyChange(ControlledScreen changedObject) {
+        if (this.equals(changedObject)) {
+            display();
+        }
     }
 
     /**

@@ -132,6 +132,7 @@ public class ScreensController extends StackPane {
                 if (initialized.put(name, true) == null) {
                     controller.lazyInitialize();
                 }
+                GameModel.getObserverRegistry().notifyChange(controller);
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
                         new KeyFrame(new Duration(1000), (ActionEvent t) -> {
@@ -152,6 +153,7 @@ public class ScreensController extends StackPane {
             } else {
                 setOpacity(0.0);
                 controller.lazyInitialize();
+                GameModel.getObserverRegistry().notifyChange(controller);
                 initialized.put(name, true);
                 getChildren().add(screen); // No one else been displayed, then just show
                 Timeline fadeIn = new Timeline(
