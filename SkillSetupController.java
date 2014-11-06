@@ -89,6 +89,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         setUp();
     }
 
+
     @Override
     public void lazyInitialize() {}
 
@@ -99,6 +100,10 @@ public class SkillSetupController implements Initializable, ControlledScreen {
        }
     }
 
+    /**
+     *
+     * @param parentController
+     */
     @Override
     public void setScreenParent(ScreensController parentController) {
         this.parentController = parentController;

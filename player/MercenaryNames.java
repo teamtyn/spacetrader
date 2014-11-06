@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package spacetrader.player;
 
 import java.util.ArrayList;
@@ -11,8 +5,9 @@ import java.util.List;
 import spacetrader.GameModel;
 
 /**
- *
- * @author Local Clayton
+ * This class contains names for our mercenaries.
+ * 
+ * @author Clayton
  */
 public final class MercenaryNames {
     private static final List<String> names = new ArrayList();
@@ -41,6 +36,10 @@ public final class MercenaryNames {
 
     }
     
+    /**
+     * Returns a randomly selected String name from the names list.
+     * @return the name to be returned
+     */
     public static String getName() {
         return names.get(GameModel.getRandom().nextInt(names.size()));
     }
