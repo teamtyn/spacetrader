@@ -9,10 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.util.ArrayList;
-import static java.util.Arrays.asList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javafx.scene.Node;
 
 /**
@@ -65,6 +65,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     private int totalPts;
     private int len;
     private ScreensController parentController;
+    private List<Skill> skillList;
 
     public SkillSetupController() {
         player = new Player();
@@ -84,6 +85,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         labelArray = new Label[] {skill0, skill1, skill2, skill3, skill4};
         // DO NOT MOVE LEN DECLARATION
         len = labelArray.length;
+        skillList = createSkillList();
         setUp();
     }
 
@@ -93,7 +95,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     // Synchronizes Player's skills with the GUI for skill selection
     private void updatePlayerSkills() {
         for (int i = 0; i < len; i++) {
-           player.getSkills().get(i).setValue(skillPointArray[i]);
+           player.getSkills().get(skillList.get(i).getType()).setValue(skillPointArray[i]);
        }
     }
 
@@ -104,7 +106,6 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     // Initializes the players' skills and the GUI arrays
     private void setUp() {
-        player.setSkillList(createSkillList());
         setUpControls();
     }
 
@@ -140,13 +141,9 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     // Initializes the skills as an ArrayList
     private List<Skill> createSkillList() {
-        Skill intelligence = new Skill("Intelligence");
-        Skill looks = new Skill("Looks");
-        Skill bloodPressure = new Skill("Blood Pressure");
-        Skill intuition = new Skill ("Intuition");
-        Skill luck = new Skill("Luck");
-        List<Skill> skills = new ArrayList<>(asList(intelligence, looks, intuition, bloodPressure, luck));
-        return skills;
+        
+        List<Skill> skillsForNow = new ArrayList(player.getSkills().values());
+        return skillsForNow;
     }
 
     /**
@@ -155,7 +152,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
      */
     private void setUpControls() {
         for(int i = 0; i < len; i++) {
-            labelArray[i].setText(player.getSkills().get(i).getType());
+            labelArray[i].setText(skillList.get(i).getType());
         }
         skillPointArray = new Integer[len];
         for(int i = 0; i < len; i++) {
@@ -200,7 +197,11 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         StringBuilder closingMessage = new StringBuilder();
         closingMessage.append("~~~PLAYER INFORMATION~~~\nNAME: ")
                         .append(player.getName()).append("\nSKILLS: \n");
-        for (Skill skill : player.getSkills()) {
+        
+        Map<String, Skill> skillMap = player.getSkills();
+        Set<String> names = skillMap.keySet();
+        for (String skillName : names) {
+            Skill skill = skillMap.get(skillName);
             closingMessage.append(skill.getType()).append(" - ")
                             .append(skill.getValue()).append("\n");
         }
@@ -220,4 +221,5 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         Node n = (Node)event.getSource();
         subtractFromSkill(minusButtonMap.get(n.getId()));
     }
+
 }

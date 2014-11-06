@@ -1,16 +1,14 @@
 package spacetrader.player;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import spacetrader.items.*;
 import spacetrader.star_system.*;
 import spacetrader.ui.Point;
 
-public class Player implements Serializable {
-    private String name;
+public class Player extends CrewMember {
     private List<Planet> knownPlanets;
-    private List<Skill> skills;
     // Used to determine player's location in the universe as a whole
     private Point coord;
     private StarSystem system;
@@ -19,8 +17,7 @@ public class Player implements Serializable {
     private int money;
 
     public Player() {
-        name = "NoName";
-        skills = new ArrayList<>();
+        super();
         knownPlanets = new ArrayList<>();
         coord = new Point(0, 0);
         ship = new Ship(Ship.ShipType.Gnat, null, null);
@@ -61,17 +58,15 @@ public class Player implements Serializable {
     }
 
     // Setter for the list of skills
-    public void setSkillList(List<Skill> newSkills) {
+    public void setSkillList(Map<String, Skill> newSkills) {
          skills = newSkills;
     }
 
     // Setter for value of a specified skill
     public void setSkill(String type, int value) {
-        for (Skill skill: this.skills) {
-            if (skill.getType().equals(type)) {
-                skill.setValue(value);
-            }
-        }
+        Skill found = skills.get(type);
+        found.setValue(value);
+        skills.put(type, found);
     }
 
     public boolean knowsPlanet(Planet planet) {
@@ -98,21 +93,9 @@ public class Player implements Serializable {
 
     // Increase the level of a skill by the specified value
     public void increaseSkill(String type, int value) {
-        for (Skill skill: this.skills) {
-            if (skill.getType().equals(type)) {
-                skill.increaseValue(value);
-            }
-        }
-    }
-
-    // Getter for name
-    public String getName() {
-        return this.name;
-    }
-
-    // Getter for skills
-    public List<Skill> getSkills() {
-        return this.skills;
+        Skill found = skills.get(type);
+        found.increaseValue(value);
+        skills.put(type, found);
     }
 
     // Getter for money
@@ -147,13 +130,5 @@ public class Player implements Serializable {
         return planet;
     }
 
-    // Getter for an individual skill
-    public Skill getSkill(String type) {
-        for (Skill skill: this.skills) {
-            if (skill.getType().equals(type)) {
-                return skill;
-            }
-        }
-        return null;
-    }
+
 }
