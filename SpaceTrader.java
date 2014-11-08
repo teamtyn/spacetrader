@@ -35,6 +35,7 @@ public class SpaceTrader extends Application {
         mainContainer.loadScreen("UniverseMap", "UniverseMap.fxml");
         mainContainer.loadScreen("Market", "Market.fxml");
         mainContainer.loadScreen("SpaceStation", "SpaceStation.fxml");
+        mainContainer.loadScreen("Encounter", "Encounter.fxml");
         mainContainer.setScreen("Menu");
 
         final Group root = new Group();

@@ -10,7 +10,7 @@ package spacetrader;
  *
  * @author Administrator
  */
-public class PlayerController {
-    private ShipView ship;
-    
+public interface ShipController {
+    public abstract void control();
+    public ShipView getShipView();
 }

@@ -17,8 +17,6 @@ public class Xform extends Group{
     }
 
     private final Translate t  = new Translate();
-    private final Translate p  = new Translate();
-    private final Translate ip = new Translate();
     private final Rotate rx = new Rotate();
     { rx.setAxis(Rotate.X_AXIS); }
     private final Rotate ry = new Rotate();
@@ -37,22 +35,22 @@ public class Xform extends Group{
         // choose the order of rotations based on the rotateOrder
         switch (rotateOrder) {
         case XYZ:
-            getTransforms().addAll(t, p, rz, ry, rx, s, ip);
+            getTransforms().addAll(t, rz, ry, rx, s);
             break;
         case XZY:
-            getTransforms().addAll(t, p, ry, rz, rx, s, ip);
+            getTransforms().addAll(t, ry, rz, rx, s);
             break;
         case YXZ:
-            getTransforms().addAll(t, p, rz, rx, ry, s, ip);
+            getTransforms().addAll(t, rz, rx, ry, s);
             break;
         case YZX:
-            getTransforms().addAll(t, p, rx, rz, ry, s, ip);  // For Camera
+            getTransforms().addAll(t, rx, rz, ry, s);
             break;
         case ZXY:
-            getTransforms().addAll(t, p, ry, rx, rz, s, ip);
+            getTransforms().addAll(t, ry, rx, rz, s);
             break;
         case ZYX:
-            getTransforms().addAll(t, p, rx, ry, rz, s, ip);
+            getTransforms().addAll(t, rx, ry, rz, s);
             break;
         }
     }
