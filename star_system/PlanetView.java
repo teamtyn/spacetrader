@@ -15,7 +15,6 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import spacetrader.Xform;
-import spacetrader.star_system.ColorGradient.ColorScheme;
 import spacetrader.star_system.NoiseGenerator.NoiseMode;
 
 /**
@@ -43,9 +42,8 @@ public class PlanetView extends Sphere {
         PhongMaterial material = new PhongMaterial();
         setMaterial(material);
         
-        ColorScheme[] colorSchemes = ColorScheme.values();
-        ColorGradient colors = new ColorGradient(0.05f, colorSchemes[r.nextInt(colorSchemes.length)]);
-        noise = new NoiseGenerator(r.nextLong(), 0.5, 1, 2, 0.5, 15, NoiseMode.SQUARE, colors);
+        ColorGradient colors = new ColorGradient(planet.getSeaLevel(), planet.getEnvironment());
+        noise = new NoiseGenerator(planet.getSeed(), 0.5, 1, 2, 0.5, 15, NoiseMode.SQUARE, colors);
         noise.initNoiseBuffer(100, 50);
         noise.addOctaves();
         material.setDiffuseMap(noise.getDiffuse());
@@ -75,11 +73,7 @@ public class PlanetView extends Sphere {
     public Xform getAxisXform() {
         return axisXform;
     }
-    
-    public double getX() {
-        return getLocalToSceneTransform().getTx();
-    }
-    
+
     public double getOffsetX() {
         return axisXform.getTx();
     }
@@ -90,6 +84,10 @@ public class PlanetView extends Sphere {
     
     public double getOffsetZ() {
         return axisXform.getTz();
+    }
+    
+    public double getX() {
+        return getLocalToSceneTransform().getTx();
     }
     
     public double getY() {
@@ -189,7 +187,7 @@ public class PlanetView extends Sphere {
     
     public void incrementOrbit() {
         orbitXform.setRz((orbitXform.getRz() + planet.getOrbitSpeed()) % 360);
-        setRotate(getRotate() + 0.1);
+        setRotate(getRotate() + planet.getAxialSpeed());
     }
     
     private class GenerateNoiseService extends Service<Void>{

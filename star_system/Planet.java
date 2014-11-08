@@ -11,28 +11,33 @@ import spacetrader.market.MarketPlace;
  * @author David Purcell
  */
 public class Planet implements Serializable {
-    private final String name;
-    private final double orbitDistance;
-    private final double orbitSpeed;
-    private final double axialTilt;
-    private final Government government;
-
-    public enum TechLevel {PREAGRICULTURAL, AGRICULTURAL,
-                           MEDIEVAL, RENAISSANCE,
-                           EARLYINDUSTRIAL, INDUSTRIAL,
-                           POSTINDUSTRIAL, HIGHTECH};
+    public enum Environment {EARTH, LAVA, ICE, DESERT, ALIEN, ROCKY};
     public enum ResourceLevel {NOSPECIALRESOURCES, MINERALRICH, MINERALPOOR,
                                DESERT, LOTSOFWATER, RICHSOIL,
                                POORSOIL, RICHFAUNA, LIFELESS,
                                WEIRDMUSHROOMS, LOTSOFHERBS,
                                ARTISTIC, WARLIKE};
-    public enum Environment {EARTH, LAVA, ICE, DESERT, ALIEN, ROCKY};
-    private final Circumstance circumstance;
-    private ResourceLevel resourceLevel;
-    private TechLevel techLevel;
-    private Environment environment;
-    private final MarketPlace market;
+    public enum TechLevel {PREAGRICULTURAL, AGRICULTURAL,
+                           MEDIEVAL, RENAISSANCE,
+                           EARLYINDUSTRIAL, INDUSTRIAL,
+                           POSTINDUSTRIAL, HIGHTECH};
+    
     private final double size;
+    private final double orbitDistance;
+    private final double orbitSpeed;
+    private final double axialTilt;
+    private final double axialSpeed;
+    
+    private final long seed;
+    private final float seaLevel;
+
+    private final Environment environment;
+    private final ResourceLevel resourceLevel;
+    private TechLevel techLevel;
+    private Circumstance circumstance;
+    private final Government government;
+    private final String name;
+    private final MarketPlace market;
 
     /**
      * 
@@ -40,8 +45,64 @@ public class Planet implements Serializable {
      * @param size 
      */
     public Planet(double orbitDistance, double size) {
-        resourceLevel = ResourceLevel.values()[
-                GameModel.getRandom().nextInt(ResourceLevel.values().length)];
+        environment = Environment.values()[GameModel.getRandom().nextInt(Environment.values().length)];
+        
+        switch (environment) {
+            case EARTH:
+                seaLevel = 0.1f * GameModel.getRandom().nextFloat() + 0.01f;
+                resourceLevel = choose(
+                    ResourceLevel.MINERALRICH,
+                    ResourceLevel.LOTSOFWATER,
+                    ResourceLevel.RICHSOIL,
+                    ResourceLevel.RICHFAUNA,
+                    ResourceLevel.LOTSOFHERBS);
+                break;
+            case LAVA:
+                seaLevel = 0.07f * GameModel.getRandom().nextFloat() + 0.005f;
+                resourceLevel = choose(
+                    ResourceLevel.NOSPECIALRESOURCES,
+                    ResourceLevel.MINERALRICH,
+                    ResourceLevel.DESERT,
+                    ResourceLevel.RICHSOIL,
+                    ResourceLevel.LIFELESS);
+                break;
+            case ICE:
+                seaLevel = 0.5f * GameModel.getRandom().nextFloat() + 0.01f;
+                resourceLevel = choose(
+                    ResourceLevel.NOSPECIALRESOURCES,
+                    ResourceLevel.LOTSOFWATER,
+                    ResourceLevel.MINERALPOOR,
+                    ResourceLevel.POORSOIL,
+                    ResourceLevel.LIFELESS);
+                break;
+            case DESERT:
+                seaLevel = 0.005f * GameModel.getRandom().nextFloat() + 0.001f;
+                resourceLevel = choose(
+                    ResourceLevel.NOSPECIALRESOURCES,
+                    ResourceLevel.DESERT,
+                    ResourceLevel.POORSOIL,
+                    ResourceLevel.LIFELESS);
+                break;
+            case ALIEN:
+                seaLevel = 0.1f * GameModel.getRandom().nextFloat() + 0.01f;
+                resourceLevel = choose(
+                    ResourceLevel.MINERALRICH,
+                    ResourceLevel.LOTSOFWATER,
+                    ResourceLevel.RICHSOIL,
+                    ResourceLevel.RICHFAUNA,
+                    ResourceLevel.WEIRDMUSHROOMS,
+                    ResourceLevel.LOTSOFHERBS);
+                break;
+            default:
+                seaLevel = 0;
+                resourceLevel = choose(
+                    ResourceLevel.NOSPECIALRESOURCES,
+                    ResourceLevel.MINERALRICH,
+                    ResourceLevel.DESERT,
+                    ResourceLevel.LIFELESS);
+                break;
+        }
+
         techLevel = TechLevel.values()[
                 GameModel.getRandom().nextInt(TechLevel.values().length)];
         circumstance = new Circumstance();
@@ -50,18 +111,26 @@ public class Planet implements Serializable {
         government = new Government();
         name = PlanetNames.getName(government);
         market = new MarketPlace(this);
+        
         axialTilt = 45 * GameModel.getRandom().nextDouble();
+        axialSpeed = 0.15 * GameModel.getRandom().nextDouble() + 0.05;
         orbitSpeed = Math.sqrt(1 / (20 * orbitDistance));
+        
+        seed = GameModel.getRandom().nextLong();
     }
-
+    
+    private <T> T choose(T ... values) {
+        return values[GameModel.getRandom().nextInt(values.length)];
+    }
+    
     /**
      * 
      * @return 
      */
-    public MarketPlace getMarket() {
-        return market;
+    public double getSize() {
+        return size;
     }
-
+    
     /**
      * 
      * @return 
@@ -69,7 +138,7 @@ public class Planet implements Serializable {
     public double getOrbitDistance(){
         return orbitDistance;
     }
-
+    
     /**
      * 
      * @return 
@@ -85,13 +154,17 @@ public class Planet implements Serializable {
     public double getAxialTilt() {
         return axialTilt;
     }
-
-    /**
-     * 
-     * @return 
-     */
-    public double getSize() {
-        return size;
+    
+    public double getAxialSpeed() {
+        return axialSpeed;
+    }
+    
+    public long getSeed() {
+        return seed;
+    }
+    
+    public float getSeaLevel() {
+        return seaLevel;
     }
 
     /**
@@ -108,6 +181,10 @@ public class Planet implements Serializable {
      */
     public Government getGovernment() {
         return government;
+    }
+    
+    public Environment getEnvironment() {
+        return environment;
     }
 
     /**
@@ -149,13 +226,13 @@ public class Planet implements Serializable {
     public Circumstance getCircumstance() {
         return circumstance;
     }
-
+    
     /**
      * 
-     * @param resourceLevel 
+     * @return 
      */
-    public void setResourceLevel(ResourceLevel resourceLevel) {
-        this.resourceLevel = resourceLevel;
+    public MarketPlace getMarket() {
+        return market;
     }
 
     /**

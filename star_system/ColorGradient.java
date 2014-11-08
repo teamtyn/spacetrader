@@ -3,18 +3,18 @@ package spacetrader.star_system;
 import java.util.Random;
 import java.util.TreeMap;
 import javafx.scene.paint.Color;
+import spacetrader.star_system.Planet.Environment;
 
 /**
  *
  * @author Administrator
  */
 public class ColorGradient {
-    public enum ColorScheme {EARTH, LAVA, ICE, DESERT, ALIEN, ROCKY};
     
     private TreeMap<Float, Color> colors;
     private float seaLevel;
     
-    public ColorGradient(float sL, ColorScheme scheme) {
+    public ColorGradient(float sL, Environment scheme) {
         colors = new TreeMap<>();
         seaLevel = sL;
         
@@ -64,10 +64,8 @@ public class ColorGradient {
                 colors.put(1f, Color.rgb(253, 245, 255));
                 break;
             case ROCKY:
-                Random r = new Random();
-                double hue = 360 * r.nextDouble();
-                colors.put(-1f, Color.hsb(hue, 0.2, 0.2));
-                colors.put(1f, Color.hsb(hue, 0.2, 0.7));
+                colors.put(-1f, Color.rgb(51, 32, 20));
+                colors.put(1f, Color.rgb(145, 145, 145));
                 break;
         }
     }
