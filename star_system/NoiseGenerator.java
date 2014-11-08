@@ -193,10 +193,16 @@ public class NoiseGenerator {
     }
     
     public void addOctaves() {
+        boolean cancelled = false;
         float max = 0;
         int octaves = Math.min((int) (Math.log(1 / (baseFreq * 2.0 * Math.PI / width)) / Math.log(lacunarity)), octaveCap);
+        noiseLoop:
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
+                if (Thread.interrupted()) {
+                    cancelled = true;
+                    break noiseLoop;
+                }
                 double normU = i / (double)width;
                 double normV = 1 - (2.0 * j / height);
 
@@ -223,17 +229,25 @@ public class NoiseGenerator {
                 }
             }
         }
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                noiseBuffer[j][i] /= max;
-                switch (mode) {
-                    case NONE: noiseBuffer[j][i] = 0.5f * (1 + noiseBuffer[j][i]);
-                        break;
-                    case SQUARE: noiseBuffer[j][i] = (float) Math.pow(noiseBuffer[j][i], 2);
-                        break;
-                    case CUBE: noiseBuffer[j][i] = 0.5f * (1 + (float) Math.pow(noiseBuffer[j][i], 3));
-                        break;
-                    case ABS: noiseBuffer[j][i] = (float) Math.abs(noiseBuffer[j][i]);
+        
+        if (!cancelled) {
+            normalizeLoop:
+            for (int j = 0; j < height; j++) {
+                for (int i = 0; i < width; i++) {
+                    if (Thread.interrupted()) {
+                        cancelled = true;
+                        break normalizeLoop;
+                    }
+                    noiseBuffer[j][i] /= max;
+                    switch (mode) {
+                        case NONE: noiseBuffer[j][i] = 0.5f * (1 + noiseBuffer[j][i]);
+                            break;
+                        case SQUARE: noiseBuffer[j][i] = (float) Math.pow(noiseBuffer[j][i], 2);
+                            break;
+                        case CUBE: noiseBuffer[j][i] = 0.5f * (1 + (float) Math.pow(noiseBuffer[j][i], 3));
+                            break;
+                        case ABS: noiseBuffer[j][i] = (float) Math.abs(noiseBuffer[j][i]);
+                    }
                 }
             }
         }
@@ -251,11 +265,15 @@ public class NoiseGenerator {
         int heightScaled = (int) Math.ceil((double)height / scaleFactor); 
         WritableImage img = new WritableImage(widthScaled, heightScaled);
         PixelWriter writer = img.getPixelWriter();
-            for (int j = 0; j < heightScaled; j++) {
-                for (int i = 0; i < widthScaled; i++) {
-                    writer.setColor(i, j, colors.getColor(noiseBuffer[j * scaleFactor][i * scaleFactor]));
+        diffuseLoop:
+        for (int j = 0; j < heightScaled; j++) {
+            for (int i = 0; i < widthScaled; i++) {
+                if (Thread.interrupted()) {
+                    break diffuseLoop;
                 }
+                writer.setColor(i, j, colors.getColor(noiseBuffer[j * scaleFactor][i * scaleFactor]));
             }
+        }
         return img;
     }
     
@@ -265,8 +283,12 @@ public class NoiseGenerator {
         }
         WritableImage img = new WritableImage(width, height);
         PixelWriter writer = img.getPixelWriter();
+        normalLoop:
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
+                if (Thread.interrupted()) {
+                    break normalLoop;
+                }
                 double tl = noiseBuffer[(height + j - 1) % height][(width + i - 1) % width];
                 double t = noiseBuffer[(height + j - 1) % height][i];
                 double tr = noiseBuffer[(height + j - 1) % height][(i + 1) % width];

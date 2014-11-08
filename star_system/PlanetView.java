@@ -201,6 +201,11 @@ public class PlanetView extends Sphere {
             return new GenerateNoiseTask(width, height);
         }
         
+        @Override
+        protected void cancelled() {
+            Thread.currentThread().interrupt();
+        }
+        
         private class GenerateNoiseTask extends Task<Void> {
             private final int width;
             private final int height;
@@ -231,6 +236,11 @@ public class PlanetView extends Sphere {
                 return noise.getDiffuse();
             }
         }
+        
+        @Override
+        protected void cancelled() {
+            Thread.currentThread().interrupt();
+        }
     }
     
     private class GenerateNormalService extends Service<Image> {
@@ -239,6 +249,11 @@ public class PlanetView extends Sphere {
         @Override
         protected Task<Image> createTask() {
             return new GenerateNormalTask(intensity);
+        }
+        
+        @Override
+        protected void cancelled() {
+            Thread.currentThread().interrupt();
         }
         
         private class GenerateNormalTask extends Task<Image> {
