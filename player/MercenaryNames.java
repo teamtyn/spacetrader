@@ -6,41 +6,44 @@ import spacetrader.GameModel;
 
 /**
  * This class contains names for our mercenaries.
- * 
+ *
  * @author Clayton
  */
 public final class MercenaryNames {
-    private static final List<String> names = new ArrayList();
+
+    private static final List<String> NAMES = new ArrayList();
+
     static {
-        names.add("Lucjan");
-        names.add("Mikuláš");
-        names.add("Sebastion");
-        names.add("Witold");
-        names.add("Silvester");
-        names.add("Urbain");
-        names.add("Biorr");
-        names.add("Ostrava");
-        names.add("Mścisław");
-        names.add("Eligiusz");
-        names.add("Tomek");
-        names.add("Bolek");
-        names.add("Zygfryd");
-        names.add("Andrzej");
-        names.add("Teofil");
-        names.add("Miloslav");
-        names.add("Borys");
-        names.add("Radko");
-        names.add("Zbygněv");
-        names.add("František");
-        names.add("Roman");
+        NAMES.add("Lucjan");
+        NAMES.add("Mikuláš");
+        NAMES.add("Sebastion");
+        NAMES.add("Witold");
+        NAMES.add("Silvester");
+        NAMES.add("Urbain");
+        NAMES.add("Biorr");
+        NAMES.add("Ostrava");
+        NAMES.add("Mścisław");
+        NAMES.add("Eligiusz");
+        NAMES.add("Tomek");
+        NAMES.add("Bolek");
+        NAMES.add("Zygfryd");
+        NAMES.add("Andrzej");
+        NAMES.add("Teofil");
+        NAMES.add("Miloslav");
+        NAMES.add("Borys");
+        NAMES.add("Radko");
+        NAMES.add("Zbygněv");
+        NAMES.add("František");
+        NAMES.add("Roman");
 
     }
-    
+
     /**
      * Returns a randomly selected String name from the names list.
+     *
      * @return the name to be returned
      */
     public static String getName() {
-        return names.get(GameModel.getRandom().nextInt(names.size()));
+        return NAMES.get(GameModel.getRandom().nextInt(NAMES.size()));
     }
 }

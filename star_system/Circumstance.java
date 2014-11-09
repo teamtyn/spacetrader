@@ -4,20 +4,26 @@ import java.io.Serializable;
 import spacetrader.GameModel;
 
 /**
- * Circumstance has one of a couple predefined types
- *   It also has a current level or severity as well as a maximum level
+ * Circumstance has one of a couple predefined types It also has a current level or severity as well
+ * as a maximum level
+ *
  * @author Ryan Burns
  */
 public class Circumstance implements Serializable {
+
     private final Type type;
     private int curLevel;
     private final int maxLevel;
     private boolean ascending;
-    public enum Type {NONE, DROUGHT, COLD, CROPFAIL, WAR,
-                            BOREDOM, PLAGUE, LACKOFWORKERS};
+
+    public enum Type {
+
+        NONE, DROUGHT, COLD, CROPFAIL, WAR,
+        BOREDOM, PLAGUE, LACKOFWORKERS
+    };
 
     /**
-     * 
+     *
      */
     public Circumstance() {
         type = Type.values()[GameModel.getRandom().nextInt(Type.values().length)];
@@ -27,39 +33,39 @@ public class Circumstance implements Serializable {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public Type getType() {
         return type;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getCurLevel() {
         return curLevel;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getMaxLevel() {
         return maxLevel;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getOrdinality() {
         return type.ordinal();
     }
 
     /**
-     * 
+     *
      */
     public void tickCurLevel() {
         if (ascending) {

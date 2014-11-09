@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader;
 
 import javafx.scene.shape.Mesh;
@@ -13,41 +12,45 @@ import spacetrader.items.Ship;
  *
  * @author Administrator
  */
-public class ControlledShipView extends ShipView{
-    public enum ControlType {PIRATE};
+public class ControlledShipView extends ShipView {
+
+    public enum ControlType {
+
+        PIRATE
+    };
     private ShipController controller;
     private ShipView target;
-    
+
     public ControlledShipView(Mesh model, Ship ship, ControlType type) {
         super(model, ship);
-        
-        switch (type){
+
+        switch (type) {
             case PIRATE:
                 controller = new PirateController(this);
         }
     }
-    
+
     public ShipController getController() {
         return controller;
     }
-    
+
     public ShipView getTarget() {
         return target;
     }
-    
+
     public void setTarget(ShipView t) {
         target = t;
     }
-    
+
     public double distanceToTarget() {
         if (target != null) {
-            return Math.sqrt((getX() - target.getX()) * (getX() - target.getX()) +
-                (getY() - target.getY()) * (getY() - target.getY()));
+            return Math.sqrt((getX() - target.getX()) * (getX() - target.getX())
+                    + (getY() - target.getY()) * (getY() - target.getY()));
         } else {
             return 0.0;
         }
     }
-    
+
     public double angleToTarget() {
         double mag = distanceToTarget();
         if (target != null && mag > 0) {

@@ -7,7 +7,8 @@ import spacetrader.items.*;
 import spacetrader.star_system.*;
 import spacetrader.ui.Point;
 
-public class Player extends CrewMember {
+public class Player extends AbstractCrewMember {
+
     private List<Planet> knownPlanets;
     // Used to determine player's location in the universe as a whole
     private Point coord;
@@ -59,7 +60,7 @@ public class Player extends CrewMember {
 
     // Setter for the list of skills
     public void setSkillList(Map<String, Skill> newSkills) {
-         skills = newSkills;
+        skills = newSkills;
     }
 
     // Setter for value of a specified skill
@@ -73,19 +74,19 @@ public class Player extends CrewMember {
         return knownPlanets.contains(planet);
     }
 
-    public void setShip(Ship ship){
+    public void setShip(Ship ship) {
         this.ship = ship;
     }
-    
+
     // Setter for coordinates
     public void setCoordinates(Point newLoc) {
         coord = newLoc;
     }
-    
+
     public void setSystem(StarSystem system) {
         this.system = system;
     }
-    
+
     public void setPlanet(Planet planet) {
         this.planet = planet;
         knownPlanets.add(planet);
@@ -104,7 +105,7 @@ public class Player extends CrewMember {
     }
 
     // Getter for ship
-    public Ship getShip(){
+    public Ship getShip() {
         return ship;
     }
 
@@ -129,6 +130,5 @@ public class Player extends CrewMember {
     public Planet getPlanet() {
         return planet;
     }
-
 
 }

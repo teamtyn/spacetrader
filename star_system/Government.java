@@ -6,12 +6,17 @@ import spacetrader.GameModel;
 
 /**
  * Government is defined by its type, leader, and level of anger
+ *
  * @author David Purcell
  */
 public class Government implements Serializable {
-    public enum Type {ANARCHY, ARISTOCRACY, CAPITALIST, COMMUNIST,
-                          CORPORATE, DEMOCRACY, FASCIST, MERITOCRACY,
-                          MONARCHY, OLIGARCHY, TECHNOCRACY, THEOCRACY};
+
+    public enum Type {
+
+        ANARCHY, ARISTOCRACY, CAPITALIST, COMMUNIST,
+        CORPORATE, DEMOCRACY, FASCIST, MERITOCRACY,
+        MONARCHY, OLIGARCHY, TECHNOCRACY, THEOCRACY
+    };
     private HashMap<Type, String> leaders;
     private Type type;
     private String leader;
@@ -75,7 +80,7 @@ public class Government implements Serializable {
     @Override
     public String toString() {
         String str = "Government Type: " + type + "\nLeader: " + leader
-                        + "\nAnger Level: " + anger;
+                + "\nAnger Level: " + anger;
         return str;
     }
 

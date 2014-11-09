@@ -8,11 +8,13 @@ import spacetrader.GameModel;
 
 /**
  * Generates planet names based on their original government.
+ *
  * @author Nico de Leon
  */
 public class PlanetNames {
-    private static final EnumMap<Government.Type, List<String>> nameLists =
-        new EnumMap<>(Government.Type.class);
+
+    private static final EnumMap<Government.Type, List<String>> NAME_LISTS
+            = new EnumMap<>(Government.Type.class);
 
     static {
         List<String> anarchicNames = new ArrayList<>();
@@ -28,7 +30,7 @@ public class PlanetNames {
             }
             anarchicNames.add(new String(nameChars));
         }
-        nameLists.put(Government.Type.ANARCHY, anarchicNames);
+        NAME_LISTS.put(Government.Type.ANARCHY, anarchicNames);
 
         List<String> capitalistCorporateNames = new ArrayList<>();
         capitalistCorporateNames.add("Abbott");
@@ -72,15 +74,15 @@ public class PlanetNames {
         capitalistCorporateNames.add("Zimmer");
         capitalistCorporateNames.add("Zoetis");
         Collections.shuffle(capitalistCorporateNames, GameModel.getRandom());
-        nameLists.put(Government.Type.CAPITALIST, capitalistCorporateNames);
-        nameLists.put(Government.Type.CORPORATE, capitalistCorporateNames);
+        NAME_LISTS.put(Government.Type.CAPITALIST, capitalistCorporateNames);
+        NAME_LISTS.put(Government.Type.CORPORATE, capitalistCorporateNames);
     }
 
     public static String getName(Government government) {
         Government.Type governmentType = government.getType();
-        while (nameLists.get(governmentType) == null || nameLists.get(governmentType).isEmpty()) {
+        while (NAME_LISTS.get(governmentType) == null || NAME_LISTS.get(governmentType).isEmpty()) {
             governmentType = Government.Type.values()[GameModel.getRandom().nextInt(Government.Type.values().length)];
         }
-        return nameLists.get(governmentType).remove(0);
+        return NAME_LISTS.get(governmentType).remove(0);
     }
 }

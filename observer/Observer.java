@@ -7,10 +7,11 @@ package spacetrader.observer;
  * @param <T> the type of the changed object to watch for
  */
 public interface Observer<T> {
+
     /**
      * This method is called every time the current object of type T is changed.
      *
      * @param changedObject the new (or modified) T
      */
-    public void notifyChange(T changedObject);
+    void notifyChange(T changedObject);
 }

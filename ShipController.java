@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader;
 
 /**
@@ -11,6 +10,8 @@ package spacetrader;
  * @author Administrator
  */
 public interface ShipController {
-    public abstract void control();
-    public ShipView getShipView();
+
+    abstract void control();
+
+    ShipView getShipView();
 }

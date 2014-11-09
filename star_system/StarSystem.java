@@ -8,9 +8,11 @@ import spacetrader.ui.SerializableColor;
 
 /**
  * StarSystem contains an array of planets, and resides at some coordinates
+ *
  * @author David Purcell
  */
 public class StarSystem implements Serializable {
+
     private final String name;
     private final Point coordinates;
     private final Planet[] planets;
@@ -26,7 +28,7 @@ public class StarSystem implements Serializable {
         setOrbits();
         size = GameModel.getRandom().nextInt(10) + 5;
         // TODO: REMOVE THIS. Leaving in for now because fixing it before demo 7 isn't worth it. -Ryan
-        planets[GameModel.getRandom().nextInt(planets.length-1)].setTechLevel(Planet.TechLevel.HIGHTECH);
+        planets[GameModel.getRandom().nextInt(planets.length - 1)].setTechLevel(Planet.TechLevel.HIGHTECH);
         color = new SerializableColor(Color.rgb(
                 GameModel.getRandom().nextInt(56) + 200,
                 GameModel.getRandom().nextInt(106) + 150,
@@ -45,14 +47,14 @@ public class StarSystem implements Serializable {
         return size;
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return color.getColor();
     }
 
     public final void setOrbits() {
         double minDist = 20;
         double remDist = 80;
-        for(int i = 0; i < planets.length; i++) {
+        for (int i = 0; i < planets.length; i++) {
             double planetSize = 2 * GameModel.getRandom().nextDouble() + 1;
             double offset = (planets.length - i != 0) ? remDist / (2 * (planets.length - i)) : remDist / 2;
             double distance = minDist + planetSize + offset + (offset / 3) * GameModel.getRandom().nextGaussian();
@@ -93,10 +95,10 @@ public class StarSystem implements Serializable {
     public String toString() {
         StringBuilder builder = new StringBuilder("System: ");
         builder.append(name)
-            .append("\nStar System Coordinates:\n")
-            .append(coordinates)
-            .append("\nPlanets: \n");
-        for (Planet planet: planets) {
+                .append("\nStar System Coordinates:\n")
+                .append(coordinates)
+                .append("\nPlanets: \n");
+        for (Planet planet : planets) {
             builder.append(planet).append("\n");
         }
         return builder.toString();

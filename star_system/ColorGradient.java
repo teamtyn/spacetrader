@@ -1,6 +1,5 @@
 package spacetrader.star_system;
 
-import java.util.Random;
 import java.util.TreeMap;
 import javafx.scene.paint.Color;
 import spacetrader.star_system.Planet.Environment;
@@ -10,14 +9,14 @@ import spacetrader.star_system.Planet.Environment;
  * @author Administrator
  */
 public class ColorGradient {
-    
+
     private TreeMap<Float, Color> colors;
     private float seaLevel;
-    
+
     public ColorGradient(float sL, Environment scheme) {
         colors = new TreeMap<>();
         seaLevel = sL;
-        
+
         switch (scheme) {
             case EARTH:
                 colors.put(-1f, Color.rgb(0, 47, 100));
@@ -69,11 +68,11 @@ public class ColorGradient {
                 break;
         }
     }
-    
+
     public void addColor(float value, Color color) {
         colors.put(value, color);
     }
-    
+
     public Color getColor(float value) {
         if (seaLevel > 0 && seaLevel < 1) {
             if (value >= seaLevel) {

@@ -17,41 +17,71 @@ import javafx.scene.Node;
 
 /**
  * FXML Controller class
+ *
  * @author Clayton
  * @version 1.0
  */
 public class SkillSetupController implements Initializable, ControlledScreen {
-    @FXML private Button minus0;
-    @FXML private Button minus1;
-    @FXML private Button minus2;
-    @FXML private Button minus3;
-    @FXML private Button minus4;
-    @FXML private Button plus0;
-    @FXML private Button plus1;
-    @FXML private Button plus2;
-    @FXML private Button plus3;
-    @FXML private Button plus4;
-    @FXML private Label points0;
-    @FXML private Label points1;
-    @FXML private Label points2;
-    @FXML private Label points3;
-    @FXML private Label points4;
-    @FXML private ProgressBar bar0;
-    @FXML private ProgressBar bar1;
-    @FXML private ProgressBar bar2;
-    @FXML private ProgressBar bar3;
-    @FXML private ProgressBar bar4;
-    @FXML private Label skill0;
-    @FXML private Label skill1;
-    @FXML private Label skill2;
-    @FXML private Label skill3;
-    @FXML private Label skill4;
-    @FXML private Label totalLabel;
-    @FXML private ProgressBar totalBar;
-    @FXML private TextField nameField;
+
+    @FXML
+    private Button minus0;
+    @FXML
+    private Button minus1;
+    @FXML
+    private Button minus2;
+    @FXML
+    private Button minus3;
+    @FXML
+    private Button minus4;
+    @FXML
+    private Button plus0;
+    @FXML
+    private Button plus1;
+    @FXML
+    private Button plus2;
+    @FXML
+    private Button plus3;
+    @FXML
+    private Button plus4;
+    @FXML
+    private Label points0;
+    @FXML
+    private Label points1;
+    @FXML
+    private Label points2;
+    @FXML
+    private Label points3;
+    @FXML
+    private Label points4;
+    @FXML
+    private ProgressBar bar0;
+    @FXML
+    private ProgressBar bar1;
+    @FXML
+    private ProgressBar bar2;
+    @FXML
+    private ProgressBar bar3;
+    @FXML
+    private ProgressBar bar4;
+    @FXML
+    private Label skill0;
+    @FXML
+    private Label skill1;
+    @FXML
+    private Label skill2;
+    @FXML
+    private Label skill3;
+    @FXML
+    private Label skill4;
+    @FXML
+    private Label totalLabel;
+    @FXML
+    private ProgressBar totalBar;
+    @FXML
+    private TextField nameField;
 
     private final Map<String, Integer> plusButtonMap = new HashMap<>(5);
-    private final Map<String, Integer> minusButtonMap = new HashMap<>(5);  
+    private final Map<String, Integer> minusButtonMap = new HashMap<>(5);
     public static Player player;
     private Label[] labelArray;
     private Label[] pointLabelArray;
@@ -78,26 +108,26 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     // Initializes the controller class
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        plusButtonArray = new Button[] {plus0, plus1, plus2, plus3, plus4};
-        minusButtonArray = new Button[] {minus0, minus1, minus2, minus3, minus4};
-        pointLabelArray = new Label[] {points0, points1, points2, points3, points4};
-        barsArray = new ProgressBar[] {bar0, bar1, bar2, bar3, bar4};
-        labelArray = new Label[] {skill0, skill1, skill2, skill3, skill4};
+        plusButtonArray = new Button[]{plus0, plus1, plus2, plus3, plus4};
+        minusButtonArray = new Button[]{minus0, minus1, minus2, minus3, minus4};
+        pointLabelArray = new Label[]{points0, points1, points2, points3, points4};
+        barsArray = new ProgressBar[]{bar0, bar1, bar2, bar3, bar4};
+        labelArray = new Label[]{skill0, skill1, skill2, skill3, skill4};
         // DO NOT MOVE LEN DECLARATION
         len = labelArray.length;
         skillList = createSkillList();
         setUp();
     }
 
-
     @Override
-    public void lazyInitialize() {}
+    public void lazyInitialize() {
+    }
 
     // Synchronizes Player's skills with the GUI for skill selection
     private void updatePlayerSkills() {
         for (int i = 0; i < len; i++) {
-           player.getSkills().get(skillList.get(i).getType()).setValue(skillPointArray[i]);
-       }
+            player.getSkills().get(skillList.get(i).getType()).setValue(skillPointArray[i]);
+        }
     }
 
     /**
@@ -129,7 +159,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     // Functions when any minus button is pressed
     private void subtractFromSkill(int index) {
         int skillPoints = skillPointArray[index];
-        if(skillPoints > 0) {
+        if (skillPoints > 0) {
             skillPoints--;
             totalPts--;
         }
@@ -140,30 +170,30 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     // Keeps totalBar and totalLabel up to date
     private void updateTotalDisplays() {
-        totalBar.setProgress((float)(maxPts - totalPts) / maxPts);
+        totalBar.setProgress((float) (maxPts - totalPts) / maxPts);
         totalLabel.setText(Integer.toString(maxPts - totalPts));
     }
 
     // Initializes the skills as an ArrayList
     private List<Skill> createSkillList() {
-        
+
         List<Skill> skillsForNow = new ArrayList(player.getSkills().values());
         return skillsForNow;
     }
 
     /**
-     * Initializes labelArray, skillPointArray, plusButtonMap, minusButtonMap,
-     *   barsArray, totalBar, totalLabel, and pointLabelArray
+     * Initializes labelArray, skillPointArray, plusButtonMap, minusButtonMap, barsArray, totalBar,
+     * totalLabel, and pointLabelArray
      */
     private void setUpControls() {
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             labelArray[i].setText(skillList.get(i).getType());
         }
         skillPointArray = new Integer[len];
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             skillPointArray[i] = avgValue;
         }
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             plusButtonMap.put(plusButtonArray[i].getId(), i);
             minusButtonMap.put(minusButtonArray[i].getId(), i);
             updateProgressBar(i, avgValue);
@@ -178,7 +208,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     // Helper method which updates a selected progress
     private void updateProgressBar(int index, int points) {
-        barsArray[index].setProgress((float)points / barMax);
+        barsArray[index].setProgress((float) points / barMax);
         updateTotalDisplays();
     }
 
@@ -187,11 +217,13 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     private void cancelButtonAction(ActionEvent event) {
         parentController.setScreen("Menu");
     }
+
     @FXML
     private void resetButtonAction(ActionEvent event) {
         nameField.setText("");
         setUpControls();
     }
+
     @FXML
     private void doneButtonAction(ActionEvent event) {
         String name = nameField.getText();
@@ -201,14 +233,14 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         updatePlayerSkills();
         StringBuilder closingMessage = new StringBuilder();
         closingMessage.append("~~~PLAYER INFORMATION~~~\nNAME: ")
-                        .append(player.getName()).append("\nSKILLS: \n");
-        
+                .append(player.getName()).append("\nSKILLS: \n");
+
         Map<String, Skill> skillMap = player.getSkills();
         Set<String> names = skillMap.keySet();
         for (String skillName : names) {
             Skill skill = skillMap.get(skillName);
             closingMessage.append(skill.getType()).append(" - ")
-                            .append(skill.getValue()).append("\n");
+                    .append(skill.getValue()).append("\n");
         }
         System.out.println(closingMessage.toString());
         GameModel.setPlayer(player);
@@ -216,14 +248,16 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
         parentController.setScreen("UniverseMap");
     }
+
     @FXML
     private void plusButtonAction(ActionEvent event) {
-        Node n = (Node)event.getSource();
+        Node n = (Node) event.getSource();
         addToSkill(plusButtonMap.get(n.getId()));
     }
+
     @FXML
     private void minusButtonAction(ActionEvent event) {
-        Node n = (Node)event.getSource();
+        Node n = (Node) event.getSource();
         subtractFromSkill(minusButtonMap.get(n.getId()));
     }
 

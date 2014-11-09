@@ -22,6 +22,7 @@ import spacetrader.star_system.NoiseGenerator.NoiseMode;
  * @author Administrator
  */
 public class PlanetView extends Sphere {
+
     private final Planet planet;
     private final Xform orbitXform;
     private final Xform axisXform;
@@ -29,47 +30,47 @@ public class PlanetView extends Sphere {
     private final GenerateNoiseService generateNoise;
     private final GenerateDiffuseService generateDiffuse;
     private final GenerateNormalService generateNormal;
-    
+
     public PlanetView(Planet planet) {
         super(planet.getSize());
-        
+
         Random r = new Random();
-        
+
         this.planet = planet;
         orbitXform = new Xform();
         axisXform = new Xform();
-        
+
         PhongMaterial material = new PhongMaterial();
         setMaterial(material);
-        
+
         ColorGradient colors = new ColorGradient(planet.getSeaLevel(), planet.getEnvironment());
         noise = new NoiseGenerator(planet.getSeed(), 0.5, 1, 2, 0.5, 15, NoiseMode.SQUARE, colors);
         noise.initNoiseBuffer(100, 50);
         noise.addOctaves();
         material.setDiffuseMap(noise.getDiffuse());
         noise.clearBuffer();
-        
+
         generateNoise = new GenerateNoiseService();
         generateDiffuse = new GenerateDiffuseService();
         generateNormal = new GenerateNormalService();
         initTextures(material);
-        
+
         setRotationAxis(Rotate.Y_AXIS);
         axisXform.setRotate(90 + planet.getAxialTilt(), 0, 360 * r.nextDouble());
         orbitXform.setRz(360 * r.nextDouble());
-        
+
         axisXform.getChildren().add(this);
         orbitXform.getChildren().add(axisXform);
     }
-    
+
     public Planet getPlanet() {
         return planet;
     }
-    
+
     public Xform getOrbitXform() {
         return orbitXform;
     }
-    
+
     public Xform getAxisXform() {
         return axisXform;
     }
@@ -77,86 +78,86 @@ public class PlanetView extends Sphere {
     public double getOffsetX() {
         return axisXform.getTx();
     }
-    
+
     public double getOffsetY() {
         return axisXform.getTy();
     }
-    
+
     public double getOffsetZ() {
         return axisXform.getTz();
     }
-    
+
     public double getX() {
         return getLocalToSceneTransform().getTx();
     }
-    
+
     public double getY() {
         return getLocalToSceneTransform().getTy();
     }
-    
+
     public double getZ() {
         return getLocalToSceneTransform().getTz();
     }
-    
+
     public double getRx() {
         return orbitXform.getRx();
     }
-    
+
     public double getRy() {
         return orbitXform.getRy();
     }
-    
+
     public double getRz() {
         return orbitXform.getRz();
     }
-    
+
     public void expand() {
         Timeline expand = new Timeline(
-            new KeyFrame(Duration.seconds(2),
-                new KeyValue(axisXform.xProperty(), planet.getOrbitDistance()),
-                new KeyValue(axisXform.sxProperty(), 1),
-                new KeyValue(axisXform.syProperty(), 1),
-                new KeyValue(axisXform.szProperty(), 1)
-            )
+                new KeyFrame(Duration.seconds(2),
+                        new KeyValue(axisXform.xProperty(), planet.getOrbitDistance()),
+                        new KeyValue(axisXform.sxProperty(), 1),
+                        new KeyValue(axisXform.syProperty(), 1),
+                        new KeyValue(axisXform.szProperty(), 1)
+                )
         );
         expand.play();
     }
-    
+
     public void collapse() {
         Timeline collapse = new Timeline(
-            new KeyFrame(Duration.seconds(2),
-                new KeyValue(axisXform.xProperty(), 0),
-                new KeyValue(axisXform.sxProperty(), 0),
-                new KeyValue(axisXform.syProperty(), 0),
-                new KeyValue(axisXform.szProperty(), 0)
-            )
+                new KeyFrame(Duration.seconds(2),
+                        new KeyValue(axisXform.xProperty(), 0),
+                        new KeyValue(axisXform.sxProperty(), 0),
+                        new KeyValue(axisXform.syProperty(), 0),
+                        new KeyValue(axisXform.szProperty(), 0)
+                )
         );
         collapse.play();
     }
-    
+
     private void initTextures(PhongMaterial material) {
         generateDiffuse.setOnSucceeded((WorkerStateEvent t) -> {
-            material.setDiffuseMap((Image)t.getSource().getValue());
+            material.setDiffuseMap((Image) t.getSource().getValue());
             generateDiffuse.setExecutor(null);
             if (!generateNormal.isRunning()) {
                 noise.clearBuffer();
             }
         });
-        
+
         generateNormal.setOnSucceeded((WorkerStateEvent t) -> {
-            material.setBumpMap((Image)t.getSource().getValue());
+            material.setBumpMap((Image) t.getSource().getValue());
             generateNormal.setExecutor(null);
             if (!generateDiffuse.isRunning()) {
                 noise.clearBuffer();
             }
         });
     }
-    
+
     public void updateTextures(int width, int height, ExecutorService es) {
         generateNoise.cancel();
         generateDiffuse.cancel();
         generateNormal.cancel();
-        
+
         ExecutorService execute;
         if (es == null) {
             execute = Executors.newSingleThreadExecutor((Runnable runnable) -> {
@@ -167,11 +168,11 @@ public class PlanetView extends Sphere {
         } else {
             execute = es;
         }
-        
+
         generateNoise.setExecutor(execute);
         generateDiffuse.setExecutor(execute);
         generateNormal.setExecutor(execute);
-        
+
         generateNoise.width = width;
         generateNoise.height = height;
         generateNormal.intensity = 7;
@@ -179,18 +180,19 @@ public class PlanetView extends Sphere {
         generateNoise.restart();
         generateDiffuse.restart();
         generateNormal.restart();
-        
+
         if (es == null) {
             execute.shutdown();
         }
     }
-    
+
     public void incrementOrbit() {
         orbitXform.setRz((orbitXform.getRz() + planet.getOrbitSpeed()) % 360);
         setRotate(getRotate() + planet.getAxialSpeed());
     }
-    
-    private class GenerateNoiseService extends Service<Void>{
+
+    private class GenerateNoiseService extends Service<Void> {
+
         int width;
         int height;
 
@@ -198,16 +200,17 @@ public class PlanetView extends Sphere {
         protected Task<Void> createTask() {
             return new GenerateNoiseTask(width, height);
         }
-        
+
         @Override
         protected void cancelled() {
             Thread.currentThread().interrupt();
         }
-        
+
         private class GenerateNoiseTask extends Task<Void> {
+
             private final int width;
             private final int height;
-            
+
             public GenerateNoiseTask(int w, int h) {
                 width = w;
                 height = h;
@@ -221,42 +224,46 @@ public class PlanetView extends Sphere {
             }
         }
     }
-    
+
     private class GenerateDiffuseService extends Service<Image> {
+
         @Override
         protected Task<Image> createTask() {
             return new GenerateDiffuseTask();
         }
-        
+
         private class GenerateDiffuseTask extends Task<Image> {
+
             @Override
             protected Image call() throws Exception {
                 return noise.getDiffuse();
             }
         }
-        
+
         @Override
         protected void cancelled() {
             Thread.currentThread().interrupt();
         }
     }
-    
+
     private class GenerateNormalService extends Service<Image> {
+
         double intensity;
-        
+
         @Override
         protected Task<Image> createTask() {
             return new GenerateNormalTask(intensity);
         }
-        
+
         @Override
         protected void cancelled() {
             Thread.currentThread().interrupt();
         }
-        
+
         private class GenerateNormalTask extends Task<Image> {
+
             private final double intensity;
-            
+
             public GenerateNormalTask(double i) {
                 intensity = i;
             }

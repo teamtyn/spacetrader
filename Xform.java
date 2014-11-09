@@ -10,19 +10,29 @@ import javafx.scene.transform.Translate;
  *
  * @author Administrator
  */
-public class Xform extends Group{
+public class Xform extends Group {
 
     public enum RotateOrder {
+
         XYZ, XZY, YXZ, YZX, ZXY, ZYX
     }
 
-    private final Translate t  = new Translate();
+    private final Translate t = new Translate();
     private final Rotate rx = new Rotate();
-    { rx.setAxis(Rotate.X_AXIS); }
+
+    {
+        rx.setAxis(Rotate.X_AXIS);
+    }
     private final Rotate ry = new Rotate();
-    { ry.setAxis(Rotate.Y_AXIS); }
+
+    {
+        ry.setAxis(Rotate.Y_AXIS);
+    }
     private final Rotate rz = new Rotate();
-    { rz.setAxis(Rotate.Z_AXIS); }
+
+    {
+        rz.setAxis(Rotate.Z_AXIS);
+    }
     private final Scale s = new Scale();
 
     public Xform() {
@@ -34,24 +44,24 @@ public class Xform extends Group{
         super();
         // choose the order of rotations based on the rotateOrder
         switch (rotateOrder) {
-        case XYZ:
-            getTransforms().addAll(t, rz, ry, rx, s);
-            break;
-        case XZY:
-            getTransforms().addAll(t, ry, rz, rx, s);
-            break;
-        case YXZ:
-            getTransforms().addAll(t, rz, rx, ry, s);
-            break;
-        case YZX:
-            getTransforms().addAll(t, rx, rz, ry, s);
-            break;
-        case ZXY:
-            getTransforms().addAll(t, ry, rx, rz, s);
-            break;
-        case ZYX:
-            getTransforms().addAll(t, rx, ry, rz, s);
-            break;
+            case XYZ:
+                getTransforms().addAll(t, rz, ry, rx, s);
+                break;
+            case XZY:
+                getTransforms().addAll(t, ry, rz, rx, s);
+                break;
+            case YXZ:
+                getTransforms().addAll(t, rz, rx, ry, s);
+                break;
+            case YZX:
+                getTransforms().addAll(t, rx, rz, ry, s);
+                break;
+            case ZXY:
+                getTransforms().addAll(t, ry, rx, rz, s);
+                break;
+            case ZYX:
+                getTransforms().addAll(t, rx, ry, rz, s);
+                break;
         }
     }
 
@@ -69,35 +79,35 @@ public class Xform extends Group{
     public void setTx(double x) {
         t.setX(x);
     }
-    
+
     public void setTy(double y) {
         t.setY(y);
     }
-    
+
     public void setTz(double z) {
         t.setZ(z);
     }
-    
+
     public double getTx() {
         return t.getTx();
     }
-    
+
     public double getTy() {
         return t.getTy();
     }
-    
+
     public double getTz() {
         return t.getTz();
     }
-    
+
     public DoubleProperty xProperty() {
         return t.xProperty();
     }
-    
+
     public DoubleProperty yProperty() {
         return t.yProperty();
     }
-    
+
     public DoubleProperty zProperty() {
         return t.zProperty();
     }
@@ -111,35 +121,35 @@ public class Xform extends Group{
     public void setRx(double x) {
         rx.setAngle(x);
     }
-    
+
     public void setRy(double y) {
         ry.setAngle(y);
     }
-    
+
     public void setRz(double z) {
         rz.setAngle(z);
     }
-    
+
     public double getRx() {
         return rx.getAngle();
     }
-    
+
     public double getRy() {
         return ry.getAngle();
     }
-    
+
     public double getRz() {
         return rz.getAngle();
     }
-    
+
     public DoubleProperty rxProperty() {
         return rx.angleProperty();
     }
-    
+
     public DoubleProperty ryProperty() {
         return ry.angleProperty();
     }
-    
+
     public DoubleProperty rzProperty() {
         return rz.angleProperty();
     }
@@ -159,35 +169,35 @@ public class Xform extends Group{
     public void setSx(double x) {
         s.setX(x);
     }
-    
+
     public void setSy(double y) {
         s.setY(y);
     }
-    
+
     public void setSz(double z) {
         s.setZ(z);
     }
-    
+
     public double getSx() {
         return s.getX();
     }
-    
+
     public double getSy() {
         return s.getY();
     }
-    
+
     public double getSz() {
         return s.getZ();
     }
-    
+
     public DoubleProperty sxProperty() {
         return s.xProperty();
     }
-    
+
     public DoubleProperty syProperty() {
         return s.yProperty();
     }
-    
+
     public DoubleProperty szProperty() {
         return s.zProperty();
     }

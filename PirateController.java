@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader;
 
 /**
@@ -11,9 +10,10 @@ package spacetrader;
  * @author Administrator
  */
 public class PirateController implements ShipController {
+
     private ControlledShipView shipView;
     private boolean turning;
-    
+
     public PirateController(ControlledShipView sV) {
         shipView = sV;
     }

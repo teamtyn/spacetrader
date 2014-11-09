@@ -34,9 +34,11 @@ import spacetrader.star_system.StarSystemView;
 
 /**
  * FXML Controller class
+ *
  * @author TYN
  */
 public class UniverseMapController extends AnimationTimer implements Initializable, ControlledScreen {
+
     private Sphere highlighted;
     private StarSystemView selectedSystem;
     private PlanetView selectedPlanet;
@@ -51,18 +53,30 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     private MeshView skybox;
     private Sphere highlight;
 
-    @FXML private Pane subScenePane;
-    @FXML private Pane infoPane;
-    @FXML private Label systemField;
-    @FXML private Label distanceField;
-    @FXML private Label fuelCostField;
-    @FXML private Label planetField;
-    @FXML private Label governmentField;
-    @FXML private Label techLevelField;
-    @FXML private Label environmentField;
-    @FXML private Button travelButton;
-    @FXML private Button marketButton;
-    @FXML private Button spaceStationButton;
+    @FXML
+    private Pane subScenePane;
+    @FXML
+    private Pane infoPane;
+    @FXML
+    private Label systemField;
+    @FXML
+    private Label distanceField;
+    @FXML
+    private Label fuelCostField;
+    @FXML
+    private Label planetField;
+    @FXML
+    private Label governmentField;
+    @FXML
+    private Label techLevelField;
+    @FXML
+    private Label environmentField;
+    @FXML
+    private Button travelButton;
+    @FXML
+    private Button marketButton;
+    @FXML
+    private Button spaceStationButton;
 
     private Timeline hideInfo;
     private Timeline systemInfo;
@@ -79,19 +93,19 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         travelButton.translateYProperty().bind(infoPane.translateYProperty());
 
         hideInfo = new Timeline(
-            new KeyFrame(Duration.seconds(0.1),
-                new KeyValue(infoPane.translateYProperty(), 193)
-            )
+                new KeyFrame(Duration.seconds(0.1),
+                        new KeyValue(infoPane.translateYProperty(), 193)
+                )
         );
         systemInfo = new Timeline(
-            new KeyFrame(Duration.seconds(0.1),
-                new KeyValue(infoPane.translateYProperty(), 128)
-            )
+                new KeyFrame(Duration.seconds(0.1),
+                        new KeyValue(infoPane.translateYProperty(), 128)
+                )
         );
         planetInfo = new Timeline(
-            new KeyFrame(Duration.seconds(0.1),
-                new KeyValue(infoPane.translateYProperty(), 0)
-            )
+                new KeyFrame(Duration.seconds(0.1),
+                        new KeyValue(infoPane.translateYProperty(), 0)
+                )
         );
     }
 
@@ -242,7 +256,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                 baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY) / 2, 180), 0));
             } else if (selectedSystem != null) {
                 baseXform.setRy((baseXform.getRy() + (mousePosX - mouseOldX) / 2) % 360);
-                baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY)/2, 90), -90));
+                baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY) / 2, 90), -90));
             } else {
                 topXform.setTx(Math.max(Math.min(topXform.getTx() - (mousePosX - mouseOldX) * 1.5, GameModel.UNIVERSE_WIDTH), 0));
                 topXform.setTy(Math.max(Math.min(topXform.getTy() - (mousePosY - mouseOldY) * 1.5, GameModel.UNIVERSE_HEIGHT), 0));
@@ -345,7 +359,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     private void spaceStationButtonAction(ActionEvent event) {
         parentController.setScreen("SpaceStation");
     }
-    
+
     @FXML
     private void saveButtonAction(ActionEvent event) {
         Persistence.saveGame();
