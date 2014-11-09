@@ -19,36 +19,109 @@ import javafx.scene.paint.Color;
 public class NoiseGenerator {
 
     public enum NoiseMode {
-
-        NONE, SQUARE, CUBE, ABS
+        /**
+         * Indicates no post processing should be applied.
+         */
+        NONE,
+        /**
+         * Indicates values should follow a quadratic curve.
+         */
+        SQUARE,
+        /**
+         * Indicates values should follow a cubic curve.
+         */
+        CUBE,
+        /**
+         * Indicates values should follow an absolute value curve.
+         */
+        ABS
     };
 
+    /**
+     * Skew factor for simplex.
+     */
     private static final double F3 = 1.0 / 3.0;
+
+    /**
+     * Unskew factor for simplex.
+     */
     private static final double G3 = 1.0 / 6.0;
+    
+    /**
+     * Cached array of possible gradient vectors.
+     */
     private static final Grad[] GTAB = {new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1, -1, 0),
         new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1, 0, -1),
         new Grad(0, 1, 1), new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0, -1, -1)};
+    
+    /**
+     * List of numbers to be shuffled for the permutation table.
+     */
     private static final short[] SUPPLY = new short[256];
-
     static {
         for (int i = 0; i < 256; i++) {
             SUPPLY[i] = (short) i;
         }
     }
 
-    private short[] p = new short[SUPPLY.length];
+    /**
+     * The permutation table used for the noise function.
+     */
     private final short[] perm;
+    
+    /**
+     * The permutation table mod 12.
+     */
     private final short[] permMod12 = new short[512];
+
+    /**
+     * The base frequency used for sampling. 
+     */
     private final double baseFreq;
+    
+    /**
+     * The base amplitude used for sampling.
+     */
     private final double baseAmp;
+    
+    /**
+     * The amount the frequency varies with each octave.
+     */
     private final double lacunarity;
+    
+    /**
+     * The amount the amplitude varies with each octave.
+     */
     private final double gain;
+    
+    /**
+     * The maximum number of octaves.
+     */
     private final int octaveCap;
+    
+    /**
+     * The type of post processing to use.
+     */
     private final NoiseMode mode;
+    
+    /**
+     * The color gradient used for diffuse map generation.
+     */
     private final ColorGradient colors;
 
+    /**
+     * The noise buffer for this noise generator.
+     */
     private float[][] noiseBuffer;
+    
+    /**
+     * The width of the noise buffer.
+     */
     private int width;
+    
+    /**
+     * The height of the noise buffer.
+     */
     private int height;
 
     /**
@@ -211,8 +284,8 @@ public class NoiseGenerator {
 
     /**
      * Initializes the noise buffer given a width and height.
-     * @param width The width of the noise buffer.
-     * @param height The height of the noise buffer.
+     * @param w The width of the noise buffer.
+     * @param h The height of the noise buffer.
      */
     public void initNoiseBuffer(int w, int h) {
         width = w;
