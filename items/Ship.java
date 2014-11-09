@@ -17,8 +17,6 @@ public class Ship implements Serializable {
     private final Weapon[] weapons;
     private final Engine[] engines;
     private final CargoBay cargoBay;
-    private EscapePod escapePod;
-    private Insurance insurance;
     private int hull;
     private int shield;
     private Color color;
@@ -48,7 +46,17 @@ public class Ship implements Serializable {
         private int cargoBaySlots;
         private final int cost;
         private final SerializableColor color;
-
+        /**
+         * Constructor for ShipType
+         * @param hullStrength the hull strength for this type of ship
+         * @param fuelCapacity the fuel capacity for this type of ship
+         * @param shieldSlots the shield slots for this type of ship
+         * @param weaponSlots the weapon slots for this type of ship
+         * @param cargoBaySlots the cargo bay slots for this type of ship
+         * @param engineSlots the engine slots for this type of ship
+         * @param cost the cost for this type of ship
+         * @param color the color used to fill in the square for this ship
+         */
         ShipType(int hullStrength, double fuelCapacity, int shieldSlots, int weaponSlots, int cargoBaySlots, int engineSlots, int cost, Color color) {
             this.hullStrength = hullStrength;
             this.fuelCapacity = fuelCapacity;
@@ -59,15 +67,27 @@ public class Ship implements Serializable {
             this.cost = cost;
             this.color = new SerializableColor(color);
         }
+        /**
+         * Getter for the color of a ship.
+         * @return the color used for this ships rectangle  
+         */
         public Color getColor() {
             return color.getColor();
         }
+        /**
+         * Getter for the cost of a ship.
+         * @return the base cost for this type of ship  
+         */
         public int getCost() {
             return cost;
         }
     };
 
-    public Ship(ShipType type, EscapePod escapePod, Insurance insurance) {
+    /**
+     * Constructor for a Ship
+     * @param type the ShipType that this ship is based on
+     */
+    public Ship(ShipType type) {
         this.type = type;
         shields = new Shield[type.shieldSlots];
         weapons = new Weapon[type.weaponSlots];
@@ -75,13 +95,14 @@ public class Ship implements Serializable {
         cargoBay = new CargoBay(type.cargoBaySlots);
         hull = type.hullStrength;
         fuel = 0;
-        this.escapePod = escapePod;
-        this.insurance = insurance;
         this.shield = 0;
     }
 
-    //Add things to ship
-
+    /**
+     * Adder for a new shield
+     * @param newShield the new shield to be added
+     * @return whether or not the add succeeded
+     */    
     public boolean addShield(Shield newShield) {
         boolean success = false;
         for (int i=0; i<shields.length; i++) {
@@ -92,6 +113,11 @@ public class Ship implements Serializable {
         }
         return success;
     }
+    /**
+     * Adder for a new weapon
+     * @param newWeapon the new weapon to be added
+     * @return whether or not the add succeeded
+     */ 
     public boolean addWeapon(Weapon newWeapon) {
         boolean success = false;
         for (int i=0; i<weapons.length; i++) {
@@ -102,6 +128,11 @@ public class Ship implements Serializable {
         }
         return success;
     }
+    /**
+     * Adder for a new engine
+     * @param newEngine the new engine to be added
+     * @return whether or not the add succeeded
+     */ 
     public boolean addEngine(Engine newEngine) {
         boolean success = false;
         for (int i=0; i<engines.length; i++) {
@@ -112,12 +143,11 @@ public class Ship implements Serializable {
         }
         return success;
     }
-    public void addEscapePod(EscapePod escapePod) {
-        this.escapePod = escapePod;
-    }
-    public void addInsurance(Insurance insurance) {
-        this.insurance = insurance;
-    }
+    /**
+     * Adder for fuel
+     * @param newFuel the amount of fuel to be added
+     * @return the new amount of fuel
+     */ 
     public double addFuel(double newFuel) {
         fuel += newFuel;
         if (fuel > type.fuelCapacity) {
@@ -126,8 +156,11 @@ public class Ship implements Serializable {
         return fuel;
     }
 
-    //Remove things from ship
-  
+    /**
+     * Remover for a shield
+     * @param position the index to be removed from
+     * @return the object that was removed
+     */
     public Shield removeShield(int position) {
         Shield removed = null;
         if (position < shields.length) {
@@ -135,7 +168,12 @@ public class Ship implements Serializable {
             shields[position] = null;
         }
         return removed;
-    }   
+    } 
+    /**
+     * Remover for a weapon
+     * @param position the index to be removed from
+     * @return the object that was removed
+     */
     public Weapon removeWeapon(int position) {
         Weapon removed = null;
         if (position < weapons.length) {
@@ -144,6 +182,11 @@ public class Ship implements Serializable {
         }
         return removed;
     }
+    /**
+     * Remover for a engine
+     * @param position the index to be removed from
+     * @return the object that was removed
+     */
     public Engine removeEngine(int position) {
         Engine removed = null;
         if (position < engines.length) {
@@ -152,57 +195,75 @@ public class Ship implements Serializable {
         }
         return removed;
     }  
-    public EscapePod removeEscapePod() {
-        EscapePod removed = escapePod;
-        escapePod = null;
-        return removed;
-    }
-    public Insurance removeInsurance() {
-        Insurance removed = insurance;
-        insurance = null;
-        return removed;
-    }
-
-    // Getters
+    /**
+     * Getter for shields
+     * @return the shields for this ship
+     */
     public Shield[] getShields() {
         return shields;
     }
+    /**
+     * Getter for shield slots
+     * @return the shield slots for this ship
+     */
     public int getShieldSlots() {
         return shields.length;
     }
+    /**
+     * Getter for weapons
+     * @return the weapons for this ship
+     */
     public Weapon[] getWeapons() {
         return weapons;
     }
     public int getWeaponSlots() {
         return weapons.length;
     }
+    /**
+     * Getter for engines
+     * @return the engines for this ship
+     */
     public Engine[] getEngines() {
         return engines;
     }
     public int getEngineSlots() {
         return engines.length;
     }
+    /**
+     * Getter for Cargo bay
+     * @return the Cargo bay for this ship
+     */
     public CargoBay getCargoBay() {
         return cargoBay;
     }
     public int getCargoBaySlots() {
         return cargoBay.getCapacity();
     }
-    public EscapePod getEscapePod() {
-        return escapePod;
-    }
-    public Insurance getInsurance() {
-        return insurance;
-    }
+    /**
+     * Getter for hull
+     * @return the hull for this ship
+     */
     public int getHull() {
         return hull;
     }
+    /**
+     * Getter for fuel
+     * @return the fuel for this ship
+     */
     public double getFuel() {
         return fuel;
     }
+    /**
+     * Getter for fuel capacity
+     * @return the fuel capacity for this ship
+     */
     public double getFuelCapacity() {
         return type.fuelCapacity;
     }
+    /**
+     * Getter for fuel efficiency
+     * @return the fuel efficiency for this ship
+     */
     public double getFuelEfficiency() {
         double fuelEfficiency = 0;
         for (Engine engine : engines){
@@ -212,24 +273,25 @@ public class Ship implements Serializable {
         }
         return fuelEfficiency;
     }
+    /**
+     * Getter for missing
+     * @return the missing fuel for this ship
+     */
     public double getMissingFuel() {
         return type.fuelCapacity - fuel;
     }
+    /**
+     * Getter for range
+     * @return the range for this ship
+     */
     public int getRange() {
         return (int)(fuel * getFuelEfficiency());
     }
-
-    // Other functionality
-
-    public boolean travelDistance(int distance) {
-        boolean success = false;
-        if (distance <= getRange()) {
-            fuel = fuel - distance / getFuelEfficiency();
-            success = true;
-        }
-        return success;
-    }
-    
+    /**
+     * Do a specified amount of damage to this ship.
+     * @param damage the amount of damage to be done.
+     * @return the remaining hull strength
+     */
     public int takeDamage(int damage) {
         // Shields???
         if (hull - damage >= 0) {

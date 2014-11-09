@@ -20,7 +20,7 @@ public class Player extends CrewMember {
         super();
         knownPlanets = new ArrayList<>();
         coord = new Point(0, 0);
-        ship = new Ship(Ship.ShipType.Gnat, null, null);
+        ship = new Ship(Ship.ShipType.Gnat);
         ship.addEngine(new Engine());
         money = 10000;
     }

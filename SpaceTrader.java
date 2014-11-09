@@ -31,7 +31,6 @@ public class SpaceTrader extends Application {
         GameModel.initialize(stage);
         mainContainer.loadScreen("Menu", "Menu.fxml");
         mainContainer.loadScreen("SkillSetup", "SkillSetup.fxml");
-        //mainContainer.loadScreen("StarMap", "StarMap.fxml");
         mainContainer.loadScreen("UniverseMap", "UniverseMap.fxml");
         mainContainer.loadScreen("Market", "Market.fxml");
         mainContainer.loadScreen("SpaceStation", "SpaceStation.fxml");

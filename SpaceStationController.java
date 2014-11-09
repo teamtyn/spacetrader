@@ -182,7 +182,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         transferParts();
         player.setShip(otherShip);
         myShip = otherShip;
-        otherShip = new Ship(otherShip.type, null, null);
+        otherShip = new Ship(otherShip.type);
     }
 
     /**
@@ -190,8 +190,6 @@ public class SpaceStationController implements Initializable, ControlledScreen {
      * TODO: Account for new ship not being able to fit any of these things, esp. goods
      */
     public void transferParts() {
-        otherShip.addEscapePod(player.getShip().getEscapePod());
-        otherShip.addInsurance(player.getShip().getInsurance());
         // TODO: 
         int i=0;
         for (; i < player.getShip().getWeapons().length; i++) {
@@ -275,7 +273,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
-                otherShip = new Ship(type, null, null);
+                otherShip = new Ship(type);
                 for (Node node: shipList.getChildren()) {
                     node.setStyle("-fx-background-color: #FFFFFF;");
                 }
