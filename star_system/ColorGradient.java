@@ -74,19 +74,20 @@ public class ColorGradient {
     }
 
     public Color getColor(float value) {
+        float height = value;
         if (seaLevel > 0 && seaLevel < 1) {
-            if (value >= seaLevel) {
-                value = (value - seaLevel) / (1 - seaLevel);
+            if (height >= seaLevel) {
+                height = (height - seaLevel) / (1 - seaLevel);
             } else {
-                value = (value - seaLevel) / seaLevel;
+                height = (height - seaLevel) / seaLevel;
             }
         }
-        if (colors.containsKey(value)) {
-            return colors.get(value);
+        if (colors.containsKey(height)) {
+            return colors.get(height);
         } else {
-            float low = colors.floorKey(value);
-            float high = colors.ceilingKey(value);
-            double scalar = (value - low) / (high - low);
+            float low = colors.floorKey(height);
+            float high = colors.ceilingKey(height);
+            double scalar = (height - low) / (high - low);
             return colors.get(low).interpolate(colors.get(high), scalar);
         }
     }

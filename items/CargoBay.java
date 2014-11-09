@@ -41,7 +41,8 @@ public class CargoBay implements Serializable {
      * @param quantity The quantity to be ideally stored in the cargo bay
      * @return The number of goods added
      */
-    public int addTradeGood(String goodName, int quantity) {
+    public int addTradeGood(String goodName, int quantityRequested) {
+        int quantity = quantityRequested;
         if ((quantity + currentSize) > capacity) {
             quantity = capacity - currentSize;
         }
