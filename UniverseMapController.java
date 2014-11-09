@@ -33,7 +33,7 @@ import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemView;
 
 /**
- * FXML Controller class
+ * FXML Controller class.
  *
  * @author TYN
  */
@@ -149,7 +149,8 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     }
 
     /**
-     *
+     * Handles all of the interactions the mouse can have with the
+     * UniverseMap view. Such as clicking on a planet or system.
      */
     public void handleMouse() {
         EventHandler<MouseEvent> bodySelect;
@@ -209,87 +210,87 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         }
 
         subScene.setOnMousePressed((MouseEvent event) -> {
-            mousePosX = event.getSceneX();
-            mousePosY = event.getSceneY();
+                mousePosX = event.getSceneX();
+                mousePosY = event.getSceneY();
 
-            PickResult pickResult = event.getPickResult();
-            if (pickResult != null) {
-                Node intersect = pickResult.getIntersectedNode();
-                if (intersect instanceof StarSystemView) {
-                    StarSystemView system = (StarSystemView) intersect;
-                    if (selectedPlanet == null) {
-                        if (system != selectedSystem) {
-                            if (selectedSystem != null) {
-                                selectedSystem.collapse();
-                                selectedSystem.updateTextures(100, 50);
-                                selectedSystem.setLightOn(false);
+                PickResult pickResult = event.getPickResult();
+                if (pickResult != null) {
+                    Node intersect = pickResult.getIntersectedNode();
+                    if (intersect instanceof StarSystemView) {
+                        StarSystemView system = (StarSystemView) intersect;
+                        if (selectedPlanet == null) {
+                            if (system != selectedSystem) {
+                                if (selectedSystem != null) {
+                                    selectedSystem.collapse();
+                                    selectedSystem.updateTextures(100, 50);
+                                    selectedSystem.setLightOn(false);
+                                }
+                                selectedSystem = system;
+                                selectedSystem.expand();
+                                selectedSystem.updateTextures(1000, 500);
+                                selectedSystem.setLightOn(true);
+                                universeMapSubScene.cameraToSystem(selectedSystem);
                             }
-                            selectedSystem = system;
-                            selectedSystem.expand();
-                            selectedSystem.updateTextures(1000, 500);
-                            selectedSystem.setLightOn(true);
+                        } else if (system == selectedSystem) {
+                            selectedPlanet.updateTextures(1000, 500, null);
+                            selectedPlanet = null;
                             universeMapSubScene.cameraToSystem(selectedSystem);
                         }
-                    } else if (system == selectedSystem) {
-                        selectedPlanet.updateTextures(1000, 500, null);
-                        selectedPlanet = null;
-                        universeMapSubScene.cameraToSystem(selectedSystem);
-                    }
-                } else if (intersect instanceof PlanetView) {
-                    PlanetView planet = (PlanetView) intersect;
-                    if (selectedSystem != null && selectedPlanet == null) {
-                        if (selectedSystem.containsPlanet(planet)) {
-                            selectedPlanet = planet;
-                            selectedPlanet.updateTextures(2000, 1000, null);
-                            universeMapSubScene.cameraToPlanet(selectedSystem, selectedPlanet);
+                    } else if (intersect instanceof PlanetView) {
+                        PlanetView planet = (PlanetView) intersect;
+                        if (selectedSystem != null && selectedPlanet == null) {
+                            if (selectedSystem.containsPlanet(planet)) {
+                                selectedPlanet = planet;
+                                selectedPlanet.updateTextures(2000, 1000, null);
+                                universeMapSubScene.cameraToPlanet(selectedSystem, selectedPlanet);
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
 
         subScene.setOnMouseDragged((MouseEvent event) -> {
-            double mouseOldX = mousePosX;
-            double mouseOldY = mousePosY;
-            mousePosX = event.getSceneX();
-            mousePosY = event.getSceneY();
+                double mouseOldX = mousePosX;
+                double mouseOldY = mousePosY;
+                mousePosX = event.getSceneX();
+                mousePosY = event.getSceneY();
 
-            if (selectedPlanet != null) {
-                baseXform.setRz((baseXform.getRz() + (mousePosX - mouseOldX) / 2) % 360);
-                baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY) / 2, 180), 0));
-            } else if (selectedSystem != null) {
-                baseXform.setRy((baseXform.getRy() + (mousePosX - mouseOldX) / 2) % 360);
-                baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY) / 2, 90), -90));
-            } else {
-                topXform.setTx(Math.max(Math.min(topXform.getTx() - (mousePosX - mouseOldX) * 1.5, GameModel.UNIVERSE_WIDTH), 0));
-                topXform.setTy(Math.max(Math.min(topXform.getTy() - (mousePosY - mouseOldY) * 1.5, GameModel.UNIVERSE_HEIGHT), 0));
-            }
-        });
+                if (selectedPlanet != null) {
+                    baseXform.setRz((baseXform.getRz() + (mousePosX - mouseOldX) / 2) % 360);
+                    baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY) / 2, 180), 0));
+                } else if (selectedSystem != null) {
+                    baseXform.setRy((baseXform.getRy() + (mousePosX - mouseOldX) / 2) % 360);
+                    baseXform.setRx(Math.max(Math.min(baseXform.getRx() - (mousePosY - mouseOldY) / 2, 90), -90));
+                } else {
+                    topXform.setTx(Math.max(Math.min(topXform.getTx() - (mousePosX - mouseOldX) * 1.5, GameModel.UNIVERSE_WIDTH), 0));
+                    topXform.setTy(Math.max(Math.min(topXform.getTy() - (mousePosY - mouseOldY) * 1.5, GameModel.UNIVERSE_HEIGHT), 0));
+                }
+            });
 
         subScene.setOnScroll((ScrollEvent event) -> {
-            if (selectedPlanet != null) {
-                camera.setTranslateZ(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -7));
-                if (camera.getTranslateZ() < -17) {
-                    selectedPlanet.updateTextures(1000, 500, null);
-                    selectedPlanet = null;
-                    updateSystemInfo(selectedSystem);
-                    systemInfo.play();
-                    universeMapSubScene.cameraToSystem(selectedSystem);
+                if (selectedPlanet != null) {
+                    camera.setTranslateZ(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -7));
+                    if (camera.getTranslateZ() < -17) {
+                        selectedPlanet.updateTextures(1000, 500, null);
+                        selectedPlanet = null;
+                        updateSystemInfo(selectedSystem);
+                        systemInfo.play();
+                        universeMapSubScene.cameraToSystem(selectedSystem);
+                    }
+                } else if (selectedSystem != null) {
+                    camera.setTranslateZ(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -100));
+                    if (camera.getTranslateZ() < -300) {
+                        selectedSystem.collapse();
+                        selectedSystem.updateTextures(100, 50);
+                        selectedSystem.setLightOn(false);
+                        selectedSystem = null;
+                        hideInfo.play();
+                        universeMapSubScene.cameraToUniverse();
+                    }
+                } else {
+                    camera.setTranslateZ(Math.max(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -1000), -3000));
                 }
-            } else if (selectedSystem != null) {
-                camera.setTranslateZ(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -100));
-                if (camera.getTranslateZ() < -300) {
-                    selectedSystem.collapse();
-                    selectedSystem.updateTextures(100, 50);
-                    selectedSystem.setLightOn(false);
-                    selectedSystem = null;
-                    hideInfo.play();
-                    universeMapSubScene.cameraToUniverse();
-                }
-            } else {
-                camera.setTranslateZ(Math.max(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -1000), -3000));
-            }
-        });
+            });
     }
 
     /**
@@ -379,7 +380,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     }
 
     @Override
-    public void setScreenParent(ScreensController parentController) {
-        this.parentController = parentController;
+    public void setScreenParent(ScreensController aParentController) {
+        parentController = aParentController;
     }
 }

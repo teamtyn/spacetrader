@@ -12,11 +12,11 @@ import javafx.stage.Stage;
 public class SpaceTrader extends Application {
 
     /**
-     *
+     * The width of the screen.
      */
     public static final int SCREEN_WIDTH = 960;
     /**
-     *
+     * The height of the screen.
      */
     public static final int SCREEN_HEIGHT = 720;
 
