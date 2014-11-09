@@ -22,7 +22,9 @@ import spacetrader.ui.Point;
  */
 public class GameModel implements Serializable {
 
+
     public static final int UNIVERSE_WIDTH = 2000;
+
     public static final int UNIVERSE_HEIGHT = 2000;
 
     private static GameModel state;
@@ -38,19 +40,36 @@ public class GameModel implements Serializable {
         // Cannot be instantiated outside of this class
     }
 
+    /**
+     * Getter for the ObserverRegistry variable.
+     * @return the OBSERVERS
+     */
     public static ObserverRegistry getObserverRegistry() {
         return OBSERVERS;
     }
 
+    /**
+     * Getter for the stage variable.
+     * @return the stage, which is used to display our views
+     */
     public static Stage getStage() {
         return stage;
     }
 
+    /**
+     * Create a new GameModel and its stage variable
+     * @param stage the stage used by the GameModel for displaying views
+     */
     public static void initialize(Stage stage) {
         state = new GameModel();
         GameModel.stage = stage;
     }
 
+    /**
+     * Load a previous save of the game.
+     * @param in the stream that passes info from the save file to be deserialized
+     * @throws IOException
+     */
     public static void load(InputStream in) throws IOException {
         try (ObjectInputStream objectIn = new ObjectInputStream(in)) {
             state = GameModel.class.cast(objectIn.readObject());
@@ -59,36 +78,74 @@ public class GameModel implements Serializable {
         }
     }
 
+    /**
+     * Save a current session of the game.
+     * @param out the stream that passes info from the game to be serialized
+     * @throws IOException
+     */
     public static void save(OutputStream out) throws IOException {
         try (ObjectOutputStream objectOut = new ObjectOutputStream(out)) {
             objectOut.writeObject(state);
         }
     }
 
+    /**
+     * Setter for the player variable.
+     * @param player the player of the game
+     */
     public static void setPlayer(Player player) {
         state.player = player;
     }
 
+    /**
+     * Getter for the player variable.
+     * 
+     * @return the player of the game
+     */
     public static Player getPlayer() {
         return state.player;
     }
 
+    /**
+     * Getter for the systems variable.
+     * 
+     * @return the array of star system in the Universe
+     */
     public static StarSystem[] getSystems() {
         return state.systems;
     }
 
+    /**
+     * Getter for the RANDOM variable.
+     *
+     * @return
+     */
     public static Random getRandom() {
         return RANDOM;
     }
 
+    /**
+     * Getter for the day variable.
+     * @return the day, the basic unit of time in game
+     */
     public static int getDay() {
         return state.day;
     }
 
+    /**
+     * Setter for the day variable.
+     * @param the day, the basic unit of time in game
+     */
     public static void setDay(int day) {
         state.day = day;
     }
 
+    /**
+     * Generate the systems of the Universe. The positions of each star system
+     * is decided by each one choosing a random point on an x, y plane where
+     * each point is a certain distance away from each other and the border
+     * of the Universe.
+     */
     public static void generateSystems() {
         List<Point> positions = new ArrayList<>();
         for (int x = 0; x <= UNIVERSE_WIDTH; x += 350) {

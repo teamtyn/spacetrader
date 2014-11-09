@@ -28,7 +28,7 @@ import spacetrader.player.Player;
 /**
  * FXML Controller for the generation of a market
  *
- * @author Clayton Kucera
+ * @author Team TYN
  */
 public class MarketController implements
         Initializable, ControlledScreen, Observer<ControlledScreen> {
@@ -261,6 +261,7 @@ public class MarketController implements
             listGoods();
         }
 
+        
         public final void listGoods() {
             for (TradeGood good : goods) {
                 boolean isDisabled = false;
