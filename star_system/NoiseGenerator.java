@@ -210,22 +210,41 @@ public class NoiseGenerator {
     }
 
     /**
-     * 
-     * @param width
-     * @param height 
+     * Initializes the noise buffer given a width and height.
+     * @param width The width of the noise buffer.
+     * @param height The height of the noise buffer.
      */
-    public void initNoiseBuffer(int width, int height) {
-        this.width = width;
-        this.height = height;
-        noiseBuffer = new float[height][width];
+    public void initNoiseBuffer(int w, int h) {
+        width = w;
+        height = h;
+        noiseBuffer = new float[h][w];
     }
 
+    /**
+     * Clears the noise buffer. This should be called after all desired textures
+     * have been generated to save memory.
+     */
     public void clearBuffer() {
         width = 0;
         height = 0;
         noiseBuffer = null;
     }
 
+    /**
+     * Fills the noise buffer with values corresponding to heights. The noise
+     * function is sampled along the surface of a sphere with a radius equal to
+     * the frequency at each octave. This result is projected onto the two
+     * dimensional buffer using a cylindrical projection. Octaves will continue
+     * to be calculated until the octave cap is reached or until max detail for
+     * the current resolution is reached.
+     * 
+     * A second pass on the noise buffer applies any post processing defined by
+     * noise mode and normalizes the final result.
+     * 
+     * This method is computationally expensive and is intended to be run
+     * concurrently. If it needs to be stopped suddenly, the thread should be
+     * interrupted.
+     */
     public void addOctaves() {
         boolean cancelled = false;
         float max = 0;
@@ -269,7 +288,6 @@ public class NoiseGenerator {
             for (int j = 0; j < height; j++) {
                 for (int i = 0; i < width; i++) {
                     if (Thread.interrupted()) {
-                        cancelled = true;
                         break normalizeLoop;
                     }
                     noiseBuffer[j][i] /= max;
@@ -291,6 +309,12 @@ public class NoiseGenerator {
         }
     }
 
+    /**
+     * Generates a diffuse map, coloring pixels based on the specified color
+     * gradient. Diffuse maps are interpolated in JavaFx so the map will be
+     * scaled if the noise buffer is greater than a resolution of 500000.
+     * @return The diffuse map.
+     */
     public Image getDiffuse() {
         int scaleFactor;
         if (width * height >= 500000) {
@@ -315,6 +339,11 @@ public class NoiseGenerator {
         return img;
     }
 
+    /**
+     * Generates `a normal map by applying a sobel filter to the noise buffer.
+     * @param intensity The intensity of the the sobel filter.
+     * @return The normal map.
+     */
     public Image getNormal(double intensity) {
         if (width * height < 500000) {
             return null;
@@ -349,13 +378,11 @@ public class NoiseGenerator {
     }
 
     private static class Grad {
-
         double x, y, z;
-
-        Grad(double x, double y, double z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+        Grad(double aX, double aY, double aZ) {
+            x = aX;
+            y = aY;
+            z = aZ;
         }
     }
 }
