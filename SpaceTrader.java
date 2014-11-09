@@ -20,11 +20,6 @@ public class SpaceTrader extends Application {
      */
     public static final int SCREEN_HEIGHT = 720;
 
-    /**
-     *
-     * @param stage
-     * @throws Exception
-     */
     @Override
     public void start(Stage stage) throws Exception {
         ScreensController mainContainer = new ScreensController();
@@ -46,8 +41,8 @@ public class SpaceTrader extends Application {
     }
 
     /**
-     *
-     * @param args
+     * The main method of the application.
+     * @param args the array of String arguments
      */
     public static void main(String[] args) {
         launch(args);

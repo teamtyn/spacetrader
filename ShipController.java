@@ -1,17 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package spacetrader;
 
 /**
- *
+ * The controller for an individual ship in an encounter.
  * @author Administrator
  */
 public interface ShipController {
 
+    /**
+     * The control method needed by all ShipControllers.
+     */
     void control();
 
+    /**
+     * Getter for the ShipView.
+     * @return the view representing the ship
+     */
     ShipView getShipView();
 }

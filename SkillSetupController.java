@@ -82,6 +82,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     private final Map<String, Integer> plusButtonMap = new HashMap<>(5);
     private final Map<String, Integer> minusButtonMap = new HashMap<>(5);
+
     public static Player player;
     private Label[] labelArray;
     private Label[] pointLabelArray;
@@ -97,6 +98,10 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     private ScreensController parentController;
     private List<Skill> skillList;
 
+    /**
+     * Sets up SkillSetupController by creating the player and establishing the
+     * default values and limitations.
+     */
     public SkillSetupController() {
         player = new Player();
         avgValue = 10;
@@ -130,10 +135,6 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         }
     }
 
-    /**
-     *
-     * @param parentController
-     */
     @Override
     public void setScreenParent(ScreensController parentController) {
         this.parentController = parentController;

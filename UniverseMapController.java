@@ -148,6 +148,9 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         highlight.setVisible(true);
     }
 
+    /**
+     *
+     */
     public void handleMouse() {
         EventHandler<MouseEvent> bodySelect;
         bodySelect = (MouseEvent event) -> {
@@ -289,6 +292,11 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         });
     }
 
+    /**
+     * Update the panel displaying info relevant to the system, such as system
+     * name, distance, fuel cost, etc. Activated upon selecting a system.
+     * @param system the view of the selected system
+     */
     public void updateSystemInfo(StarSystemView system) {
         NumberFormat nf = NumberFormat.getInstance();
         nf.setMaximumFractionDigits(2);
@@ -306,6 +314,11 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         spaceStationButton.setDisable(true);
     }
 
+    /**
+     * Updates the panel displaying planet information. This is activated
+     * upon clicking on the planet.
+     * @param planet the view of the selected planet
+     */
     public void updatePlanetInfo(PlanetView planet) {
         Player player = GameModel.getPlayer();
 

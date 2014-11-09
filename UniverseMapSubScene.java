@@ -27,7 +27,7 @@ import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemView;
 
 /**
- *
+ * The subscene displaying the 3D Universe.
  * @author Administrator
  */
 public class UniverseMapSubScene {
