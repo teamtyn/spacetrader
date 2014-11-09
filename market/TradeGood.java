@@ -52,7 +52,7 @@ public class TradeGood implements Serializable {
         GOVERNMENT_PRICE = Collections.unmodifiableMap(govPrice);
     }
     // Quantity multipliers from government type of the planet
-    private final static Map<Government.Type, Double> GOVERNMENT_QUANTITY;
+    private static final Map<Government.Type, Double> GOVERNMENT_QUANTITY;
 
     static {
         Map<Government.Type, Double> govQuantity = new HashMap<>();

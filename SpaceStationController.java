@@ -272,7 +272,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                 otherShip = new Ship(type);
                 for (Node node: shipList.getChildren()) {
                     node.setStyle("-fx-background-color: #FFFFFF;");
@@ -349,7 +349,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                 currentGadgetType = "Weapon";
                 selectedWeapon = new Weapon(type);
                 resetSelected();
@@ -381,7 +381,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                 currentGadgetType = "Shield";
                 selectedShield = new Shield(type);
                 resetSelected();
@@ -413,7 +413,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                 currentGadgetType = "Engine";
                 selectedEngine = new Engine(type);
                 resetSelected();
@@ -441,7 +441,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if(weapon != null){
                 label = new Label(weapon.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                     currentGadgetType = "My Weapon";
                     selectedWeapon = weapon;
                     resetSelected();
@@ -475,7 +475,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if(shield != null){
                 label = new Label(shield.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                     currentGadgetType = "My Shield";
                     selectedShield = shield;
                     resetSelected();
@@ -508,7 +508,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if(engine != null){
                 label = new Label(engine.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                     currentGadgetType = "My Engine";
                     selectedEngine = engine;
                     resetSelected();
@@ -564,61 +564,67 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     
     @FXML
     private void buyGadgetButtonAction(ActionEvent event) {
-        if(currentGadgetType == "Weapon"){
-            if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedWeapon.getType().cost))) {
-                shipDialogueField.setText("");
-                confirmationGadgetField.setText("");
-                buyWeapon();
-            } else {
-                shipDialogueField.setText("Please confirm the price of your new weapon.");
-            }
-        } else if(currentGadgetType == "Shield"){
-            if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedShield.getType().cost))) {
-                shipDialogueField.setText("");
-                confirmationGadgetField.setText("");
-                buyShield();
-            } else {
-                shipDialogueField.setText("Please confirm the price of your new shield.");
-            }
-        } else if(currentGadgetType == "Engine"){
-            if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedEngine.getType().cost))) {
-                shipDialogueField.setText("");
-                confirmationGadgetField.setText("");
-                buyEngine();
-            } else {
-                shipDialogueField.setText("Please confirm the price of your new engine.");
-            }
+        switch (currentGadgetType) {
+            case "Weapon":
+                if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedWeapon.getType().cost))) {
+                    shipDialogueField.setText("");
+                    confirmationGadgetField.setText("");
+                    buyWeapon();
+                } else {
+                    shipDialogueField.setText("Please confirm the price of your new weapon.");
+                }   break;
+            case "Shield":
+                if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedShield.getType().cost))) {
+                    shipDialogueField.setText("");
+                    confirmationGadgetField.setText("");
+                    buyShield();
+                } else {
+                    shipDialogueField.setText("Please confirm the price of your new shield.");
+                }   break;
+            case "Engine":
+                if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedEngine.getType().cost))) {
+                    shipDialogueField.setText("");
+                    confirmationGadgetField.setText("");
+                    buyEngine();
+                } else {
+                    shipDialogueField.setText("Please confirm the price of your new engine.");
+                }   break;
         }
     }
     
      @FXML
     private void sellGadgetButtonAction(ActionEvent event) {
-        if(currentGadgetType == "My Weapon"){
-            System.out.println("SELLING Weapon");
-            player.addMoney(selectedWeapon.getType().cost / 2);
-            shipDialogueField.setText("Weapon sold for " + selectedWeapon.getType().cost / 2);
-            player.getShip().removeWeapon(gadgetIndex);
-            updatePlayerWeapons();
-            gadgetIndex = -1;
-            currentGadgetType = "None";
-        } else if(currentGadgetType == "My Shield"){
-            System.out.println("SELLING shield");
-            shipDialogueField.setText("Shield sold for " + selectedShield.getType().cost / 2);
-            player.addMoney(selectedShield.getType().cost / 2);
-            player.getShip().removeShield(gadgetIndex);
-            updatePlayerShields();
-            gadgetIndex = -1;
-            currentGadgetType = "None";
-        } else if(currentGadgetType == "My Engine"){
-            System.out.println("SELLING engine");
-            player.addMoney(selectedEngine.getType().cost / 2);
-            shipDialogueField.setText("Engine sold for " + selectedEngine.getType().cost / 2);
-            player.getShip().removeEngine(gadgetIndex);
-            updatePlayerEngines();
-            gadgetIndex = -1;
-            currentGadgetType = "None";
-        } else {
-            shipDialogueField.setText("Please select a valid part to sell.");
+        switch (currentGadgetType) {
+            case "My Weapon":
+                System.out.println("SELLING Weapon");
+                player.addMoney(selectedWeapon.getType().cost / 2);
+                shipDialogueField.setText("Weapon sold for " + selectedWeapon.getType().cost / 2);
+                player.getShip().removeWeapon(gadgetIndex);
+                updatePlayerWeapons();
+                gadgetIndex = -1;
+                currentGadgetType = "None";
+                break;
+            case "My Shield":
+                System.out.println("SELLING shield");
+                shipDialogueField.setText("Shield sold for " + selectedShield.getType().cost / 2);
+                player.addMoney(selectedShield.getType().cost / 2);
+                player.getShip().removeShield(gadgetIndex);
+                updatePlayerShields();
+                gadgetIndex = -1;
+                currentGadgetType = "None";
+                break;
+            case "My Engine":
+                System.out.println("SELLING engine");
+                player.addMoney(selectedEngine.getType().cost / 2);
+                shipDialogueField.setText("Engine sold for " + selectedEngine.getType().cost / 2);
+                player.getShip().removeEngine(gadgetIndex);
+                updatePlayerEngines();
+                gadgetIndex = -1;
+                currentGadgetType = "None";
+                break;
+            default:
+                shipDialogueField.setText("Please select a valid part to sell.");
+                break;
         }
         moneyLabel.setText(Integer.toString(player.getMoney()));
     }

@@ -38,7 +38,7 @@ public class CargoBay implements Serializable {
      * Add as many goods as possible up to specified quantity
      *
      * @param goodName The good to be stored in the cargo bay
-     * @param quantity The quantity to be ideally stored in the cargo bay
+     * @param quantityRequested The quantity to be ideally stored in the cargo bay
      * @return The number of goods added
      */
     public int addTradeGood(String goodName, int quantityRequested) {
@@ -58,10 +58,11 @@ public class CargoBay implements Serializable {
      * Remove as many goods as possible up to specified quantity
      *
      * @param goodName The good to be removed from the cargo bay
-     * @param quantity The quantity to be ideally removed from the cargo bay
+     * @param quantityRequested The quantity to be ideally removed from the cargo bay
      * @return The number of goods removed
      */
-    public int removeTradeGood(String goodName, int quantity) {
+    public int removeTradeGood(String goodName, int quantityRequested) {
+        int quantity = quantityRequested;
         if (quantity > goods.get(goodName)) {
             quantity = goods.get(goodName);
         }

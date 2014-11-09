@@ -2,9 +2,6 @@ package spacetrader.items;
 
 import java.io.Serializable;
 import javafx.scene.paint.Color;
-import spacetrader.items.Engine.EngineType;
-import spacetrader.items.Shield;
-import spacetrader.items.Weapon;
 import spacetrader.ui.SerializableColor;
 
 /**
