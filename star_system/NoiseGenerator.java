@@ -8,7 +8,12 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * A noise generator is used to generate textures for a planet view. A noise
+ * buffer can be specified and then filled by sampling a three dimensional 
+ * simplex noise function. Once the noise buffer is filled, a diffuse map can
+ * be generated using a color gradient and a normal map can be generated using
+ * a sobel filter.
+ * 
  * @author Administrator
  */
 public class NoiseGenerator {
@@ -30,6 +35,7 @@ public class NoiseGenerator {
             SUPPLY[i] = (short) i;
         }
     }
+
     private short[] p = new short[SUPPLY.length];
     private final short[] perm;
     private final short[] permMod12 = new short[512];
@@ -45,6 +51,17 @@ public class NoiseGenerator {
     private int width;
     private int height;
 
+    /**
+     * Constructs a noise generator based on specified parameters.
+     * @param seed The seed for building a permutation table.
+     * @param bF The base frequency used for the first octave.
+     * @param bA The base amplitude used for the first octave.
+     * @param l The fall off of frquency
+     * @param g
+     * @param oC
+     * @param m
+     * @param c 
+     */
     public NoiseGenerator(long seed, double bF, double bA, double l, double g, int oC, NoiseMode m, ColorGradient c) {
         Random r = new Random(seed);
         perm = Arrays.copyOf(SUPPLY, 512);
@@ -67,7 +84,7 @@ public class NoiseGenerator {
         colors = c;
     }
 
-    private int fastfloor(double x) {
+    private static int fastfloor(double x) {
         int floorX = (int) x;
         return x < floorX ? floorX - 1 : floorX;
     }
@@ -76,6 +93,13 @@ public class NoiseGenerator {
         return g.x * x + g.y * y + g.z * z;
     }
 
+    /**
+     * 
+     * @param xin
+     * @param yin
+     * @param zin
+     * @return 
+     */
     private double noise(double xin, double yin, double zin) {
         double n0, n1, n2, n3;
         double s = (xin + yin + zin) * F3;
