@@ -53,14 +53,15 @@ public class NoiseGenerator {
 
     /**
      * Constructs a noise generator based on specified parameters.
+     * 
      * @param seed The seed for building a permutation table.
      * @param bF The base frequency used for the first octave.
      * @param bA The base amplitude used for the first octave.
-     * @param l The fall off of frquency
-     * @param g
-     * @param oC
-     * @param m
-     * @param c 
+     * @param l The lacunarity. Defines how frequency changes for each octave.
+     * @param g The gain. Defines how amplitude changes for each octave.
+     * @param oC The maximum number of octaves to run.
+     * @param m The type of post processing to use.
+     * @param c The color gradient to use for diffuse map calculation.
      */
     public NoiseGenerator(long seed, double bF, double bA, double l, double g, int oC, NoiseMode m, ColorGradient c) {
         Random r = new Random(seed);
@@ -94,11 +95,13 @@ public class NoiseGenerator {
     }
 
     /**
+     * A three dimensional noise function based on the paper found here:
+     * http://webstaff.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf
      * 
-     * @param xin
-     * @param yin
-     * @param zin
-     * @return 
+     * @param xin The x coordinate of the sample point.
+     * @param yin The y coordinate of the sample point.
+     * @param zin The z coordinate of the sample point.
+     * @return The noise value at the point (x, y, z).
      */
     private double noise(double xin, double yin, double zin) {
         double n0, n1, n2, n3;
@@ -206,6 +209,11 @@ public class NoiseGenerator {
         return 32.0 * (n0 + n1 + n2 + n3);
     }
 
+    /**
+     * 
+     * @param width
+     * @param height 
+     */
     public void initNoiseBuffer(int width, int height) {
         this.width = width;
         this.height = height;
