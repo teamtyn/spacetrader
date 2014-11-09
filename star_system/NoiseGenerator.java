@@ -83,12 +83,9 @@ public class NoiseGenerator {
         int j = fastfloor(yin + s);
         int k = fastfloor(zin + s);
         double t = (i + j + k) * G3;
-        double X0 = i - t;
-        double Y0 = j - t;
-        double Z0 = k - t;
-        double x0 = xin - X0;
-        double y0 = yin - Y0;
-        double z0 = zin - Z0;
+        double x0 = xin - (i - t);
+        double y0 = yin - (j - t);
+        double z0 = zin - (k - t);
         int i1, j1, k1;
         int i2, j2, k2;
         if (x0 >= y0) {

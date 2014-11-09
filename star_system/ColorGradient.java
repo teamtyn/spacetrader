@@ -1,6 +1,5 @@
 package spacetrader.star_system;
 
-import java.util.Random;
 import java.util.TreeMap;
 import javafx.scene.paint.Color;
 import spacetrader.star_system.Planet.Environment;

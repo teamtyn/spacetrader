@@ -33,42 +33,42 @@ public class TradeGood implements Serializable {
     private int price;
     private int quantity;
     // Price multipliers from government type of the planet
-    private final static Map<Government.Type, Double> govPrice;
+    private static final Map<Government.Type, Double> GOVERNMENT_PRICE;
 
     static {
-        Map<Government.Type, Double> govPrice2 = new HashMap<>();
-        govPrice2.put(Government.Type.ANARCHY, 1.5);
-        govPrice2.put(Government.Type.ARISTOCRACY, 1.0);
-        govPrice2.put(Government.Type.CAPITALIST, 1.0);
-        govPrice2.put(Government.Type.COMMUNIST, 1.25);
-        govPrice2.put(Government.Type.CORPORATE, 1.0);
-        govPrice2.put(Government.Type.DEMOCRACY, 1.0);
-        govPrice2.put(Government.Type.FASCIST, 1.0);
-        govPrice2.put(Government.Type.MERITOCRACY, .75);
-        govPrice2.put(Government.Type.MONARCHY, 1.0);
-        govPrice2.put(Government.Type.OLIGARCHY, 1.0);
-        govPrice2.put(Government.Type.TECHNOCRACY, .5);
-        govPrice2.put(Government.Type.THEOCRACY, 1.0);
-        govPrice = Collections.unmodifiableMap(govPrice2);
+        Map<Government.Type, Double> govPrice = new HashMap<>();
+        govPrice.put(Government.Type.ANARCHY, 1.5);
+        govPrice.put(Government.Type.ARISTOCRACY, 1.0);
+        govPrice.put(Government.Type.CAPITALIST, 1.0);
+        govPrice.put(Government.Type.COMMUNIST, 1.25);
+        govPrice.put(Government.Type.CORPORATE, 1.0);
+        govPrice.put(Government.Type.DEMOCRACY, 1.0);
+        govPrice.put(Government.Type.FASCIST, 1.0);
+        govPrice.put(Government.Type.MERITOCRACY, .75);
+        govPrice.put(Government.Type.MONARCHY, 1.0);
+        govPrice.put(Government.Type.OLIGARCHY, 1.0);
+        govPrice.put(Government.Type.TECHNOCRACY, .5);
+        govPrice.put(Government.Type.THEOCRACY, 1.0);
+        GOVERNMENT_PRICE = Collections.unmodifiableMap(govPrice);
     }
     // Quantity multipliers from government type of the planet
-    private final static Map<Government.Type, Double> govQuantity;
+    private final static Map<Government.Type, Double> GOVERNMENT_QUANTITY;
 
     static {
-        Map<Government.Type, Double> govQuantity2 = new HashMap<>();
-        govQuantity2.put(Government.Type.ANARCHY, 1.0);
-        govQuantity2.put(Government.Type.ARISTOCRACY, 1.0);
-        govQuantity2.put(Government.Type.CAPITALIST, 1.0);
-        govQuantity2.put(Government.Type.COMMUNIST, 1.0);
-        govQuantity2.put(Government.Type.CORPORATE, 1.0);
-        govQuantity2.put(Government.Type.DEMOCRACY, 1.0);
-        govQuantity2.put(Government.Type.FASCIST, 1.0);
-        govQuantity2.put(Government.Type.MERITOCRACY, 1.0);
-        govQuantity2.put(Government.Type.MONARCHY, 1.0);
-        govQuantity2.put(Government.Type.OLIGARCHY, 1.0);
-        govQuantity2.put(Government.Type.TECHNOCRACY, 1.0);
-        govQuantity2.put(Government.Type.THEOCRACY, 1.0);
-        govQuantity = Collections.unmodifiableMap(govQuantity2);
+        Map<Government.Type, Double> govQuantity = new HashMap<>();
+        govQuantity.put(Government.Type.ANARCHY, 1.0);
+        govQuantity.put(Government.Type.ARISTOCRACY, 1.0);
+        govQuantity.put(Government.Type.CAPITALIST, 1.0);
+        govQuantity.put(Government.Type.COMMUNIST, 1.0);
+        govQuantity.put(Government.Type.CORPORATE, 1.0);
+        govQuantity.put(Government.Type.DEMOCRACY, 1.0);
+        govQuantity.put(Government.Type.FASCIST, 1.0);
+        govQuantity.put(Government.Type.MERITOCRACY, 1.0);
+        govQuantity.put(Government.Type.MONARCHY, 1.0);
+        govQuantity.put(Government.Type.OLIGARCHY, 1.0);
+        govQuantity.put(Government.Type.TECHNOCRACY, 1.0);
+        govQuantity.put(Government.Type.THEOCRACY, 1.0);
+        GOVERNMENT_QUANTITY = Collections.unmodifiableMap(govQuantity);
     }
 
     public enum GoodType {
@@ -139,7 +139,7 @@ public class TradeGood implements Serializable {
         if (type.ie == planet.getCircumstance().getOrdinality()) {
             thisPrice *= 1.5;
         }
-        thisPrice *= govPrice.get(planet.getGovernment().getType());
+        thisPrice *= GOVERNMENT_PRICE.get(planet.getGovernment().getType());
         return (int) thisPrice;
     }
 

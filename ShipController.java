@@ -11,7 +11,7 @@ package spacetrader;
  */
 public interface ShipController {
 
-    public abstract void control();
+    abstract void control();
 
-    public ShipView getShipView();
+    ShipView getShipView();
 }

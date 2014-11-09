@@ -7,11 +7,11 @@ package spacetrader.player;
  *
  * @author Clayton
  */
-public class Mercenary extends CrewMember {
+public class Mercenary extends AbstractCrewMember {
 
     /**
-     * The no arg constructor for Mercenary. It does everything a CrewMember does in addition to
-     * assigning itself a random name.
+     * The no arg constructor for Mercenary. It does everything a AbstractCrewMember does in addition to
+ assigning itself a random name.
      */
     public Mercenary() {
         super();

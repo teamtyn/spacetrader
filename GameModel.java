@@ -26,8 +26,8 @@ public class GameModel implements Serializable {
     public static final int UNIVERSE_HEIGHT = 2000;
 
     private static GameModel state;
-    private static final Random random = new Random();
-    private static final ObserverRegistry observerRegistry = new ObserverRegistry();
+    private static final Random RANDOM = new Random();
+    private static final ObserverRegistry OBSERVERS = new ObserverRegistry();
     private static Stage stage;
 
     private int day;
@@ -39,7 +39,7 @@ public class GameModel implements Serializable {
     }
 
     public static ObserverRegistry getObserverRegistry() {
-        return observerRegistry;
+        return OBSERVERS;
     }
 
     public static Stage getStage() {
@@ -78,7 +78,7 @@ public class GameModel implements Serializable {
     }
 
     public static Random getRandom() {
-        return random;
+        return RANDOM;
     }
 
     public static int getDay() {
@@ -93,10 +93,10 @@ public class GameModel implements Serializable {
         List<Point> positions = new ArrayList<>();
         for (int x = 0; x <= UNIVERSE_WIDTH; x += 350) {
             for (int y = 0; y <= UNIVERSE_HEIGHT; y += 350) {
-                positions.add(new Point(x + random.nextInt(100) - 50, y + random.nextInt(100) - 50));
+                positions.add(new Point(x + RANDOM.nextInt(100) - 50, y + RANDOM.nextInt(100) - 50));
             }
         }
-        Collections.shuffle(positions, random);
+        Collections.shuffle(positions, RANDOM);
 
         state.systems = new StarSystem[10];
         for (int i = 0; i < state.systems.length; i++) {

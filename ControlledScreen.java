@@ -46,7 +46,7 @@ package spacetrader;
 public interface ControlledScreen {
 
     //This method will allow the injection of the Parent ScreenPane
-    public void setScreenParent(ScreensController parentController);
+    void setScreenParent(ScreensController parentController);
 
-    public void lazyInitialize();
+    void lazyInitialize();
 }

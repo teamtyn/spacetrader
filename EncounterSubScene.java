@@ -19,7 +19,6 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.MeshView;
 import spacetrader.ControlledShipView.ControlType;
-import spacetrader.Xform.RotateOrder;
 
 /**
  *

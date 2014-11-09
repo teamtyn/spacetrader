@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class Point implements Serializable {
 
-    private final double x, y, z;
+    private final double x;
+    private final double y;
+    private final double z;
 
     /**
      *

@@ -9,14 +9,14 @@ import spacetrader.GameModel;
 
 public class Persistence {
 
-    private static final FileChooser.ExtensionFilter extensionFilter
+    private static final FileChooser.ExtensionFilter EXTENSION_FILTER
             = new FileChooser.ExtensionFilter("Space Trader Save", "*.sts");
-    private static final FileChooser loadChooser = createChooser("Load Game");
-    private static final FileChooser saveChooser = createChooser("Save Game");
-    private static final File homeDirectory = new File(System.getProperty("user.home"));
+    private static final FileChooser LOAD_CHOOSER = createChooser("Load Game");
+    private static final FileChooser SAVE_CHOOSER = createChooser("Save Game");
+    private static final File HOME_DIRECTORY = new File(System.getProperty("user.home"));
 
     public static boolean loadGame() {
-        File loadFile = loadChooser.showOpenDialog(GameModel.getStage());
+        File loadFile = LOAD_CHOOSER.showOpenDialog(GameModel.getStage());
         if (loadFile != null) {
             try (FileInputStream loadStream = new FileInputStream(loadFile)) {
                 GameModel.load(loadStream);
@@ -29,7 +29,7 @@ public class Persistence {
     }
 
     public static boolean saveGame() {
-        File saveFile = saveChooser.showSaveDialog(GameModel.getStage());
+        File saveFile = SAVE_CHOOSER.showSaveDialog(GameModel.getStage());
         if (saveFile != null) {
             if (!saveFile.getName().toLowerCase().endsWith(".sts")) {
                 saveFile = new File(saveFile.getAbsolutePath() + ".sts");
@@ -47,9 +47,9 @@ public class Persistence {
     private static FileChooser createChooser(String title) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle(title);
-        chooser.getExtensionFilters().add(extensionFilter);
-        chooser.setSelectedExtensionFilter(extensionFilter);
-        chooser.setInitialDirectory(homeDirectory);
+        chooser.getExtensionFilters().add(EXTENSION_FILTER);
+        chooser.setSelectedExtensionFilter(EXTENSION_FILTER);
+        chooser.setInitialDirectory(HOME_DIRECTORY);
         return chooser;
     }
 }

@@ -13,5 +13,5 @@ public interface Observer<T> {
      *
      * @param changedObject the new (or modified) T
      */
-    public void notifyChange(T changedObject);
+    void notifyChange(T changedObject);
 }
