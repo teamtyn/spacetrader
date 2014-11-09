@@ -12,18 +12,18 @@ import javafx.stage.Stage;
 public class SpaceTrader extends Application {
 
     /**
-     * 
+     *
      */
     public static final int SCREEN_WIDTH = 960;
     /**
-     * 
+     *
      */
     public static final int SCREEN_HEIGHT = 720;
 
     /**
-     * 
+     *
      * @param stage
-     * @throws Exception 
+     * @throws Exception
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -47,8 +47,8 @@ public class SpaceTrader extends Application {
     }
 
     /**
-     * 
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String[] args) {
         launch(args);

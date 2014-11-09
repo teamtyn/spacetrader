@@ -17,18 +17,19 @@ import spacetrader.Xform.RotateOrder;
  * @author Administrator
  */
 public class StarSystemView extends Sphere {
+
     private StarSystem system;
     private ArrayList<PlanetView> planetViews;
     private Xform systemXform;
     private Xform planetsXform;
     private PointLight light;
     private PhongMaterial material;
-    
+
     public StarSystemView(StarSystem system) {
         super(system.getSize());
-        
+
         Random r = new Random();
-        
+
         this.system = system;
         planetViews = new ArrayList<>(system.getPlanets().length);
         systemXform = new Xform(RotateOrder.ZYX);
@@ -37,87 +38,86 @@ public class StarSystemView extends Sphere {
         light.setLightOn(false);
         material = new PhongMaterial();
         setMaterial(new PhongMaterial(Color.rgb(240, 255, 100)));//system.getColor()));
-        
+
         systemXform.setTranslate(system.getCoordinateX(), system.getCoordinateY());
         systemXform.setRotate(180 * r.nextDouble(), 180 * r.nextDouble(), 0);
-        
-        for(Planet planet : system.getPlanets()) {
+
+        for (Planet planet : system.getPlanets()) {
             PlanetView planetView = new PlanetView(planet);
             planetsXform.getChildren().add(planetView.getOrbitXform());
             planetViews.add(planetView);
         }
         systemXform.getChildren().addAll(this, planetsXform, light);
-        
+
         light.getScope().add(planetsXform);
         UniverseMapSubScene.AMBIENT.getScope().add(planetsXform);
         UniverseMapSubScene.NO_SHADE.getScope().add(this);
-        
-        
+
         light.getScope().add(planetsXform);
         UniverseMapSubScene.AMBIENT.getScope().add(planetsXform);
         UniverseMapSubScene.NO_SHADE.getScope().add(this);
     }
-    
+
     public StarSystem getSystem() {
         return system;
     }
-    
+
     public ArrayList<PlanetView> getPlanetViews() {
         return planetViews;
     }
-    
+
     public boolean containsPlanet(PlanetView planet) {
         return planetViews.contains(planet);
     }
-    
+
     public Xform getSystemXform() {
         return systemXform;
     }
-    
+
     public Xform getPlanetsXform() {
         return planetsXform;
     }
-    
+
     public double getX() {
         return systemXform.getTx();
     }
-    
+
     public double getY() {
         return systemXform.getTy();
     }
-    
+
     public double getZ() {
         return systemXform.getTz();
     }
-    
+
     public double getRx() {
         return systemXform.getRx();
     }
-    
+
     public double getRy() {
         return systemXform.getRy();
     }
-    
+
     public double getRz() {
         return systemXform.getRz();
     }
-    
+
     public void setLightOn(boolean on) {
         light.setLightOn(on);
     }
-    
+
     public void expand() {
         for (PlanetView planet : planetViews) {
             planet.expand();
         }
     }
-    
+
     public void collapse() {
         for (PlanetView planet : planetViews) {
             planet.collapse();
         }
     }
-    
+
     public void updateTextures(int width, int height) {
         ExecutorService es = Executors.newSingleThreadExecutor((Runnable runnable) -> {
             Thread thread = Executors.defaultThreadFactory().newThread(runnable);
@@ -129,7 +129,7 @@ public class StarSystemView extends Sphere {
         }
         es.shutdown();
     }
-    
+
     public void incrementOrbits() {
         for (PlanetView planet : planetViews) {
             planet.incrementOrbit();

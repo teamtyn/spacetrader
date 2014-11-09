@@ -8,8 +8,9 @@ import javafx.stage.FileChooser;
 import spacetrader.GameModel;
 
 public class Persistence {
-    private static final FileChooser.ExtensionFilter extensionFilter =
-            new FileChooser.ExtensionFilter("Space Trader Save", "*.sts");
+
+    private static final FileChooser.ExtensionFilter extensionFilter
+            = new FileChooser.ExtensionFilter("Space Trader Save", "*.sts");
     private static final FileChooser loadChooser = createChooser("Load Game");
     private static final FileChooser saveChooser = createChooser("Save Game");
     private static final File homeDirectory = new File(System.getProperty("user.home"));
@@ -42,7 +43,7 @@ public class Persistence {
         }
         return false;
     }
-    
+
     private static FileChooser createChooser(String title) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle(title);

@@ -1,4 +1,5 @@
 package spacetrader;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -11,13 +12,14 @@ import spacetrader.persist.Persistence;
  * @version 1.0
  */
 public class MenuController implements Initializable, ControlledScreen {
+
     private ScreensController parentController;
 
     @FXML
     private void startButtonAction(ActionEvent event) {
         parentController.setScreen("SkillSetup");
     }
-    
+
     @FXML
     private void loadButtonAction(ActionEvent event) {
         if (Persistence.loadGame()) {
@@ -34,9 +36,10 @@ public class MenuController implements Initializable, ControlledScreen {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
+
     @Override
-    public void lazyInitialize() {}
+    public void lazyInitialize() {
+    }
 
     @Override
     public void setScreenParent(ScreensController parentController) {

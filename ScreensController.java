@@ -37,8 +37,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  * 
- */ 
-
+ */
 package spacetrader;
 
 import java.io.ByteArrayOutputStream;
@@ -80,7 +79,7 @@ public class ScreensController extends StackPane {
     public static Node getScreen(String name) {
         return screens.get(name);
     }
-    
+
     public static boolean isInitialized(String name) {
         return initialized.get(name) != null;
     }
@@ -91,12 +90,13 @@ public class ScreensController extends StackPane {
     }
 
     /**
-     * Loads the FXML file, adds the screen to the screens collection and
-     *   finally injects the screenPane to the controller
+     * Loads the FXML file, adds the screen to the screens collection and finally injects the
+     * screenPane to the controller
+     *
      * @param name The name of the screen being loaded
      * @param resource The FXML file for the screen to be loaded
      * @return Whether or not the screen was successfully loaded
-    */
+     */
     public boolean loadScreen(String name, String resource) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
@@ -115,14 +115,14 @@ public class ScreensController extends StackPane {
     }
 
     /**
-     * This method tries to display the screen with a predefined name
-     *   First it makes sure the screen has been already loaded
-     *   If there is more than one screen, the current screen
-     *     is removed, and then the new screen is added
-     *   If there isn't any screen being displayed, the new screen is just added
+     * This method tries to display the screen with a predefined name First it makes sure the screen
+     * has been already loaded If there is more than one screen, the current screen is removed, and
+     * then the new screen is added If there isn't any screen being displayed, the new screen is
+     * just added
+     *
      * @param name The name of the screen to be displayed
      * @return Whether the screen was successfully added or not
-    */
+     */
     public boolean setScreen(final String name) {
         Node screen = screens.get(name);
         ControlledScreen controller = controllers.get(name);
@@ -142,7 +142,7 @@ public class ScreensController extends StackPane {
                                     new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
                                     new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
                             fadeIn.play();
-                }, new KeyValue(opacity, 0.0)));
+                        }, new KeyValue(opacity, 0.0)));
                 fade.play();
                 try {
                     GameModel.save(new ByteArrayOutputStream());
@@ -177,12 +177,12 @@ public class ScreensController extends StackPane {
             return true;
         }
     }
-    
+
     public String toString() {
         String str = "";
-            for(String s: screens.keySet()){
-                    str += s + '\n';
-            }
+        for (String s : screens.keySet()) {
+            str += s + '\n';
+        }
         return str;
     }
 }

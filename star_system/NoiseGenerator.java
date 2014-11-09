@@ -12,14 +12,19 @@ import javafx.scene.paint.Color;
  * @author Administrator
  */
 public class NoiseGenerator {
-    public enum NoiseMode {NONE, SQUARE, CUBE, ABS};
-    
-    private static final double F3 = 1.0/3.0;
-    private static final double G3 = 1.0/6.0;
+
+    public enum NoiseMode {
+
+        NONE, SQUARE, CUBE, ABS
+    };
+
+    private static final double F3 = 1.0 / 3.0;
+    private static final double G3 = 1.0 / 6.0;
     private static final Grad[] GTAB = {new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1, -1, 0),
-                                        new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1, 0, -1),
-                                        new Grad(0, 1, 1), new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0, -1, -1)};
+        new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1, 0, -1),
+        new Grad(0, 1, 1), new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0, -1, -1)};
     private static final short[] SUPPLY = new short[256];
+
     static {
         for (int i = 0; i < 256; i++) {
             SUPPLY[i] = (short) i;
@@ -35,11 +40,11 @@ public class NoiseGenerator {
     private final int octaveCap;
     private final NoiseMode mode;
     private final ColorGradient colors;
-    
+
     private float[][] noiseBuffer;
     private int width;
     private int height;
-    
+
     public NoiseGenerator(long seed, double bF, double bA, double l, double g, int oC, NoiseMode m, ColorGradient c) {
         Random r = new Random(seed);
         perm = Arrays.copyOf(SUPPLY, 512);
@@ -61,16 +66,16 @@ public class NoiseGenerator {
         mode = m;
         colors = c;
     }
-    
+
     private int fastfloor(double x) {
-        int floorX = (int)x;
+        int floorX = (int) x;
         return x < floorX ? floorX - 1 : floorX;
     }
-    
+
     private static double dot(Grad g, double x, double y, double z) {
-        return g.x*x + g.y*y + g.z*z; 
+        return g.x * x + g.y * y + g.z * z;
     }
-    
+
     private double noise(double xin, double yin, double zin) {
         double n0, n1, n2, n3;
         double s = (xin + yin + zin) * F3;
@@ -150,7 +155,7 @@ public class NoiseGenerator {
         int gi2 = permMod12[ii + i2 + perm[jj + j2 + perm[kk + k2]]];
         int gi3 = permMod12[ii + 1 + perm[jj + 1 + perm[kk + 1]]];
         double t0 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
-        if(t0 < 0) {
+        if (t0 < 0) {
             n0 = 0.0;
         } else {
             t0 *= t0;
@@ -179,19 +184,19 @@ public class NoiseGenerator {
         }
         return 32.0 * (n0 + n1 + n2 + n3);
     }
-    
+
     public void initNoiseBuffer(int width, int height) {
         this.width = width;
         this.height = height;
         noiseBuffer = new float[height][width];
     }
-    
+
     public void clearBuffer() {
         width = 0;
         height = 0;
         noiseBuffer = null;
     }
-    
+
     public void addOctaves() {
         boolean cancelled = false;
         float max = 0;
@@ -203,17 +208,17 @@ public class NoiseGenerator {
                     cancelled = true;
                     break noiseLoop;
                 }
-                double normU = i / (double)width;
+                double normU = i / (double) width;
                 double normV = 1 - (2.0 * j / height);
 
                 double x = Math.cos(2.0 * Math.PI * normU) * Math.sqrt(1.0 - normV * normV);
                 double y = Math.sin(2.0 * Math.PI * normU) * Math.sqrt(1.0 - normV * normV);
                 double z = normV;
-                
+
                 x *= baseFreq;
                 y *= baseFreq;
                 z *= baseFreq;
-                
+
                 float noiseSum = 0;
                 double amplitude = baseAmp;
                 for (int k = 1; k < octaves; k++) {
@@ -229,7 +234,7 @@ public class NoiseGenerator {
                 }
             }
         }
-        
+
         if (!cancelled) {
             normalizeLoop:
             for (int j = 0; j < height; j++) {
@@ -240,19 +245,23 @@ public class NoiseGenerator {
                     }
                     noiseBuffer[j][i] /= max;
                     switch (mode) {
-                        case NONE: noiseBuffer[j][i] = 0.5f * (1 + noiseBuffer[j][i]);
+                        case NONE:
+                            noiseBuffer[j][i] = 0.5f * (1 + noiseBuffer[j][i]);
                             break;
-                        case SQUARE: noiseBuffer[j][i] = (float) Math.pow(noiseBuffer[j][i], 2);
+                        case SQUARE:
+                            noiseBuffer[j][i] = (float) Math.pow(noiseBuffer[j][i], 2);
                             break;
-                        case CUBE: noiseBuffer[j][i] = 0.5f * (1 + (float) Math.pow(noiseBuffer[j][i], 3));
+                        case CUBE:
+                            noiseBuffer[j][i] = 0.5f * (1 + (float) Math.pow(noiseBuffer[j][i], 3));
                             break;
-                        case ABS: noiseBuffer[j][i] = (float) Math.abs(noiseBuffer[j][i]);
+                        case ABS:
+                            noiseBuffer[j][i] = (float) Math.abs(noiseBuffer[j][i]);
                     }
                 }
             }
         }
     }
-    
+
     public Image getDiffuse() {
         int scaleFactor;
         if (width * height >= 500000) {
@@ -260,9 +269,9 @@ public class NoiseGenerator {
         } else {
             scaleFactor = 1;
         }
-        
-        int widthScaled = (int) Math.ceil((double)width / scaleFactor);
-        int heightScaled = (int) Math.ceil((double)height / scaleFactor); 
+
+        int widthScaled = (int) Math.ceil((double) width / scaleFactor);
+        int heightScaled = (int) Math.ceil((double) height / scaleFactor);
         WritableImage img = new WritableImage(widthScaled, heightScaled);
         PixelWriter writer = img.getPixelWriter();
         diffuseLoop:
@@ -276,7 +285,7 @@ public class NoiseGenerator {
         }
         return img;
     }
-    
+
     public Image getNormal(double intensity) {
         if (width * height < 500000) {
             return null;
@@ -311,6 +320,7 @@ public class NoiseGenerator {
     }
 
     private static class Grad {
+
         double x, y, z;
 
         Grad(double x, double y, double z) {

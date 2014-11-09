@@ -10,33 +10,31 @@ import spacetrader.star_system.Planet;
 
 /**
  * MTLP = Minimum Tech Level to Produce this resource (You can't buy on planets below this level)
- * MTLU = Minimum Tech Level to Use this resource (You can't sell on planets below this level)
- * TTP = Tech Level which produces the most of this item
- * IPL = Price increase per tech level
- * VAR = variance is the maximum percentage that the price can vary above or below the base
- * IE = Radical price increase event, when this even happens on a planet, the price may increase astronomically
- * CR = When this condition is present, the price of this resource is unusually low
- * ER = When this condition is present, the resource is expensive
- * MTL = Min price offered in space trade with random trader (not on a planet)
- * MTH = Max price offered in space trade with random trader (not on a planet)
- * TechLevel {PREAGRICULTURAL [0], AGRICULTURAL [1], MEDIEVAL [2], RENAISSANCE [3],
- *            EARLYINDUSTRIAL [4], INDUSTRIAL [5], POSTINDUSTRIAL [6], HIGHTECH [7]};
- * ResourceLevel {NOSPECIALRESOURCES [0], MINERALRICH [1], MINERALPOOR [2],
- *                DESERT [3], LOTSOFWATER [4], RICHSOIL [5], POORSOIL [6],
- *                RICHFAUNA [7], LIFELESS [8], WEIRDMUSHROOMS [9],
- *                LOTSOFHERBS [10], ARTISTIC [11], WARLIKE [12]};
- * Circumstance {NONE [0], DROUGHT [1], COLD [2], CROPFAIL [3], WAR [4],
-                 BOREDOM [5], PLAGUE [6], LACKOFWORKERS [7]};
- * If ie, cr, or er == -1, means never
+ * MTLU = Minimum Tech Level to Use this resource (You can't sell on planets below this level) TTP =
+ * Tech Level which produces the most of this item IPL = Price increase per tech level VAR =
+ * variance is the maximum percentage that the price can vary above or below the base IE = Radical
+ * price increase event, when this even happens on a planet, the price may increase astronomically
+ * CR = When this condition is present, the price of this resource is unusually low ER = When this
+ * condition is present, the resource is expensive MTL = Min price offered in space trade with
+ * random trader (not on a planet) MTH = Max price offered in space trade with random trader (not on
+ * a planet) TechLevel {PREAGRICULTURAL [0], AGRICULTURAL [1], MEDIEVAL [2], RENAISSANCE [3],
+ * EARLYINDUSTRIAL [4], INDUSTRIAL [5], POSTINDUSTRIAL [6], HIGHTECH [7]}; ResourceLevel
+ * {NOSPECIALRESOURCES [0], MINERALRICH [1], MINERALPOOR [2], DESERT [3], LOTSOFWATER [4], RICHSOIL
+ * [5], POORSOIL [6], RICHFAUNA [7], LIFELESS [8], WEIRDMUSHROOMS [9], LOTSOFHERBS [10], ARTISTIC
+ * [11], WARLIKE [12]}; Circumstance {NONE [0], DROUGHT [1], COLD [2], CROPFAIL [3], WAR [4],
+ * BOREDOM [5], PLAGUE [6], LACKOFWORKERS [7]}; If ie, cr, or er == -1, means never
+ *
  * @author Ryan Burns
  */
 public class TradeGood implements Serializable {
+
     public GoodType type;
     private final Planet planet;
     private int price;
     private int quantity;
     // Price multipliers from government type of the planet
     private final static Map<Government.Type, Double> govPrice;
+
     static {
         Map<Government.Type, Double> govPrice2 = new HashMap<>();
         govPrice2.put(Government.Type.ANARCHY, 1.5);
@@ -55,6 +53,7 @@ public class TradeGood implements Serializable {
     }
     // Quantity multipliers from government type of the planet
     private final static Map<Government.Type, Double> govQuantity;
+
     static {
         Map<Government.Type, Double> govQuantity2 = new HashMap<>();
         govQuantity2.put(Government.Type.ANARCHY, 1.0);
@@ -73,6 +72,7 @@ public class TradeGood implements Serializable {
     }
 
     public enum GoodType {
+
         Water(0, 0, 2, 30, 10, 3, 4, 1, 4, 3, 30, 500, "Water"),
         Furs(0, 0, 0, 250, 10, 10, 10, 2, 7, 8, 230, 280, "Furs"),
         Food(1, 0, 1, 100, 10, 5, 5, 3, 5, 6, 90, 160, "Food"),
@@ -140,12 +140,12 @@ public class TradeGood implements Serializable {
             thisPrice *= 1.5;
         }
         thisPrice *= govPrice.get(planet.getGovernment().getType());
-        return (int)thisPrice;
+        return (int) thisPrice;
     }
 
     public static GoodType fromNameToType(String name) {
         GoodType found = null;
-        for (GoodType type: GoodType.values()) {
+        for (GoodType type : GoodType.values()) {
             if (type.name.equals(name)) {
                 found = type;
             }
@@ -180,12 +180,12 @@ public class TradeGood implements Serializable {
 
     }
 
-    public void setPrice(int newPrice){
+    public void setPrice(int newPrice) {
         price = newPrice;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.type.name + " " + quantity;
     }
 }

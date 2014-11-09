@@ -22,19 +22,30 @@ import spacetrader.ui.Point;
 
 /**
  * FXML Controller for the generation of the universe
+ *
  * @author David Purcell
  */
 public class StarMapController implements ControlledScreen {
-    @FXML private Pane systemPane;
-    @FXML private Label fuelLabel;
-    @FXML private Label rangeLabel;
-    @FXML private Label hullLabel;
-    @FXML private Label dialogueField;
-    @FXML private Label dayLabel;
-    @FXML private Rectangle playerRectangle;
-    @FXML private Text playerText;
-    @FXML private Button backButton;
-    
+
+    @FXML
+    private Pane systemPane;
+    @FXML
+    private Label fuelLabel;
+    @FXML
+    private Label rangeLabel;
+    @FXML
+    private Label hullLabel;
+    @FXML
+    private Label dialogueField;
+    @FXML
+    private Label dayLabel;
+    @FXML
+    private Rectangle playerRectangle;
+    @FXML
+    private Text playerText;
+    @FXML
+    private Button backButton;
+
     private ScreensController parentController;
     private StarSystem[] systems;
     private Player player;
@@ -43,7 +54,7 @@ public class StarMapController implements ControlledScreen {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        for (StarSystem system: systems) {
+        for (StarSystem system : systems) {
             str.append(system).append("\n");
         }
         return str.toString();
@@ -54,12 +65,12 @@ public class StarMapController implements ControlledScreen {
      */
     public void viewUniverse() {
         systemPane.getChildren().removeAll(systemPane.getChildren());
-        
+
         // Update player ship display
         fuelLabel.setText(Double.toString(player.getShip().getFuel()));
         rangeLabel.setText(Integer.toString(player.getShip().getRange()));
         hullLabel.setText(Integer.toString(player.getShip().getHull()));
-        
+
         // If the player doesn't have a system or planet, just draw them somewhere
         // TODO: Randomize start location or pick a noob spot
         if (player.getSystem() == null && player.getPlanet() == null) {
@@ -68,13 +79,13 @@ public class StarMapController implements ControlledScreen {
         }
 
         // Adding systems to map
-        for (StarSystem system: systems) {
+        for (StarSystem system : systems) {
 
             // Draw a yellow circle to represent star at center of system
             Circle star = new Circle(system.getCoordinateX(), system.getCoordinateY(), 10, system.getColor());
             star.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
                 viewSystem(system);
-            });         
+            });
             systemPane.getChildren().add(star);
 
             // If player is in this system, draw them
@@ -120,13 +131,14 @@ public class StarMapController implements ControlledScreen {
                 });
                 travelButton.setLayoutX(system.getCoordinateX() - 50);
                 travelButton.setLayoutY(system.getCoordinateY() - 100);
-                systemPane.getChildren().add(travelButton);   
+                systemPane.getChildren().add(travelButton);
             }
         }
     }
 
     /**
      * View of a specific system within the universe
+     *
      * @param system The system to be viewed
      */
     public void viewSystem(StarSystem system) {
@@ -136,7 +148,7 @@ public class StarMapController implements ControlledScreen {
         fuelLabel.setText(Double.toString(player.getShip().getFuel()));
         rangeLabel.setText(Integer.toString(player.getShip().getRange()));
         hullLabel.setText(Integer.toString(player.getShip().getHull()));
-        
+
         // If the player is in the system, but has not traveled to a planet yet, draw player at arbitrary point
         if (system.hasPlayer && player.getPlanet() == null) {
             player.setCoordinates(new Point(100, 100));
@@ -146,10 +158,10 @@ public class StarMapController implements ControlledScreen {
         // Go back to the universe view
         backButton = new Button("GO BACK");
         backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
-                viewUniverse();
-            });
+            viewUniverse();
+        });
         systemPane.getChildren().add(backButton);
-        
+
         // Name of system
         Text systemText = new Text(600, 50, system.getName());
         systemText.setFont(Font.font("Verdana", 40));
@@ -163,7 +175,7 @@ public class StarMapController implements ControlledScreen {
         // Loop through planets, adding them at equal intervals around the star
         int numPlanets = system.getPlanets().length;
         int degrees = 0;
-        for (Planet planet: system.getPlanets()) {
+        for (Planet planet : system.getPlanets()) {
 
             // Draw circle for planet
             double planetX = star.getCenterX() + (5 * planet.getOrbitDistance() * Math.cos(degrees * 0.0174532925));
@@ -171,35 +183,34 @@ public class StarMapController implements ControlledScreen {
             Circle planetCircle = new Circle(planetX, planetY, planet.getSize() * Math.sqrt(5), Color.BLUE);//planet.getColor());
             planetCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
                 viewPlanet(planet, system);
-            }); 
+            });
             systemPane.getChildren().add(planetCircle);
 
             // Write name of planet above the planet's circle
             Text planetText = new Text(planetCircle.getCenterX() - planet.getName().length() * 3, planetCircle.getCenterY() - 30, planet.getName());
-            planetText.setFont(Font.font ("Verdana", 20));
+            planetText.setFont(Font.font("Verdana", 20));
             planetText.setFill(Color.WHITE);
             systemPane.getChildren().add(planetText);
 
             // If the player is in this system and not already at this planet, allow travel to this planet
             //if (system.hasPlayer && !planet.hasPlayer) {
-
-                // Button to travel to this planet from inside system
-                Button travelButton = new Button("Travel to " + planet.getName());
-                travelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
-                    travelToPlanet(planet, system);
-                });
-                travelButton.setLayoutX(planetX - 50);
-                travelButton.setLayoutY(planetY - 75);
-                systemPane.getChildren().add(travelButton);
+            // Button to travel to this planet from inside system
+            Button travelButton = new Button("Travel to " + planet.getName());
+            travelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
+                travelToPlanet(planet, system);
+            });
+            travelButton.setLayoutX(planetX - 50);
+            travelButton.setLayoutY(planetY - 75);
+            systemPane.getChildren().add(travelButton);
             //}
-            
+
             // Space station for player to buy things for their ship, not clickable from here
             Rectangle spaceStation = new Rectangle(5, 5);
             spaceStation.setFill(Color.GREY);
             spaceStation.setLayoutX(planetX + 25);
             spaceStation.setLayoutY(planetY);
             if (planet.getTechLevel() == TechLevel.HIGHTECH) {
-                systemPane.getChildren().add(spaceStation);   
+                systemPane.getChildren().add(spaceStation);
             }
 
             // If the player is at this planet, draw the player
@@ -212,12 +223,13 @@ public class StarMapController implements ControlledScreen {
 
     /**
      * View a specific planet
+     *
      * @param planet The planet to be viewed
      * @param system The system that the planet resides in
      */
     public void viewPlanet(Planet planet, StarSystem system) {
         systemPane.getChildren().removeAll(systemPane.getChildren());
-        
+
         // Update player ship display
         fuelLabel.setText(Double.toString(player.getShip().getFuel()));
         rangeLabel.setText(Integer.toString(player.getShip().getRange()));
@@ -227,17 +239,16 @@ public class StarMapController implements ControlledScreen {
 //        if (planet.hasPlayer) {
 //            drawPlayer(100, 100);
 //        }
-
         // Button to return to system view
         backButton = new Button("GO BACK");
         backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
-                viewSystem(system);
-            });
+            viewSystem(system);
+        });
         systemPane.getChildren().add(backButton);
 
         // Write the name of the planet
         Text planetTitle = new Text(600, 50, planet.getName());
-        planetTitle.setFont(Font.font ("Verdana", 40));
+        planetTitle.setFont(Font.font("Verdana", 40));
         planetTitle.setFill(Color.WHITE);
         systemPane.getChildren().add(planetTitle);
 
@@ -263,7 +274,7 @@ public class StarMapController implements ControlledScreen {
         spaceStation.setLayoutX(400);
         spaceStation.setLayoutY(260);
         if (planet.getTechLevel() == TechLevel.HIGHTECH) {
-            systemPane.getChildren().add(spaceStation);   
+            systemPane.getChildren().add(spaceStation);
         }
 
         // Button to go to the market
@@ -271,7 +282,7 @@ public class StarMapController implements ControlledScreen {
         marketButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent MouseEvent) -> {
             market = new MarketPlace(planet);
             if (ScreensController.isInitialized("Market")) {
-                ((MarketController)ScreensController.getController("Market")).display();
+                ((MarketController) ScreensController.getController("Market")).display();
             }
             parentController.setScreen("Market");
         });
@@ -283,6 +294,7 @@ public class StarMapController implements ControlledScreen {
 
     /**
      * Method to draw the player on the screen at given coordinates
+     *
      * @param x Horizontal component of the player
      * @param y Vertical component of the player
      */
@@ -298,20 +310,21 @@ public class StarMapController implements ControlledScreen {
 
     /**
      * Calculate integer distance from the player's coordinates to the given system
+     *
      * @param system The system in question
-     * @return  The distance between the player and the system
+     * @return The distance between the player and the system
      */
     public int getDistanceToSystem(StarSystem system) {
-        double distance = Math.sqrt(Math.pow(system.getCoordinateX() - player.getSystem().getCoordinateX(), 2) +
-                                    Math.pow(system.getCoordinateY() - player.getSystem().getCoordinateY(), 2));
-        return (int)distance;
+        double distance = Math.sqrt(Math.pow(system.getCoordinateX() - player.getSystem().getCoordinateX(), 2)
+                + Math.pow(system.getCoordinateY() - player.getSystem().getCoordinateY(), 2));
+        return (int) distance;
     }
 
     // TODO: Animations?
     // TODO: Random Encounters (pirates / police)?
     /**
-     * Method for the player to travel to a given system
-     * TODO: Here or model?
+     * Method for the player to travel to a given system TODO: Here or model?
+     *
      * @param system The system to be traveled to
      */
     public void travelToSystem(StarSystem system) {
@@ -347,6 +360,7 @@ public class StarMapController implements ControlledScreen {
 
     /**
      * Method for the player to travel to a given planet
+     *
      * @param planet The planet to be traveled to
      * @param system The system that planet resides in
      */
@@ -404,14 +418,14 @@ public class StarMapController implements ControlledScreen {
             }
             if (lostFood != 0) {
                 dialogueField.setText("You spiraled into a deep depression and tried to eat"
-                                    + " your way out of it! You have lost " + lostFood + " food!");
+                        + " your way out of it! You have lost " + lostFood + " food!");
             } else {
                 dialogueField.setText("");
             }
         } else if (rand == 5) {
             if ((myBay.getGoods().get("Robots") > 1) && (myBay.addTradeGood("Robots", 1) > 0)) {
                 dialogueField.setText("You taught your robots how to love, but maybe"
-                                        + " a little too well! You have gained 1 robot!");
+                        + " a little too well! You have gained 1 robot!");
             } else {
                 dialogueField.setText("");
             }
@@ -425,7 +439,7 @@ public class StarMapController implements ControlledScreen {
         // TODO
         //parentController.setScreen("PlayerCard");
     }
-    
+
     @FXML
     private void saveGameButtonAction(ActionEvent event) {
         Persistence.saveGame();

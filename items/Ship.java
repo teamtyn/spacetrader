@@ -9,9 +9,11 @@ import spacetrader.ui.SerializableColor;
 
 /**
  * Ship class, what the player travels around and transports cargo in
+ *
  * @author David Purcell
  */
 public class Ship implements Serializable {
+
     public ShipType type;
     private final Shield[] shields;
     private final Weapon[] weapons;
@@ -28,17 +30,19 @@ public class Ship implements Serializable {
      * ShipType contains TYPE(hullStrength, shieldSlots, weaponSlots, cargoBaySlots, fuelCapacity)
      */
     public enum ShipType {
+
         //Name      hull  fuelC S  W  C   E     cost  color
-        Flea        (10,  30,   0, 0, 10, 1,   100,  Color.BLUE), 
-        Gnat        (100, 100,  0, 1, 15, 1,   200,  Color.RED), 
-        Firefly     (100, 200,  0, 1, 20, 2,   500,  Color.GREEN), 
-        Mosquito    (300, 100,  1, 2, 15, 2,   750,  Color.ORANGE), 
-        Bumblebee   (100, 200,  1, 2, 20, 2,   750,  Color.YELLOW),
-        Beetle      (100, 1000, 1, 0, 50, 3,   1000, Color.PURPLE),
-        Hornet      (400, 100,  2, 3, 20, 3,   1000, Color.BROWN), 
-        Grasshopper (100, 200,  2, 2, 30, 3,   1000, Color.GREY), 
-        Termite     (500, 1000, 3, 1, 60, 4,   5000, Color.WHITE), 
-        Wasp        (500, 300,  2, 4, 35, 4,   5000, Color.ALICEBLUE);
+
+        Flea(10, 30, 0, 0, 10, 1, 100, Color.BLUE),
+        Gnat(100, 100, 0, 1, 15, 1, 200, Color.RED),
+        Firefly(100, 200, 0, 1, 20, 2, 500, Color.GREEN),
+        Mosquito(300, 100, 1, 2, 15, 2, 750, Color.ORANGE),
+        Bumblebee(100, 200, 1, 2, 20, 2, 750, Color.YELLOW),
+        Beetle(100, 1000, 1, 0, 50, 3, 1000, Color.PURPLE),
+        Hornet(400, 100, 2, 3, 20, 3, 1000, Color.BROWN),
+        Grasshopper(100, 200, 2, 2, 30, 3, 1000, Color.GREY),
+        Termite(500, 1000, 3, 1, 60, 4, 5000, Color.WHITE),
+        Wasp(500, 300, 2, 4, 35, 4, 5000, Color.ALICEBLUE);
 
         private int hullStrength;
         private final double fuelCapacity;
@@ -59,9 +63,11 @@ public class Ship implements Serializable {
             this.cost = cost;
             this.color = new SerializableColor(color);
         }
+
         public Color getColor() {
             return color.getColor();
         }
+
         public int getCost() {
             return cost;
         }
@@ -81,10 +87,9 @@ public class Ship implements Serializable {
     }
 
     //Add things to ship
-
     public boolean addShield(Shield newShield) {
         boolean success = false;
-        for (int i=0; i<shields.length; i++) {
+        for (int i = 0; i < shields.length; i++) {
             if (shields[i] == null && !success) {
                 shields[i] = newShield;
                 success = true;
@@ -92,9 +97,10 @@ public class Ship implements Serializable {
         }
         return success;
     }
+
     public boolean addWeapon(Weapon newWeapon) {
         boolean success = false;
-        for (int i=0; i<weapons.length; i++) {
+        for (int i = 0; i < weapons.length; i++) {
             if (weapons[i] == null && !success) {
                 weapons[i] = newWeapon;
                 success = true;
@@ -102,9 +108,10 @@ public class Ship implements Serializable {
         }
         return success;
     }
+
     public boolean addEngine(Engine newEngine) {
         boolean success = false;
-        for (int i=0; i<engines.length; i++) {
+        for (int i = 0; i < engines.length; i++) {
             if (engines[i] == null && !success) {
                 engines[i] = newEngine;
                 success = true;
@@ -112,12 +119,15 @@ public class Ship implements Serializable {
         }
         return success;
     }
+
     public void addEscapePod(EscapePod escapePod) {
         this.escapePod = escapePod;
     }
+
     public void addInsurance(Insurance insurance) {
         this.insurance = insurance;
     }
+
     public double addFuel(double newFuel) {
         fuel += newFuel;
         if (fuel > type.fuelCapacity) {
@@ -127,7 +137,6 @@ public class Ship implements Serializable {
     }
 
     //Remove things from ship
-  
     public Shield removeShield(int position) {
         Shield removed = null;
         if (position < shields.length) {
@@ -135,7 +144,8 @@ public class Ship implements Serializable {
             shields[position] = null;
         }
         return removed;
-    }   
+    }
+
     public Weapon removeWeapon(int position) {
         Weapon removed = null;
         if (position < weapons.length) {
@@ -144,6 +154,7 @@ public class Ship implements Serializable {
         }
         return removed;
     }
+
     public Engine removeEngine(int position) {
         Engine removed = null;
         if (position < engines.length) {
@@ -151,12 +162,14 @@ public class Ship implements Serializable {
             engines[position] = null;
         }
         return removed;
-    }  
+    }
+
     public EscapePod removeEscapePod() {
         EscapePod removed = escapePod;
         escapePod = null;
         return removed;
     }
+
     public Insurance removeInsurance() {
         Insurance removed = insurance;
         insurance = null;
@@ -167,60 +180,74 @@ public class Ship implements Serializable {
     public Shield[] getShields() {
         return shields;
     }
+
     public int getShieldSlots() {
         return shields.length;
     }
+
     public Weapon[] getWeapons() {
         return weapons;
     }
+
     public int getWeaponSlots() {
         return weapons.length;
     }
+
     public Engine[] getEngines() {
         return engines;
     }
+
     public int getEngineSlots() {
         return engines.length;
     }
+
     public CargoBay getCargoBay() {
         return cargoBay;
     }
+
     public int getCargoBaySlots() {
         return cargoBay.getCapacity();
     }
+
     public EscapePod getEscapePod() {
         return escapePod;
     }
+
     public Insurance getInsurance() {
         return insurance;
     }
+
     public int getHull() {
         return hull;
     }
+
     public double getFuel() {
         return fuel;
     }
+
     public double getFuelCapacity() {
         return type.fuelCapacity;
     }
+
     public double getFuelEfficiency() {
         double fuelEfficiency = 0;
-        for (Engine engine : engines){
-            if(engine != null){
+        for (Engine engine : engines) {
+            if (engine != null) {
                 fuelEfficiency += engine.getFuelEfficiency();
             }
         }
         return fuelEfficiency;
     }
+
     public double getMissingFuel() {
         return type.fuelCapacity - fuel;
     }
+
     public int getRange() {
-        return (int)(fuel * getFuelEfficiency());
+        return (int) (fuel * getFuelEfficiency());
     }
 
     // Other functionality
-
     public boolean travelDistance(int distance) {
         boolean success = false;
         if (distance <= getRange()) {
@@ -229,7 +256,7 @@ public class Ship implements Serializable {
         }
         return success;
     }
-    
+
     public int takeDamage(int damage) {
         // Shields???
         if (hull - damage >= 0) {
@@ -265,7 +292,7 @@ public class Ship implements Serializable {
         return cargoBay.getCapacity() - cargoBay.getCurrentSize();
     }
 
-    public void emptyFuel(){
+    public void emptyFuel() {
         fuel = 0;
     }
 }

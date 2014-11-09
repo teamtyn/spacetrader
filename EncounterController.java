@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader;
 
 import java.net.URL;
@@ -23,27 +22,30 @@ import javafx.scene.layout.Pane;
  * @author Administrator
  */
 public class EncounterController extends AnimationTimer implements Initializable, ControlledScreen {
+
     private ScreensController parentController;
     private EncounterSubScene encounterSubScene;
-    
+
     private SubScene subScene;
     private ShipView playerShip;
     private ControlledShipView enemyShip;
     private PerspectiveCamera camera;
-    
-    @FXML private Pane subScenePane;
-    
+
+    @FXML
+    private Pane subScenePane;
+
     private boolean wDown;
     private boolean aDown;
     private boolean sDown;
     private boolean dDown;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         //TODO
-    }    
+        //TODO
+    }
 
     @Override
     public void handle(long now) {
@@ -63,7 +65,7 @@ public class EncounterController extends AnimationTimer implements Initializable
             aDown = false;
             playerShip.applyTorque(1);
         }
-        
+
         enemyShip.getController().control();
         enemyShip.update();
         playerShip.update();
@@ -84,7 +86,7 @@ public class EncounterController extends AnimationTimer implements Initializable
         handleKeyboard();
         start();
     }
-    
+
     public void handleKeyboard() {
         subScene.setFocusTraversable(true);
         subScene.requestFocus();
@@ -105,7 +107,7 @@ public class EncounterController extends AnimationTimer implements Initializable
                     break;
             }
         });
-        
+
         subScene.setOnKeyReleased(event -> {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {

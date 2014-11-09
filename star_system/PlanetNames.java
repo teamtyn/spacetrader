@@ -8,11 +8,13 @@ import spacetrader.GameModel;
 
 /**
  * Generates planet names based on their original government.
+ *
  * @author Nico de Leon
  */
 public class PlanetNames {
-    private static final EnumMap<Government.Type, List<String>> nameLists =
-        new EnumMap<>(Government.Type.class);
+
+    private static final EnumMap<Government.Type, List<String>> nameLists
+            = new EnumMap<>(Government.Type.class);
 
     static {
         List<String> anarchicNames = new ArrayList<>();

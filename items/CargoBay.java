@@ -6,9 +6,11 @@ import spacetrader.market.TradeGood;
 
 /**
  * A CargoBay is defined by its capacity, current size, and contents (which are TradeGoods)
+ *
  * @author David Purcell
  */
 public class CargoBay implements Serializable {
+
     private int capacity;
     private int currentSize;
     private final HashMap<String, Integer> goods;
@@ -34,6 +36,7 @@ public class CargoBay implements Serializable {
 
     /**
      * Add as many goods as possible up to specified quantity
+     *
      * @param goodName The good to be stored in the cargo bay
      * @param quantity The quantity to be ideally stored in the cargo bay
      * @return The number of goods added
@@ -52,6 +55,7 @@ public class CargoBay implements Serializable {
 
     /**
      * Remove as many goods as possible up to specified quantity
+     *
      * @param goodName The good to be removed from the cargo bay
      * @param quantity The quantity to be ideally removed from the cargo bay
      * @return The number of goods removed
@@ -79,6 +83,7 @@ public class CargoBay implements Serializable {
 
     /**
      * Only to be used as a convenience when player upgrades their cargo bay
+     *
      * @param capacity The new capacity of the cargo bay
      */
     public void setCapacity(int capacity) {
@@ -88,7 +93,7 @@ public class CargoBay implements Serializable {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("Cargo bay contents: \n");
-        for (String goodName: goods.keySet()) {
+        for (String goodName : goods.keySet()) {
             str.append(goodName);
             str.append(": ");
             str.append(goods.get(goodName));

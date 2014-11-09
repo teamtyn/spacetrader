@@ -3,22 +3,23 @@ package spacetrader.ui;
 import java.io.Serializable;
 
 public class Point implements Serializable {
+
     private final double x, y, z;
 
     /**
-     * 
+     *
      * @param x
-     * @param y 
+     * @param y
      */
     public Point(double x, double y) {
         this(x, y, 0);
     }
 
     /**
-     * 
+     *
      * @param x
      * @param y
-     * @param z 
+     * @param z
      */
     public Point(double x, double y, double z) {
         this.x = x;
@@ -27,24 +28,24 @@ public class Point implements Serializable {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public double getX() {
         return x;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public double getY() {
         return y;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public double getZ() {
         return z;

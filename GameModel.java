@@ -21,9 +21,10 @@ import spacetrader.ui.Point;
  * Acts as the singleton for the game, notably holding the universal player
  */
 public class GameModel implements Serializable {
+
     public static final int UNIVERSE_WIDTH = 2000;
     public static final int UNIVERSE_HEIGHT = 2000;
-    
+
     private static GameModel state;
     private static final Random random = new Random();
     private static final ObserverRegistry observerRegistry = new ObserverRegistry();
@@ -44,12 +45,12 @@ public class GameModel implements Serializable {
     public static Stage getStage() {
         return stage;
     }
-    
+
     public static void initialize(Stage stage) {
         state = new GameModel();
         GameModel.stage = stage;
     }
-    
+
     public static void load(InputStream in) throws IOException {
         try (ObjectInputStream objectIn = new ObjectInputStream(in)) {
             state = GameModel.class.cast(objectIn.readObject());
@@ -57,7 +58,7 @@ public class GameModel implements Serializable {
             throw new IOException("Saved game in incompatible format.", e);
         }
     }
-    
+
     public static void save(OutputStream out) throws IOException {
         try (ObjectOutputStream objectOut = new ObjectOutputStream(out)) {
             objectOut.writeObject(state);
@@ -75,7 +76,7 @@ public class GameModel implements Serializable {
     public static StarSystem[] getSystems() {
         return state.systems;
     }
-    
+
     public static Random getRandom() {
         return random;
     }
@@ -96,7 +97,7 @@ public class GameModel implements Serializable {
             }
         }
         Collections.shuffle(positions, random);
-        
+
         state.systems = new StarSystem[10];
         for (int i = 0; i < state.systems.length; i++) {
             state.systems[i] = new StarSystem(StarSystemNames.getName(), positions.remove(0));

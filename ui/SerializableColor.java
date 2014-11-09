@@ -7,29 +7,30 @@ import java.io.Serializable;
 import javafx.scene.paint.Color;
 
 public class SerializableColor implements Serializable {
+
     private transient Color color;
 
     /**
-     * 
-     * @param color 
+     *
+     * @param color
      */
     public SerializableColor(Color color) {
         this.color = color;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public Color getColor() {
         return color;
     }
 
     /**
-     * 
+     *
      * @param in
      * @throws IOException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
@@ -37,9 +38,9 @@ public class SerializableColor implements Serializable {
     }
 
     /**
-     * 
+     *
      * @param out
-     * @throws IOException 
+     * @throws IOException
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
