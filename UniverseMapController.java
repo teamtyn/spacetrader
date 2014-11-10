@@ -77,6 +77,10 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     private Button marketButton;
     @FXML
     private Button spaceStationButton;
+    @FXML
+    private Button mercenaryButton;
+    @FXML
+    private Button saveButton;
 
     private Timeline hideInfo;
     private Timeline systemInfo;
@@ -313,6 +317,8 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         travelButton.setDisable(true);
         marketButton.setDisable(true);
         spaceStationButton.setDisable(true);
+        mercenaryButton.setDisable(true);
+        
     }
 
     /**
@@ -329,6 +335,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         if (player.getPlanet() == planet.getPlanet()) {
             travelButton.setText("To Surface");
             marketButton.setDisable(false);
+            mercenaryButton.setDisable(false);
             if (player.getPlanet().getTechLevel() == TechLevel.HIGHTECH) {
                 spaceStationButton.setDisable(false);
             }
@@ -371,6 +378,11 @@ public class UniverseMapController extends AnimationTimer implements Initializab
 
     @FXML
     private void spaceStationButtonAction(ActionEvent event) {
+        parentController.setScreen("SpaceStation");
+    }
+    
+    @FXML
+    private void mercenaryButtonAction(ActionEvent event) {
         parentController.setScreen("SpaceStation");
     }
 

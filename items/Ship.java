@@ -2,6 +2,8 @@ package spacetrader.items;
 
 import java.io.Serializable;
 import javafx.scene.paint.Color;
+import spacetrader.player.AbstractCrewMember;
+import spacetrader.player.Mercenary;
 import spacetrader.ui.SerializableColor;
 
 /**
@@ -15,7 +17,9 @@ public class Ship implements Serializable {
     private final Shield[] shields;
     private final Weapon[] weapons;
     private final Engine[] engines;
+    private final AbstractCrewMember[] crew;
     private final CargoBay cargoBay;
+    private int crewNumber;
     private int hull;
     private int shield;
     private Color color;
@@ -26,18 +30,18 @@ public class Ship implements Serializable {
      */
     public enum ShipType {
 
-        //Name      hull  fuelC S  W  C   E     cost  color
+        //Name      hull  fuelC S  W  C   E     Cr   cost  color
 
-        Flea(10, 30, 0, 0, 10, 1, 100, Color.BLUE),
-        Gnat(100, 100, 0, 1, 15, 1, 200, Color.RED),
-        Firefly(100, 200, 0, 1, 20, 2, 500, Color.GREEN),
-        Mosquito(300, 100, 1, 2, 15, 2, 750, Color.ORANGE),
-        Bumblebee(100, 200, 1, 2, 20, 2, 750, Color.YELLOW),
-        Beetle(100, 1000, 1, 0, 50, 3, 1000, Color.PURPLE),
-        Hornet(400, 100, 2, 3, 20, 3, 1000, Color.BROWN),
-        Grasshopper(100, 200, 2, 2, 30, 3, 1000, Color.GREY),
-        Termite(500, 1000, 3, 1, 60, 4, 5000, Color.WHITE),
-        Wasp(500, 300, 2, 4, 35, 4, 5000, Color.ALICEBLUE);
+        Flea(10, 30, 0, 0, 10, 1, 1, 100, Color.BLUE),
+        Gnat(100, 100, 0, 1, 15, 1, 2, 200, Color.RED),
+        Firefly(100, 200, 0, 1, 20, 2, 5, 500, Color.GREEN),
+        Mosquito(300, 100, 1, 2, 15, 2, 7, 750, Color.ORANGE),
+        Bumblebee(100, 200, 1, 2, 20, 2, 7, 750, Color.YELLOW),
+        Beetle(100, 1000, 1, 0, 50, 3, 10, 1000, Color.PURPLE),
+        Hornet(400, 100, 2, 3, 20, 3, 10,  1000, Color.BROWN),
+        Grasshopper(100, 200, 2, 2, 30, 3, 10, 1000, Color.GREY),
+        Termite(500, 1000, 3, 1, 60, 4, 50, 5000, Color.WHITE),
+        Wasp(500, 300, 2, 4, 35, 4, 50, 5000, Color.ALICEBLUE);
 
         private int hullStrength;
         private final double fuelCapacity;
@@ -45,11 +49,12 @@ public class Ship implements Serializable {
         private int shieldSlots;
         private int engineSlots;
         private int cargoBaySlots;
+        private int crewSlots;
         private final int cost;
         private final SerializableColor color;
 
         /**
-         * Constructor for ShipType
+         * Constructor for ShipType.
          *
          * @param hullStrength the hull strength for this type of ship
          * @param fuelCapacity the fuel capacity for this type of ship
@@ -57,16 +62,18 @@ public class Ship implements Serializable {
          * @param weaponSlots the weapon slots for this type of ship
          * @param cargoBaySlots the cargo bay slots for this type of ship
          * @param engineSlots the engine slots for this type of ship
+         * @param crewSlots the crew slots for this type of ship
          * @param cost the cost for this type of ship
          * @param color the color used to fill in the square for this ship
          */
-        ShipType(int hullStrength, double fuelCapacity, int shieldSlots, int weaponSlots, int cargoBaySlots, int engineSlots, int cost, Color color) {
+        ShipType(int hullStrength, double fuelCapacity, int shieldSlots, int weaponSlots, int cargoBaySlots, int engineSlots, int crewSlots, int cost, Color color) {
             this.hullStrength = hullStrength;
             this.fuelCapacity = fuelCapacity;
             this.shieldSlots = shieldSlots;
             this.weaponSlots = weaponSlots;
             this.cargoBaySlots = cargoBaySlots;
             this.engineSlots = engineSlots;
+            this.crewSlots = crewSlots;
             this.cost = cost;
             this.color = new SerializableColor(color);
         }
@@ -91,7 +98,7 @@ public class Ship implements Serializable {
     };
 
     /**
-     * Constructor for a Ship
+     * Constructor for a Ship.
      *
      * @param type the ShipType that this ship is based on
      */
@@ -100,7 +107,9 @@ public class Ship implements Serializable {
         shields = new Shield[type.shieldSlots];
         weapons = new Weapon[type.weaponSlots];
         engines = new Engine[type.engineSlots];
+        crew = new Mercenary[type.crewSlots];
         cargoBay = new CargoBay(type.cargoBaySlots);
+        crewNumber = 0;
         hull = type.hullStrength;
         fuel = 0;
         this.shield = 0;
@@ -158,7 +167,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Adder for fuel
+     * Adder for fuel.
      *
      * @param newFuel the amount of fuel to be added
      * @return the new amount of fuel
@@ -170,9 +179,19 @@ public class Ship implements Serializable {
         }
         return fuel;
     }
+    
+    public boolean addCrewMember(AbstractCrewMember cm) {
+        boolean success = false;
+        if(crewNumber < getCrewSlots()) {
+            crew[crewNumber] = cm;
+            crewNumber++;
+            success = true;
+        }
+        return success;
+    }
 
     /**
-     * Remover for a shield
+     * Remover for a shield.
      *
      * @param position the index to be removed from
      * @return the object that was removed
@@ -187,7 +206,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Remover for a weapon
+     * Remover for a weapon.
      *
      * @param position the index to be removed from
      * @return the object that was removed
@@ -202,7 +221,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Remover for a engine
+     * Remover for an engine.
      *
      * @param position the index to be removed from
      * @return the object that was removed
@@ -217,7 +236,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for shields
+     * Getter for shields.
      *
      * @return the shields for this ship
      */
@@ -226,7 +245,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for shield slots
+     * Getter for shield slots.
      *
      * @return the shield slots for this ship
      */
@@ -235,7 +254,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for weapons
+     * Getter for weapons.
      *
      * @return the weapons for this ship
      */
@@ -248,20 +267,41 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for engines
+     * Getter for engines.
      *
      * @return the engines for this ship
      */
     public Engine[] getEngines() {
         return engines;
     }
-
+    
+    /**
+     * Getter for the number of engine slots.
+     *
+     * @return the number of engine slots on this ship
+     */
     public int getEngineSlots() {
         return engines.length;
     }
+    /**
+     * Getter for the crew
+     *
+     * @return the crew for this ship
+     */
+    public AbstractCrewMember[] getCrew() {
+        return crew;
+    }
+    /**
+     * Getter for number of crew slots.
+     *
+     * @return the number of crew slots on this ship
+     */
+    public int getCrewSlots() {
+        return crew.length;
+    }
 
     /**
-     * Getter for Cargo bay
+     * Getter for Cargo bay.
      *
      * @return the Cargo bay for this ship
      */
@@ -274,7 +314,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for hull
+     * Getter for hull.
      *
      * @return the hull for this ship
      */
@@ -283,7 +323,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for fuel
+     * Getter for fuel.
      *
      * @return the fuel for this ship
      */
@@ -292,7 +332,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for fuel capacity
+     * Getter for fuel capacity.
      *
      * @return the fuel capacity for this ship
      */
@@ -301,7 +341,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for fuel efficiency
+     * Getter for fuel efficiency.
      *
      * @return the fuel efficiency for this ship
      */
@@ -316,7 +356,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for missing
+     * Getter for missing.
      *
      * @return the missing fuel for this ship
      */
@@ -325,7 +365,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Getter for range
+     * Getter for range.
      *
      * @return the range for this ship
      */
