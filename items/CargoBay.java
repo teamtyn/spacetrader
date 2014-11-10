@@ -43,14 +43,16 @@ public class CargoBay implements Serializable {
      */
     public int addTradeGood(String goodName, int quantityRequested) {
         int quantity = quantityRequested;
-        if ((quantity + currentSize) > capacity) {
-            quantity = capacity - currentSize;
-        }
-        if (quantity > 0) {
-            currentSize += quantity;
-            int oldNum = goods.get(goodName);
-            goods.replace(goodName, oldNum + quantity);
-        }
+        if(quantity > 0) {
+            if ((quantity + currentSize) > capacity) {
+                quantity = capacity - currentSize;
+            }
+            if (quantity > 0) {
+                currentSize += quantity;
+                int oldNum = goods.get(goodName);
+                goods.replace(goodName, oldNum + quantity);
+            }
+        } else { quantity = 0; }
         return quantity;
     }
 
