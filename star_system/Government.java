@@ -20,17 +20,21 @@ public class Government implements Serializable {
     private HashMap<Type, String> leaders;
     private Type type;
     private String leader;
-    private int anger;
 
+    /**
+     * No argument constructor for a Government
+     */
     public Government() {
         type = Type.values()[GameModel.getRandom().nextInt(Type.values().length)];
         leaders = new HashMap<>();
         //setUpLeaderMap();
         //leader = leaders.get(type);
         leader = "THE PEOPLE";
-        anger = 0;
     }
 
+    /**
+     * Method that creates a map of government type to leader names.
+     */
     public void setUpLeaderMap() {
         leaders.put(Type.ANARCHY, "No One");
         leaders.put(Type.ARISTOCRACY, "The Snobs");
@@ -46,47 +50,45 @@ public class Government implements Serializable {
         leaders.put(Type.THEOCRACY, "God");
     }
 
+    /**
+     * Getter for the leader of a government
+     * 
+     * @return the leader's name
+     */
     public String getLeader() {
         return leader;
     }
 
+    /**
+     * Setter for the new leader of a government
+     * 
+     * @param newLeader the new leader
+     */
     public void setLeader(String newLeader) {
         leader = newLeader;
     }
 
+    /**
+     * Getter for the type of government
+     * 
+     * @return the type of government
+     */
     public Type getType() {
         return type;
     }
 
+    /**
+     * Sets the government type to a new type
+     * 
+     * @param newType the new government type
+     */
     public void setType(Type newType) {
         type = newType;
     }
 
-    public int getAnger() {
-        return anger;
-    }
-
-    public void setAnger(int newAnger) {
-        anger = newAnger;
-    }
-
-    public void revolution() {
-        type = Type.ANARCHY;
-        leader = null;
-        //leader = leaders.get(type);
-        anger = Integer.MAX_VALUE;
-    }
-
     @Override
     public String toString() {
-        String str = "Government Type: " + type + "\nLeader: " + leader
-                + "\nAnger Level: " + anger;
+        String str = "Government Type: " + type + "\nLeader: " + leader;
         return str;
-    }
-
-    public void toMonarchy(String name) {
-        type = Type.MONARCHY;
-        leader = name;
-        anger = 0;
     }
 }
