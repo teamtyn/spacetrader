@@ -188,19 +188,23 @@ public class UniverseMapController extends AnimationTimer implements Initializab
             }
         };
 
-        EventHandler<MouseEvent> bodyDeselect = (MouseEvent event) -> {
-            highlighted = null;
-            highlight.setVisible(false);
-            if (selectedPlanet == null) {
-                if (selectedSystem == null) {
-                    hideInfo.play();
+        EventHandler<MouseEvent> bodyDeselect = new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                highlighted = null;
+                highlight.setVisible(false);
+                if (selectedPlanet == null) {
+                    if (selectedSystem == null) {
+                        hideInfo.play();
+                    } else {
+                        updateSystemInfo(selectedSystem);
+                        systemInfo.play();
+                    }
                 } else {
-                    updateSystemInfo(selectedSystem);
-                    systemInfo.play();
+                    updatePlanetInfo(selectedPlanet);
+                    planetInfo.play();
                 }
-            } else {
-                updatePlanetInfo(selectedPlanet);
-                planetInfo.play();
             }
         };
 

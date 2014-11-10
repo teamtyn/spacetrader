@@ -123,7 +123,7 @@ public class GameModel implements Serializable {
     /**
      * Getter for the RANDOM variable.
      *
-     * @return
+     * @return the one true source of all randomness
      */
     public static Random getRandom() {
         return RANDOM;
