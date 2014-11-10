@@ -20,10 +20,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import spacetrader.items.*;
+import spacetrader.items.Engine;
 import spacetrader.items.Engine.EngineType;
+import spacetrader.items.Shield;
 import spacetrader.items.Shield.ShieldType;
+import spacetrader.items.Ship;
 import spacetrader.items.Ship.ShipType;
+import spacetrader.items.Weapon;
 import spacetrader.items.Weapon.WeaponType;
 import spacetrader.player.Player;
 

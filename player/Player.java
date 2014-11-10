@@ -3,8 +3,10 @@ package spacetrader.player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import spacetrader.items.*;
-import spacetrader.star_system.*;
+import spacetrader.items.Engine;
+import spacetrader.items.Ship;
+import spacetrader.star_system.Planet;
+import spacetrader.star_system.StarSystem;
 import spacetrader.ui.Point;
 
 public class Player extends AbstractCrewMember {

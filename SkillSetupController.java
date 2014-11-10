@@ -1,19 +1,22 @@
 package spacetrader;
 
-import spacetrader.player.*;
-
 import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
+import spacetrader.player.Player;
+import spacetrader.player.Skill;
 
 /**
  * FXML Controller class
