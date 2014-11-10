@@ -383,7 +383,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     
     @FXML
     private void mercenaryButtonAction(ActionEvent event) {
-        parentController.setScreen("SpaceStation");
+        parentController.setScreen("MercenaryShop");
     }
 
     @FXML
