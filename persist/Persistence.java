@@ -21,31 +21,33 @@ public class Persistence {
 
     public static boolean loadGame() {
         File loadFile = LOAD_CHOOSER.showOpenDialog(GameModel.getStage());
+        boolean success = false;
         if (loadFile != null) {
             try (FileInputStream loadStream = new FileInputStream(loadFile)) {
                 GameModel.load(loadStream);
-                return true;
+                success = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return false;
+        return success;
     }
 
     public static boolean saveGame() {
         File saveFile = SAVE_CHOOSER.showSaveDialog(GameModel.getStage());
+        boolean success = false;
         if (saveFile != null) {
             if (!saveFile.getName().toLowerCase().endsWith(".sts")) {
                 saveFile = new File(saveFile.getAbsolutePath() + ".sts");
             }
             try (FileOutputStream saveStream = new FileOutputStream(saveFile)) {
                 GameModel.save(saveStream);
-                return true;
+                success = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return false;
+        return success;
     }
 
     private static FileChooser createChooser(String title) {
