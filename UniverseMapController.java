@@ -286,7 +286,10 @@ public class UniverseMapController extends AnimationTimer implements Initializab
             }
         });
 
-        subScene.setOnScroll((ScrollEvent event) -> {
+        subScene.setOnScroll(new EventHandler<ScrollEvent>() {
+
+            @Override
+            public void handle(ScrollEvent event) {
                 if (selectedPlanet != null) {
                     camera.setTranslateZ(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -7));
                     if (camera.getTranslateZ() < -17) {
@@ -309,7 +312,8 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                 } else {
                     camera.setTranslateZ(Math.max(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -1000), -3000));
                 }
-            });
+            }
+        });
     }
 
     /**
