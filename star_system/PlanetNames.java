@@ -8,8 +8,7 @@ import spacetrader.GameModel;
 
 /**
  * Generates planet names based on their original government.
- *
- * @author Nico de Leon
+ * @author Team TYN
  */
 public class PlanetNames {
 

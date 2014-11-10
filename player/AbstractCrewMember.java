@@ -5,34 +5,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This is the AbstractCrewMember, the abstract class which is inherited by Player and all Mercenaries. All
- * crew members will have a name and a Map of String keys and Skill values.
- *
- * @author Clayton
+ * Abstract class which is inherited by Player and all Mercenaries.
+ * All crew members will have a name and a Map of String keys and Skill values
+ * @author Team TYN
  */
 public abstract class AbstractCrewMember implements Serializable {
-
-    Map<String, Skill> skills = new HashMap();
-    String name;
+    /**
+     * The skills of the crew member.
+     */
+    protected Map<String, Skill> skills;
+    /**
+     * The name of the crew member.
+     */
+    protected String name;
 
     /**
-     * The no args constructor for CrewMember, creates a CrewMember whose name is redacted. Skills
-     * are created as usual.
+     * No args constructor for CrewMember, which
+     *     creates a CrewMember whose name is redacted.
+     * Skills are created as usual
      */
     public AbstractCrewMember() {
         this("REDACTED");
     }
 
     /**
-     * Constructor for CrewMember, takes in a String newName and creates a CrewMember of that name.
-     * It also adds the skills to the CrewMember.
-     *
-     * @param newName the name for the crew member
+     * Constructor for CrewMember, takes in a String newName
+     *     and creates a CrewMember of that name.
+     * It also adds the skills to the CrewMember
+     * All skills have a default value of 1
+     * @param newName The new name for the crew member
      */
-    public AbstractCrewMember(String newName) {
+    public AbstractCrewMember(final String newName) {
         name = newName;
-        //These are the skills posessed by every single AbstractCrewMember, Player included.
-        //Default value is 1.
+        skills = new HashMap();
         skills.put("piloting", new Skill("piloting"));
         skills.put("fighting", new Skill("fighting"));
         skills.put("trading", new Skill("trading"));
@@ -41,32 +46,27 @@ public abstract class AbstractCrewMember implements Serializable {
     }
 
     /**
-     * Getter for skills
-     *
-     * @return
+     * Getter for the skills of the crew member.
+     * @return The skills of the crew member
      */
-    public Map<String, Skill> getSkills() {
+    public final Map<String, Skill> getSkills() {
         return skills;
     }
 
-        // Getter for an individual skill
     /**
-     * Getter for individual Skill
-     *
-     * @param type
-     * @return
+     * Getter for an individual skill of the crew member.
+     * @param type The skill to be evaluated for this crew member
+     * @return The value of the given skill
      */
-    public Skill getSkill(String type) {
+    public final Skill getSkill(final String type) {
         return skills.get(type);
     }
 
     /**
-     * Getter for name
-     *
-     * @return
+     * Getter for the name of the crew member.
+     * @return The name of the crew member
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
-
 }

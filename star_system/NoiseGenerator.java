@@ -8,13 +8,12 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 /**
- * A noise generator is used to generate textures for a planet view. A noise
- * buffer can be specified and then filled by sampling a three dimensional 
- * simplex noise function. Once the noise buffer is filled, a diffuse map can
- * be generated using a color gradient and a normal map can be generated using
- * a sobel filter.
- * 
- * @author Administrator
+ * A noise generator is used to generate textures for a planet view.
+ * A noise buffer can be specified and then filled by sampling a
+ *     three dimensional simplex noise function
+ * Once the noise buffer is filled, a diffuse map can be generated using a
+ *     color gradient and a normal map can be generated using a sobel filter
+ * @author Team TYN
  */
 public class NoiseGenerator {
 

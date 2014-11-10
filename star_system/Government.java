@@ -12,17 +12,16 @@ import spacetrader.GameModel;
 public class Government implements Serializable {
 
     public enum Type {
-
         ANARCHY, ARISTOCRACY, CAPITALIST, COMMUNIST,
         CORPORATE, DEMOCRACY, FASCIST, MERITOCRACY,
         MONARCHY, OLIGARCHY, TECHNOCRACY, THEOCRACY
     };
-    private HashMap<Type, String> leaders;
+    private final HashMap<Type, String> leaders;
     private Type type;
     private String leader;
 
     /**
-     * No argument constructor for a Government
+     * No argument constructor for a Government.
      */
     public Government() {
         type = Type.values()[GameModel.getRandom().nextInt(Type.values().length)];
@@ -51,43 +50,39 @@ public class Government implements Serializable {
     }
 
     /**
-     * Getter for the leader of a government
-     * 
-     * @return the leader's name
+     * Getter for the leader of the government.
+     * @return The leader of the government
      */
-    public String getLeader() {
+    public final String getLeader() {
         return leader;
     }
 
     /**
-     * Setter for the new leader of a government
-     * 
-     * @param newLeader the new leader
+     * Setter for the new leader of the government.
+     * @param newLeader The new leader
      */
-    public void setLeader(String newLeader) {
+    public void setLeader(final String newLeader) {
         leader = newLeader;
     }
 
     /**
-     * Getter for the type of government
-     * 
-     * @return the type of government
+     * Getter for the type of the government.
+     * @return The type of the government
      */
-    public Type getType() {
+    public final Type getType() {
         return type;
     }
 
     /**
-     * Sets the government type to a new type
-     * 
-     * @param newType the new government type
+     * Sets the government type to a new type.
+     * @param newType The new government type
      */
-    public void setType(Type newType) {
+    public void setType(final Type newType) {
         type = newType;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         String str = "Government Type: " + type + "\nLeader: " + leader;
         return str;
     }

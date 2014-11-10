@@ -6,16 +6,15 @@ import spacetrader.star_system.Planet.Environment;
 
 /**
  *
- * @author Administrator
+ * @author Team TYN
  */
 public class ColorGradient {
-
     private TreeMap<Float, Color> colors;
     private float seaLevel;
 
-    public ColorGradient(float sL, Environment scheme) {
+    public ColorGradient(final float aSeaLevel, final Environment scheme) {
         colors = new TreeMap<>();
-        seaLevel = sL;
+        seaLevel = aSeaLevel;
 
         switch (scheme) {
             case EARTH:

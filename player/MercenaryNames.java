@@ -6,11 +6,9 @@ import spacetrader.GameModel;
 
 /**
  * This class contains names for our mercenaries.
- *
- * @author Clayton
+ * @author Team TYN
  */
 public final class MercenaryNames {
-
     private static final List<String> NAMES = new ArrayList();
 
     static {
@@ -35,13 +33,11 @@ public final class MercenaryNames {
         NAMES.add("Zbygněv");
         NAMES.add("František");
         NAMES.add("Roman");
-
     }
 
     /**
      * Returns a randomly selected String name from the names list.
-     *
-     * @return the name to be returned
+     * @return The name
      */
     public static String getName() {
         return NAMES.get(GameModel.getRandom().nextInt(NAMES.size()));
