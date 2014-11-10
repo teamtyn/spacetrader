@@ -18,10 +18,9 @@ import spacetrader.star_system.StarSystemNames;
 import spacetrader.ui.Point;
 
 /**
- * Acts as the singleton for the game, notably holding the universal player
+ * Acts as the singleton for the game, holding all the state.
  */
 public class GameModel implements Serializable {
-
 
     public static final int UNIVERSE_WIDTH = 2000;
 
@@ -42,6 +41,7 @@ public class GameModel implements Serializable {
 
     /**
      * Getter for the ObserverRegistry variable.
+     *
      * @return the OBSERVERS
      */
     public static ObserverRegistry getObserverRegistry() {
@@ -50,6 +50,7 @@ public class GameModel implements Serializable {
 
     /**
      * Getter for the stage variable.
+     *
      * @return the stage, which is used to display our views
      */
     public static Stage getStage() {
@@ -57,18 +58,20 @@ public class GameModel implements Serializable {
     }
 
     /**
-     * Create a new GameModel and its stage variable
-     * @param stage the stage used by the GameModel for displaying views
+     * Create a new GameModel and its stage variable.
+     *
+     * @param aStage the stage used by the GameModel for displaying views
      */
-    public static void initialize(Stage stage) {
+    public static void initialize(Stage aStage) {
         state = new GameModel();
-        GameModel.stage = stage;
+        GameModel.stage = aStage;
     }
 
     /**
      * Load a previous save of the game.
+     *
      * @param in the stream that passes info from the save file to be deserialized
-     * @throws IOException
+     * @throws IOException if there was an error reading from the stream
      */
     public static void load(InputStream in) throws IOException {
         try (ObjectInputStream objectIn = new ObjectInputStream(in)) {
@@ -80,8 +83,9 @@ public class GameModel implements Serializable {
 
     /**
      * Save a current session of the game.
+     *
      * @param out the stream that passes info from the game to be serialized
-     * @throws IOException
+     * @throws IOException if there was an error writing to the stream
      */
     public static void save(OutputStream out) throws IOException {
         try (ObjectOutputStream objectOut = new ObjectOutputStream(out)) {
@@ -91,6 +95,7 @@ public class GameModel implements Serializable {
 
     /**
      * Setter for the player variable.
+     *
      * @param player the player of the game
      */
     public static void setPlayer(Player player) {
@@ -99,7 +104,7 @@ public class GameModel implements Serializable {
 
     /**
      * Getter for the player variable.
-     * 
+     *
      * @return the player of the game
      */
     public static Player getPlayer() {
@@ -108,7 +113,7 @@ public class GameModel implements Serializable {
 
     /**
      * Getter for the systems variable.
-     * 
+     *
      * @return the array of star system in the Universe
      */
     public static StarSystem[] getSystems() {
@@ -126,7 +131,8 @@ public class GameModel implements Serializable {
 
     /**
      * Getter for the day variable.
-     * @return the day, the basic unit of time in game
+     *
+     * @return the current day in the game
      */
     public static int getDay() {
         return state.day;
@@ -134,17 +140,17 @@ public class GameModel implements Serializable {
 
     /**
      * Setter for the day variable.
-     * @param the day, the basic unit of time in game
+     *
+     * @param day the current day in the game
      */
     public static void setDay(int day) {
         state.day = day;
     }
 
     /**
-     * Generate the systems of the Universe. The positions of each star system
-     * is decided by each one choosing a random point on an x, y plane where
-     * each point is a certain distance away from each other and the border
-     * of the Universe.
+     * Generate the systems of the Universe. The positions of each star system is decided by each
+     * one choosing a random point on an x, y plane where each point is a certain distance away from
+     * each other and the border of the Universe.
      */
     public static void generateSystems() {
         List<Point> positions = new ArrayList<>();
