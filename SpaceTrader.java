@@ -21,8 +21,8 @@ public class SpaceTrader extends Application {
     public static final int SCREEN_HEIGHT = 720;
 
     @Override
-    public void start(Stage stage) throws Exception {
-        ScreensController mainContainer = new ScreensController();
+    public void start(final Stage stage) {
+        final ScreensController mainContainer = new ScreensController();
         GameModel.initialize(stage);
         mainContainer.loadScreen("Menu", "Menu.fxml");
         mainContainer.loadScreen("SkillSetup", "SkillSetup.fxml");
@@ -42,7 +42,7 @@ public class SpaceTrader extends Application {
 
     /**
      * The main method of the application.
-     * @param args the array of String arguments
+     * @param args The array of String arguments
      */
     public static void main(String[] args) {
         launch(args);

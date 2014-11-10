@@ -7,6 +7,10 @@ import java.io.IOException;
 import javafx.stage.FileChooser;
 import spacetrader.GameModel;
 
+/**
+ * 
+ * @author Team TYN
+ */
 public class Persistence {
 
     private static final FileChooser.ExtensionFilter EXTENSION_FILTER

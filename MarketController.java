@@ -27,8 +27,7 @@ import spacetrader.market.TradeGood;
 import spacetrader.player.Player;
 
 /**
- * FXML Controller for the generation of a market
- *
+ * FXML Controller for the generation of a market.
  * @author Team TYN
  */
 public class MarketController implements

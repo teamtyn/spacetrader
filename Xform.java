@@ -8,16 +8,15 @@ import javafx.scene.transform.Translate;
 
 /**
  *
- * @author Administrator
+ * @author Team TYN
  */
 public class Xform extends Group {
 
     public enum RotateOrder {
-
         XYZ, XZY, YXZ, YZX, ZXY, ZYX
     }
 
-    private final Translate t = new Translate();
+    private final Translate translate = new Translate();
     private final Rotate rx = new Rotate();
 
     {
@@ -35,177 +34,323 @@ public class Xform extends Group {
     }
     private final Scale s = new Scale();
 
+    /**
+     * 
+     */
     public Xform() {
         super();
-        getTransforms().addAll(t, rz, ry, rx, s);
+        getTransforms().addAll(translate, rz, ry, rx, s);
     }
 
+    /**
+     * 
+     * @param rotateOrder 
+     */
     public Xform(RotateOrder rotateOrder) {
         super();
         // choose the order of rotations based on the rotateOrder
         switch (rotateOrder) {
             case XYZ:
-                getTransforms().addAll(t, rz, ry, rx, s);
+                getTransforms().addAll(translate, rz, ry, rx, s);
                 break;
             case XZY:
-                getTransforms().addAll(t, ry, rz, rx, s);
+                getTransforms().addAll(translate, ry, rz, rx, s);
                 break;
             case YXZ:
-                getTransforms().addAll(t, rz, rx, ry, s);
+                getTransforms().addAll(translate, rz, rx, ry, s);
                 break;
             case YZX:
-                getTransforms().addAll(t, rx, rz, ry, s);
+                getTransforms().addAll(translate, rx, rz, ry, s);
                 break;
             case ZXY:
-                getTransforms().addAll(t, ry, rx, rz, s);
+                getTransforms().addAll(translate, ry, rx, rz, s);
                 break;
             case ZYX:
-                getTransforms().addAll(t, rx, ry, rz, s);
+                getTransforms().addAll(translate, rx, ry, rz, s);
                 break;
         }
     }
 
-    public void setTranslate(double x, double y, double z) {
-        t.setX(x);
-        t.setY(y);
-        t.setZ(z);
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param z 
+     */
+    public final void setTranslate(final double x,
+            final double y, final double z) {
+        translate.setX(x);
+        translate.setY(y);
+        translate.setZ(z);
     }
 
-    public void setTranslate(double x, double y) {
-        t.setX(x);
-        t.setY(y);
+    /**
+     * 
+     * @param x
+     * @param y 
+     */
+    public final void setTranslate(final double x, final double y) {
+        translate.setX(x);
+        translate.setY(y);
     }
 
-    public void setTx(double x) {
-        t.setX(x);
+    /**
+     * 
+     * @param x 
+     */
+    public final void setTx(double x) {
+        translate.setX(x);
     }
 
-    public void setTy(double y) {
-        t.setY(y);
+    /**
+     * 
+     * @param y 
+     */
+    public final void setTy(double y) {
+        translate.setY(y);
     }
 
-    public void setTz(double z) {
-        t.setZ(z);
+    /**
+     * 
+     * @param z 
+     */
+    public final void setTz(double z) {
+        translate.setZ(z);
     }
 
-    public double getTx() {
-        return t.getTx();
+    /**
+     * 
+     * @return 
+     */
+    public final double getTx() {
+        return translate.getTx();
     }
 
-    public double getTy() {
-        return t.getTy();
+    /**
+     * 
+     * @return 
+     */
+    public final double getTy() {
+        return translate.getTy();
     }
 
-    public double getTz() {
-        return t.getTz();
+    /**
+     * 
+     * @return 
+     */
+    public final double getTz() {
+        return translate.getTz();
     }
 
-    public DoubleProperty xProperty() {
-        return t.xProperty();
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty xProperty() {
+        return translate.xProperty();
     }
 
-    public DoubleProperty yProperty() {
-        return t.yProperty();
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty yProperty() {
+        return translate.yProperty();
     }
 
-    public DoubleProperty zProperty() {
-        return t.zProperty();
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty zProperty() {
+        return translate.zProperty();
     }
 
-    public void setRotate(double x, double y, double z) {
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param z 
+     */
+    public final void setRotate(final double x, final double y, final double z) {
         rx.setAngle(x);
         ry.setAngle(y);
         rz.setAngle(z);
     }
 
-    public void setRx(double x) {
+    /**
+     * 
+     * @param x 
+     */
+    public final void setRx(final double x) {
         rx.setAngle(x);
     }
 
-    public void setRy(double y) {
+    /**
+     * 
+     * @param y 
+     */
+    public final void setRy(final double y) {
         ry.setAngle(y);
     }
 
-    public void setRz(double z) {
+    /**
+     * 
+     * @param z 
+     */
+    public final void setRz(final double z) {
         rz.setAngle(z);
     }
 
-    public double getRx() {
+    /**
+     * 
+     * @return 
+     */
+    public final double getRx() {
         return rx.getAngle();
     }
 
-    public double getRy() {
+    /**
+     * 
+     * @return 
+     */
+    public final double getRy() {
         return ry.getAngle();
     }
 
-    public double getRz() {
+    /**
+     * 
+     * @return 
+     */
+    public final double getRz() {
         return rz.getAngle();
     }
 
-    public DoubleProperty rxProperty() {
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty rxProperty() {
         return rx.angleProperty();
     }
 
-    public DoubleProperty ryProperty() {
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty ryProperty() {
         return ry.angleProperty();
     }
 
-    public DoubleProperty rzProperty() {
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty rzProperty() {
         return rz.angleProperty();
     }
 
-    public void setScale(double scaleFactor) {
+    /**
+     * 
+     * @param scaleFactor 
+     */
+    public final void setScale(final double scaleFactor) {
         s.setX(scaleFactor);
         s.setY(scaleFactor);
         s.setZ(scaleFactor);
     }
 
-    public void setScale(double x, double y, double z) {
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param z 
+     */
+    public final void setScale(final double x, final double y, final double z) {
         s.setX(x);
         s.setY(y);
         s.setZ(z);
     }
 
-    public void setSx(double x) {
+    /**
+     * 
+     * @param x 
+     */
+    public final void setSx(final double x) {
         s.setX(x);
     }
 
-    public void setSy(double y) {
+    /**
+     * 
+     * @param y 
+     */
+    public final void setSy(final double y) {
         s.setY(y);
     }
 
-    public void setSz(double z) {
+    /**
+     * 
+     * @param z 
+     */
+    public final void setSz(final double z) {
         s.setZ(z);
     }
 
-    public double getSx() {
+    /**
+     * 
+     * @return 
+     */
+    public final double getSx() {
         return s.getX();
     }
 
-    public double getSy() {
+    /**
+     * 
+     * @return 
+     */
+    public final double getSy() {
         return s.getY();
     }
 
-    public double getSz() {
+    /**
+     * 
+     * @return 
+     */
+    public final double getSz() {
         return s.getZ();
     }
 
-    public DoubleProperty sxProperty() {
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty sxProperty() {
         return s.xProperty();
     }
 
-    public DoubleProperty syProperty() {
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty syProperty() {
         return s.yProperty();
     }
 
-    public DoubleProperty szProperty() {
+    /**
+     * 
+     * @return 
+     */
+    public final DoubleProperty szProperty() {
         return s.zProperty();
     }
 
+    /**
+     * 
+     */
     public void reset() {
-        t.setX(0.0);
-        t.setY(0.0);
-        t.setZ(0.0);
+        translate.setX(0.0);
+        translate.setY(0.0);
+        translate.setZ(0.0);
         rx.setAngle(0.0);
         ry.setAngle(0.0);
         rz.setAngle(0.0);

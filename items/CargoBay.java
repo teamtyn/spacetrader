@@ -5,22 +5,37 @@ import java.util.HashMap;
 import spacetrader.market.TradeGood;
 
 /**
- * A CargoBay is defined by its capacity, current size, and contents (which are TradeGoods)
- *
- * @author David Purcell
+ * A CargoBay is defined by its capacity, current size,
+ *     and contents (which are TradeGoods).
+ * @author Team TYN
  */
 public class CargoBay implements Serializable {
-
+    /**
+     * The capacity of the cargo bay.
+     */
     private int capacity;
+    /**
+     * The current size of the cargo bay's contents.
+     */
     private int currentSize;
+    /**
+     * The goods contained in the cargo bay.
+     */
     private final HashMap<String, Integer> goods;
 
-    public CargoBay(int capacity) {
-        this.capacity = capacity;
+    /**
+     * Constructor for a cargo bay.
+     * @param aCapacity The capacity of the cargo bay
+     */
+    public CargoBay(final int aCapacity) {
+        capacity = aCapacity;
         goods = new HashMap<>(TradeGood.GoodType.values().length);
         setUpMap();
     }
 
+    /**
+     * 
+     */
     public final void setUpMap() {
         goods.put("Water", 0);
         goods.put("Furs", 0);
@@ -35,10 +50,10 @@ public class CargoBay implements Serializable {
     }
 
     /**
-     * Add as many goods as possible up to specified quantity
-     *
+     * Add as many goods as possible up to specified quantity.
      * @param goodName The good to be stored in the cargo bay
-     * @param quantityRequested The quantity to be ideally stored in the cargo bay
+     * @param quantityRequested The quantity to be ideally
+     *     stored in the cargo bay
      * @return The number of goods added
      */
     public int addTradeGood(String goodName, int quantityRequested) {
@@ -59,14 +74,12 @@ public class CargoBay implements Serializable {
     }
 
     /**
-     * Remove as many goods as possible up to specified quantity
-     *
+     * Remove as many goods as possible up to specified quantity.
      * @param goodName The good to be removed from the cargo bay
-     * @param quantityRequested The quantity to be ideally removed from the cargo bay
+     * @param quantity The quantity to be ideally removed from the cargo bay
      * @return The number of goods removed
      */
-    public int removeTradeGood(String goodName, int quantityRequested) {
-        int quantity = quantityRequested;
+    public int removeTradeGood(final String goodName, int quantity) {
         if (quantity > goods.get(goodName)) {
             quantity = goods.get(goodName);
         }
@@ -75,30 +88,41 @@ public class CargoBay implements Serializable {
         return quantity;
     }
 
-    public HashMap<String, Integer> getGoods() {
+    /**
+     * Getter for the goods of the cargo bay.
+     * @return The goods of the cargo bay
+     */
+    public final HashMap<String, Integer> getGoods() {
         return goods;
     }
 
-    public int getCapacity() {
+    /**
+     * Getter for the capacity of the cargo bay.
+     * @return The capacity of the cargo bay
+     */
+    public final int getCapacity() {
         return capacity;
     }
 
-    public int getCurrentSize() {
+    /**
+     * Getter for the current size of the cargo bay.
+     * @return The current size of the cargo bay
+     */
+    public final int getCurrentSize() {
         return currentSize;
     }
 
     /**
-     * Only to be used as a convenience when player upgrades their cargo bay
-     *
-     * @param capacity The new capacity of the cargo bay
+     * Only to be used as a convenience when player upgrades their cargo bay.
+     * @param aCapacity The new capacity of the cargo bay
      */
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setCapacity(final int aCapacity) {
+        capacity = aCapacity;
     }
 
     @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder("Cargo bay contents: \n");
+    public final String toString() {
+        final StringBuilder str = new StringBuilder("Cargo bay contents: \n");
         for (String goodName : goods.keySet()) {
             str.append(goodName);
             str.append(": ");
