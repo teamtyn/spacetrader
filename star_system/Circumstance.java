@@ -23,7 +23,7 @@ public class Circumstance implements Serializable {
     };
 
     /**
-     *
+     * No argument constructor for a circumstance.
      */
     public Circumstance() {
         type = Type.values()[GameModel.getRandom().nextInt(Type.values().length)];
@@ -33,39 +33,43 @@ public class Circumstance implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Getter for the type of circumstance.
+     * 
+     * @return the type of circumstance
      */
     public Type getType() {
         return type;
     }
 
     /**
-     *
-     * @return
+     * Getter for the current level of the circumstance.
+     * 
+     * @return the current level of the circumstance
      */
     public int getCurLevel() {
         return curLevel;
     }
 
     /**
-     *
-     * @return
+     * Getter for the max level of this circumstance.
+     * 
+     * @return the max level
      */
     public int getMaxLevel() {
         return maxLevel;
     }
 
     /**
-     *
-     * @return
+     * Getter for the ordinality.
+     * 
+     * @return the ordinality
      */
     public int getOrdinality() {
         return type.ordinal();
     }
 
     /**
-     *
+     * Method to increase or decrease the current level of the circumstance.
      */
     public void tickCurLevel() {
         if (ascending) {
