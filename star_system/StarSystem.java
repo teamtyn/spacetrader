@@ -20,6 +20,12 @@ public class StarSystem implements Serializable {
     private final SerializableColor color;
     public boolean hasPlayer;
 
+    /**
+     * Constructor for a StarSystem
+     * 
+     * @param name the name of the star system
+     * @param coordinates the location of the star system within the universe
+     */
     public StarSystem(String name, Point coordinates) {
         this.name = name;
         this.coordinates = coordinates;
@@ -35,22 +41,36 @@ public class StarSystem implements Serializable {
                 GameModel.getRandom().nextInt(25)));
     }
 
+    /**
+     * Getter for the name of a star system
+     * 
+     * @return the name of the star system
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter for the planets of a star system
+     * 
+     * @return the planets of the star system
+     */
     public Planet[] getPlanets() {
         return planets;
     }
 
+    /**
+     * Getter for the size of a star system
+     * 
+     * @return the size of the star system
+     */
     public double getSize() {
         return size;
     }
 
-    public Color getColor() {
-        return color.getColor();
-    }
-
+    /**
+     * Method to set the orbit distances for all the planets in the system
+     */
     public final void setOrbits() {
         double minDist = 20;
         double remDist = 80;
@@ -64,29 +84,31 @@ public class StarSystem implements Serializable {
         }
     }
 
-    public Planet destroyPlanet(int i) {
-        Planet dead = null;
-        if (i < planets.length) {
-            dead = planets[i];
-            planets[i] = null;
-        }
-        return dead;
-    }
-
-    public Point getCoordinates() {
-        return coordinates;
-    }
-
+    /**
+     * Getter for the X coordinate of a star system
+     * 
+     * @return the X coordinate of the star system
+     */
     public double getCoordinateX() {
         return coordinates.getX();
     }
 
+    /**
+     * Getter for the system distance of a star system
+     * 
+     * @return the system distance of the star system
+     */
     public double getSystemDistance(StarSystem other) {
         double dx = other.getCoordinateX() - coordinates.getX();
         double dy = other.getCoordinateY() - coordinates.getY();
         return Math.sqrt(dx * dx + dy * dy);
     }
 
+    /**
+     * Getter for the Y coordinate of a star system
+     * 
+     * @return the Y coordinate of the star system
+     */
     public double getCoordinateY() {
         return coordinates.getY();
     }
