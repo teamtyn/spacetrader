@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import spacetrader.star_system.Planet;
 
 /**
- * MarketSetup has three lists, goods, buyable, and sellable -goods are all the goods in the game,
- * prices based on the planet passed on -buyable are all the goods that are allowed to be bought
- * here (via tech level) -sellable are all the goods that are allowed to be sold here (via tech
- * level)
- *
+ * MarketSetup has three lists, goods, buyable, and sellable.
+ *     -goods are all the goods in the game, prices based on
+ *          the planet passed on
+ *     -buyable are all the goods that are allowed to be bought
+ *          here (via tech level)
+ *     -sellable are all the goods that are allowed to be sold
+ *          here (via tech level)
  * @author Ryan Burns
  */
 public class MarketPlace implements Serializable {

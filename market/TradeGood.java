@@ -9,25 +9,37 @@ import spacetrader.star_system.Government;
 import spacetrader.star_system.Planet;
 
 /**
- * MTLP = Minimum Tech Level to Produce this resource (You can't buy on planets below this level)
- * MTLU = Minimum Tech Level to Use this resource (You can't sell on planets below this level) TTP =
- * Tech Level which produces the most of this item IPL = Price increase per tech level VAR =
- * variance is the maximum percentage that the price can vary above or below the base IE = Radical
- * price increase event, when this even happens on a planet, the price may increase astronomically
- * CR = When this condition is present, the price of this resource is unusually low ER = When this
- * condition is present, the resource is expensive MTL = Min price offered in space trade with
- * random trader (not on a planet) MTH = Max price offered in space trade with random trader (not on
- * a planet) TechLevel {PREAGRICULTURAL [0], AGRICULTURAL [1], MEDIEVAL [2], RENAISSANCE [3],
- * EARLYINDUSTRIAL [4], INDUSTRIAL [5], POSTINDUSTRIAL [6], HIGHTECH [7]}; ResourceLevel
- * {NOSPECIALRESOURCES [0], MINERALRICH [1], MINERALPOOR [2], DESERT [3], LOTSOFWATER [4], RICHSOIL
- * [5], POORSOIL [6], RICHFAUNA [7], LIFELESS [8], WEIRDMUSHROOMS [9], LOTSOFHERBS [10], ARTISTIC
- * [11], WARLIKE [12]}; Circumstance {NONE [0], DROUGHT [1], COLD [2], CROPFAIL [3], WAR [4],
- * BOREDOM [5], PLAGUE [6], LACKOFWORKERS [7]}; If ie, cr, or er == -1, means never
+ * MTLP = Minimum Tech Level to produce this resource
+ *     (You can't buy on planets below this level)
+ * MTLU = Minimum Tech Level to use this resource
+ *     (You can't sell on planets below this level)
+ * TTP = Tech Level which produces the most of this item
+ * IPL = Price increase per tech level
+ * VAR = variance is the maximum percentage that the price can vary
+ *     above or below the base
+ * IE = Radical price increase event, when this event happens on a planet,
+ *     the price may increase astronomically
+ * CR = When this condition is present, the resource is cheap
+ * ER = When this condition is present, the resource is expensive
+ * MTL = Min price offered in space trade with random trader (not on a planet)
+ * MTH = Max price offered in space trade with random trader (not on a planet)
  *
+ * TechLevel -- {PREAGRICULTURAL [0], AGRICULTURAL [1], MEDIEVAL [2],
+ * RENAISSANCE [3], EARLYINDUSTRIAL [4], INDUSTRIAL [5],
+ * POSTINDUSTRIAL [6],HIGHTECH [7]};
+ *
+ * ResourceLevel -- {NOSPECIALRESOURCES [0], MINERALRICH [1], MINERALPOOR [2],
+ * DESERT [3], LOTSOFWATER [4], RICHSOIL [5], POORSOIL [6], RICHFAUNA [7],
+ * LIFELESS [8], WEIRDMUSHROOMS [9], LOTSOFHERBS [10],
+ * ARTISTIC [11], WARLIKE [12]};
+ *
+ * Circumstance -- {NONE [0], DROUGHT [1], COLD [2], CROPFAIL [3], WAR [4],
+ * BOREDOM [5], PLAGUE [6], LACKOFWORKERS [7]};
+ *
+ * If IE, CR, or ER == -1, it means that condition is never present
  * @author Ryan Burns
  */
 public class TradeGood implements Serializable {
-
     public GoodType type;
     private final Planet planet;
     private int price;
