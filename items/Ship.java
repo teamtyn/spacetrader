@@ -31,14 +31,13 @@ public class Ship implements Serializable {
     public enum ShipType {
 
         //Name      hull  fuelC S  W  C   E     Cr   cost  color
-
         Flea(10, 30, 0, 0, 10, 1, 1, 100, Color.BLUE),
         Gnat(100, 100, 0, 1, 15, 1, 2, 200, Color.RED),
         Firefly(100, 200, 0, 1, 20, 2, 5, 500, Color.GREEN),
         Mosquito(300, 100, 1, 2, 15, 2, 7, 750, Color.ORANGE),
         Bumblebee(100, 200, 1, 2, 20, 2, 7, 750, Color.YELLOW),
         Beetle(100, 1000, 1, 0, 50, 3, 10, 1000, Color.PURPLE),
-        Hornet(400, 100, 2, 3, 20, 3, 10,  1000, Color.BROWN),
+        Hornet(400, 100, 2, 3, 20, 3, 10, 1000, Color.BROWN),
         Grasshopper(100, 200, 2, 2, 30, 3, 10, 1000, Color.GREY),
         Termite(500, 1000, 3, 1, 60, 4, 50, 5000, Color.WHITE),
         Wasp(500, 300, 2, 4, 35, 4, 50, 5000, Color.ALICEBLUE);
@@ -179,10 +178,10 @@ public class Ship implements Serializable {
         }
         return fuel;
     }
-    
+
     public boolean addCrewMember(AbstractCrewMember cm) {
         boolean success = false;
-        if(crewNumber < getCrewSlots()) {
+        if (crewNumber < getCrewSlots()) {
             crew[crewNumber] = cm;
             crewNumber++;
             success = true;
@@ -274,7 +273,7 @@ public class Ship implements Serializable {
     public Engine[] getEngines() {
         return engines;
     }
-    
+
     /**
      * Getter for the number of engine slots.
      *
@@ -283,6 +282,7 @@ public class Ship implements Serializable {
     public int getEngineSlots() {
         return engines.length;
     }
+
     /**
      * Getter for the crew
      *
@@ -291,6 +291,7 @@ public class Ship implements Serializable {
     public AbstractCrewMember[] getCrew() {
         return crew;
     }
+
     /**
      * Getter for number of crew slots.
      *

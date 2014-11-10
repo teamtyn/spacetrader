@@ -28,7 +28,7 @@ public class Engine implements Serializable {
         Shetland(20, 25, 500, new SerializableColor(Color.RED), "Shetland"),
         Tawleed(50, 10, 500, new SerializableColor(Color.RED), "Tawleed"),
         Yakut(10, 250, 2500, new SerializableColor(Color.GOLD), "Yakut"),
-        Unicorn(250, 10, 2500, new SerializableColor(Color.GOLD), "Unicorn"),;
+        Unicorn(250, 10, 2500, new SerializableColor(Color.GOLD), "Unicorn");
 
         public final int acceleration;
         public final int fuelEfficiency;

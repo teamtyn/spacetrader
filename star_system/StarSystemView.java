@@ -38,7 +38,7 @@ public class StarSystemView extends Sphere {
         light = new PointLight();
         light.setLightOn(false);
         material = new PhongMaterial();
-        setMaterial(new PhongMaterial(Color.rgb(240, 255, 100)));//system.getColor()));
+        setMaterial(new PhongMaterial(Color.rgb(240, 255, 100))); //system.getColor()));
 
         systemXform.setTranslate(system.getCoordinateX(), system.getCoordinateY());
         systemXform.setRotate(180 * r.nextDouble(), 180 * r.nextDouble(), 0);

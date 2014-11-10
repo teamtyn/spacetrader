@@ -96,6 +96,7 @@ public class StarSystem implements Serializable {
     /**
      * Getter for the system distance of a star system
      * 
+     * @param other the other star system to measure the distance to
      * @return the system distance of the star system
      */
     public double getSystemDistance(StarSystem other) {

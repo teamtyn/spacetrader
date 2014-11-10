@@ -27,7 +27,7 @@ public abstract class AbstractCrewMember implements Serializable {
      * Constructor for CrewMember, takes in a String newName and creates a CrewMember of that name.
      * It also adds the skills to the CrewMember.
      *
-     * @param newName
+     * @param newName the name for the crew member
      */
     public AbstractCrewMember(String newName) {
         name = newName;

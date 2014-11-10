@@ -31,7 +31,7 @@ public class Shield implements Serializable {
         BatterSea(400, 5, 500, new SerializableColor(Color.DARKGOLDENROD), "BatterSea"),
         Scutum(500, 10, 1000, new SerializableColor(Color.DARKRED), "Scutum"),
         Aegis(500, 25, 2500, new SerializableColor(Color.YELLOW), "Aegis"),
-        Svalinn(1000, 10, 1000, new SerializableColor(Color.BLUEVIOLET), "Svalinn"),;
+        Svalinn(1000, 10, 1000, new SerializableColor(Color.BLUEVIOLET), "Svalinn");
 
         public final int shieldStrength;
         public final int rechargeRate;

@@ -30,7 +30,7 @@ public class Weapon implements Serializable {
         Scimitar(1, 500, 500, new SerializableColor(Color.RED), "Scimitar"),
         Claymore(500, 1, 500, new SerializableColor(Color.RED), "Claymore"),
         Joyeuse(100, 25, 2500, new SerializableColor(Color.GOLD), "Joyeuse"),
-        Szczerbiec(250, 10, 2500, new SerializableColor(Color.GOLD), "Szczerbiec"),;
+        Szczerbiec(250, 10, 2500, new SerializableColor(Color.GOLD), "Szczerbiec");
 
         public final int damage;
         public final int rateOfFire;
