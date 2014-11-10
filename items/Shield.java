@@ -1,14 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package spacetrader.items;
 
 import java.io.Serializable;
 import javafx.scene.paint.Color;
 import spacetrader.ui.SerializableColor;
 
+
+/**
+ * Shield is a class used to protect ships from taking direct damage.
+ * 
+ * @author Purcell7
+ */
 public class Shield implements Serializable {
 
     private int strength;
@@ -40,7 +41,7 @@ public class Shield implements Serializable {
         public final SerializableColor color;
 
         /**
-         * Constructor for ShieldType
+         * Constructor for ShieldType.
          *
          * @param shieldStrength The strength of this type of shield
          * @param rechargeRate The recharge rate of this type of shield
@@ -58,7 +59,7 @@ public class Shield implements Serializable {
     };
 
     /**
-     * Constructor for Shield
+     * Constructor for Shield.
      *
      * @param type The shield type of the shield
      */
@@ -70,7 +71,7 @@ public class Shield implements Serializable {
     }
 
     /**
-     * Getter for shield strength
+     * Getter for shield strength.
      *
      * @return the current strength of the shield
      */
@@ -79,7 +80,7 @@ public class Shield implements Serializable {
     }
 
     /**
-     * Getter for shield recharge rate
+     * Getter for shield recharge rate.
      *
      * @return the recharge rate of the shield
      */
@@ -88,7 +89,7 @@ public class Shield implements Serializable {
     }
 
     /**
-     * Recharges the shield by a certain amount
+     * Recharges the shield by a certain amount.
      *
      * @param time the amount of time the shield has to charge
      * @return the current strength of the shield
@@ -113,7 +114,7 @@ public class Shield implements Serializable {
     }
 
     /**
-     * Getter for the name of a shield
+     * Getter for the name of a shield.
      *
      * @return The name of the shield
      */

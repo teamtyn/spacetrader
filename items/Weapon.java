@@ -5,8 +5,9 @@ import javafx.scene.paint.Color;
 import spacetrader.ui.SerializableColor;
 
 /**
- *
- * @author Purcell7
+ * Weapon is a class used to attack other ships and deal damage
+ * 
+ * @author David Purcell
  */
 public class Weapon implements Serializable {
 
@@ -39,7 +40,7 @@ public class Weapon implements Serializable {
         public final SerializableColor color;
 
         /**
-         * Constructor for WeaponType
+         * Constructor for WeaponType.
          *
          * @param damage The damage of this type of weapon
          * @param rateOfFire The rate of fire of this type of weapon
@@ -57,7 +58,7 @@ public class Weapon implements Serializable {
     };
 
     /**
-     * Constructor for weapons
+     * Constructor for weapons.
      *
      * @param type The weapon type of the weapon
      */
@@ -69,7 +70,7 @@ public class Weapon implements Serializable {
     }
 
     /**
-     * Getter for the damage of a weapon
+     * Getter for the damage of a weapon.
      *
      * @return The damage of the weapon
      */
@@ -78,7 +79,7 @@ public class Weapon implements Serializable {
     }
 
     /**
-     * Getter for the rate of fire of a weapon
+     * Getter for the rate of fire of a weapon.
      *
      * @return The rate of fire of the weapon
      */
@@ -87,7 +88,7 @@ public class Weapon implements Serializable {
     }
 
     /**
-     * Getter for the type of a weapon
+     * Getter for the type of a weapon.
      *
      * @return The type of the weapon
      */
@@ -96,7 +97,7 @@ public class Weapon implements Serializable {
     }
 
     /**
-     * Getter for the name of a weapon
+     * Getter for the name of a weapon.
      *
      * @return The name of the weapon
      */

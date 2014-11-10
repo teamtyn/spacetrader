@@ -5,7 +5,8 @@ import javafx.scene.paint.Color;
 import spacetrader.ui.SerializableColor;
 
 /**
- *
+ * Engine is a class used to propel ships around the universe.
+ * 
  * @author Purcell7
  */
 public class Engine implements Serializable {
@@ -37,7 +38,7 @@ public class Engine implements Serializable {
         public final SerializableColor color;
 
         /**
-         * Constructor for EngineType
+         * Constructor for EngineType.
          *
          * @param acceleration The rate of change in velocity due to the engine
          * @param fuelEfficiency The rate at which fuel is burnt to travel distances
@@ -55,7 +56,7 @@ public class Engine implements Serializable {
     };
 
     /**
-     * No argument constructor for Shield, creates a Hackney engine (lowest level)
+     * No argument constructor for Shield, creates a Hackney engine (lowest level).
      */
     public Engine() {
         this.type = EngineType.Hackney;
@@ -65,7 +66,7 @@ public class Engine implements Serializable {
     }
 
     /**
-     * Constructor for Engine
+     * Constructor for Engine.
      *
      * @param type The engine type of the engine
      */
@@ -77,7 +78,7 @@ public class Engine implements Serializable {
     }
 
     /**
-     * Getter for acceleration
+     * Getter for acceleration.
      *
      * @return The engine's acceleration
      */
@@ -86,7 +87,7 @@ public class Engine implements Serializable {
     }
 
     /**
-     * Getter for fuel efficiency
+     * Getter for fuel efficiency.
      *
      * @return The engine's fuel efficiency
      */
@@ -95,7 +96,7 @@ public class Engine implements Serializable {
     }
 
     /**
-     * Getter for engine type
+     * Getter for engine type.
      *
      * @return The engine's engine type
      */
@@ -104,7 +105,7 @@ public class Engine implements Serializable {
     }
 
     /**
-     * Getter for engine name
+     * Getter for engine name.
      *
      * @return The engine's engine name
      */
