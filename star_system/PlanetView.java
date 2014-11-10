@@ -3,6 +3,7 @@ package spacetrader.star_system;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -169,10 +170,14 @@ public class PlanetView extends Sphere {
 
         ExecutorService execute;
         if (es == null) {
-            execute = Executors.newSingleThreadExecutor((Runnable runnable) -> {
-                Thread thread = Executors.defaultThreadFactory().newThread(runnable);
-                thread.setDaemon(true);
-                return thread;
+            execute = Executors.newSingleThreadExecutor(new ThreadFactory() {
+
+                @Override
+                public Thread newThread(Runnable runnable) {
+                    Thread thread = Executors.defaultThreadFactory().newThread(runnable);
+                    thread.setDaemon(true);
+                    return thread;
+                }
             });
         } else {
             execute = es;
