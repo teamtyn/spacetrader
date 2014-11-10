@@ -2,6 +2,12 @@ package spacetrader.ui;
 
 import java.io.Serializable;
 
+/**
+ * Point is a class used to store x,y,z cooridinates of objects within 
+ * the universe
+ * 
+ * @author Team TYN
+ */
 public class Point implements Serializable {
 
     private final double x;
@@ -9,19 +15,21 @@ public class Point implements Serializable {
     private final double z;
 
     /**
-     *
-     * @param x
-     * @param y
+     * 2D Constructor for point
+     * 
+     * @param x the x coordinate
+     * @param y the y coordinate
      */
     public Point(double x, double y) {
         this(x, y, 0);
     }
 
     /**
-     *
-     * @param x
-     * @param y
-     * @param z
+     * 3D Constructor for point
+     * 
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param z the z coordinate
      */
     public Point(double x, double y, double z) {
         this.x = x;
@@ -30,24 +38,27 @@ public class Point implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Getter for the x coordinate
+     * 
+     * @return the x coordinate
      */
     public double getX() {
         return x;
     }
 
     /**
-     *
-     * @return
+     * Getter for the y coordinate
+     * 
+     * @return the y coordinate
      */
     public double getY() {
         return y;
     }
 
     /**
-     *
-     * @return
+     * Getter for the z coordinate
+     * 
+     * @return the z coordinate
      */
     public double getZ() {
         return z;

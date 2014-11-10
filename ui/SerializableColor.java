@@ -6,31 +6,39 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.scene.paint.Color;
 
+/**
+ * SerializableColor is a class used to store colors in a serializable way
+ * 
+ * @author Team TYN
+ */
 public class SerializableColor implements Serializable {
 
     private transient Color color;
 
     /**
-     *
-     * @param color
+     * Constructor for SerializableColor
+     * 
+     * @param color the color that we are storing
      */
     public SerializableColor(Color color) {
         this.color = color;
     }
 
     /**
-     *
-     * @return
+     * Getter for the color
+     * 
+     * @return the color
      */
     public Color getColor() {
         return color;
     }
 
     /**
-     *
-     * @param in
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * Method to read in the color from the storage file.
+     * 
+     * @param in the input stream being read from
+     * @throws IOException thrown if problem with the file
+     * @throws ClassNotFoundException thrown if problem with the class
      */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
@@ -38,9 +46,10 @@ public class SerializableColor implements Serializable {
     }
 
     /**
-     *
-     * @param out
-     * @throws IOException
+     * Method to write the color to the storage file.
+     * 
+     * @param out the Output stream being written to
+     * @throws IOException thrown if problem with the file
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
