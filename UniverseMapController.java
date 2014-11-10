@@ -157,31 +157,34 @@ public class UniverseMapController extends AnimationTimer implements Initializab
      * UniverseMap view. Such as clicking on a planet or system.
      */
     public void handleMouse() {
-        EventHandler<MouseEvent> bodySelect;
-        bodySelect = (MouseEvent event) -> {
-            PickResult pickResult = event.getPickResult();
-            if (pickResult != null) {
-                Node intersect = pickResult.getIntersectedNode();
-                if (intersect instanceof StarSystemView) {
-                    StarSystemView system = (StarSystemView) intersect;
-                    if (selectedPlanet == null) {
-                        if (system != selectedSystem) {
+        EventHandler<MouseEvent> bodySelect = new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                PickResult pickResult = event.getPickResult();
+                if (pickResult != null) {
+                    Node intersect = pickResult.getIntersectedNode();
+                    if (intersect instanceof StarSystemView) {
+                        StarSystemView system = (StarSystemView) intersect;
+                        if (selectedPlanet == null) {
+                            if (system != selectedSystem) {
+                                setHighlighted(system);
+                                updateSystemInfo(system);
+                                systemInfo.play();
+                            }
+                        } else if (system == selectedSystem) {
                             setHighlighted(system);
                             updateSystemInfo(system);
                             systemInfo.play();
                         }
-                    } else if (system == selectedSystem) {
-                        setHighlighted(system);
-                        updateSystemInfo(system);
-                        systemInfo.play();
-                    }
-                } else if (intersect instanceof PlanetView) {
-                    PlanetView planet = (PlanetView) intersect;
-                    if (selectedSystem != null && selectedPlanet == null) {
-                        if (selectedSystem.containsPlanet(planet)) {
-                            setHighlighted(planet);
-                            updatePlanetInfo(planet);
-                            planetInfo.play();
+                    } else if (intersect instanceof PlanetView) {
+                        PlanetView planet = (PlanetView) intersect;
+                        if (selectedSystem != null && selectedPlanet == null) {
+                            if (selectedSystem.containsPlanet(planet)) {
+                                setHighlighted(planet);
+                                updatePlanetInfo(planet);
+                                planetInfo.play();
+                            }
                         }
                     }
                 }
@@ -217,7 +220,10 @@ public class UniverseMapController extends AnimationTimer implements Initializab
             }
         }
 
-        subScene.setOnMousePressed((MouseEvent event) -> {
+        subScene.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
                 mousePosX = event.getSceneX();
                 mousePosY = event.getSceneY();
 
@@ -255,9 +261,13 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                         }
                     }
                 }
-            });
+            }
+        });
 
-        subScene.setOnMouseDragged((MouseEvent event) -> {
+        subScene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
                 double mouseOldX = mousePosX;
                 double mouseOldY = mousePosY;
                 mousePosX = event.getSceneX();
@@ -273,7 +283,8 @@ public class UniverseMapController extends AnimationTimer implements Initializab
                     topXform.setTx(Math.max(Math.min(topXform.getTx() - (mousePosX - mouseOldX) * 1.5, GameModel.UNIVERSE_WIDTH), 0));
                     topXform.setTy(Math.max(Math.min(topXform.getTy() - (mousePosY - mouseOldY) * 1.5, GameModel.UNIVERSE_HEIGHT), 0));
                 }
-            });
+            }
+        });
 
         subScene.setOnScroll((ScrollEvent event) -> {
                 if (selectedPlanet != null) {
