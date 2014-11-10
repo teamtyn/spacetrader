@@ -36,6 +36,15 @@ public class Engine implements Serializable {
         public final String name;
         public final SerializableColor color;
 
+        /**
+         * Constructor for EngineType
+         *
+         * @param acceleration The rate of change in velocity due to the engine
+         * @param fuelEfficiency The rate at which fuel is burnt to travel distances
+         * @param cost The base cost for this type of engine
+         * @param color The color used to distinguish this engine type from the others
+         * @param name The string representation of the name type
+         */
         EngineType(int acceleration, int fuelEfficiency, int cost, SerializableColor color, String name) {
             this.acceleration = acceleration;
             this.fuelEfficiency = fuelEfficiency;
@@ -45,6 +54,9 @@ public class Engine implements Serializable {
         }
     };
 
+    /**
+     * No argument constructor for Shield, creates a Hackney engine (lowest level)
+     */
     public Engine() {
         this.type = EngineType.Hackney;
         this.acceleration = type.acceleration;
@@ -52,6 +64,11 @@ public class Engine implements Serializable {
         this.name = type.name;
     }
 
+    /**
+     * Constructor for Engine
+     *
+     * @param type The engine type of the engine
+     */
     public Engine(EngineType type) {
         this.type = type;
         this.acceleration = type.acceleration;
@@ -59,18 +76,38 @@ public class Engine implements Serializable {
         this.name = type.name;
     }
 
+    /**
+     * Getter for acceleration
+     *
+     * @return The engine's acceleration
+     */
     public int getAcceleration() {
         return acceleration;
     }
 
+    /**
+     * Getter for fuel efficiency
+     *
+     * @return The engine's fuel efficiency
+     */
     public int getFuelEfficiency() {
         return fuelEfficiency;
     }
 
+    /**
+     * Getter for engine type
+     *
+     * @return The engine's engine type
+     */
     public EngineType getType() {
         return type;
     }
 
+    /**
+     * Getter for engine name
+     *
+     * @return The engine's engine name
+     */
     public String getName() {
         return name;
     }

@@ -39,6 +39,15 @@ public class Shield implements Serializable {
         public final String name;
         public final SerializableColor color;
 
+        /**
+         * Constructor for ShieldType
+         *
+         * @param shieldStrength The strength of this type of shield
+         * @param rechargeRate The recharge rate of this type of shield
+         * @param cost The base cost for this type of shield
+         * @param color The color used to distinguish this shield type from the others
+         * @param name The string representation of the shield type
+         */
         ShieldType(int shieldStrength, int rechargeRate, int cost, SerializableColor color, String name) {
             this.shieldStrength = shieldStrength;
             this.rechargeRate = rechargeRate;
@@ -48,6 +57,11 @@ public class Shield implements Serializable {
         }
     };
 
+    /**
+     * Constructor for Shield
+     *
+     * @param type The shield type of the shield
+     */
     public Shield(ShieldType type) {
         this.strength = type.shieldStrength;
         this.rechargeRate = type.rechargeRate;
@@ -55,23 +69,41 @@ public class Shield implements Serializable {
         this.name = type.name;
     }
 
-    //Return strength of shield
+    /**
+     * Getter for shield strength
+     *
+     * @return the current strength of the shield
+     */
     public int getStrength() {
         return strength;
     }
 
-    //Return racharge rate of shield
+    /**
+     * Getter for shield recharge rate
+     *
+     * @return the recharge rate of the shield
+     */
     public int getRechargeRate() {
         return rechargeRate;
     }
 
-    //Recharge the shield for X units of time
+    /**
+     * Recharges the shield by a certain amount
+     *
+     * @param time the amount of time the shield has to charge
+     * @return the current strength of the shield
+     */
     public int recharge(int time) {
         strength += rechargeRate * time;
         return strength;
     }
 
-    //Damage the shield for X damages.  ALL DAMAGE IS BLOCKED BY SHIELD EVEN IF OVERFLOW
+    /**
+     * Damages the shield by a certain amount, all damage is blocked even if overflow.
+     *
+     * @param damage the amount of damage being dealt to the shield
+     * @return the current strength of the shield
+     */
     public int doDamage(int damage) {
         strength -= damage;
         if (strength < 0) {
@@ -80,6 +112,11 @@ public class Shield implements Serializable {
         return strength;
     }
 
+    /**
+     * Getter for the name of a shield
+     *
+     * @return The name of the shield
+     */
     public String getName() {
         return name;
     }

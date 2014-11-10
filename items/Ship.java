@@ -393,6 +393,12 @@ public class Ship implements Serializable {
         return hull;
     }
 
+    /**
+     * Repair a specified amount of damage to this ship.
+     *
+     * @param repairs the amount of damage to be undone.
+     * @return the current hull strength
+     */
     public int repairHull(int repairs) {
         hull += repairs;
         if (hull >= type.hullStrength) {
@@ -401,19 +407,40 @@ public class Ship implements Serializable {
         return hull;
     }
 
+    /**
+     * Add a specified amount of a specified trade good to the ship
+     *
+     * @param goodName the type of trade good to be added
+     * @param quantity the amount of trade goods to be added
+     * @return the number of goods successfully added
+     */
     public int storeTradeGood(String goodName, int quantity) {
         return cargoBay.addTradeGood(goodName, quantity);
     }
 
+    /**
+     * Remove a specified amount of a specified trade good to the ship
+     *
+     * @param goodName the type of trade good to be removed
+     * @param quantity the amount of trade goods to be removed
+     * @return the number of goods successfully removed
+     */
     public int removeTradeGood(String goodName, int quantity) {
         return cargoBay.removeTradeGood(goodName, quantity);
     }
 
-    // Return the unused space of the cargo bay
+    /**
+     * Return the remaining available space in the cargo bay
+     *
+     * @return the remaining available space in the cargo bay
+     */
     public int getExtraSpace() {
         return cargoBay.getCapacity() - cargoBay.getCurrentSize();
     }
 
+    /**
+     * Set the fuel level of the ship to 0.
+     */
     public void emptyFuel() {
         fuel = 0;
     }
