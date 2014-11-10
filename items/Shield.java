@@ -19,20 +19,50 @@ public class Shield implements Serializable {
 
     public enum ShieldType {
 
-        //TODO: Balancing to make better.
-        //Name      str   RoC   cost  color
-
+        /**
+         *  Cheapest shield available.
+         */
         Kite(100, 10, 100, new SerializableColor(Color.RED), "Kite"),
+        /**
+         *  Basic shield that favors strength.
+         */
         Heater(125, 10, 300, new SerializableColor(Color.GREEN), "Heater"),
+        /**
+         *  Basic shield that favors recharge rate.
+         */
         Targe(100, 15, 300, new SerializableColor(Color.PINK), "Targe"),
+        /**
+         *  Basic shield with very low strength and high recharge rate.
+         */
         Buckler(25, 25, 300, new SerializableColor(Color.AQUA), "Buckler"),
+        /**
+         *  Basic shield with high strength but doesn't recharge.
+         */
         Ishlangu(400, 0, 300, new SerializableColor(Color.WHITE), "Ishlangu"),
-        Hoplon(200, 15, 500, new SerializableColor(Color.DARKKHAKI), "Hoplon"),
-        Riot(300, 10, 500, new SerializableColor(Color.BLACK), "Riot"),
+        /**
+         *  Advanced shield that favors recharge rate.
+         */
+        Hoplon(200, 25, 500, new SerializableColor(Color.DARKKHAKI), "Hoplon"),
+        /**
+         *  Advanced shield that favors strength.
+         */
+        Riot(250, 20, 500, new SerializableColor(Color.BLACK), "Riot"),
+        /**
+         *  Advanced shield that heavily favors strength.
+         */
         BatterSea(400, 5, 500, new SerializableColor(Color.DARKGOLDENROD), "BatterSea"),
+        /**
+         *  Epic shield that heavily favors strength.
+         */
         Scutum(500, 10, 1000, new SerializableColor(Color.DARKRED), "Scutum"),
+        /**
+         *  The legendary shield of the god Zeus.
+         */
         Aegis(500, 25, 2500, new SerializableColor(Color.YELLOW), "Aegis"),
-        Svalinn(1000, 10, 1000, new SerializableColor(Color.BLUEVIOLET), "Svalinn");
+        /**
+         *  The legendary shield that protects the horses that pull the sun.
+         */
+        Svalinn(1000, 10, 2500, new SerializableColor(Color.BLUEVIOLET), "Svalinn");
 
         public final int shieldStrength;
         public final int rechargeRate;

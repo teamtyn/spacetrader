@@ -18,17 +18,45 @@ public class Engine implements Serializable {
 
     public enum EngineType {
 
-        //Name      acc   fuel  cost  color                              //Name
-
+        /**
+         * Cheapest engine type.
+         */
         Hackney(10, 10, 100, new SerializableColor(Color.GREEN), "Hackney"),
+        /**
+         * Basic engine that greatly favors acceleration.
+         */
         Lipizzaner(30, 10, 300, new SerializableColor(Color.BLUE), "Lipizzaner"),
+        /**
+         * Basic engine that greatly favors efficiency.
+         */
         Marwari(10, 30, 300, new SerializableColor(Color.BLUE), "Marwari"),
+        /**
+         * Better engine that slightly favors efficiency.
+         */
         Malopolski(15, 20, 300, new SerializableColor(Color.BLUE), "Malopolski"),
+        /**
+         * Better engine that slightly favors acceleration.
+         */
         Galiceño(20, 15, 300, new SerializableColor(Color.BLUE), "Galiceño"),
+        /**
+         * Advanced engine that slightly favors acceleration.
+         */
         Kampilan(25, 20, 500, new SerializableColor(Color.RED), "Kampilan"),
+        /**
+         * Advanced engine that slightly favors efficiency.
+         */
         Shetland(20, 25, 500, new SerializableColor(Color.RED), "Shetland"),
+        /**
+         *  Advanced engine that heavily favors acceleration.
+         */
         Tawleed(50, 10, 500, new SerializableColor(Color.RED), "Tawleed"),
+        /**
+         *  Epic engine that heavily favors efficiency.
+         */
         Yakut(10, 250, 2500, new SerializableColor(Color.GOLD), "Yakut"),
+        /**
+         *  Epic engine that heavily favors acceleration.
+         */
         Unicorn(250, 10, 2500, new SerializableColor(Color.GOLD), "Unicorn");
 
         public final int acceleration;

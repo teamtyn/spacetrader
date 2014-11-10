@@ -23,14 +23,41 @@ public class Weapon implements Serializable {
 
         //Name      dmg   rof   cost  color
 
+        /**
+         *  Cheapest weapon available.
+         */
         Gladius(10, 10, 100, new SerializableColor(Color.GREEN), "Gladius"),
+        /**
+         *  Basic weapon that favors damage.
+         */
         Spatha(30, 10, 300, new SerializableColor(Color.BLUE), "Spatha"),
+        /**
+         *  Basic weapon that favors rate of fire.
+         */
         Katana(10, 30, 301, new SerializableColor(Color.BLUE), "Katana"),
+        /**
+         *  Basic weapon that heavily favors rate of fire.
+         */
         Rapier(5, 60, 300, new SerializableColor(Color.BLUE), "Rapier"),
+        /**
+         *  Advanced weapon that is roughly balanced.
+         */
         Kampilan(25, 20, 500, new SerializableColor(Color.RED), "Kampilan"),
+        /**
+         *  Advanced weapon that very heavily favors rate of fire.
+         */
         Scimitar(1, 500, 500, new SerializableColor(Color.RED), "Scimitar"),
+        /**
+         *  Advanced weapon that very heavily favors damage.
+         */
         Claymore(500, 1, 500, new SerializableColor(Color.RED), "Claymore"),
+        /**
+         *  The legendary sword wielded by Charlemagne
+         */
         Joyeuse(100, 25, 2500, new SerializableColor(Color.GOLD), "Joyeuse"),
+        /**
+         *  The legendary sword used to crown polish kings for centuries.
+         */
         Szczerbiec(250, 10, 2500, new SerializableColor(Color.GOLD), "Szczerbiec");
 
         public final int damage;
