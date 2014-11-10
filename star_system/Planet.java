@@ -53,9 +53,10 @@ public class Planet implements Serializable {
     private final MarketPlace market;
 
     /**
-     *
-     * @param orbitDistance
-     * @param size
+     * Constructor for a planet
+     * 
+     * @param orbitDistance the radius of the planet's orbit
+     * @param size the radius of the planet
      */
     public Planet(double orbitDistance, double size) {
         environment = Environment.values()[GameModel.getRandom().nextInt(Environment.values().length)];
@@ -137,129 +138,158 @@ public class Planet implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Getter for the size of the planet
+     * 
+     * @return the size of the planet
      */
     public double getSize() {
         return size;
     }
 
     /**
-     *
-     * @return
+     * Getter for the orbit distance of the planet
+     * 
+     * @return the orbit distance of the planet
      */
     public double getOrbitDistance() {
         return orbitDistance;
     }
 
     /**
-     *
-     * @return
+     * Getter for the orbit speed of the planet
+     * 
+     * @return the orbit speed of the planet
      */
     public double getOrbitSpeed() {
         return orbitSpeed;
     }
 
     /**
-     *
-     * @return
+     * Getter for the axial tilt of the planet
+     * 
+     * @return the axial tilt of the planet
      */
     public double getAxialTilt() {
         return axialTilt;
     }
 
+    /**
+     * Getter for the axial speed of the planet
+     * 
+     * @return the axial speed of the planet
+     */
     public double getAxialSpeed() {
         return axialSpeed;
     }
 
+    /**
+     * Getter for the seed of the planet
+     * 
+     * @return the seed of the planet
+     */
     public long getSeed() {
         return seed;
     }
 
+    /**
+     * Getter for the sea level of the planet
+     * 
+     * @return the sea level of the planet
+     */
     public float getSeaLevel() {
         return seaLevel;
     }
 
     /**
-     *
-     * @return
+     * Getter for the name of the planet
+     * 
+     * @return the name of the planet
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @return
+     * Getter for the government of the planet
+     * 
+     * @return the government of the planet
      */
     public Government getGovernment() {
         return government;
     }
 
+    /**
+     * Getter for the environment of the planet
+     * 
+     * @return the environment of the planet
+     */
     public Environment getEnvironment() {
         return environment;
     }
 
     /**
-     *
-     * @return
+     * Getter for the resource level of the planet
+     * 
+     * @return the resource level of the planet
      */
     public ResourceLevel getResourceLevel() {
         return resourceLevel;
     }
 
     /**
-     *
-     * @return
+     * Getter for the resource level of the planet
+     * 
+     * @return the resource level of the planet
      */
     public int getResourceLevelOrdinality() {
         return resourceLevel.ordinal();
     }
 
     /**
-     *
-     * @return
+     * Getter for the tech level of the planet
+     * 
+     * @return the tech level of the planet
      */
     public TechLevel getTechLevel() {
         return techLevel;
     }
 
     /**
-     *
-     * @return
+     * Getter for the tech level ordinality of the planet
+     * 
+     * @return the tech level ordinality of the planet
      */
     public int getTechLevelOrdinality() {
         return techLevel.ordinal();
     }
 
     /**
-     *
-     * @return
+     * Getter for the current circumstance of the planet
+     * 
+     * @return the circumstance of the planet
      */
     public Circumstance getCircumstance() {
         return circumstance;
     }
 
     /**
-     *
-     * @return
+     * Getter for the market of the planet
+     * 
+     * @return the market of the planet
      */
     public MarketPlace getMarket() {
         return market;
     }
 
     /**
-     *
-     * @param techLevel
+     * Setter for the tech level of the planet
+     * 
+     * @param techLevel the new tech level for the planet
      */
     public void setTechLevel(TechLevel techLevel) {
         this.techLevel = techLevel;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String toString() {
         final StringBuilder str = new StringBuilder();
