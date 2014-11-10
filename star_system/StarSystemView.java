@@ -1,7 +1,6 @@
 package spacetrader.star_system;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -9,28 +8,26 @@ import javafx.scene.PointLight;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
+import spacetrader.GameModel;
 import spacetrader.UniverseMapSubScene;
 import spacetrader.Xform;
 import spacetrader.Xform.RotateOrder;
 
 /**
  *
- * @author Administrator
+ * @author Team TYN
  */
 public class StarSystemView extends Sphere {
 
-    private StarSystem system;
-    private ArrayList<PlanetView> planetViews;
-    private Xform systemXform;
-    private Xform planetsXform;
-    private PointLight light;
-    private PhongMaterial material;
+    private final StarSystem system;
+    private final ArrayList<PlanetView> planetViews;
+    private final Xform systemXform;
+    private final Xform planetsXform;
+    private final PointLight light;
+    private final PhongMaterial material;
 
     public StarSystemView(StarSystem system) {
         super(system.getSize());
-
-        Random r = new Random();
-
         this.system = system;
         planetViews = new ArrayList<>(system.getPlanets().length);
         systemXform = new Xform(RotateOrder.ZYX);
@@ -38,22 +35,20 @@ public class StarSystemView extends Sphere {
         light = new PointLight();
         light.setLightOn(false);
         material = new PhongMaterial();
-        setMaterial(new PhongMaterial(Color.rgb(240, 255, 100))); //system.getColor()));
-
-        systemXform.setTranslate(system.getCoordinateX(), system.getCoordinateY());
-        systemXform.setRotate(180 * r.nextDouble(), 180 * r.nextDouble(), 0);
-
+        setMaterial(new PhongMaterial(Color.rgb(240, 255, 100)));
+        systemXform.setTranslate(system.getCoordinateX(),
+                system.getCoordinateY());
+        systemXform.setRotate(180 * GameModel.getRandom().nextDouble(),
+                180 * GameModel.getRandom().nextDouble(), 0);
         for (Planet planet : system.getPlanets()) {
             PlanetView planetView = new PlanetView(planet);
             planetsXform.getChildren().add(planetView.getOrbitXform());
             planetViews.add(planetView);
         }
         systemXform.getChildren().addAll(this, planetsXform, light);
-
         light.getScope().add(planetsXform);
         UniverseMapSubScene.AMBIENT.getScope().add(planetsXform);
         UniverseMapSubScene.NO_SHADE.getScope().add(this);
-
         light.getScope().add(planetsXform);
         UniverseMapSubScene.AMBIENT.getScope().add(planetsXform);
         UniverseMapSubScene.NO_SHADE.getScope().add(this);

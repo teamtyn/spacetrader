@@ -5,14 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Basically the standard set of solar system names, we currently have 125
- *
- * @author Ryan Burns
+ * Basically the standard set of solar system names, we currently have 125.
+ * @author Team TYN
  */
 public class StarSystemNames {
-
     private static final List<String> NAME_LIST = new ArrayList<>();
-
     static {
         NAME_LIST.add("Acamar");
         NAME_LIST.add("Adahn");
@@ -139,7 +136,6 @@ public class StarSystemNames {
         NAME_LIST.add("Yojimbo");
         NAME_LIST.add("Zalkon");
         NAME_LIST.add("Zuul");
-
         Collections.shuffle(NAME_LIST);
     }
 
