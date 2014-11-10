@@ -73,32 +73,33 @@ public class ScreensController extends StackPane {
     }
 
     // Adds the screen to the collection
-
     /**
      * Adds a screen to the ScreensController, so that it can be viewed.
+     *
      * @param name the name of the scene
      * @param screen the view
      * @param controller the controller that controls the view
      */
-        public void addScreen(String name, Node screen, ControlledScreen controller) {
+    public void addScreen(String name, Node screen, ControlledScreen controller) {
         SCREENS.put(name, screen);
         CONTROLLERS.put(name, controller);
     }
 
     // Returns the Node with the appropriate name
-
     /**
      * Returns the requested screen, as in a view to be loaded.
+     *
      * @param name the name of the screen corresponding to the view
      * @return the requested view
      */
-        public static Node getScreen(String name) {
+    public static Node getScreen(String name) {
         return SCREENS.get(name);
     }
 
     /**
-     * Checks if the Screen is initialized or not. Checks a HashMap of Strings
-     * whose values are booleans.
+     * Checks if the Screen is initialized or not. Checks a HashMap of Strings whose values are
+     * booleans.
+     *
      * @param name the name of the screen being checked
      * @return
      */
@@ -108,10 +109,11 @@ public class ScreensController extends StackPane {
 
     /**
      * Returns the Node with the appropriate name.
+     *
      * @param name the name of the Node to be returned
      * @return the Node with the appropriate name
      */
-        public static ControlledScreen getController(String name) {
+    public static ControlledScreen getController(String name) {
         return CONTROLLERS.get(name);
     }
 
@@ -195,13 +197,13 @@ public class ScreensController extends StackPane {
     }
 
     // This method will remove the screen with the given name from the collection of screens
-
     /**
      * Remove the screen with the given name from the collection of screens.
+     *
      * @param name the name of the screen to be removed
      * @return Whether or not the screen being removed existed in the first place
      */
-        public boolean unloadScreen(String name) {
+    public boolean unloadScreen(String name) {
         if (SCREENS.remove(name) == null) {
             System.out.println("Screen does not exist.\n");
             return false;

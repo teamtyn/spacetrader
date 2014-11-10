@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -187,8 +188,12 @@ public class MarketController implements
 
         public BuyButton(TradeGood good) {
             super("BUY");
-            this.setOnAction((ActionEvent event) -> {
-                buy(good);
+            this.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    buy(good);
+                }
             });
             this.setId("row-button");
         }
@@ -201,8 +206,12 @@ public class MarketController implements
 
         public SellButton(TradeGood good) {
             super("SELL");
-            this.setOnAction((ActionEvent event) -> {
-                sell(good);
+            this.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    sell(good);
+                }
             });
             this.setId("row-button");
         }
@@ -229,16 +238,20 @@ public class MarketController implements
                 button.setDisable(true);
             }
             this.getChildren().add(button);
-            this.setOnMouseEntered((MouseEvent event) -> {
-                generateChart(good.type.name, good.getPrice());
-                if (notAllowedHere && isABuyRow) {
-                    priceField.setText(good.type.name + " cannot be bought here due to "
-                            + player.getPlanet().getName() + "'s tech level being too low.");
-                } else if (notAllowedHere && !isABuyRow) {
-                    priceField.setText(good.type.name + " cannot be sold here due to "
-                            + player.getPlanet().getName() + "'s tech level being too low.");
-                } else {
-                    priceField.setText(good.type.name + " costs " + good.getPrice() + " per unit.");
+            this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+                    generateChart(good.type.name, good.getPrice());
+                    if (notAllowedHere && isABuyRow) {
+                        priceField.setText(good.type.name + " cannot be bought here due to "
+                                + player.getPlanet().getName() + "'s tech level being too low.");
+                    } else if (notAllowedHere && !isABuyRow) {
+                        priceField.setText(good.type.name + " cannot be sold here due to "
+                                + player.getPlanet().getName() + "'s tech level being too low.");
+                    } else {
+                        priceField.setText(good.type.name + " costs " + good.getPrice() + " per unit.");
+                    }
                 }
             });
             this.setId("goods-row");

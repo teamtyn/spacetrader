@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import javafx.scene.PointLight;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -119,10 +120,14 @@ public class StarSystemView extends Sphere {
     }
 
     public void updateTextures(int width, int height) {
-        ExecutorService es = Executors.newSingleThreadExecutor((Runnable runnable) -> {
-            Thread thread = Executors.defaultThreadFactory().newThread(runnable);
-            thread.setDaemon(true);
-            return thread;
+        ExecutorService es = Executors.newSingleThreadExecutor(new ThreadFactory() {
+
+            @Override
+            public Thread newThread(Runnable runnable) {
+                Thread thread = Executors.defaultThreadFactory().newThread(runnable);
+                thread.setDaemon(true);
+                return thread;
+            }
         });
         for (PlanetView planet : planetViews) {
             planet.updateTextures(width, height, es);

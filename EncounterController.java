@@ -8,11 +8,13 @@ package spacetrader;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 /**
@@ -89,39 +91,47 @@ public class EncounterController extends AnimationTimer implements Initializable
     public void handleKeyboard() {
         subScene.setFocusTraversable(true);
         subScene.requestFocus();
-        subScene.setOnKeyPressed(event -> {
-            KeyCode keyCode = event.getCode();
-            switch (keyCode) {
-                case W:
-                    wDown = true;
-                    break;
-                case A:
-                    aDown = true;
-                    break;
-                case S:
-                    sDown = true;
-                    break;
-                case D:
-                    dDown = true;
-                    break;
+        subScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent event) {
+                KeyCode keyCode = event.getCode();
+                switch (keyCode) {
+                    case W:
+                        wDown = true;
+                        break;
+                    case A:
+                        aDown = true;
+                        break;
+                    case S:
+                        sDown = true;
+                        break;
+                    case D:
+                        dDown = true;
+                        break;
+                }
             }
         });
 
-        subScene.setOnKeyReleased(event -> {
-            KeyCode keyCode = event.getCode();
-            switch (keyCode) {
-                case W:
-                    wDown = false;
-                    break;
-                case A:
-                    aDown = false;
-                    break;
-                case S:
-                    sDown = false;
-                    break;
-                case D:
-                    dDown = false;
-                    break;
+        subScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent event) {
+                KeyCode keyCode = event.getCode();
+                switch (keyCode) {
+                    case W:
+                        wDown = false;
+                        break;
+                    case A:
+                        aDown = false;
+                        break;
+                    case S:
+                        sDown = false;
+                        break;
+                    case D:
+                        dDown = false;
+                        break;
+                }
             }
         });
     }

@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -136,19 +137,27 @@ public class PlanetView extends Sphere {
     }
 
     private void initTextures(PhongMaterial material) {
-        generateDiffuse.setOnSucceeded((WorkerStateEvent t) -> {
-            material.setDiffuseMap((Image) t.getSource().getValue());
-            generateDiffuse.setExecutor(null);
-            if (!generateNormal.isRunning()) {
-                noise.clearBuffer();
+        generateDiffuse.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+            @Override
+            public void handle(WorkerStateEvent t) {
+                material.setDiffuseMap((Image) t.getSource().getValue());
+                generateDiffuse.setExecutor(null);
+                if (!generateNormal.isRunning()) {
+                    noise.clearBuffer();
+                }
             }
         });
 
-        generateNormal.setOnSucceeded((WorkerStateEvent t) -> {
-            material.setBumpMap((Image) t.getSource().getValue());
-            generateNormal.setExecutor(null);
-            if (!generateDiffuse.isRunning()) {
-                noise.clearBuffer();
+        generateNormal.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+            @Override
+            public void handle(WorkerStateEvent t) {
+                material.setBumpMap((Image) t.getSource().getValue());
+                generateNormal.setExecutor(null);
+                if (!generateDiffuse.isRunning()) {
+                    noise.clearBuffer();
+                }
             }
         });
     }

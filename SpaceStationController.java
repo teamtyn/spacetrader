@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -323,7 +324,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent mouseEvent) {
                     otherShip = new Ship(type);
                     for (Node node : shipList.getChildren()) {
                         node.setStyle("-fx-background-color: #FFFFFF;");
@@ -333,6 +337,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     row.setLayoutY(mult * 25);
                     buyShip.setDisable(false);
                     updateShip();
+                }
             });
             shipList.getChildren().add(row);
         }
@@ -399,7 +404,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent mouseEvent) {
                     currentGadgetType = "Weapon";
                     selectedWeapon = new Weapon(type);
                     resetSelected();
@@ -415,6 +423,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
                     myGadgetPicture.setFill(selectedWeapon.getType().color.getColor());
                     gadgetPicture.getChildren().add(myGadgetPicture);
+                }
             });
             gadgetList.getChildren().add(row);
         }
@@ -431,7 +440,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent mouseEvent) {
                     currentGadgetType = "Shield";
                     selectedShield = new Shield(type);
                     resetSelected();
@@ -447,6 +459,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
                     myGadgetPicture.setFill(selectedShield.getType().color.getColor());
                     gadgetPicture.getChildren().add(myGadgetPicture);
+                }
             });
             gadgetList.getChildren().add(row);
         }
@@ -463,7 +476,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent mouseEvent) {
                     currentGadgetType = "Engine";
                     selectedEngine = new Engine(type);
                     resetSelected();
@@ -479,6 +495,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
                     myGadgetPicture.setFill(selectedEngine.getType().color.getColor());
                     gadgetPicture.getChildren().add(myGadgetPicture);
+                }
             });
             gadgetList.getChildren().add(row);
         }
@@ -491,21 +508,25 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if (weapon != null) {
                 label = new Label(weapon.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
-                    currentGadgetType = "My Weapon";
-                    selectedWeapon = weapon;
-                    resetSelected();
-                    row.setStyle("-fx-background-color: #EEEEEE;");
-                    gadgetNameLabel1.setText("Damage ");
-                    gadgetNameLabel2.setText("Rate of Fire");
-                    gadgetValueLabel1.setText("" + selectedWeapon.getType().damage);
-                    gadgetValueLabel2.setText("" + selectedWeapon.getType().rateOfFire);
-                    gadgetCostLabel.setText("" + (selectedWeapon.getType().cost / 2));
-                    gadgetPicture.getChildren().clear();
-                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(selectedWeapon.getType().color.getColor());
-                    gadgetPicture.getChildren().add(myGadgetPicture);
-                    gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        currentGadgetType = "My Weapon";
+                        selectedWeapon = weapon;
+                        resetSelected();
+                        row.setStyle("-fx-background-color: #EEEEEE;");
+                        gadgetNameLabel1.setText("Damage ");
+                        gadgetNameLabel2.setText("Rate of Fire");
+                        gadgetValueLabel1.setText("" + selectedWeapon.getType().damage);
+                        gadgetValueLabel2.setText("" + selectedWeapon.getType().rateOfFire);
+                        gadgetCostLabel.setText("" + (selectedWeapon.getType().cost / 2));
+                        gadgetPicture.getChildren().clear();
+                        Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                        myGadgetPicture.setFill(selectedWeapon.getType().color.getColor());
+                        gadgetPicture.getChildren().add(myGadgetPicture);
+                        gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                    }
                 });
             } else {
                 label = new Label("Empty slot");
@@ -525,21 +546,25 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if (shield != null) {
                 label = new Label(shield.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
-                    currentGadgetType = "My Shield";
-                    selectedShield = shield;
-                    resetSelected();
-                    row.setStyle("-fx-background-color: #EEEEEE;");
-                    gadgetNameLabel1.setText("Strength ");
-                    gadgetNameLabel2.setText("Recharge Rate");
-                    gadgetValueLabel1.setText("" + selectedShield.getStrength());
-                    gadgetValueLabel2.setText("" + selectedShield.getRechargeRate());
-                    gadgetCostLabel.setText("" + (selectedShield.getType().cost / 2));
-                    gadgetPicture.getChildren().clear();
-                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(selectedShield.getType().color.getColor());
-                    gadgetPicture.getChildren().add(myGadgetPicture);
-                    gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        currentGadgetType = "My Shield";
+                        selectedShield = shield;
+                        resetSelected();
+                        row.setStyle("-fx-background-color: #EEEEEE;");
+                        gadgetNameLabel1.setText("Strength ");
+                        gadgetNameLabel2.setText("Recharge Rate");
+                        gadgetValueLabel1.setText("" + selectedShield.getStrength());
+                        gadgetValueLabel2.setText("" + selectedShield.getRechargeRate());
+                        gadgetCostLabel.setText("" + (selectedShield.getType().cost / 2));
+                        gadgetPicture.getChildren().clear();
+                        Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                        myGadgetPicture.setFill(selectedShield.getType().color.getColor());
+                        gadgetPicture.getChildren().add(myGadgetPicture);
+                        gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                    }
                 });
             } else {
                 label = new Label("Empty slot");
@@ -558,21 +583,25 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if (engine != null) {
                 label = new Label(engine.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
-                    currentGadgetType = "My Engine";
-                    selectedEngine = engine;
-                    resetSelected();
-                    row.setStyle("-fx-background-color: #EEEEEE;");
-                    gadgetNameLabel1.setText("Acceleration ");
-                    gadgetNameLabel2.setText("Fuel Efficiency");
-                    gadgetValueLabel1.setText("" + selectedEngine.getAcceleration());
-                    gadgetValueLabel2.setText("" + selectedEngine.getFuelEfficiency());
-                    gadgetCostLabel.setText("" + (selectedEngine.getType().cost / 2));
-                    gadgetPicture.getChildren().clear();
-                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(selectedEngine.getType().color.getColor());
-                    gadgetPicture.getChildren().add(myGadgetPicture);
-                    gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        currentGadgetType = "My Engine";
+                        selectedEngine = engine;
+                        resetSelected();
+                        row.setStyle("-fx-background-color: #EEEEEE;");
+                        gadgetNameLabel1.setText("Acceleration ");
+                        gadgetNameLabel2.setText("Fuel Efficiency");
+                        gadgetValueLabel1.setText("" + selectedEngine.getAcceleration());
+                        gadgetValueLabel2.setText("" + selectedEngine.getFuelEfficiency());
+                        gadgetCostLabel.setText("" + (selectedEngine.getType().cost / 2));
+                        gadgetPicture.getChildren().clear();
+                        Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
+                        myGadgetPicture.setFill(selectedEngine.getType().color.getColor());
+                        gadgetPicture.getChildren().add(myGadgetPicture);
+                        gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                    }
                 });
             } else {
                 label = new Label("Empty slot");
