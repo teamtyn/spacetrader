@@ -12,17 +12,49 @@ import spacetrader.ui.SerializableColor;
  * @author David Purcell
  */
 public class Ship implements Serializable {
-
+    /**
+     * 
+     */
     public ShipType type;
+    /**
+     * 
+     */
     private final Shield[] shields;
+    /**
+     * 
+     */
     private final Weapon[] weapons;
+    /**
+     * 
+     */
     private final Engine[] engines;
+    /**
+     * 
+     */
     private final AbstractCrewMember[] crew;
+    /**
+     * 
+     */
     private final CargoBay cargoBay;
+    /**
+     * 
+     */
     private int crewNumber;
+    /**
+     * 
+     */
     private int hull;
-    private int shield;
+    /**
+     * 
+     */
+    private final int shield;
+    /**
+     * 
+     */
     private Color color;
+    /**
+     * 
+     */
     private double fuel;
 
     /**
@@ -65,7 +97,9 @@ public class Ship implements Serializable {
          * @param cost the cost for this type of ship
          * @param color the color used to fill in the square for this ship
          */
-        ShipType(int hullStrength, double fuelCapacity, int shieldSlots, int weaponSlots, int cargoBaySlots, int engineSlots, int crewSlots, int cost, Color color) {
+        ShipType(int hullStrength, double fuelCapacity, int shieldSlots,
+                int weaponSlots, int cargoBaySlots, int engineSlots,
+                int crewSlots, int cost, Color color) {
             this.hullStrength = hullStrength;
             this.fuelCapacity = fuelCapacity;
             this.shieldSlots = shieldSlots;
@@ -80,7 +114,7 @@ public class Ship implements Serializable {
         /**
          * Getter for the color of a ship.
          *
-         * @return the color used for this ships rectangle
+         * @return The color used for this ships rectangle
          */
         public Color getColor() {
             return color.getColor();
@@ -89,7 +123,7 @@ public class Ship implements Serializable {
         /**
          * Getter for the cost of a ship.
          *
-         * @return the base cost for this type of ship
+         * @return The base cost for this type of ship
          */
         public int getCost() {
             return cost;
@@ -99,10 +133,10 @@ public class Ship implements Serializable {
     /**
      * Constructor for a Ship.
      *
-     * @param type the ShipType that this ship is based on
+     * @param aType The ShipType that this ship is based on
      */
-    public Ship(ShipType type) {
-        this.type = type;
+    public Ship(final ShipType aType) {
+        type = aType;
         shields = new Shield[type.shieldSlots];
         weapons = new Weapon[type.weaponSlots];
         engines = new Engine[type.engineSlots];
@@ -115,12 +149,12 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Adder for a new shield
+     * Adder for a new shield.
      *
-     * @param newShield the new shield to be added
-     * @return whether or not the add succeeded
+     * @param newShield The new shield to be added
+     * @return Whether or not the add succeeded
      */
-    public boolean addShield(Shield newShield) {
+    public boolean addShield(final Shield newShield) {
         boolean success = false;
         for (int i = 0; i < shields.length; i++) {
             if (shields[i] == null && !success) {
@@ -132,12 +166,12 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Adder for a new weapon
+     * Adder for a new weapon.
      *
      * @param newWeapon the new weapon to be added
      * @return whether or not the add succeeded
      */
-    public boolean addWeapon(Weapon newWeapon) {
+    public boolean addWeapon(final Weapon newWeapon) {
         boolean success = false;
         for (int i = 0; i < weapons.length; i++) {
             if (weapons[i] == null && !success) {
@@ -149,12 +183,12 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Adder for a new engine
+     * Adder for a new engine.
      *
      * @param newEngine the new engine to be added
      * @return whether or not the add succeeded
      */
-    public boolean addEngine(Engine newEngine) {
+    public boolean addEngine(final Engine newEngine) {
         boolean success = false;
         for (int i = 0; i < engines.length; i++) {
             if (engines[i] == null && !success) {
@@ -171,7 +205,7 @@ public class Ship implements Serializable {
      * @param newFuel the amount of fuel to be added
      * @return the new amount of fuel
      */
-    public double addFuel(double newFuel) {
+    public double addFuel(final double newFuel) {
         fuel += newFuel;
         if (fuel > type.fuelCapacity) {
             fuel = type.fuelCapacity;
@@ -179,7 +213,12 @@ public class Ship implements Serializable {
         return fuel;
     }
 
-    public boolean addCrewMember(AbstractCrewMember cm) {
+    /**
+     * 
+     * @param cm
+     * @return 
+     */
+    public boolean addCrewMember(final AbstractCrewMember cm) {
         boolean success = false;
         if (crewNumber < getCrewSlots()) {
             crew[crewNumber] = cm;
@@ -195,7 +234,7 @@ public class Ship implements Serializable {
      * @param position the index to be removed from
      * @return the object that was removed
      */
-    public Shield removeShield(int position) {
+    public Shield removeShield(final int position) {
         Shield removed = null;
         if (position < shields.length) {
             removed = shields[position];
@@ -210,7 +249,7 @@ public class Ship implements Serializable {
      * @param position the index to be removed from
      * @return the object that was removed
      */
-    public Weapon removeWeapon(int position) {
+    public Weapon removeWeapon(final int position) {
         Weapon removed = null;
         if (position < weapons.length) {
             removed = weapons[position];
@@ -225,7 +264,7 @@ public class Ship implements Serializable {
      * @param position the index to be removed from
      * @return the object that was removed
      */
-    public Engine removeEngine(int position) {
+    public Engine removeEngine(final int position) {
         Engine removed = null;
         if (position < engines.length) {
             removed = engines[position];
@@ -261,6 +300,10 @@ public class Ship implements Serializable {
         return weapons;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getWeaponSlots() {
         return weapons.length;
     }
