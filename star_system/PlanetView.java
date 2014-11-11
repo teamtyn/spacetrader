@@ -21,8 +21,8 @@ import spacetrader.star_system.NoiseGenerator.NoiseMode;
 
 /**
  * A planet view is a visual representation of a planet. Planet views are
- * automatically placed in hierarchy of transformation Xform that allow for easy
- * manipulation of their relative positions.
+ * automatically placed in a hierarchy of transformation Xform that allow for
+ * easy manipulation of their relative positions.
  *
  * Each planet view has a noise generator used for generating diffuse and normal
  * textures.
