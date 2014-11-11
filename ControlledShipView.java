@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package spacetrader;
 
 import javafx.scene.shape.Mesh;
 import spacetrader.items.Ship;
 
 /**
- *
+ * Controller that displays a controlled ship.
+ * 
  * @author Administrator
  */
 public class ControlledShipView extends ShipView {
@@ -21,6 +17,13 @@ public class ControlledShipView extends ShipView {
     private ShipController controller;
     private ShipView target;
 
+    /**
+     * The constructor for this class.
+     * 
+     * @param model 3D mesh that goes on the ship.
+     * @param ship the ship's data stored in a ship object.
+     * @param type The type of controlled ship.
+     */
     public ControlledShipView(Mesh model, Ship ship, ControlType type) {
         super(model, ship);
 
@@ -30,18 +33,38 @@ public class ControlledShipView extends ShipView {
         }
     }
 
+    /**
+     * Getter for the controller.
+     * 
+     * @return the controller.
+     */
     public ShipController getController() {
         return controller;
     }
 
+    /**
+     * Getter for this ship's target.
+     * 
+     * @return this ship's target.
+     */
     public ShipView getTarget() {
         return target;
     }
 
+    /**
+     * Setter for this ship's target.
+     * 
+     * @param t the new target.
+     */
     public void setTarget(ShipView t) {
         target = t;
     }
 
+    /**
+     * Calculates the distance to the target.
+     * 
+     * @return distance to the target.
+     */
     public double distanceToTarget() {
         if (target != null) {
             return Math.sqrt((getX() - target.getX()) * (getX() - target.getX())
@@ -51,6 +74,11 @@ public class ControlledShipView extends ShipView {
         }
     }
 
+    /**
+     * Calculates the angle towards the target.
+     * 
+     * @return the angle.
+     */
     public double angleToTarget() {
         double mag = distanceToTarget();
         if (target != null && mag > 0) {

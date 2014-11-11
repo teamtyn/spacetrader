@@ -40,9 +40,6 @@ public class EncounterController extends AnimationTimer implements Initializable
     private boolean sDown;
     private boolean dDown;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO
@@ -88,6 +85,9 @@ public class EncounterController extends AnimationTimer implements Initializable
         start();
     }
 
+    /**
+     * Method to handle keyboard input.
+     */
     public void handleKeyboard() {
         subScene.setFocusTraversable(true);
         subScene.requestFocus();

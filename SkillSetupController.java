@@ -112,13 +112,6 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         totalPts = 50;
     }
 
-    /**
-     * Initializes the controller and creates the button arrays.
-     * 
-     * @param url the url for this controller.
-     * @param rb the resource bundle for this controller.
-     */
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         plusButtonArray = new Button[]{plus0, plus1, plus2, plus3, plus4};
@@ -132,9 +125,6 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         setUp();
     }
 
-    /**
-     * Initializes the controller.
-     */
     @Override
     public void lazyInitialize() {
     }
@@ -148,11 +138,6 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         }
     }
 
-    /**
-     * Sets the parent controller for this screen.
-     * 
-     * @param parentController the parent controller for this screen.
-     */
     @Override
     public void setScreenParent(ScreensController parentController) {
         this.parentController = parentController;

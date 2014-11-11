@@ -62,7 +62,6 @@ public class MarketController implements
         this.parentController = parentController;
     }
 
-    // Sets up the fade transition specifications
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ft = new FadeTransition(Duration.millis(1000), dialogueField);
