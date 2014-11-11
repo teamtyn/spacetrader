@@ -144,35 +144,73 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     @FXML
     private TextField confirmationGadgetField;
 
+    /**
+     * 
+     */
     private Ship myShip;
+    /**
+     * 
+     */
     private Ship otherShip;
+    /**
+     * 
+     */
     private final int fuelCost = 10;
+    /**
+     * 
+     */
     private double tempFuel;
+    /**
+     * 
+     */
     private Player player;
+    /**
+     * 
+     */
     private FadeTransition ft;
+    /**
+     * 
+     */
     private ScreensController parentController;
+    /**
+     * 
+     */
     private String currentGadgetType;
+    /**
+     * 
+     */
     private Weapon selectedWeapon;
+    /**
+     * 
+     */
     private Shield selectedShield;
+    /**
+     * 
+     */
     private Engine selectedEngine;
+    /**
+     * 
+     */
     private int gadgetIndex;
 
     /**
-     * Determines which fuel buttons should currently be disabled Maintains the progress bar and
-     * labels associated with fuel
+     * Determines which fuel buttons should currently be disabled.
+     * Maintains the progress bar and labels associated with fuel
      */
     public void updateFuel() {
         fuelProgress.setProgress(tempFuel / player.getShip().getFuelCapacity());
-        fuelLabel.setText(Math.round(tempFuel) + "/" + Math.round(player.getShip().getFuelCapacity()));
+        fuelLabel.setText(Math.round(tempFuel) + "/" + Math.round(
+                player.getShip().getFuelCapacity()));
         confirmFuelButton.setDisable(player.getShip().getFuel() == tempFuel);
         cancelFuelButton.setDisable(player.getShip().getFuel() == tempFuel);
-        fillFuelButton.setDisable(tempFuel == player.getShip().getFuelCapacity());
+        fillFuelButton.setDisable(
+                tempFuel == player.getShip().getFuelCapacity());
         moneyLabel.setText(Integer.toString(player.getMoney()));
     }
 
     /**
-     * Sets up the My Ship panel with the appropriate info Picture is currently a colored rectangle,
-     * TODO: Get Josh's 3D ship
+     * Sets up the My Ship panel with the appropriate info.
+     * Picture is currently a colored rectangle, TODO: Get Josh's 3D ship
      */
     public void myShipStats() {
         myHullStrength.setText(Integer.toString(myShip.getHull()));
@@ -183,14 +221,14 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         myCargoBaySlots.setText(Integer.toString(myShip.getCargoBaySlots()));
         myShipValue.setText(Integer.toString(myShip.type.getCost()));
         myShipPicturePane.getChildren().removeAll();
-        Rectangle myShipPicture = new Rectangle(100, 10, 100, 100);
+        final Rectangle myShipPicture = new Rectangle(100, 10, 100, 100);
         myShipPicture.setFill(myShip.type.getColor());
         myShipPicturePane.getChildren().add(myShipPicture);
     }
 
     /**
-     * Sets up the Other Ship panel with the appropriate info Picture is currently a colored
-     * rectangle, TODO: Get Josh's 3D ship
+     * Sets up the Other Ship panel with the appropriate info.
+     * Picture is currently a colored rectangle, TODO: Get Josh's 3D ship
      */
     public void otherShipStats() {
         otherShipLabel.setText(otherShip.type.name());
@@ -201,15 +239,16 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         engineSlots.setText(Integer.toString(otherShip.getEngineSlots()));
         cargoBaySlots.setText(Integer.toString(otherShip.getCargoBaySlots()));
         otherShipPicturePane.getChildren().removeAll();
-        Rectangle otherShipPicture = new Rectangle(100, 10, 100, 100);
+        final Rectangle otherShipPicture = new Rectangle(100, 10, 100, 100);
         otherShipPicture.setFill(otherShip.type.getColor());
         otherShipPicturePane.getChildren().add(otherShipPicture);
         shipCost.setText(Integer.toString(otherShip.type.getCost()));
     }
 
     /**
-     * Informs the user if they are not allowed to buy the currently selected ship Calls the methods
-     * to keep myShip and otherShip up to date
+     * Informs the user if they are not allowed to buy the currently
+     *     selected ship.
+     * Calls the methods to keep myShip and otherShip up to date
      */
     public void updateShip() {
         if (otherShip.type == myShip.type) {
@@ -227,8 +266,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Handles purchase of a ship Subtracts/Adds money from/to the player, transfers the parts, and
-     * then resets all variables after giving the player their new ship
+     * Handles purchase of a ship.
+     * Subtracts/Adds money from/to the player, transfers the parts, and
+     *     then resets all variables after giving the player their new ship
      */
     public void buyShip() {
         player.subtractMoney(otherShip.type.getCost());
@@ -240,13 +280,12 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Transfers parts from player's old ship to new ship upon purchase TODO: Account for new ship
-     * not being able to fit any of these things, esp. goods
+     * Transfers parts from player's old ship to new ship upon purchase.
      */
     public void transferParts() {
-        // TODO: 
-        int i = 0;
-        for (; i < player.getShip().getWeapons().length; i++) {
+        // TODO: Account for new ship not being able to fit any
+        //     of these things, esp. goods
+        for (int i = 0; i < player.getShip().getWeapons().length; i++) {
             if (otherShip.addWeapon(player.getShip().getWeapons()[i])) {
                 player.getShip().removeWeapon(i);
             }
@@ -254,11 +293,11 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         for (Weapon weapon : player.getShip().getWeapons()) {
             if (weapon != null) {
                 player.addMoney(weapon.getType().cost / 2);
-                System.out.println("Excess weapon sold for: " + weapon.getType().cost / 2);
+                System.out.println("Excess weapon sold for: "
+                        + weapon.getType().cost / 2);
             }
         }
-        i = 0;
-        for (; i < player.getShip().getShields().length; i++) {
+        for (int i = 0; i < player.getShip().getShields().length; i++) {
             if (otherShip.addShield(player.getShip().getShields()[i])) {
                 player.getShip().removeShield(i);
             }
@@ -266,11 +305,11 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         for (Shield shield : player.getShip().getShields()) {
             if (shield != null) {
                 player.addMoney(shield.getType().cost / 2);
-                System.out.println("Excess shield sold for: " + shield.getType().cost / 2);
+                System.out.println("Excess shield sold for: "
+                        + shield.getType().cost / 2);
             }
         }
-        i = 0;
-        for (; i < player.getShip().getEngines().length; i++) {
+        for (int i = 0; i < player.getShip().getEngines().length; i++) {
             if (otherShip.addEngine(player.getShip().getEngines()[i])) {
                 player.getShip().removeEngine(i);
             }
@@ -278,7 +317,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         for (Engine engine : player.getShip().getEngines()) {
             if (engine != null) {
                 player.addMoney(engine.getType().cost / 2);
-                System.out.println("Excess weapon sold for: " + engine.getType().cost / 2);
+                System.out.println("Excess weapon sold for: "
+                        + engine.getType().cost / 2);
             }
         }
         boolean hasEngine = false;
@@ -291,7 +331,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             System.out.println("Complimentary engine yay");
             otherShip.addEngine(new Engine(EngineType.Hackney));
         }
-        HashMap<String, Integer> goods = player.getShip().getCargoBay().getGoods();
+        final HashMap<String, Integer> goods
+                = player.getShip().getCargoBay().getGoods();
         for (String goodName : goods.keySet()) {
             otherShip.storeTradeGood(goodName, goods.get(goodName));
         }
@@ -299,7 +340,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
 
     // Sets up the fade transition specifications
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(final URL url, final ResourceBundle rBundle) {
         ft = new FadeTransition(Duration.millis(1000), fuelDialogueField);
         ft.setFromValue(0);
         ft.setToValue(1);
@@ -320,13 +361,14 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         updateFuel();
         updateShip();
         for (ShipType type : ShipType.values()) {
-            int mult = type.ordinal();
-            HBox row = new HBox();
-            Label label = new Label(type.name());
+            final int mult = type.ordinal();
+            final HBox row = new HBox();
+            final Label label = new Label(type.name());
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new EventHandler<MouseEvent>() {
 
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -377,7 +419,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 gadgetPane.setVisible(false);
                 shopForPartsButton.setText("Shop for Parts");
             } else {
-                shipDialogueField.setText("Hey buddy, I can't let you leave with no engine");
+                shipDialogueField.setText("Hey buddy, I can't "
+                        + "let you leave with no engine");
                 viewEngines(new ActionEvent());
             }
         }
@@ -406,7 +449,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new EventHandler<MouseEvent>() {
 
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -418,9 +462,12 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     row.setLayoutY(mult * 25);
                     gadgetNameLabel1.setText("Damage ");
                     gadgetNameLabel2.setText("Rate of Fire");
-                    gadgetValueLabel1.setText("" + selectedWeapon.getType().damage);
-                    gadgetValueLabel2.setText("" + selectedWeapon.getType().rateOfFire);
-                    gadgetCostLabel.setText("" + selectedWeapon.getType().cost);
+                    gadgetValueLabel1.setText(Integer.toString(
+                            selectedWeapon.getType().damage));
+                    gadgetValueLabel2.setText(Integer.toString(
+                            selectedWeapon.getType().rateOfFire));
+                    gadgetCostLabel.setText(Integer.toString(
+                            selectedWeapon.getType().cost));
                     gadgetPicture.getChildren().clear();
                     Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
                     myGadgetPicture.setFill(selectedWeapon.getType().color.getColor());
@@ -436,13 +483,14 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         gadgetTypeLabel.setText("Shields");
         gadgetList.getChildren().clear();
         for (ShieldType type : ShieldType.values()) {
-            int mult = type.ordinal();
-            HBox row = new HBox();
-            Label label = new Label(type.name());
+            final int mult = type.ordinal();
+            final HBox row = new HBox();
+            final Label label = new Label(type.name());
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new EventHandler<MouseEvent>() {
 
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -454,12 +502,17 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     row.setLayoutY(mult * 25);
                     gadgetNameLabel1.setText("Strength ");
                     gadgetNameLabel2.setText("Recharge Rate");
-                    gadgetValueLabel1.setText("" + selectedShield.getStrength());
-                    gadgetValueLabel2.setText("" + selectedShield.getRechargeRate());
-                    gadgetCostLabel.setText("" + selectedShield.getType().cost);
+                    gadgetValueLabel1.setText(Integer.toString(
+                            selectedShield.getStrength()));
+                    gadgetValueLabel2.setText(Integer.toString(
+                            selectedShield.getRechargeRate()));
+                    gadgetCostLabel.setText(Integer.toString(
+                            selectedShield.getType().cost));
                     gadgetPicture.getChildren().clear();
-                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(selectedShield.getType().color.getColor());
+                    final Rectangle myGadgetPicture
+                            = new Rectangle(100, 10, 100, 100);
+                    myGadgetPicture.setFill(
+                            selectedShield.getType().color.getColor());
                     gadgetPicture.getChildren().add(myGadgetPicture);
                 }
             });
@@ -472,13 +525,14 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         gadgetTypeLabel.setText("Engines");
         gadgetList.getChildren().clear();
         for (EngineType type : EngineType.values()) {
-            int mult = type.ordinal();
-            HBox row = new HBox();
-            Label label = new Label(type.name());
+            final int mult = type.ordinal();
+            final HBox row = new HBox();
+            final Label label = new Label(type.name());
             label.setPrefSize(200, 25);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new EventHandler<MouseEvent>() {
 
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -490,12 +544,17 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     row.setLayoutY(mult * 25);
                     gadgetNameLabel1.setText("Acceleration ");
                     gadgetNameLabel2.setText("Fuel Efficiency");
-                    gadgetValueLabel1.setText("" + selectedEngine.getType().acceleration);
-                    gadgetValueLabel2.setText("" + selectedEngine.getType().fuelEfficiency);
-                    gadgetCostLabel.setText("" + selectedEngine.getType().cost);
+                    gadgetValueLabel1.setText(Integer.toString(
+                            selectedEngine.getType().acceleration));
+                    gadgetValueLabel2.setText(Integer.toString(
+                            selectedEngine.getType().fuelEfficiency));
+                    gadgetCostLabel.setText(Integer.toString(
+                            selectedEngine.getType().cost));
                     gadgetPicture.getChildren().clear();
-                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(selectedEngine.getType().color.getColor());
+                    final Rectangle myGadgetPicture
+                            = new Rectangle(100, 10, 100, 100);
+                    myGadgetPicture.setFill(
+                            selectedEngine.getType().color.getColor());
                     gadgetPicture.getChildren().add(myGadgetPicture);
                 }
             });
@@ -510,7 +569,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             Label label;
             if (weapon != null) {
                 label = new Label(weapon.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                        new EventHandler<MouseEvent>() {
 
                     @Override
                     public void handle(MouseEvent mouseEvent) {
@@ -520,14 +580,20 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                         row.setStyle("-fx-background-color: #EEEEEE;");
                         gadgetNameLabel1.setText("Damage ");
                         gadgetNameLabel2.setText("Rate of Fire");
-                        gadgetValueLabel1.setText("" + selectedWeapon.getType().damage);
-                        gadgetValueLabel2.setText("" + selectedWeapon.getType().rateOfFire);
-                        gadgetCostLabel.setText("" + (selectedWeapon.getType().cost / 2));
+                        gadgetValueLabel1.setText(Integer.toString(
+                                selectedWeapon.getType().damage));
+                        gadgetValueLabel2.setText(Integer.toString(
+                                selectedWeapon.getType().rateOfFire));
+                        gadgetCostLabel.setText(Integer.toString(
+                                (selectedWeapon.getType().cost / 2)));
                         gadgetPicture.getChildren().clear();
-                        Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                        myGadgetPicture.setFill(selectedWeapon.getType().color.getColor());
+                        final Rectangle myGadgetPicture
+                                = new Rectangle(100, 10, 100, 100);
+                        myGadgetPicture.setFill(
+                                selectedWeapon.getType().color.getColor());
                         gadgetPicture.getChildren().add(myGadgetPicture);
-                        gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                        gadgetIndex = row.getParent().
+                                getChildrenUnmodifiable().indexOf(row);
                     }
                 });
             } else {
@@ -540,15 +606,19 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         }
     }
 
+    /**
+     * 
+     */
     private void updatePlayerShields() {
         gadgetShieldsViewer.getChildren().clear();
         for (Shield shield : player.getShip().getShields()) {
             System.out.println(shield);
-            HBox row = new HBox();
+            final HBox row = new HBox();
             Label label;
             if (shield != null) {
                 label = new Label(shield.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                        new EventHandler<MouseEvent>() {
 
                     @Override
                     public void handle(MouseEvent mouseEvent) {
@@ -558,14 +628,20 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                         row.setStyle("-fx-background-color: #EEEEEE;");
                         gadgetNameLabel1.setText("Strength ");
                         gadgetNameLabel2.setText("Recharge Rate");
-                        gadgetValueLabel1.setText("" + selectedShield.getStrength());
-                        gadgetValueLabel2.setText("" + selectedShield.getRechargeRate());
-                        gadgetCostLabel.setText("" + (selectedShield.getType().cost / 2));
+                        gadgetValueLabel1.setText(Integer.toString(
+                                selectedShield.getStrength()));
+                        gadgetValueLabel2.setText(Integer.toString(
+                                selectedShield.getRechargeRate()));
+                        gadgetCostLabel.setText(Integer.toString(
+                                (selectedShield.getType().cost / 2)));
                         gadgetPicture.getChildren().clear();
-                        Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                        myGadgetPicture.setFill(selectedShield.getType().color.getColor());
+                        final Rectangle myGadgetPicture
+                                = new Rectangle(100, 10, 100, 100);
+                        myGadgetPicture.setFill(
+                                selectedShield.getType().color.getColor());
                         gadgetPicture.getChildren().add(myGadgetPicture);
-                        gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                        gadgetIndex = row.getParent()
+                                .getChildrenUnmodifiable().indexOf(row);
                     }
                 });
             } else {
@@ -581,11 +657,12 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     private void updatePlayerEngines() {
         gadgetEnginesViewer.getChildren().clear();
         for (Engine engine : player.getShip().getEngines()) {
-            HBox row = new HBox();
+            final HBox row = new HBox();
             Label label;
             if (engine != null) {
                 label = new Label(engine.getName());
-                row.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                        new EventHandler<MouseEvent>() {
 
                     @Override
                     public void handle(MouseEvent mouseEvent) {
@@ -595,14 +672,20 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                         row.setStyle("-fx-background-color: #EEEEEE;");
                         gadgetNameLabel1.setText("Acceleration ");
                         gadgetNameLabel2.setText("Fuel Efficiency");
-                        gadgetValueLabel1.setText("" + selectedEngine.getAcceleration());
-                        gadgetValueLabel2.setText("" + selectedEngine.getFuelEfficiency());
-                        gadgetCostLabel.setText("" + (selectedEngine.getType().cost / 2));
+                        gadgetValueLabel1.setText(Integer.toString(
+                                selectedEngine.getAcceleration()));
+                        gadgetValueLabel2.setText(Integer.toString(
+                                selectedEngine.getFuelEfficiency()));
+                        gadgetCostLabel.setText(Integer.toString(
+                                (selectedEngine.getType().cost / 2)));
                         gadgetPicture.getChildren().clear();
-                        Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                        myGadgetPicture.setFill(selectedEngine.getType().color.getColor());
+                        final Rectangle myGadgetPicture
+                                = new Rectangle(100, 10, 100, 100);
+                        myGadgetPicture.setFill(
+                                selectedEngine.getType().color.getColor());
                         gadgetPicture.getChildren().add(myGadgetPicture);
-                        gadgetIndex = row.getParent().getChildrenUnmodifiable().indexOf(row);
+                        gadgetIndex = row.getParent()
+                                .getChildrenUnmodifiable().indexOf(row);
                     }
                 });
             } else {
@@ -615,6 +698,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         }
     }
 
+    /**
+     * 
+     */
     private void resetSelected() {
         for (Node node : gadgetList.getChildren()) {
             node.setStyle("-fx-background-color: #FFFFFF;");
@@ -632,7 +718,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
 
     @FXML
     private void buyShipButtonAction(ActionEvent event) {
-        if (confirmationField.getText().trim().equals(Integer.toString(otherShip.type.getCost()))) {
+        if (confirmationField.getText().trim().equals(
+                Integer.toString(otherShip.type.getCost()))) {
             shipDialogueField.setText("");
             confirmationField.setText("");
             buyShip();
@@ -647,30 +734,36 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     private void buyGadgetButtonAction(ActionEvent event) {
         switch (currentGadgetType) {
             case "Weapon":
-                if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedWeapon.getType().cost))) {
+                if (confirmationGadgetField.getText().trim().equals(
+                        Integer.toString(selectedWeapon.getType().cost))) {
                     shipDialogueField.setText("");
                     confirmationGadgetField.setText("");
                     buyWeapon();
                 } else {
-                    shipDialogueField.setText("Please confirm the price of your new weapon.");
+                    shipDialogueField.setText("Please confirm the "
+                            + "price of your new weapon.");
                 }
                 break;
             case "Shield":
-                if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedShield.getType().cost))) {
+                if (confirmationGadgetField.getText().trim().equals(
+                        Integer.toString(selectedShield.getType().cost))) {
                     shipDialogueField.setText("");
                     confirmationGadgetField.setText("");
                     buyShield();
                 } else {
-                    shipDialogueField.setText("Please confirm the price of your new shield.");
+                    shipDialogueField.setText("Please confirm the "
+                            + "price of your new shield.");
                 }
                 break;
             case "Engine":
-                if (confirmationGadgetField.getText().trim().equals(Integer.toString(selectedEngine.getType().cost))) {
+                if (confirmationGadgetField.getText().trim().equals(
+                        Integer.toString(selectedEngine.getType().cost))) {
                     shipDialogueField.setText("");
                     confirmationGadgetField.setText("");
                     buyEngine();
                 } else {
-                    shipDialogueField.setText("Please confirm the price of your new engine.");
+                    shipDialogueField.setText("Please confirm the "
+                            + "price of your new engine.");
                 }
                 break;
         }
@@ -680,17 +773,17 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     private void sellGadgetButtonAction(ActionEvent event) {
         switch (currentGadgetType) {
             case "My Weapon":
-                System.out.println("SELLING Weapon");
                 player.addMoney(selectedWeapon.getType().cost / 2);
-                shipDialogueField.setText("Weapon sold for " + selectedWeapon.getType().cost / 2);
+                shipDialogueField.setText("Weapon sold for "
+                        + selectedWeapon.getType().cost / 2);
                 player.getShip().removeWeapon(gadgetIndex);
                 updatePlayerWeapons();
                 gadgetIndex = -1;
                 currentGadgetType = "None";
                 break;
             case "My Shield":
-                System.out.println("SELLING shield");
-                shipDialogueField.setText("Shield sold for " + selectedShield.getType().cost / 2);
+                shipDialogueField.setText("Shield sold for "
+                        + selectedShield.getType().cost / 2);
                 player.addMoney(selectedShield.getType().cost / 2);
                 player.getShip().removeShield(gadgetIndex);
                 updatePlayerShields();
@@ -698,26 +791,28 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 currentGadgetType = "None";
                 break;
             case "My Engine":
-                System.out.println("SELLING engine");
                 player.addMoney(selectedEngine.getType().cost / 2);
-                shipDialogueField.setText("Engine sold for " + selectedEngine.getType().cost / 2);
+                shipDialogueField.setText("Engine sold for "
+                        + selectedEngine.getType().cost / 2);
                 player.getShip().removeEngine(gadgetIndex);
                 updatePlayerEngines();
                 gadgetIndex = -1;
                 currentGadgetType = "None";
                 break;
             default:
-                shipDialogueField.setText("Please select a valid part to sell.");
+                shipDialogueField.setText("Please select a"
+                        + "valid part to sell.");
                 break;
         }
         moneyLabel.setText(Integer.toString(player.getMoney()));
     }
 
-    /*
-     * Purchases a weapon. Checks to see if the player has enough money for the
-     * weapon. If so, removes the money from the player and adds the weapon to
-     * the player's ship.     
-    */
+    /**
+     * Purchases a weapon.
+     * Checks to see if the player has enough money for the weapon
+     * If so, removes the money from the player and adds the weapon to
+     *     the player's ship
+     */
     public void buyWeapon() {
         if (player.getMoney() >= selectedWeapon.getType().cost) {
             player.subtractMoney(selectedWeapon.getType().cost);
@@ -734,10 +829,11 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         moneyLabel.setText(Integer.toString(player.getMoney()));
     }
 
-    /*
-     * Purchases an shield. Checks to see if the player has enough money for the
-     * shield. If so, removes the money from the player and adds the shield to
-     * the player's ship.     
+    /**
+     * Purchases a shield.
+     * Checks to see if the player has enough money for the shield
+     * If so, removes the money from the player and adds the shield to
+     *     the player's ship  
      */
     public void buyShield() {
         if (player.getMoney() >= selectedShield.getType().cost) {
@@ -756,9 +852,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Purchases an engine. Checks to see if the player has enough money for the
-     * engine. If so, removes the money from the player and adds the engine to
-     * the player's ship.
+     * Purchases an engine.
+     * Checks to see if the player has enough money for the engine
+     * If so, removes the money from the player and adds the engine to
+     *     the player's ship
      */
     public void buyEngine() {
         if (player.getMoney() >= selectedEngine.getType().cost) {
@@ -778,7 +875,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
 
     @FXML
     private void confirmFuelButtonAction(ActionEvent event) {
-        int newFuel = (int) (tempFuel - player.getShip().getFuel());
+        final int newFuel = (int) (tempFuel - player.getShip().getFuel());
         fuelDialogueField.setText("Purchased " + newFuel + " gallons of fuel.");
         if (ft != null) {
             ft.play();
@@ -796,13 +893,15 @@ public class SpaceStationController implements Initializable, ControlledScreen {
 
     @FXML
     private void fillFuelButtonAction(ActionEvent event) {
-        int potentialNewFuel = (int) (player.getShip().getFuelCapacity() - player.getShip().getFuel());
-        int canAffordFuel = player.getMoney() / fuelCost;
+        final int potentialNewFuel = (int) (player.getShip().getFuelCapacity()
+                - player.getShip().getFuel());
+        final int canAffordFuel = player.getMoney() / fuelCost;
         if (canAffordFuel >= potentialNewFuel) {
             tempFuel = player.getShip().getFuelCapacity();
         } else {
             tempFuel = player.getShip().getFuel() + canAffordFuel;
-            fuelDialogueField.setText("Can only afford " + canAffordFuel + " gallons of fuel.");
+            fuelDialogueField.setText("Can only afford "
+                    + canAffordFuel + " gallons of fuel.");
             if (ft != null) {
                 ft.play();
             }
@@ -811,7 +910,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     @Override
-    public void setScreenParent(ScreensController aParentController) {
+    public void setScreenParent(final ScreensController aParentController) {
         parentController = aParentController;
     }
 }

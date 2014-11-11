@@ -7,13 +7,24 @@ import spacetrader.ui.SerializableColor;
 /**
  * Engine is a class used to propel ships around the universe.
  * 
- * @author Purcell7
+ * @author Team TYN
  */
 public class Engine implements Serializable {
-
+    /**
+     * 
+     */
     private final EngineType type;
+    /**
+     * 
+     */
     private final int acceleration;
+    /**
+     * 
+     */
     private final int fuelEfficiency;
+    /**
+     * 
+     */
     private final String name;
 
     /**
@@ -28,7 +39,8 @@ public class Engine implements Serializable {
         /**
          * Basic engine that greatly favors acceleration.
          */
-        Lipizzaner(30, 10, 300, new SerializableColor(Color.BLUE), "Lipizzaner"),
+        Lipizzaner(30, 10, 300, new SerializableColor(Color.BLUE),
+                "Lipizzaner"),
         /**
          * Basic engine that greatly favors efficiency.
          */
@@ -36,11 +48,12 @@ public class Engine implements Serializable {
         /**
          * Better engine that slightly favors efficiency.
          */
-        Malopolski(15, 20, 300, new SerializableColor(Color.BLUE), "Malopolski"),
+        Malopolski(15, 20, 300, new SerializableColor(Color.BLUE),
+                "Malopolski"),
         /**
          * Better engine that slightly favors acceleration.
          */
-        Galiceño(20, 15, 300, new SerializableColor(Color.BLUE), "Galiceño"),
+        Galiceno(20, 15, 300, new SerializableColor(Color.BLUE), "Galiceño"),
         /**
          * Advanced engine that slightly favors acceleration.
          */
@@ -62,32 +75,53 @@ public class Engine implements Serializable {
          */
         Unicorn(250, 10, 2500, new SerializableColor(Color.GOLD), "Unicorn");
 
+        /**
+         * 
+         */
         public final int acceleration;
+        /**
+         * 
+         */
         public final int fuelEfficiency;
+        /**
+         * 
+         */
         public final int cost;
+        /**
+         * 
+         */
         public final String name;
+        /**
+         * 
+         */
         public final SerializableColor color;
 
         /**
          * Constructor for EngineType.
          *
-         * @param acceleration The rate of change in velocity due to the engine.
-         * @param fuelEfficiency The rate at which fuel is burnt to travel distances.
-         * @param cost The base cost for this type of engine.
-         * @param color The color used to distinguish this engine type from the others.
-         * @param name The string representation of the name type.
+         * @param aAcceleration The rate of change in velocity
+         *     due to the engine.
+         * @param aFuelEfficiency The rate at which fuel is burnt to
+         *     travel distances.
+         * @param aCost The base cost for this type of engine.
+         * @param aColor The color used to distinguish this engine
+         *     type from the others.
+         * @param aName The string representation of the name type.
          */
-        EngineType(int acceleration, int fuelEfficiency, int cost, SerializableColor color, String name) {
-            this.acceleration = acceleration;
-            this.fuelEfficiency = fuelEfficiency;
-            this.cost = cost;
-            this.color = color;
-            this.name = name;
+        EngineType(final int aAcceleration, final int aFuelEfficiency,
+                final int aCost, final SerializableColor aColor,
+                final String aName) {
+            acceleration = aAcceleration;
+            fuelEfficiency = aFuelEfficiency;
+            cost = aCost;
+            color = aColor;
+            name = aName;
         }
     };
 
     /**
-     * No argument constructor for Shield, creates a Hackney engine (lowest level).
+     * No argument constructor for Shield,
+     *     creates a Hackney engine (lowest level).
      */
     public Engine() {
         this.type = EngineType.Hackney;
@@ -99,13 +133,13 @@ public class Engine implements Serializable {
     /**
      * Constructor for Engine.
      *
-     * @param type The engine type of the engine.
+     * @param aType The engine type of the engine.
      */
-    public Engine(EngineType type) {
-        this.type = type;
-        this.acceleration = type.acceleration;
-        this.fuelEfficiency = type.fuelEfficiency;
-        this.name = type.name;
+    public Engine(final EngineType aType) {
+        type = aType;
+        acceleration = aType.acceleration;
+        fuelEfficiency = aType.fuelEfficiency;
+        name = aType.name;
     }
 
     /**

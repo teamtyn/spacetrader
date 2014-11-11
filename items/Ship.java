@@ -7,19 +7,46 @@ import spacetrader.player.Mercenary;
 import spacetrader.ui.SerializableColor;
 
 /**
- * Ship class, what the player travels around and transports cargo in
+ * Ship class, what the player travels around and transports cargo in.
  *
- * @author David Purcell
+ * @author Team TYN
  */
 public class Ship implements Serializable {
+    /**
+     * 
+     */
     public ShipType type;
+    /**
+     * 
+     */
     private final Shield[] shields;
+    /**
+     * 
+     */
     private final Weapon[] weapons;
+    /**
+     * 
+     */
     private final Engine[] engines;
+    /**
+     * 
+     */
     private final AbstractCrewMember[] crew;
+    /**
+     * 
+     */
     private final CargoBay cargoBay;
+    /**
+     * 
+     */
     private int crewNumber;
+    /**
+     * 
+     */
     private int hull;
+    /**
+     * 
+     */
     private double fuel;
 
     /**
@@ -68,41 +95,69 @@ public class Ship implements Serializable {
          */
         Wasp(500, 300, 2, 4, 35, 4, 50, 5000, Color.ALICEBLUE);
 
+        /**
+         * 
+         */
         private int hullStrength;
+        /**
+         * 
+         */
         private final double fuelCapacity;
+        /**
+         * 
+         */
         private int weaponSlots;
+        /**
+         * 
+         */
         private int shieldSlots;
+        /**
+         * 
+         */
         private int engineSlots;
+        /**
+         * 
+         */
         private int cargoBaySlots;
+        /**
+         * 
+         */
         private int crewSlots;
+        /**
+         * 
+         */
         private final int cost;
+        /**
+         * 
+         */
         private final SerializableColor color;
 
         /**
          * Constructor for ShipType.
          *
-         * @param hullStrength the hull strength for this type of ship.
-         * @param fuelCapacity the fuel capacity for this type of ship.
-         * @param shieldSlots the shield slots for this type of ship.
-         * @param weaponSlots the weapon slots for this type of ship.
-         * @param cargoBaySlots the cargo bay slots for this type of ship.
-         * @param engineSlots the engine slots for this type of ship.
-         * @param crewSlots the crew slots for this type of ship.
-         * @param cost the cost for this type of ship.
-         * @param color the color used to fill in the square for this ship.
+         * @param aHullStrength the hull strength for this type of ship.
+         * @param aFuelCapacity the fuel capacity for this type of ship.
+         * @param aShieldSlots the shield slots for this type of ship.
+         * @param aWeaponSlots the weapon slots for this type of ship.
+         * @param aCargoBaySlots the cargo bay slots for this type of ship.
+         * @param aEngineSlots the engine slots for this type of ship.
+         * @param aCrewSlots the crew slots for this type of ship.
+         * @param aCost the cost for this type of ship.
+         * @param aColor the color used to fill in the square for this ship.
          */
-        ShipType(int hullStrength, double fuelCapacity, int shieldSlots,
-                int weaponSlots, int cargoBaySlots, int engineSlots,
-                int crewSlots, int cost, Color color) {
-            this.hullStrength = hullStrength;
-            this.fuelCapacity = fuelCapacity;
-            this.shieldSlots = shieldSlots;
-            this.weaponSlots = weaponSlots;
-            this.cargoBaySlots = cargoBaySlots;
-            this.engineSlots = engineSlots;
-            this.crewSlots = crewSlots;
-            this.cost = cost;
-            this.color = new SerializableColor(color);
+        ShipType(final int aHullStrength, final double aFuelCapacity,
+                final int aShieldSlots, final int aWeaponSlots,
+                final int aCargoBaySlots, final int aEngineSlots,
+                final int aCrewSlots, final int aCost, final Color aColor) {
+            hullStrength = aHullStrength;
+            fuelCapacity = aFuelCapacity;
+            shieldSlots = aShieldSlots;
+            weaponSlots = aWeaponSlots;
+            cargoBaySlots = aCargoBaySlots;
+            engineSlots = aEngineSlots;
+            crewSlots = aCrewSlots;
+            cost = aCost;
+            color = new SerializableColor(aColor);
         }
 
         /**

@@ -6,8 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * @author TYN
- * @version 1.0
+ * 
+ * @author Team TYN
  */
 public class SpaceTrader extends Application {
 

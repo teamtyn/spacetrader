@@ -7,13 +7,24 @@ import spacetrader.ui.SerializableColor;
 /**
  * Weapon is a class used to attack other ships and deal damage.
  * 
- * @author David Purcell
+ * @author Team TYN
  */
 public class Weapon implements Serializable {
-
+    /**
+     * 
+     */
     private WeaponType type;
+    /**
+     * 
+     */
     private int damage;
+    /**
+     * 
+     */
     private int rateOfFire;
+    /**
+     * 
+     */
     private String name;
 
     /**
@@ -130,6 +141,7 @@ public class Weapon implements Serializable {
         return name;
     }
 
+    @Override
     public String toString() {
         return name;
     }

@@ -28,7 +28,7 @@ import spacetrader.star_system.StarSystemView;
 
 /**
  * The subscene displaying the 3D Universe.
- * @author Administrator
+ * @author Team TYN
  */
 public class UniverseMapSubScene {
 
@@ -130,7 +130,8 @@ public class UniverseMapSubScene {
     }
 
     private void buildCamera(Group root) {
-        topXform.setTranslate(GameModel.UNIVERSE_WIDTH / 2, GameModel.UNIVERSE_HEIGHT / 2);
+        topXform.setTranslate(
+                GameModel.UNIVERSE_WIDTH / 2, GameModel.UNIVERSE_HEIGHT / 2);
         camera.setTranslateZ(-2000);
 
         baseXform.getChildren().add(camera);
@@ -211,16 +212,21 @@ public class UniverseMapSubScene {
         }
 
         topXform.rzProperty().unbind();
-        DoubleProperty angleOffset = new SimpleDoubleProperty(topXform.getRz() - planet.getRz());
-        topXform.rzProperty().bind(planet.getOrbitXform().rzProperty().add(angleOffset));
+        DoubleProperty angleOffset =
+                new SimpleDoubleProperty(topXform.getRz() - planet.getRz());
+        topXform.rzProperty().bind(
+                planet.getOrbitXform().rzProperty().add(angleOffset));
         toPlanet = new Timeline(
                 new KeyFrame(Duration.seconds(2),
                         new KeyValue(topXform.rxProperty(), system.getRx()),
                         new KeyValue(topXform.ryProperty(), system.getRy()),
                         new KeyValue(angleOffset, 0),
-                        new KeyValue(baseXform.xProperty(), planet.getOffsetX()),
-                        new KeyValue(baseXform.yProperty(), planet.getOffsetY()),
-                        new KeyValue(baseXform.zProperty(), planet.getOffsetZ()),
+                        new KeyValue(baseXform.xProperty(),
+                                planet.getOffsetX()),
+                        new KeyValue(baseXform.yProperty(),
+                                planet.getOffsetY()),
+                        new KeyValue(baseXform.zProperty(),
+                                planet.getOffsetZ()),
                         new KeyValue(camera.translateZProperty(), -13),
                         new KeyValue(baseXform.rxProperty(), 90),
                         new KeyValue(baseXform.ryProperty(), 0),
@@ -278,7 +284,8 @@ public class UniverseMapSubScene {
         skybox.setScaleZ(5000);
 
         PhongMaterial skyboxMaterial = new PhongMaterial();
-        skyboxMaterial.setDiffuseMap(new Image(getClass().getResource("skybox1.png").toExternalForm()));
+        skyboxMaterial.setDiffuseMap(new Image(getClass()
+                .getResource("skybox1.png").toExternalForm()));
         skybox.setMaterial(skyboxMaterial);
         NO_SHADE.getScope().add(skybox);
 

@@ -37,7 +37,7 @@ import spacetrader.star_system.Planet;
  * BOREDOM [5], PLAGUE [6], LACKOFWORKERS [7]};
  *
  * If IE, CR, or ER == -1, it means that condition is never present
- * @author Ryan Burns
+ * @author Team TYN
  */
 public class TradeGood implements Serializable {
     public GoodType type;

@@ -12,7 +12,7 @@ import spacetrader.star_system.Planet;
  *          here (via tech level)
  *     -sellable are all the goods that are allowed to be sold
  *          here (via tech level)
- * @author Ryan Burns
+ * @author Team TYN
  */
 public class MarketPlace implements Serializable {
 

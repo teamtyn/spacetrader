@@ -33,11 +33,11 @@ import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemView;
 
 /**
- * FXML Controller class.
- *
- * @author TYN
+ * FXML Controller class for the UniverseMap.
+ * @author Team TYN
  */
-public class UniverseMapController extends AnimationTimer implements Initializable, ControlledScreen {
+public class UniverseMapController extends AnimationTimer
+            implements Initializable, ControlledScreen {
 
     private Sphere highlighted;
     private StarSystemView selectedSystem;
