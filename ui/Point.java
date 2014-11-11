@@ -3,43 +3,49 @@ package spacetrader.ui;
 import java.io.Serializable;
 
 /**
- * Point is a class used to store x,y,z cooridinates of objects within 
- * the universe
- * 
+ * Stores x, y, and z coordinates of objects within the universe.
+ *
  * @author Team TYN
  */
-public class Point implements Serializable {
+public final class Point implements Serializable {
 
+    /**
+     * The x coordinate.
+     */
     private final double x;
+    /**
+     * The y coordinate.
+     */
     private final double y;
+    /**
+     * The z coordinate.
+     */
     private final double z;
 
     /**
-     * 2D Constructor for point
-     * 
-     * @param x the x coordinate
-     * @param y the y coordinate
+     * Constructor for a two-dimensional point.
+     *
+     * @param newX the x coordinate
+     * @param newY the y coordinate
      */
-    public Point(double x, double y) {
-        this(x, y, 0);
+    public Point(final double newX, final double newY) {
+        this(newX, newY, 0);
     }
 
     /**
-     * 3D Constructor for point
-     * 
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param z the z coordinate
+     * Constructor for a three-dimensional point.
+     *
+     * @param newX the x coordinate
+     * @param newY the y coordinate
+     * @param newZ the z coordinate
      */
-    public Point(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public Point(final double newX, final double newY, final double newZ) {
+        this.x = newX;
+        this.y = newY;
+        this.z = newZ;
     }
 
     /**
-     * Getter for the x coordinate
-     * 
      * @return the x coordinate
      */
     public double getX() {
@@ -47,8 +53,6 @@ public class Point implements Serializable {
     }
 
     /**
-     * Getter for the y coordinate
-     * 
      * @return the y coordinate
      */
     public double getY() {
@@ -56,8 +60,6 @@ public class Point implements Serializable {
     }
 
     /**
-     * Getter for the z coordinate
-     * 
      * @return the z coordinate
      */
     public double getZ() {
