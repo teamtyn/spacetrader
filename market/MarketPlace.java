@@ -43,26 +43,26 @@ public class MarketPlace implements Serializable {
     }
 
     /**
-     * 
-     * @return 
+     * Gets the goods of the market place.
+     * @return The goods of the market place
      */
-    public ArrayList<TradeGood> getGoods() {
+    public final ArrayList<TradeGood> getGoods() {
         return goods;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the buyable goods of the market place.
+     * @return The buyable goods of the market place
      */
-    public ArrayList<TradeGood> getBuyable() {
+    public final ArrayList<TradeGood> getBuyable() {
         return buyable;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the sellable goods of the market place.
+     * @return The sellable goods of the market place
      */
-    public ArrayList<TradeGood> getSellable() {
+    public final ArrayList<TradeGood> getSellable() {
         return sellable;
     }
 
@@ -71,7 +71,7 @@ public class MarketPlace implements Serializable {
      * @param good The good to be changed
      * @param change The change in amount of the good
      */
-    public void changeQuantity(TradeGood good, int change) {
+    public final void changeQuantity(final TradeGood good, final int change) {
         for (TradeGood tg : goods) {
             if (tg.type == good.type) {
                 tg.setQuantity(tg.getQuantity() + change);
@@ -80,7 +80,7 @@ public class MarketPlace implements Serializable {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder str = new StringBuilder();
         for (TradeGood good : goods) {
             str.append(good.type);
