@@ -8,6 +8,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
@@ -27,15 +28,15 @@ import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemView;
 
 /**
- * The subscene displaying the 3D Universe.
+ * The sub scene displaying the 3D Universe.
  * @author Team TYN
  */
-public class UniverseMapSubScene {
+public class UniverseMapSubScene extends SubScene{
 
     public static final AmbientLight NO_SHADE = new AmbientLight();
     public static final AmbientLight AMBIENT = new AmbientLight(Color.rgb(20, 20, 20));
 
-    private final SubScene subScene;
+    //private final SubScene subScene;
     private final ArrayList<StarSystemView> systemViews;
     private final PerspectiveCamera camera;
     private final Xform topXform;
@@ -47,12 +48,9 @@ public class UniverseMapSubScene {
     private final Sphere highlight;
     private final Box updater;
 
-    public UniverseMapSubScene() {
-        Group root = new Group();
-        subScene = new SubScene(root, SpaceTrader.SCREEN_WIDTH,
-                SpaceTrader.SCREEN_HEIGHT, true,
-                SceneAntialiasing.BALANCED);
-        subScene.setFill(Color.BLACK);
+    public UniverseMapSubScene(Group root, double width, double height, boolean depthBuffer, SceneAntialiasing antialiasing) {
+        super(root, width, height, depthBuffer, antialiasing);
+        setFill(Color.BLACK);
 
         systemViews = new ArrayList<>();
         buildSystems(root);
@@ -61,7 +59,7 @@ public class UniverseMapSubScene {
         camera.setFieldOfView(45);
         camera.setNearClip(1);
         camera.setFarClip(20000);
-        subScene.setCamera(camera);
+        setCamera(camera);
 
         topXform = new Xform(RotateOrder.ZYX);
         baseXform = new Xform();
@@ -89,11 +87,7 @@ public class UniverseMapSubScene {
         root.getChildren().addAll(NO_SHADE, AMBIENT, highlight, updater);
         Bloom bloom = new Bloom();
         bloom.setThreshold(0.9);
-        subScene.setEffect(bloom);
-    }
-
-    public SubScene getSubScene() {
-        return subScene;
+        setEffect(bloom);
     }
 
     public ArrayList<StarSystemView> getSystemViews() {
@@ -106,10 +100,6 @@ public class UniverseMapSubScene {
 
     public Xform getBaseXform() {
         return baseXform;
-    }
-
-    public PerspectiveCamera getCamera() {
-        return camera;
     }
 
     public MeshView getSkybox() {

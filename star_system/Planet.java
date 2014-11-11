@@ -61,7 +61,7 @@ public class Planet implements Serializable {
                 GameModel.getRandom().nextInt(Environment.values().length)];
         switch (environment) {
             case EARTH:
-                seaLevel = 0.1f * GameModel.getRandom().nextFloat() + 0.01f;
+                seaLevel = 0.2f * GameModel.getRandom().nextFloat() + 0.01f;
                 resourceLevel = choose(
                         ResourceLevel.MINERALRICH,
                         ResourceLevel.LOTSOFWATER,
@@ -79,7 +79,7 @@ public class Planet implements Serializable {
                         ResourceLevel.LIFELESS);
                 break;
             case ICE:
-                seaLevel = 0.1f * GameModel.getRandom().nextFloat() + 0.01f;
+                seaLevel = 0.2f * GameModel.getRandom().nextFloat() + 0.01f;
                 resourceLevel = choose(
                         ResourceLevel.NOSPECIALRESOURCES,
                         ResourceLevel.LOTSOFWATER,

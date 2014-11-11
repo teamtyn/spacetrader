@@ -12,8 +12,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,9 +45,9 @@ public class UniverseMapController extends AnimationTimer
     private StarSystemView selectedSystem;
     private PlanetView selectedPlanet;
     private ScreensController parentController;
-    private UniverseMapSubScene universeMapSubScene;
+    //private UniverseMapSubScene universeMapSubScene;
 
-    private SubScene subScene;
+    private UniverseMapSubScene subScene;
     private ArrayList<StarSystemView> systemViews;
     private PerspectiveCamera camera;
     private Xform topXform;
@@ -115,14 +117,16 @@ public class UniverseMapController extends AnimationTimer
 
     @Override
     public void lazyInitialize() {
-        universeMapSubScene = new UniverseMapSubScene();
-        subScene = universeMapSubScene.getSubScene();
-        systemViews = universeMapSubScene.getSystemViews();
-        camera = universeMapSubScene.getCamera();
-        topXform = universeMapSubScene.getTopXform();
-        baseXform = universeMapSubScene.getBaseXform();
-        skybox = universeMapSubScene.getSkybox();
-        highlight = universeMapSubScene.getHighlight();
+        //universeMapSubScene = new UniverseMapSubScene();
+        subScene = new UniverseMapSubScene(new Group(), 
+                SpaceTrader.SCREEN_WIDTH, SpaceTrader.SCREEN_HEIGHT, true,
+                SceneAntialiasing.BALANCED);
+        systemViews = subScene.getSystemViews();
+        camera = (PerspectiveCamera) subScene.getCamera();
+        topXform = subScene.getTopXform();
+        baseXform = subScene.getBaseXform();
+        skybox = subScene.getSkybox();
+        highlight = subScene.getHighlight();
 
         subScenePane.getChildren().add(subScene);
         handleMouse();
@@ -158,49 +162,55 @@ public class UniverseMapController extends AnimationTimer
      */
     public void handleMouse() {
         EventHandler<MouseEvent> bodySelect;
-        bodySelect = (MouseEvent event) -> {
-            PickResult pickResult = event.getPickResult();
-            if (pickResult != null) {
-                Node intersect = pickResult.getIntersectedNode();
-                if (intersect instanceof StarSystemView) {
-                    StarSystemView system = (StarSystemView) intersect;
-                    if (selectedPlanet == null) {
-                        if (system != selectedSystem) {
+        bodySelect = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                PickResult pickResult = event.getPickResult();
+                if (pickResult != null) {
+                    Node intersect = pickResult.getIntersectedNode();
+                    if (intersect instanceof StarSystemView) {
+                        StarSystemView system = (StarSystemView) intersect;
+                        if (selectedPlanet == null) {
+                            if (system != selectedSystem) {
+                                setHighlighted(system);
+                                updateSystemInfo(system);
+                                systemInfo.play();
+                            }
+                        } else if (system == selectedSystem) {
                             setHighlighted(system);
                             updateSystemInfo(system);
                             systemInfo.play();
                         }
-                    } else if (system == selectedSystem) {
-                        setHighlighted(system);
-                        updateSystemInfo(system);
-                        systemInfo.play();
-                    }
-                } else if (intersect instanceof PlanetView) {
-                    PlanetView planet = (PlanetView) intersect;
-                    if (selectedSystem != null && selectedPlanet == null) {
-                        if (selectedSystem.containsPlanet(planet)) {
-                            setHighlighted(planet);
-                            updatePlanetInfo(planet);
-                            planetInfo.play();
+                    } else if (intersect instanceof PlanetView) {
+                        PlanetView planet = (PlanetView) intersect;
+                        if (selectedSystem != null && selectedPlanet == null) {
+                            if (selectedSystem.containsPlanet(planet)) {
+                                setHighlighted(planet);
+                                updatePlanetInfo(planet);
+                                planetInfo.play();
+                            }
                         }
                     }
                 }
             }
         };
 
-        EventHandler<MouseEvent> bodyDeselect = (MouseEvent event) -> {
-            highlighted = null;
-            highlight.setVisible(false);
-            if (selectedPlanet == null) {
-                if (selectedSystem == null) {
-                    hideInfo.play();
+        EventHandler<MouseEvent> bodyDeselect = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                highlighted = null;
+                highlight.setVisible(false);
+                if (selectedPlanet == null) {
+                    if (selectedSystem == null) {
+                        hideInfo.play();
+                    } else {
+                        updateSystemInfo(selectedSystem);
+                        systemInfo.play();
+                    }
                 } else {
-                    updateSystemInfo(selectedSystem);
-                    systemInfo.play();
+                    updatePlanetInfo(selectedPlanet);
+                    planetInfo.play();
                 }
-            } else {
-                updatePlanetInfo(selectedPlanet);
-                planetInfo.play();
             }
         };
 
@@ -213,7 +223,9 @@ public class UniverseMapController extends AnimationTimer
             }
         }
 
-        subScene.setOnMousePressed((MouseEvent event) -> {
+        subScene.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
                 mousePosX = event.getSceneX();
                 mousePosY = event.getSceneY();
 
@@ -233,12 +245,12 @@ public class UniverseMapController extends AnimationTimer
                                 selectedSystem.expand();
                                 selectedSystem.updateTextures(1000, 500);
                                 selectedSystem.setLightOn(true);
-                                universeMapSubScene.cameraToSystem(selectedSystem);
+                                subScene.cameraToSystem(selectedSystem);
                             }
                         } else if (system == selectedSystem) {
                             selectedPlanet.updateTextures(1000, 500, null);
                             selectedPlanet = null;
-                            universeMapSubScene.cameraToSystem(selectedSystem);
+                            subScene.cameraToSystem(selectedSystem);
                         }
                     } else if (intersect instanceof PlanetView) {
                         PlanetView planet = (PlanetView) intersect;
@@ -246,14 +258,17 @@ public class UniverseMapController extends AnimationTimer
                             if (selectedSystem.containsPlanet(planet)) {
                                 selectedPlanet = planet;
                                 selectedPlanet.updateTextures(2000, 1000, null);
-                                universeMapSubScene.cameraToPlanet(selectedSystem, selectedPlanet);
+                                subScene.cameraToPlanet(selectedSystem, selectedPlanet);
                             }
                         }
                     }
                 }
-            });
+            }
+        });
 
-        subScene.setOnMouseDragged((MouseEvent event) -> {
+        subScene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
                 double mouseOldX = mousePosX;
                 double mouseOldY = mousePosY;
                 mousePosX = event.getSceneX();
@@ -269,9 +284,12 @@ public class UniverseMapController extends AnimationTimer
                     topXform.setTx(Math.max(Math.min(topXform.getTx() - (mousePosX - mouseOldX) * 1.5, GameModel.UNIVERSE_WIDTH), 0));
                     topXform.setTy(Math.max(Math.min(topXform.getTy() - (mousePosY - mouseOldY) * 1.5, GameModel.UNIVERSE_HEIGHT), 0));
                 }
-            });
+            }
+        });
 
-        subScene.setOnScroll((ScrollEvent event) -> {
+        subScene.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
                 if (selectedPlanet != null) {
                     camera.setTranslateZ(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -7));
                     if (camera.getTranslateZ() < -17) {
@@ -279,7 +297,7 @@ public class UniverseMapController extends AnimationTimer
                         selectedPlanet = null;
                         updateSystemInfo(selectedSystem);
                         systemInfo.play();
-                        universeMapSubScene.cameraToSystem(selectedSystem);
+                        subScene.cameraToSystem(selectedSystem);
                     }
                 } else if (selectedSystem != null) {
                     camera.setTranslateZ(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -100));
@@ -289,12 +307,13 @@ public class UniverseMapController extends AnimationTimer
                         selectedSystem.setLightOn(false);
                         selectedSystem = null;
                         hideInfo.play();
-                        universeMapSubScene.cameraToUniverse();
+                        subScene.cameraToUniverse();
                     }
                 } else {
                     camera.setTranslateZ(Math.max(Math.min(camera.getTranslateZ() - camera.getTranslateZ() * event.getDeltaY() / 2000, -1000), -3000));
                 }
-            });
+            }
+        });
     }
 
     /**
