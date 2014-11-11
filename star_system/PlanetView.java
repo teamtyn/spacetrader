@@ -25,19 +25,19 @@ import spacetrader.star_system.NoiseGenerator.NoiseMode;
  */
 public class PlanetView extends Sphere {
     /**
-     * 
+     * Planet represented by this planet view.
      */
     private final Planet planet;
     /**
-     * 
+     * The orbit level Xform.
      */
     private final Xform orbitXform;
     /**
-     * 
+     * The axis level Xform.
      */
     private final Xform axisXform;
     /**
-     * 
+     * The noise generator used for texture generation.
      */
     private final NoiseGenerator noise;
     /**

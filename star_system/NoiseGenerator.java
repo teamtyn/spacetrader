@@ -55,7 +55,7 @@ public class NoiseGenerator {
     /**
      * Factor used to calculate the contribution for each corner of a simplex.
      */
-    private static final double CONTRIBUTION_FACTOR = 0.6;
+    private static final double CONTRIBUTION_FACTOR = 0.5;
     /**
      * Factor used to normalize individual noise values.
      */
@@ -213,11 +213,11 @@ public class NoiseGenerator {
      */
     private double noise(final double xin, final double yin, final double zin) {
         double n0, n1, n2, n3;
-        double s = (xin + yin + zin) * (1.0 / F3);
+        double s = (xin + yin + zin) * F3;
         int i = fastfloor(xin + s);
         int j = fastfloor(yin + s);
         int k = fastfloor(zin + s);
-        double t = (i + j + k) * (1.0 / G3);
+        double t = (i + j + k) * G3;
         double x0 = xin - (i - t);
         double y0 = yin - (j - t);
         double z0 = zin - (k - t);
