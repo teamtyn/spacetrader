@@ -13,12 +13,10 @@ import spacetrader.market.MarketPlace;
  */
 public class Planet implements Serializable {
     public enum Environment {
-
         EARTH, LAVA, ICE, DESERT, ALIEN, ROCKY
     };
 
     public enum ResourceLevel {
-
         NOSPECIALRESOURCES, MINERALRICH, MINERALPOOR,
         DESERT, LOTSOFWATER, RICHSOIL,
         POORSOIL, RICHFAUNA, LIFELESS,
@@ -27,7 +25,6 @@ public class Planet implements Serializable {
     };
 
     public enum TechLevel {
-
         PREAGRICULTURAL, AGRICULTURAL,
         MEDIEVAL, RENAISSANCE,
         EARLYINDUSTRIAL, INDUSTRIAL,
@@ -46,10 +43,32 @@ public class Planet implements Serializable {
     private final Environment environment;
     private final ResourceLevel resourceLevel;
     private TechLevel techLevel;
-    private Circumstance circumstance;
+    private final Circumstance circumstance;
     private final Government government;
     private final String name;
     private final MarketPlace market;
+
+    /**
+     * No arg constructor that Ryan is using for his JUnit test.
+     */
+    public Planet() {
+        size = 0;
+        orbitDistance = 0;
+        orbitSpeed = 0;
+        axialTilt = 0;
+        axialSpeed = 0;
+        seed = 0;
+        seaLevel = 0;
+        environment = null;
+        resourceLevel = ResourceLevel.values()[
+                GameModel.getRandom().nextInt(ResourceLevel.values().length)];
+        techLevel = TechLevel.values()[
+                GameModel.getRandom().nextInt(TechLevel.values().length)];
+        circumstance = new Circumstance();
+        government = new Government();
+        name = PlanetNames.getName(government);
+        market = null;
+    }
 
     /**
      * Constructor for a planet.
