@@ -335,7 +335,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
         if (player.getPlanet() == planet.getPlanet()) {
             travelButton.setText("To Surface");
             marketButton.setDisable(false);
-            mercenaryButton.setDisable(false);
+            //mercenaryButton.setDisable(false);
             if (player.getPlanet().getTechLevel() == TechLevel.HIGHTECH) {
                 spaceStationButton.setDisable(false);
             }
