@@ -56,6 +56,10 @@ public class MarketController implements
     private Player player;
     private ArrayList<TradeGood> goods;
     private CargoBay cargoBay;
+    private final int CHART_DAYS_TO_DISPLAY = 5;
+    private final int CHART_RANDOM_PRICE_MULTIPLIER = 3;
+    private final int CHART_WIDTH = 300;
+    private final int CHART_HEIGHT = 300;
 
     @Override
     public void setScreenParent(ScreensController parentController) {
@@ -78,9 +82,9 @@ public class MarketController implements
         display();
     }
 
-    /**
-     * Initializes the market, goods, and cargoBay Maintains the cargo and money labels as well as
-     * the good lists
+    /*
+     * Initializes the market, goods, and cargoBay Maintains
+     * the cargo and money labels as well as the good lists.
      */
     public void display() {
         market = player.getPlanet().getMarket();
@@ -92,7 +96,7 @@ public class MarketController implements
     }
 
     /**
-     * Clears the current lists, and then populates the buy and sell tabs
+     * Clears the current lists, and then populates the buy and sell tabs.
      */
     public void setUpGoodsLists() {
         buyGoodsVBox.getChildren().clear();
@@ -107,7 +111,7 @@ public class MarketController implements
     }
 
     /**
-     * Sets up and then updates the past pricing chart
+     * Sets up and then updates the past pricing chart.
      *
      * @param name The name of the good the chart applies to
      * @param price The current price of that good
@@ -118,23 +122,25 @@ public class MarketController implements
         AreaChart<Number, Number> ac = new AreaChart<>(xAxis, yAxis);
         ac.setTitle(name + " prices over last 5 days");
         XYChart.Series series = new XYChart.Series();
-        // TODO: Make the chart values not random
-        for (int i = 0; i < 4; i++) {
-            series.getData().add(new XYChart.Data(i - 5, Math.random() * price * 3 + 1));
+        for (int i = 0; i < CHART_DAYS_TO_DISPLAY - 1; i++) {
+            series.getData().add(new XYChart
+                    .Data(i - CHART_DAYS_TO_DISPLAY, Math.random()
+                            * price * CHART_RANDOM_PRICE_MULTIPLIER + 1));
         }
         series.getData().add(new XYChart.Data(0, price));
         ac.getData().addAll(series);
         chartPane.getChildren().clear();
         chartPane.getChildren().add(ac);
-        ac.setPrefHeight(300);
-        ac.setPrefWidth(300);
+        ac.setPrefHeight(CHART_HEIGHT);
+        ac.setPrefWidth(CHART_WIDTH);
         ac.setId("chart");
     }
 
     /**
-     * Makes a purchase Subtracts the price of the good, stores it in the cargo bay, removes it from
-     * the market, then updates the display If out of cargo space or money, a dialogue is shown on
-     * the bottom dock
+     * Makes a purchase Subtracts the price of the good, stores it in
+     * the cargo bay, removes it from the market, then updates the display.
+     * If out of cargo space or money, a dialogue is shown on
+     * the bottom dock.
      *
      * @param good The good to be purchased
      */
@@ -159,8 +165,8 @@ public class MarketController implements
     }
 
     /**
-     * Makes a sale Adds the price of the good, removes it from the cargo bay, adds it to the
-     * market, then updates the display
+     * Makes a sale Adds the price of the good, removes it from the
+     * cargo bay, adds it to the market, then updates the display.
      *
      * @param good The good to be sold
      */
@@ -180,7 +186,7 @@ public class MarketController implements
     }
 
     /**
-     * Buy Button
+     * Buy Button.
      */
     private class BuyButton extends Button {
 
@@ -198,7 +204,7 @@ public class MarketController implements
     }
 
     /**
-     * Sell Button
+     * Sell Button.
      */
     private class SellButton extends Button {
 
@@ -216,11 +222,17 @@ public class MarketController implements
     }
 
     /**
-     * GoodsRow is a HBox that contains two labels and a buy/sell button
+     * GoodsRow is a HBox that contains two labels and a buy/sell button.
      */
     private class GoodsRow extends HBox {
-
-        public GoodsRow(TradeGood good, boolean isABuyRow, boolean isDisabled, boolean notAllowedHere) {
+        /**
+         * Constructor for GoodsRow.
+         *
+         * @param good the TradeGood to be represented
+         * @param isABuyRow whether the represented good can be bought by player
+         */
+        public GoodsRow(TradeGood good, boolean isABuyRow,
+                boolean isDisabled, boolean notAllowedHere) {
             this.getChildren().add(new Label(good.type.name));
             Label quantityLabel;
             Button button;
@@ -228,7 +240,8 @@ public class MarketController implements
                 quantityLabel = new Label("x" + good.getQuantity());
                 button = new BuyButton(good);
             } else {
-                quantityLabel = new Label("x" + cargoBay.getGoods().get(good.type.name));
+                quantityLabel = new Label("x"
+                        + cargoBay.getGoods().get(good.type.name));
                 button = new SellButton(good);
             }
             this.getChildren().add(quantityLabel);
@@ -242,13 +255,20 @@ public class MarketController implements
                 public void handle(MouseEvent event) {
                     generateChart(good.type.name, good.getPrice());
                     if (notAllowedHere && isABuyRow) {
-                        priceField.setText(good.type.name + " cannot be bought here due to "
-                                + player.getPlanet().getName() + "'s tech level being too low.");
+                        priceField.setText(good.type.name
+                                + " cannot be bought here due to "
+                                + player.getPlanet().getName()
+                                + "'s tech level being too low.");
                     } else if (notAllowedHere && !isABuyRow) {
-                        priceField.setText(good.type.name + " cannot be sold here due to "
-                                + player.getPlanet().getName() + "'s tech level being too low.");
+                        priceField.setText(good.type.name
+                                + " cannot be sold here due to "
+                                + player.getPlanet().getName()
+                                + "'s tech level being too low.");
                     } else {
-                        priceField.setText(good.type.name + " costs " + good.getPrice() + " per unit.");
+                        priceField.setText(good.type.name
+                                + " costs "
+                                + good.getPrice()
+                                + " per unit.");
                     }
                 }
             });
@@ -259,19 +279,26 @@ public class MarketController implements
     }
 
     /**
-     * GoodsList is a VBox made up of HBox GoodsRow's
+     * GoodsList is a VBox made up of HBox GoodsRow's.
      */
     private class GoodsList {
 
         private final VBox vBox;
         private final boolean isABuyList;
-
+        /**
+         * GoodsList is a VBox made up of HBox GoodsRow's.
+         *
+         * @param vBox the VBox that is to be populated with RowBoxes
+         * @param isABuyList whether the list has goods the player can buy
+         */
         public GoodsList(VBox vBox, boolean isABuyList) {
             this.vBox = vBox;
             this.isABuyList = isABuyList;
             listGoods();
         }
-
+        /**
+        * Populate the VBox with GoodsRows.
+        */
         public final void listGoods() {
             for (TradeGood good : goods) {
                 boolean isDisabled = false;
@@ -282,7 +309,8 @@ public class MarketController implements
                 if (isABuyList && good.getQuantity() <= 0) {
                     isDisabled = true;
                 }
-                if (!isABuyList && cargoBay.getGoods().get(good.type.name) <= 0) {
+                if (!isABuyList && cargoBay.getGoods()
+                        .get(good.type.name) <= 0) {
                     isDisabled = true;
                 }
                 if (isABuyList && !market.getBuyable().contains(good)) {
@@ -293,11 +321,14 @@ public class MarketController implements
                     isDisabled = true;
                     notAllowedHere = true;
                 }
-                GoodsRow row = new GoodsRow(good, isABuyList, isDisabled, notAllowedHere);
+                GoodsRow row = new GoodsRow(good, isABuyList,
+                        isDisabled, notAllowedHere);
                 this.addChild(row);
             }
         }
-
+        /**
+        * Add the node to the VBox as a child.
+        */
         public void addChild(Node node) {
             vBox.getChildren().add(node);
         }
