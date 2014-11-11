@@ -3,16 +3,16 @@ package spacetrader.player;
 import java.io.Serializable;
 
 /**
- * 
+ * Represents a skill that the player has which has a value and a type.
  * @author Team TYN
  */
 public class Skill implements Serializable {
     /**
-     * 
+     * The type of the skill.
      */
     private String type;
     /**
-     * 
+     * The value of the skill.
      */
     private int value;
 
@@ -34,43 +34,35 @@ public class Skill implements Serializable {
         value = aValue;
     }
 
-    // Getter for value
-
     /**
-     *
-     * @return
+     * Returns the value of this skill.
+     * @return The value of this skill
      */
     public final int getValue() {
         return this.value;
     }
 
-    // Getter for type
-
     /**
-     *
-     * @return
+     * Returns the type of this skill.
+     * @return The type of this skill
      */
     public final String getType() {
         return this.type;
     }
 
-    // Setter for value
-
     /**
-     *
-     * @param newValue
+     * Sets the skill value to a new number.
+     * @param newValue The new value for the skill
      */
-    public final void setValue(int newValue) {
+    public final void setValue(final int newValue) {
         this.value = newValue;
     }
 
-    // Increase the value of skill by specified amount
-
     /**
-     *
+     * Increases the value of the skill by the specified amount.
      * @param moreValue The value to be added the skill's value
      */
-    public final void increaseValue(int moreValue) {
+    public final void increaseValue(final int moreValue) {
         this.value += moreValue;
     }
 }
