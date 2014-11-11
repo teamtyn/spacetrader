@@ -79,7 +79,7 @@ public class Planet implements Serializable {
                         ResourceLevel.LIFELESS);
                 break;
             case ICE:
-                seaLevel = 0.5f * GameModel.getRandom().nextFloat() + 0.01f;
+                seaLevel = 0.1f * GameModel.getRandom().nextFloat() + 0.01f;
                 resourceLevel = choose(
                         ResourceLevel.NOSPECIALRESOURCES,
                         ResourceLevel.LOTSOFWATER,

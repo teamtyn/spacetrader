@@ -62,7 +62,7 @@ public class ColorGradient {
                 colors.put(1f, Color.rgb(253, 245, 255));
                 break;
             case ROCKY:
-                colors.put(-1f, Color.rgb(51, 32, 20));
+                colors.put(-1f, Color.rgb(41, 22, 10));
                 colors.put(1f, Color.rgb(145, 145, 145));
                 break;
         }

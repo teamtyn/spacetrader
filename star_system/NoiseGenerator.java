@@ -41,17 +41,13 @@ public class NoiseGenerator {
     };
 
     /**
-     * Three lol.
-     */
-    private static final double THREE = 3.0;
-    /**
      * Skew factor for simplex.
      */
-    private static final double F3 = 1.0 / THREE;
+    private static final double F3 = 1.0 / 3.0;
     /**
      * Unskew factor for simplex.
      */
-    private static final double G3 = 1.0 / (2.0 * THREE);
+    private static final double G3 = 1.0 / 6.0;
     /**
      * Factor used to calculate the contribution for each corner of a simplex.
      */
@@ -276,9 +272,9 @@ public class NoiseGenerator {
         double x2 = x0 - i2 + 2.0 * G3;
         double y2 = y0 - j2 + 2.0 * G3;
         double z2 = z0 - k2 + 2.0 * G3;
-        double x3 = x0 - 1.0 + THREE * G3;
-        double y3 = y0 - 1.0 + THREE * G3;
-        double z3 = z0 - 1.0 + THREE * G3;
+        double x3 = x0 - 1.0 + 3.0 * G3;
+        double y3 = y0 - 1.0 + 3.0 * G3;
+        double z3 = z0 - 1.0 + 3.0 * G3;
         int ii = i & (SUPPLY_LENGTH - 1);
         int jj = j & (SUPPLY_LENGTH - 1);
         int kk = k & (SUPPLY_LENGTH - 1);
@@ -416,7 +412,7 @@ public class NoiseGenerator {
                         case CUBE:
                             noiseBuffer[j][i] =
                                     (1 + (float) Math.pow(
-                                            noiseBuffer[j][i], THREE)) / 2.0f;
+                                            noiseBuffer[j][i], 3)) / 2.0f;
                             break;
                         default:
                             noiseBuffer[j][i] =
@@ -511,15 +507,15 @@ public class NoiseGenerator {
         /**
          * The x component of this gradient.
          */
-        double x; //Should not be private.
+        private double x; //Should not be private.
         /**
          * The y component of this gradient.
          */
-        double y; //Should not be private.
+        private double y; //Should not be private.
         /**
          * The z component of this gradient.
          */
-        double z; //Should not be private.
+        private double z; //Should not be private.
 
         /**
          * Constructs a gradient vector.

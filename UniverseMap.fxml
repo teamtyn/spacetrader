@@ -83,7 +83,7 @@
                                     <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
                                  </padding>
                               </Label>
-                              <Label text="Environment" textFill="WHITE" GridPane.rowIndex="2">
+                              <Label text="Resource Level:" textFill="WHITE" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="4.0" />
                                  </padding>
@@ -98,7 +98,7 @@
                                     <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="environmentField" prefHeight="29.0" prefWidth="159.0" text="Unknown" textFill="#a4a4a4" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <Label fx:id="resourceField" prefHeight="29.0" prefWidth="159.0" text="Unknown" textFill="#a4a4a4" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="4.0" />
                                  </padding>

@@ -70,7 +70,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
     @FXML
     private Label techLevelField;
     @FXML
-    private Label environmentField;
+    private Label resourceField;
     @FXML
     private Button travelButton;
     @FXML
@@ -333,7 +333,7 @@ public class UniverseMapController extends AnimationTimer implements Initializab
             travelButton.setDisable(false);
         }
         if (player.getPlanet() == planet.getPlanet()) {
-            travelButton.setText("To Surface");
+            travelButton.setDisable(true);
             marketButton.setDisable(false);
             //mercenaryButton.setDisable(false);
             if (player.getPlanet().getTechLevel() == TechLevel.HIGHTECH) {
@@ -347,12 +347,12 @@ public class UniverseMapController extends AnimationTimer implements Initializab
             planetField.setText(planet.getPlanet().getName());
             governmentField.setText("" + planet.getPlanet().getGovernment());
             techLevelField.setText("" + planet.getPlanet().getTechLevel());
-            environmentField.setText("" + planet.getPlanet().getResourceLevel());
+            resourceField.setText("" + planet.getPlanet().getResourceLevel());
         } else {
             planetField.setText("Unknown");
             governmentField.setText("Unknown");
             techLevelField.setText("Unknown");
-            environmentField.setText("Unknown");
+            resourceField.setText("Unknown");
         }
     }
 
