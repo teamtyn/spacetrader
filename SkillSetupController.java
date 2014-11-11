@@ -19,7 +19,7 @@ import spacetrader.player.Player;
 import spacetrader.player.Skill;
 
 /**
- * FXML Controller class
+ * FXML Controller class that allows the player to set their starting skills.
  *
  * @author Clayton
  * @version 1.0
@@ -102,8 +102,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     private List<Skill> skillList;
 
     /**
-     * Sets up SkillSetupController by creating the player and establishing the
-     * default values and limitations.
+     * Sets up SkillSetupController by creating the player and establishing the default values and limitations.
      */
     public SkillSetupController() {
         player = new Player();
@@ -113,7 +112,13 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         totalPts = 50;
     }
 
-    // Initializes the controller class
+    /**
+     * Initializes the controller and creates the button arrays.
+     * 
+     * @param url the url for this controller.
+     * @param rb the resource bundle for this controller.
+     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         plusButtonArray = new Button[]{plus0, plus1, plus2, plus3, plus4};
@@ -127,28 +132,44 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         setUp();
     }
 
+    /**
+     * Initializes the controller.
+     */
     @Override
     public void lazyInitialize() {
     }
 
-    // Synchronizes Player's skills with the GUI for skill selection
+    /**
+     * Synchronizes Player's skills with the GUI for skill selection
+     */ 
     private void updatePlayerSkills() {
         for (int i = 0; i < len; i++) {
             player.getSkills().get(skillList.get(i).getType()).setValue(skillPointArray[i]);
         }
     }
 
+    /**
+     * Sets the parent controller for this screen.
+     * 
+     * @param parentController the parent controller for this screen.
+     */
     @Override
     public void setScreenParent(ScreensController parentController) {
         this.parentController = parentController;
     }
 
-    // Initializes the players' skills and the GUI arrays
+    /**
+     * Initializes the players' skills and the GUI arrays.
+     */
     private void setUp() {
         setUpControls();
     }
 
-    // Functions when any plus button is pressed
+    /**
+     * Functions when any plus button is pressed.
+     * 
+     * @param index the index of the skill being added to.
+     */
     private void addToSkill(int index) {
         int skillPoints = skillPointArray[index];
         if ((skillPoints < barMax) && (totalPts < maxPts)) {
@@ -160,7 +181,11 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         updatePointLabel(index, skillPoints);
     }
 
-    // Functions when any minus button is pressed
+    /**
+     * Functions when any minus button is pressed.
+     * 
+     * @param index the index of the skill being subtracted from.
+     */
     private void subtractFromSkill(int index) {
         int skillPoints = skillPointArray[index];
         if (skillPoints > 0) {
@@ -172,13 +197,19 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         updatePointLabel(index, skillPoints);
     }
 
-    // Keeps totalBar and totalLabel up to date
+    /** 
+     * Keeps totalBar and totalLabel up to date.
+     */
     private void updateTotalDisplays() {
         totalBar.setProgress((float) (maxPts - totalPts) / maxPts);
         totalLabel.setText(Integer.toString(maxPts - totalPts));
     }
 
-    // Initializes the skills as an ArrayList
+    /**
+     * Initializes the skills as an ArrayList.
+     * 
+     * @return the newly created List<Skill>.
+     */
     private List<Skill> createSkillList() {
 
         List<Skill> skillsForNow = new ArrayList(player.getSkills().values());
@@ -205,18 +236,29 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         }
     }
 
-    // Helper method which updates a selected point label
+    /**
+     *  Helper method which updates a selected point label.
+     * 
+     * @param index the index of the pointLabel being updated.
+     * @param points the points for that skill label.
+     */
     private void updatePointLabel(int index, int points) {
         pointLabelArray[index].setText(Integer.toString(points));
     }
 
-    // Helper method which updates a selected progress
+    /**
+     * Helper method which updates a selected progress.
+     * 
+     * @param index the progress bar to be changed.
+     * @param points the points in that bar.
+     */
     private void updateProgressBar(int index, int points) {
         barsArray[index].setProgress((float) points / barMax);
         updateTotalDisplays();
     }
 
     // All button handlers from here on out
+    // No idea how to javadoc these, because FXML - DAVID
     @FXML
     private void cancelButtonAction(ActionEvent event) {
         parentController.setScreen("Menu");
