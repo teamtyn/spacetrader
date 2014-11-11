@@ -45,6 +45,18 @@ public class UniverseMapSubScene extends SubScene {
      */
     public static final AmbientLight AMBIENT =
             new AmbientLight(Color.rgb(20, 20, 20));
+    /**
+     * The default universal level zoom.
+     */
+    public static final double UNIVERSE_ZOOM = -2000;
+    /**
+     * The default system level zoom.
+     */
+    public static final double SYSTEM_ZOOM = -200;
+    /**
+     * The default planet level zoom.
+     */
+    public static final double PLANET_ZOOM = -13;
 
     /**
      * The field of view for this subscene's camera.
@@ -58,18 +70,6 @@ public class UniverseMapSubScene extends SubScene {
      * The bloom threshold for this subscene.
      */
     private static final double BLOOM_THRESHOLD = 0.9;
-    /**
-     * The default universal level zoom.
-     */
-    private static final double UNIVERSE_ZOOM = -2000;
-    /**
-     * The default system level zoom.
-     */
-    private static final double SYSTEM_ZOOM = -200;
-    /**
-     * The default planet level zoom.
-     */
-    private static final double PLANET_ZOOM = -13;
     /**
      * The scale of the skybox.
      */
