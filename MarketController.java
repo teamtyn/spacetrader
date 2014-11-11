@@ -274,7 +274,6 @@ public class MarketController implements
             listGoods();
         }
 
-        
         public final void listGoods() {
             for (TradeGood good : goods) {
                 boolean isDisabled = false;

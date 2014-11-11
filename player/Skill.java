@@ -3,16 +3,22 @@ package spacetrader.player;
 import java.io.Serializable;
 
 public class Skill implements Serializable {
-
     private String type;
     private int value;
 
-    // No value constructor
+    /**
+     * 
+     * @param type 
+     */
     public Skill(String type) {
         this(type, 0);
     }
 
-    // Full constructor
+    /**
+     * 
+     * @param type
+     * @param value 
+     */
     public Skill(String type, int value) {
         this.type = type;
         this.value = value;

@@ -9,7 +9,7 @@ import spacetrader.ui.Point;
 
 public class Player extends AbstractCrewMember {
 
-    private List<Planet> knownPlanets;
+    private final List<Planet> knownPlanets;
     // Used to determine player's location in the universe as a whole
     private Point coord;
     private StarSystem system;
