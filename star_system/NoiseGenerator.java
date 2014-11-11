@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
  * buffer can be specified and then filled by sampling a three dimensional
  * simplex noise function Once the noise buffer is filled, a diffuse map can be
  * generated using a color gradient and a normal map can be generated using a
- * sobel filter
+ * sobel filter.
  *
  * @author Team TYN
  */
@@ -91,17 +91,14 @@ public class NoiseGenerator {
      * The permutation table used for the noise function.
      */
     private final short[] perm;
-
     /**
      * The permutation table mod 12.
      */
     private final short[] permMod12 = new short[2 * SUPPLY_LENGTH];
-
     /**
      * The base frequency used for sampling.
      */
     private final double baseFreq;
-
     /**
      * The base amplitude used for sampling.
      */
@@ -111,37 +108,30 @@ public class NoiseGenerator {
      * The amount the frequency varies with each octave.
      */
     private final double lacunarity;
-
     /**
      * The amount the amplitude varies with each octave.
      */
     private final double gain;
-
     /**
      * The maximum number of octaves.
      */
     private final int octaveCap;
-
     /**
      * The type of post processing to use.
      */
     private final NoiseMode mode;
-
     /**
      * The color gradient used for diffuse map generation.
      */
     private final ColorGradient colors;
-
     /**
      * The noise buffer for this noise generator.
      */
     private float[][] noiseBuffer;
-
     /**
      * The width of the noise buffer.
      */
     private int width;
-
     /**
      * The height of the noise buffer.
      */
@@ -161,7 +151,7 @@ public class NoiseGenerator {
      */
     public NoiseGenerator(final long seed, final double bF, final double bA,
             final double l, final double g, final int oC, final NoiseMode m,
-            final ColorGradient c) {
+            final ColorGradient c) { //All parameters are necessary.
         Random r = new Random(seed);
         perm = Arrays.copyOf(SUPPLY, 2 * SUPPLY_LENGTH);
         for (int i = 0; i < SUPPLY_LENGTH; i++) {
@@ -521,15 +511,15 @@ public class NoiseGenerator {
         /**
          * The x component of this gradient.
          */
-        double x;
+        double x; //Should not be private.
         /**
          * The y component of this gradient.
          */
-        double y;
+        double y; //Should not be private.
         /**
          * The z component of this gradient.
          */
-        double z;
+        double z; //Should not be private.
 
         /**
          * Constructs a gradient vector.
