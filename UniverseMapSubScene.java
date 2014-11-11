@@ -8,7 +8,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
@@ -28,37 +27,114 @@ import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemView;
 
 /**
- * The sub scene displaying the 3D Universe.
+ * A universe map subscene renders all three dimensional nodes in the
+ * universe map. It also contains several methods for handling camera movement.
+ *
  * @author Team TYN
  */
-public class UniverseMapSubScene extends SubScene{
+public class UniverseMapSubScene extends SubScene {
 
+    /**
+     * An ambient light that provides full illumination. Adding a node to this
+     * light's scope will effectively remove shading.
+     */
     public static final AmbientLight NO_SHADE = new AmbientLight();
-    public static final AmbientLight AMBIENT = new AmbientLight(Color.rgb(20, 20, 20));
+    /**
+     * An ambient light used for shaded objects. Nodes that are shaded should
+     * be added to this light's scope to eliminate black featureless artifacts.
+     */
+    public static final AmbientLight AMBIENT =
+            new AmbientLight(Color.rgb(20, 20, 20));
 
-    //private final SubScene subScene;
+    /**
+     * The field of view for this subscene's camera.
+     */
+    private static final int FOV = 45;
+    /**
+     * The far clip plane for this subscene's camera.
+     */
+    private static final int FAR_CLIP = 20000;
+    /**
+     * The bloom threshold for this subscene.
+     */
+    private static final double BLOOM_THRESHOLD = 0.9;
+    /**
+     * The default universal level zoom.
+     */
+    private static final double UNIVERSE_ZOOM = -2000;
+    /**
+     * The default system level zoom.
+     */
+    private static final double SYSTEM_ZOOM = -200;
+    /**
+     * The default planet level zoom.
+     */
+    private static final double PLANET_ZOOM = -13;
+    /**
+     * The scale of the skybox.
+     */
+    private static final double SKYBOX_SCALE = 5000;
+
+    /**
+     * The list of system views rendered in this subscene.
+     */
     private final ArrayList<StarSystemView> systemViews;
+    /**
+     * The camera for this subscene.
+     */
     private final PerspectiveCamera camera;
+    /**
+     * The top level camera Xform.
+     */
     private final Xform topXform;
+    /**
+     * The base level camera Xform.
+     */
     private final Xform baseXform;
+    /**
+     * The animation that shifts the camera into universe level scope.
+     */
     private Timeline toUniverse;
+    /**
+     * The animation that shifts the camera into system level scope.
+     */
     private Timeline toSystem;
+    /**
+     * The animation that shifts the camera into planet level scope.
+     */
     private Timeline toPlanet;
+    /**
+     * The skybox for this subscene.
+     */
     private final MeshView skybox;
+    /**
+     * The highlight object for this subscene.
+     */
     private final Sphere highlight;
+    /**
+     * A node that is constantly animated to refresh the subscene.
+     */
     private final Box updater;
 
-    public UniverseMapSubScene(Group root, double width, double height, boolean depthBuffer, SceneAntialiasing antialiasing) {
-        super(root, width, height, depthBuffer, antialiasing);
+    /**
+     * Constructs a universe map subscene.
+     *
+     * @param root The root of this subscene.
+     * @param width The width of this subscene.
+     * @param height The height of this subscene.
+     */
+    public UniverseMapSubScene(final Group root, final double width,
+            final double height) {
+        super(root, width, height, true, SceneAntialiasing.BALANCED);
         setFill(Color.BLACK);
 
         systemViews = new ArrayList<>();
         buildSystems(root);
 
         camera = new PerspectiveCamera(true);
-        camera.setFieldOfView(45);
+        camera.setFieldOfView(FOV);
         camera.setNearClip(1);
-        camera.setFarClip(20000);
+        camera.setFarClip(FAR_CLIP);
         setCamera(camera);
 
         topXform = new Xform(RotateOrder.ZYX);
@@ -75,7 +151,7 @@ public class UniverseMapSubScene extends SubScene{
         highlight.setVisible(false);
 
         updater = new Box(1, 1, 1);
-        updater.setTranslateX(200000);
+        updater.setTranslateX(2 * FAR_CLIP);
         Timeline update = new Timeline(
                 new KeyFrame(Duration.seconds(0),
                         new KeyValue(updater.rotateProperty(), 0)),
@@ -86,31 +162,56 @@ public class UniverseMapSubScene extends SubScene{
 
         root.getChildren().addAll(NO_SHADE, AMBIENT, highlight, updater);
         Bloom bloom = new Bloom();
-        bloom.setThreshold(0.9);
+        bloom.setThreshold(BLOOM_THRESHOLD);
         setEffect(bloom);
     }
 
-    public ArrayList<StarSystemView> getSystemViews() {
+    /**
+     * Getter for the system views rendered in this subscene.
+     * @return An array list of system views.
+     */
+    public final ArrayList<StarSystemView> getSystemViews() {
         return systemViews;
     }
 
-    public Xform getTopXform() {
+    /**
+     * Getter for the top level camera Xform.
+     * @return The top level camera Xform.
+     */
+    public final Xform getTopXform() {
         return topXform;
     }
 
-    public Xform getBaseXform() {
+    /**
+     * Getter for the base level camera Xform.
+     * @return The base level camera Xform.
+     */
+    public final Xform getBaseXform() {
         return baseXform;
     }
 
-    public MeshView getSkybox() {
+    /**
+     * Getter for the skybox.
+     * @return The skybox.
+     */
+    public final MeshView getSkybox() {
         return skybox;
     }
 
-    public Sphere getHighlight() {
+    /**
+     * Getter for the highlight.
+     * @return The highlight.
+     */
+    public final Sphere getHighlight() {
         return highlight;
     }
 
-    private void buildSystems(Group root) {
+    /**
+     * Instantiates the system views rendered by this subscene based on the
+     * systems stored in the game model.
+     * @param root The root of this subscene.
+     */
+    private void buildSystems(final Group root) {
         StarSystem[] systems = GameModel.getSystems();
         for (StarSystem system : systems) {
             StarSystemView systemView = new StarSystemView(system);
@@ -119,17 +220,26 @@ public class UniverseMapSubScene extends SubScene{
         }
     }
 
-    private void buildCamera(Group root) {
+    /**
+     * Builds the hierarchy of transformation Xform used for manipulating the
+     * camera's movements.
+     *
+     * @param root The root of this subscene.
+     */
+    private void buildCamera(final Group root) {
         topXform.setTranslate(
                 GameModel.UNIVERSE_WIDTH / 2, GameModel.UNIVERSE_HEIGHT / 2);
-        camera.setTranslateZ(-2000);
+        camera.setTranslateZ(UNIVERSE_ZOOM);
 
         baseXform.getChildren().add(camera);
         topXform.getChildren().add(baseXform);
         root.getChildren().add(topXform);
     }
 
-    public void cameraToUniverse() {
+    /**
+     * Animates the camera into universe level scope.
+     */
+    public final void cameraToUniverse() {
         if (toUniverse != null) {
             toUniverse.stop();
         }
@@ -149,7 +259,8 @@ public class UniverseMapSubScene extends SubScene{
                         new KeyValue(baseXform.rxProperty(), 0),
                         new KeyValue(baseXform.ryProperty(), 0),
                         new KeyValue(baseXform.rzProperty(), 0),
-                        new KeyValue(camera.translateZProperty(), -2000),
+                        new KeyValue(
+                                camera.translateZProperty(), UNIVERSE_ZOOM),
                         new KeyValue(topXform.rxProperty(), 0),
                         new KeyValue(topXform.ryProperty(), 0),
                         new KeyValue(topXform.rzProperty(), 0)
@@ -158,7 +269,12 @@ public class UniverseMapSubScene extends SubScene{
         toUniverse.play();
     }
 
-    public void cameraToSystem(StarSystemView system) {
+    /**
+     * Animates the camera into system level scope.
+     *
+     * @param system The focused system.
+     */
+    public final void cameraToSystem(final StarSystemView system) {
         if (toUniverse != null) {
             toUniverse.stop();
         }
@@ -181,7 +297,7 @@ public class UniverseMapSubScene extends SubScene{
                         new KeyValue(topXform.xProperty(), system.getX()),
                         new KeyValue(topXform.yProperty(), system.getY()),
                         new KeyValue(topXform.zProperty(), system.getZ()),
-                        new KeyValue(camera.translateZProperty(), -200),
+                        new KeyValue(camera.translateZProperty(), SYSTEM_ZOOM),
                         new KeyValue(topXform.rxProperty(), system.getRx()),
                         new KeyValue(topXform.ryProperty(), system.getRy()),
                         new KeyValue(topXform.rzProperty(), system.getRz())
@@ -190,7 +306,14 @@ public class UniverseMapSubScene extends SubScene{
         toSystem.play();
     }
 
-    public void cameraToPlanet(StarSystemView system, PlanetView planet) {
+    /**
+     * Animates the camera into planet level scope.
+     *
+     * @param system The focused system.
+     * @param planet The focused planet.
+     */
+    public final void cameraToPlanet(final StarSystemView system,
+            final PlanetView planet) {
         if (toUniverse != null) {
             toUniverse.stop();
         }
@@ -217,7 +340,7 @@ public class UniverseMapSubScene extends SubScene{
                                 planet.getOffsetY()),
                         new KeyValue(baseXform.zProperty(),
                                 planet.getOffsetZ()),
-                        new KeyValue(camera.translateZProperty(), -13),
+                        new KeyValue(camera.translateZProperty(), PLANET_ZOOM),
                         new KeyValue(baseXform.rxProperty(), 90),
                         new KeyValue(baseXform.ryProperty(), 0),
                         new KeyValue(baseXform.rzProperty(), 0)
@@ -226,7 +349,11 @@ public class UniverseMapSubScene extends SubScene{
         toPlanet.play();
     }
 
-    private void buildSkybox(Group root) {
+    /**
+     * Builds the skybox triangle mesh.
+     * @param root The root of this subscene.
+     */
+    private void buildSkybox(final Group root) {
         TriangleMesh skyboxMesh = new TriangleMesh();
         skyboxMesh.getPoints().addAll(
                 -1f, -1f, -1f,
@@ -269,9 +396,9 @@ public class UniverseMapSubScene extends SubScene{
                 7, 11, 3, 12, 5, 13
         );
         skybox.setMesh(skyboxMesh);
-        skybox.setScaleX(5000);
-        skybox.setScaleY(5000);
-        skybox.setScaleZ(5000);
+        skybox.setScaleX(SKYBOX_SCALE);
+        skybox.setScaleY(SKYBOX_SCALE);
+        skybox.setScaleZ(SKYBOX_SCALE);
 
         PhongMaterial skyboxMaterial = new PhongMaterial();
         skyboxMaterial.setDiffuseMap(new Image(getClass()

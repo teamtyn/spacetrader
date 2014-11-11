@@ -119,8 +119,7 @@ public class UniverseMapController extends AnimationTimer
     public void lazyInitialize() {
         //universeMapSubScene = new UniverseMapSubScene();
         subScene = new UniverseMapSubScene(new Group(), 
-                SpaceTrader.SCREEN_WIDTH, SpaceTrader.SCREEN_HEIGHT, true,
-                SceneAntialiasing.BALANCED);
+                SpaceTrader.SCREEN_WIDTH, SpaceTrader.SCREEN_HEIGHT);
         systemViews = subScene.getSystemViews();
         camera = (PerspectiveCamera) subScene.getCamera();
         topXform = subScene.getTopXform();
