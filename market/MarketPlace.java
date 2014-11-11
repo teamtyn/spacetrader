@@ -6,26 +6,27 @@ import spacetrader.star_system.Planet;
 
 /**
  * MarketSetup has three lists, goods, buyable, and sellable.
- *     -goods are all the goods in the game, prices based on
- *          the planet passed on
- *     -buyable are all the goods that are allowed to be bought
- *          here (via tech level)
- *     -sellable are all the goods that are allowed to be sold
- *          here (via tech level)
  * @author Team TYN
  */
 public class MarketPlace implements Serializable {
-
+    /**
+     * All the goods in the game, with prices based on the planet passed in.
+     */
     private final ArrayList<TradeGood> goods;
+    /**
+     * All the goods that are allowed to be bought here (via tech level).
+     */
     private final ArrayList<TradeGood> buyable;
+    /**
+     * All the goods that are allowed to be sold here (via tech level).
+     */
     private final ArrayList<TradeGood> sellable;
 
     /**
-     * Initializes the three lists based on the correct planet
-     *
+     * Initializes the three lists based on the correct planet.
      * @param planet The planet that that market is on
      */
-    public MarketPlace(Planet planet) {
+    public MarketPlace(final Planet planet) {
         goods = new ArrayList<>();
         buyable = new ArrayList<>();
         sellable = new ArrayList<>();
@@ -41,21 +42,32 @@ public class MarketPlace implements Serializable {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<TradeGood> getGoods() {
         return goods;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<TradeGood> getBuyable() {
         return buyable;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<TradeGood> getSellable() {
         return sellable;
     }
 
     /**
-     * Works as both the increment and decrement functions
-     *
+     * Works as both the increment and decrement functions.
      * @param good The good to be changed
      * @param change The change in amount of the good
      */
