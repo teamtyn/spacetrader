@@ -73,7 +73,7 @@ public class MarketPlace implements Serializable {
      */
     public final void changeQuantity(final TradeGood good, final int change) {
         for (TradeGood tg : goods) {
-            if (tg.type == good.type) {
+            if (tg.getType() == good.getType()) {
                 tg.setQuantity(tg.getQuantity() + change);
             }
         }
@@ -83,7 +83,7 @@ public class MarketPlace implements Serializable {
     public final String toString() {
         StringBuilder str = new StringBuilder();
         for (TradeGood good : goods) {
-            str.append(good.type);
+            str.append(good.getType());
             str.append(": ");
             str.append(good.getPrice());
             str.append("\n");

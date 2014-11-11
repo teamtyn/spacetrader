@@ -12,10 +12,16 @@ import spacetrader.market.MarketPlace;
  * @author Team TYN
  */
 public class Planet implements Serializable {
+    /**
+     * An enum representing all possible environments for a planet.
+     */
     public enum Environment {
         EARTH, LAVA, ICE, DESERT, ALIEN, ROCKY
     };
 
+    /**
+     * An enum representing all possible resource levels for a planet.
+     */
     public enum ResourceLevel {
         NOSPECIALRESOURCES, MINERALRICH, MINERALPOOR,
         DESERT, LOTSOFWATER, RICHSOIL,
@@ -24,6 +30,9 @@ public class Planet implements Serializable {
         ARTISTIC, WARLIKE
     };
 
+    /**
+     * An enum representing all possible tech levels for a planet.
+     */
     public enum TechLevel {
         PREAGRICULTURAL, AGRICULTURAL,
         MEDIEVAL, RENAISSANCE,
@@ -31,25 +40,66 @@ public class Planet implements Serializable {
         POSTINDUSTRIAL, HIGHTECH
     };
 
+    /**
+     * The size of the planet.
+     */
     private final double size;
+    /**
+     * The orbit distance of the planet.
+     */
     private final double orbitDistance;
+    /**
+     * The orbit speed of the planet.
+     */
     private final double orbitSpeed;
+    /**
+     * The axial tilt of the planet.
+     */
     private final double axialTilt;
+    /**
+     * The axial speed of the planet.
+     */
     private final double axialSpeed;
-
+    /**
+     * The seed of the planet.
+     */
     private final long seed;
+    /**
+     * The sea level of the planet.
+     */
     private final float seaLevel;
-
+    /**
+     * The environment of the planet.
+     */
     private final Environment environment;
+    /**
+     * The resource level of the planet.
+     */
     private final ResourceLevel resourceLevel;
+    /**
+     * The tech level of the planet.
+     */
     private TechLevel techLevel;
+    /**
+     * The circumstance of the planet.
+     */
     private final Circumstance circumstance;
+    /**
+     * The government of the planet.
+     */
     private final Government government;
+    /**
+     * The name of the planet.
+     */
     private final String name;
+    /**
+     * The market of the planet.
+     */
     private final MarketPlace market;
 
     /**
      * No arg constructor that Ryan is using for his JUnit test.
+     * DO NOT USE IN ACTUAL GAME!
      */
     public Planet() {
         size = 0;

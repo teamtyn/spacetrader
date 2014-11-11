@@ -10,6 +10,15 @@ import spacetrader.GameModel;
  */
 public class Circumstance implements Serializable {
     /**
+     * The maximum duration of a circumstance.
+     */
+    private static final int MAX_DURATION = 30;
+    /**
+     * The minimum duration of a circumstance.
+     */
+    private static final int MIN_DURATION = 10;
+
+    /**
      * The type of the circumstance.
      */
     private final Type type;
@@ -26,6 +35,9 @@ public class Circumstance implements Serializable {
      */
     private boolean ascending;
 
+    /**
+     * The set of predefined types of a potential circumstance.
+     */
     public enum Type {
         NONE, DROUGHT, COLD, CROPFAIL, WAR,
         BOREDOM, PLAGUE, LACKOFWORKERS
@@ -38,7 +50,8 @@ public class Circumstance implements Serializable {
         type = Type.values()[
                 GameModel.getRandom().nextInt(Type.values().length)];
         curLevel = 0;
-        maxLevel = GameModel.getRandom().nextInt(20) + 10;
+        maxLevel = GameModel.getRandom().nextInt(MAX_DURATION - MIN_DURATION)
+                + MIN_DURATION;
         ascending = true;
     }
 

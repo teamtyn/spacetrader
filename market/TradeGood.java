@@ -45,7 +45,7 @@ public class TradeGood implements Serializable {
     /**
      * The type of the good (from the enum).
      */
-    public GoodType type;
+    private final GoodType type;
     /**
      * The planet the good is on.
      */
@@ -79,30 +79,9 @@ public class TradeGood implements Serializable {
         govPrice.put(Government.Type.THEOCRACY, 1.0);
         GOVERNMENT_PRICE = Collections.unmodifiableMap(govPrice);
     }
-    /**
-     * Quantity multipliers from government type of the planet.
-     */
-    private static final Map<Government.Type, Double> GOVERNMENT_QUANTITY;
-
-    static {
-        Map<Government.Type, Double> govQuantity = new HashMap<>();
-        govQuantity.put(Government.Type.ANARCHY, 1.0);
-        govQuantity.put(Government.Type.ARISTOCRACY, 1.0);
-        govQuantity.put(Government.Type.CAPITALIST, 1.0);
-        govQuantity.put(Government.Type.COMMUNIST, 1.0);
-        govQuantity.put(Government.Type.CORPORATE, 1.0);
-        govQuantity.put(Government.Type.DEMOCRACY, 1.0);
-        govQuantity.put(Government.Type.FASCIST, 1.0);
-        govQuantity.put(Government.Type.MERITOCRACY, 1.0);
-        govQuantity.put(Government.Type.MONARCHY, 1.0);
-        govQuantity.put(Government.Type.OLIGARCHY, 1.0);
-        govQuantity.put(Government.Type.TECHNOCRACY, 1.0);
-        govQuantity.put(Government.Type.THEOCRACY, 1.0);
-        GOVERNMENT_QUANTITY = Collections.unmodifiableMap(govQuantity);
-    }
 
     /**
-     * 
+     * The set of all predefined types of goods available in the universe.
      */
     public enum GoodType {
         /**
@@ -317,6 +296,14 @@ public class TradeGood implements Serializable {
      */
     public final int getQuantity() {
         return quantity;
+    }
+
+    /**
+     * Gets the type of the good.
+     * @return The type of the good
+     */
+    public final GoodType getType() {
+        return type;
     }
 
     /**
