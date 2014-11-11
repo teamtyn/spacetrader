@@ -17,6 +17,9 @@ public class Shield implements Serializable {
     private String name;
     private ShieldType type;
 
+    /**
+     * The enum used to store values constant across all shields of a type.
+     */
     public enum ShieldType {
 
         /**
@@ -73,11 +76,11 @@ public class Shield implements Serializable {
         /**
          * Constructor for ShieldType.
          *
-         * @param shieldStrength The strength of this type of shield
-         * @param rechargeRate The recharge rate of this type of shield
-         * @param cost The base cost for this type of shield
-         * @param color The color used to distinguish this shield type from the others
-         * @param name The string representation of the shield type
+         * @param shieldStrength The strength of this type of shield.
+         * @param rechargeRate The recharge rate of this type of shield.
+         * @param cost The base cost for this type of shield.
+         * @param color The color used to distinguish this shield type from the others.
+         * @param name The string representation of the shield type.
          */
         ShieldType(int shieldStrength, int rechargeRate, int cost, SerializableColor color, String name) {
             this.shieldStrength = shieldStrength;
@@ -91,7 +94,7 @@ public class Shield implements Serializable {
     /**
      * Constructor for Shield.
      *
-     * @param type The shield type of the shield
+     * @param type The shield type of the shield.
      */
     public Shield(ShieldType type) {
         this.strength = type.shieldStrength;
@@ -103,7 +106,7 @@ public class Shield implements Serializable {
     /**
      * Getter for shield strength.
      *
-     * @return the current strength of the shield
+     * @return the current strength of the shield.
      */
     public int getStrength() {
         return strength;
@@ -112,7 +115,7 @@ public class Shield implements Serializable {
     /**
      * Getter for shield recharge rate.
      *
-     * @return the recharge rate of the shield
+     * @return the recharge rate of the shield.
      */
     public int getRechargeRate() {
         return rechargeRate;
@@ -121,8 +124,8 @@ public class Shield implements Serializable {
     /**
      * Recharges the shield by a certain amount.
      *
-     * @param time the amount of time the shield has to charge
-     * @return the current strength of the shield
+     * @param time the amount of time the shield has to charge.
+     * @return the current strength of the shield.
      */
     public int recharge(int time) {
         strength += rechargeRate * time;
@@ -132,8 +135,8 @@ public class Shield implements Serializable {
     /**
      * Damages the shield by a certain amount, all damage is blocked even if overflow.
      *
-     * @param damage the amount of damage being dealt to the shield
-     * @return the current strength of the shield
+     * @param damage the amount of damage being dealt to the shield.
+     * @return the current strength of the shield.
      */
     public int doDamage(int damage) {
         strength -= damage;
@@ -146,7 +149,7 @@ public class Shield implements Serializable {
     /**
      * Getter for the name of a shield.
      *
-     * @return The name of the shield
+     * @return The name of the shield.
      */
     public String getName() {
         return name;

@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import spacetrader.ui.SerializableColor;
 
 /**
- * Weapon is a class used to attack other ships and deal damage
+ * Weapon is a class used to attack other ships and deal damage.
  * 
  * @author David Purcell
  */
@@ -17,11 +17,9 @@ public class Weapon implements Serializable {
     private String name;
 
     /**
-     *
+     * The enum used to store values constant across all weapons of a type.
      */
     public enum WeaponType {
-
-        //Name      dmg   rof   cost  color
 
         /**
          *  Cheapest weapon available.
@@ -52,7 +50,7 @@ public class Weapon implements Serializable {
          */
         Claymore(500, 1, 500, new SerializableColor(Color.RED), "Claymore"),
         /**
-         *  The legendary sword wielded by Charlemagne
+         *  The legendary sword wielded by Charlemagne.
          */
         Joyeuse(100, 25, 2500, new SerializableColor(Color.GOLD), "Joyeuse"),
         /**
@@ -69,11 +67,11 @@ public class Weapon implements Serializable {
         /**
          * Constructor for WeaponType.
          *
-         * @param damage The damage of this type of weapon
-         * @param rateOfFire The rate of fire of this type of weapon
-         * @param cost The base cost for this type of weapon
-         * @param color The color used to distinguish this weapon type from the others
-         * @param name The string representation of the weapon type
+         * @param damage The damage of this type of weapon.
+         * @param rateOfFire The rate of fire of this type of weapon.
+         * @param cost The base cost for this type of weapon.
+         * @param color The color used to distinguish this weapon type from the others.
+         * @param name The string representation of the weapon type.
          */
         WeaponType(int damage, int rateOfFire, int cost, SerializableColor color, String name) {
             this.damage = damage;
@@ -87,7 +85,7 @@ public class Weapon implements Serializable {
     /**
      * Constructor for weapons.
      *
-     * @param type The weapon type of the weapon
+     * @param type The weapon type of the weapon.
      */
     public Weapon(WeaponType type) {
         this.type = type;
@@ -99,7 +97,7 @@ public class Weapon implements Serializable {
     /**
      * Getter for the damage of a weapon.
      *
-     * @return The damage of the weapon
+     * @return The damage of the weapon.
      */
     public int getDamage() {
         return damage;
@@ -108,7 +106,7 @@ public class Weapon implements Serializable {
     /**
      * Getter for the rate of fire of a weapon.
      *
-     * @return The rate of fire of the weapon
+     * @return The rate of fire of the weapon.
      */
     public int getRateOfFire() {
         return rateOfFire;
@@ -117,7 +115,7 @@ public class Weapon implements Serializable {
     /**
      * Getter for the type of a weapon.
      *
-     * @return The type of the weapon
+     * @return The type of the weapon.
      */
     public WeaponType getType() {
         return type;
@@ -126,7 +124,7 @@ public class Weapon implements Serializable {
     /**
      * Getter for the name of a weapon.
      *
-     * @return The name of the weapon
+     * @return The name of the weapon.
      */
     public String getName() {
         return name;

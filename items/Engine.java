@@ -16,6 +16,9 @@ public class Engine implements Serializable {
     private final int fuelEfficiency;
     private final String name;
 
+    /**
+     * The enum used to store values constant across all engines of a type.
+     */
     public enum EngineType {
 
         /**
@@ -68,11 +71,11 @@ public class Engine implements Serializable {
         /**
          * Constructor for EngineType.
          *
-         * @param acceleration The rate of change in velocity due to the engine
-         * @param fuelEfficiency The rate at which fuel is burnt to travel distances
-         * @param cost The base cost for this type of engine
-         * @param color The color used to distinguish this engine type from the others
-         * @param name The string representation of the name type
+         * @param acceleration The rate of change in velocity due to the engine.
+         * @param fuelEfficiency The rate at which fuel is burnt to travel distances.
+         * @param cost The base cost for this type of engine.
+         * @param color The color used to distinguish this engine type from the others.
+         * @param name The string representation of the name type.
          */
         EngineType(int acceleration, int fuelEfficiency, int cost, SerializableColor color, String name) {
             this.acceleration = acceleration;
@@ -96,7 +99,7 @@ public class Engine implements Serializable {
     /**
      * Constructor for Engine.
      *
-     * @param type The engine type of the engine
+     * @param type The engine type of the engine.
      */
     public Engine(EngineType type) {
         this.type = type;
@@ -108,7 +111,7 @@ public class Engine implements Serializable {
     /**
      * Getter for acceleration.
      *
-     * @return The engine's acceleration
+     * @return The engine's acceleration.
      */
     public int getAcceleration() {
         return acceleration;
@@ -117,7 +120,7 @@ public class Engine implements Serializable {
     /**
      * Getter for fuel efficiency.
      *
-     * @return The engine's fuel efficiency
+     * @return The engine's fuel efficiency.
      */
     public int getFuelEfficiency() {
         return fuelEfficiency;
@@ -126,7 +129,7 @@ public class Engine implements Serializable {
     /**
      * Getter for engine type.
      *
-     * @return The engine's engine type
+     * @return The engine's engine type.
      */
     public EngineType getType() {
         return type;
@@ -135,7 +138,7 @@ public class Engine implements Serializable {
     /**
      * Getter for engine name.
      *
-     * @return The engine's engine name
+     * @return The engine's engine name.
      */
     public String getName() {
         return name;
