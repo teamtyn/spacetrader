@@ -2,7 +2,7 @@ package spacetrader;
 
 /**
  * The controller for an individual ship in an encounter.
- * @author Administrator
+ * @author Team TYN
  */
 public interface ShipController {
 
@@ -13,7 +13,7 @@ public interface ShipController {
 
     /**
      * Getter for the ShipView.
-     * @return the view representing the ship
+     * @return The view representing the ship
      */
     ShipView getShipView();
 }

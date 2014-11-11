@@ -40,13 +40,19 @@
 package spacetrader;
 
 /**
- * @author TYN
- * @version 1.0
+ * An interface for initializing the project.
+ * @author Team TYN
  */
 public interface ControlledScreen {
 
-    //This method will allow the injection of the Parent ScreenPane
+    /**
+     * This method will allow the injection of the parent ScreenPane.
+     * @param parentController The parentController of this screen
+     */
     void setScreenParent(ScreensController parentController);
 
+    /**
+     * An initialize called when a screen is set for the first time.
+     */
     void lazyInitialize();
 }

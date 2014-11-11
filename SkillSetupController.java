@@ -20,8 +20,7 @@ import spacetrader.player.Skill;
 
 /**
  * FXML Controller class that allows the player to set their starting skills.
- *
- * @author Clayton
+ * @author Team TYN
  * @version 1.0
  */
 public class SkillSetupController implements Initializable, ControlledScreen {
@@ -83,26 +82,75 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     @FXML
     private TextField nameField;
 
+    /**
+     * 
+     */
     private final Map<String, Integer> plusButtonMap = new HashMap<>(5);
+    /**
+     * 
+     */
     private final Map<String, Integer> minusButtonMap = new HashMap<>(5);
 
+    /**
+     * 
+     */
     public static Player player;
+    /**
+     * 
+     */
     private Label[] labelArray;
+    /**
+     * 
+     */
     private Label[] pointLabelArray;
+    /**
+     * 
+     */
     private Button[] minusButtonArray;
+    /**
+     * 
+     */
     private Button[] plusButtonArray;
+    /**
+     * 
+     */
     private ProgressBar[] barsArray;
+    /**
+     * 
+     */
     private Integer[] skillPointArray;
+    /**
+     * 
+     */
     private final int avgValue;
+    /**
+     * 
+     */
     private final int barMax;
+    /**
+     * 
+     */
     private final int maxPts;
+    /**
+     * 
+     */
     private int totalPts;
+    /**
+     * 
+     */
     private int len;
+    /**
+     * 
+     */
     private ScreensController parentController;
+    /**
+     * 
+     */
     private List<Skill> skillList;
 
     /**
-     * Sets up SkillSetupController by creating the player and establishing the default values and limitations.
+     * Sets up SkillSetupController by creating the player and establishing
+     *     the default values and limitations.
      */
     public SkillSetupController() {
         player = new Player();
@@ -113,10 +161,11 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(final URL url, final ResourceBundle rBundle) {
         plusButtonArray = new Button[]{plus0, plus1, plus2, plus3, plus4};
         minusButtonArray = new Button[]{minus0, minus1, minus2, minus3, minus4};
-        pointLabelArray = new Label[]{points0, points1, points2, points3, points4};
+        pointLabelArray = new Label[]{points0, points1, points2,
+            points3, points4};
         barsArray = new ProgressBar[]{bar0, bar1, bar2, bar3, bar4};
         labelArray = new Label[]{skill0, skill1, skill2, skill3, skill4};
         // DO NOT MOVE LEN DECLARATION
@@ -127,24 +176,26 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     @Override
     public void lazyInitialize() {
+        // TODO
     }
 
     /**
-     * Synchronizes Player's skills with the GUI for skill selection
+     * Synchronizes Player's skills with the GUI for skill selection.
      */ 
     private void updatePlayerSkills() {
         for (int i = 0; i < len; i++) {
-            player.getSkills().get(skillList.get(i).getType()).setValue(skillPointArray[i]);
+            player.getSkills().get(skillList.get(i).getType()).setValue(
+                    skillPointArray[i]);
         }
     }
 
     @Override
-    public void setScreenParent(ScreensController parentController) {
-        this.parentController = parentController;
+    public void setScreenParent(final ScreensController aParentController) {
+        parentController = aParentController;
     }
 
     /**
-     * Initializes the players' skills and the GUI arrays.
+     * Initializes the player's skills and the GUI arrays.
      */
     private void setUp() {
         setUpControls();
@@ -152,10 +203,10 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     /**
      * Functions when any plus button is pressed.
-     * 
+     *
      * @param index the index of the skill being added to.
      */
-    private void addToSkill(int index) {
+    private void addToSkill(final int index) {
         int skillPoints = skillPointArray[index];
         if ((skillPoints < barMax) && (totalPts < maxPts)) {
             skillPoints++;
@@ -168,10 +219,10 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     /**
      * Functions when any minus button is pressed.
-     * 
+     *
      * @param index the index of the skill being subtracted from.
      */
-    private void subtractFromSkill(int index) {
+    private void subtractFromSkill(final int index) {
         int skillPoints = skillPointArray[index];
         if (skillPoints > 0) {
             skillPoints--;
@@ -182,7 +233,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         updatePointLabel(index, skillPoints);
     }
 
-    /** 
+    /**
      * Keeps totalBar and totalLabel up to date.
      */
     private void updateTotalDisplays() {
@@ -192,7 +243,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     /**
      * Initializes the skills as an ArrayList.
-     * 
+     *
      * @return the newly created List<Skill>.
      */
     private List<Skill> createSkillList() {
@@ -202,8 +253,8 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Initializes labelArray, skillPointArray, plusButtonMap, minusButtonMap, barsArray, totalBar,
-     * totalLabel, and pointLabelArray
+     * Initializes labelArray, skillPointArray, plusButtonMap, minusButtonMap,
+     *     barsArray, totalBar, totalLabel, and pointLabelArray.
      */
     private void setUpControls() {
         for (int i = 0; i < len; i++) {
@@ -223,21 +274,21 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     /**
      *  Helper method which updates a selected point label.
-     * 
+     *
      * @param index the index of the pointLabel being updated.
      * @param points the points for that skill label.
      */
-    private void updatePointLabel(int index, int points) {
+    private void updatePointLabel(final int index, final int points) {
         pointLabelArray[index].setText(Integer.toString(points));
     }
 
     /**
      * Helper method which updates a selected progress.
-     * 
+     *
      * @param index the progress bar to be changed.
      * @param points the points in that bar.
      */
-    private void updateProgressBar(int index, int points) {
+    private void updateProgressBar(final int index, final int points) {
         barsArray[index].setProgress((float) points / barMax);
         updateTotalDisplays();
     }

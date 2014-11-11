@@ -55,15 +55,24 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 /**
- * @author TYN
- * @version 1.0
+ * 
+ * @author Team TYN
  */
 public class ScreensController extends StackPane {
-
-    // Holds the screens to be displayed
+    /**
+     * Holds the screens to be displayed.
+     */
     private static final HashMap<String, Node> SCREENS = new HashMap<>();
-    private static final HashMap<String, ControlledScreen> CONTROLLERS = new HashMap<>();
-    private static final HashMap<String, Boolean> IS_INITIALIZED = new HashMap<>();
+    /**
+     * 
+     */
+    private static final HashMap<String, ControlledScreen> CONTROLLERS
+            = new HashMap<>();
+    /**
+     * 
+     */
+    private static final HashMap<String, Boolean> IS_INITIALIZED
+            = new HashMap<>();
 
     /**
      * The constructor for ScreensController.
@@ -72,7 +81,6 @@ public class ScreensController extends StackPane {
         super();
     }
 
-    // Adds the screen to the collection
     /**
      * Adds a screen to the ScreensController, so that it can be viewed.
      *
@@ -80,28 +88,28 @@ public class ScreensController extends StackPane {
      * @param screen the view
      * @param controller the controller that controls the view
      */
-    public void addScreen(String name, Node screen, ControlledScreen controller) {
+    public void addScreen(final String name, final Node screen,
+            final ControlledScreen controller) {
         SCREENS.put(name, screen);
         CONTROLLERS.put(name, controller);
     }
 
-    // Returns the Node with the appropriate name
     /**
      * Returns the requested screen, as in a view to be loaded.
      *
-     * @param name the name of the screen corresponding to the view
-     * @return the requested view
+     * @param name The name of the screen corresponding to the view
+     * @return The requested view
      */
     public static Node getScreen(String name) {
         return SCREENS.get(name);
     }
 
     /**
-     * Checks if the Screen is initialized or not. Checks a HashMap of Strings whose values are
-     * booleans.
+     * Checks if the Screen is initialized or not.
+     * Checks a HashMap of Strings whose values are booleans
      *
-     * @param name the name of the screen being checked
-     * @return
+     * @param name The name of the screen being checked
+     * @return Whether the screen is initialized or not
      */
     public static boolean isInitialized(String name) {
         return IS_INITIALIZED.get(name) != null;
@@ -110,16 +118,16 @@ public class ScreensController extends StackPane {
     /**
      * Returns the Node with the appropriate name.
      *
-     * @param name the name of the Node to be returned
-     * @return the Node with the appropriate name
+     * @param name The name of the Node to be returned
+     * @return The Node with the appropriate name
      */
     public static ControlledScreen getController(String name) {
         return CONTROLLERS.get(name);
     }
 
     /**
-     * Loads the FXML file, adds the screen to the screens collection and finally injects the
-     * screenPane to the controller
+     * Loads the FXML file, adds the screen to the screens collection
+     *     and finally injects the screenPane to the controller.
      *
      * @param name The name of the screen being loaded
      * @param resource The FXML file for the screen to be loaded
@@ -127,26 +135,26 @@ public class ScreensController extends StackPane {
      */
     public boolean loadScreen(String name, String resource) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(resource));
             Parent loadScreen = (Parent) loader.load();
-            ControlledScreen controller = ((ControlledScreen) loader.getController());
+            ControlledScreen controller =
+                    ((ControlledScreen) loader.getController());
             controller.setScreenParent(this);
             addScreen(name, loadScreen, controller);
             return true;
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            System.out.println(e);
-            e.printStackTrace();
-            Thread.dumpStack();
             return false;
         }
     }
 
     /**
-     * This method tries to display the screen with a predefined name First it makes sure the screen
-     * has been already loaded If there is more than one screen, the current screen is removed, and
-     * then the new screen is added If there isn't any screen being displayed, the new screen is
-     * just added
+     * This method tries to display the screen with a predefined name.
+     * First it makes sure the screen has been already loaded
+     * If there is more than one screen, the current screen is removed, and
+     *     then the new screen is added
+     * If there isn't any screen being displayed, the new screen is just added
      *
      * @param name The name of the screen to be displayed
      * @return Whether the screen was successfully added or not
@@ -164,11 +172,13 @@ public class ScreensController extends StackPane {
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
                         new KeyFrame(new Duration(1000), (ActionEvent t) -> {
-                            getChildren().remove(0); // Remove the displayed screen
+                            getChildren().remove(0); // Remove the displayed
                             getChildren().add(0, screen); // Add the screen
                             Timeline fadeIn = new Timeline(
-                                    new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                                    new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
+                                    new KeyFrame(Duration.ZERO,
+                                            new KeyValue(opacity, 0.0)),
+                                    new KeyFrame(new Duration(800),
+                                            new KeyValue(opacity, 1.0)));
                             fadeIn.play();
                         }, new KeyValue(opacity, 0.0)));
                 fade.play();
@@ -176,17 +186,18 @@ public class ScreensController extends StackPane {
                     GameModel.save(new ByteArrayOutputStream());
                 } catch (java.io.IOException e) {
                     System.err.println("Test game save failed.");
-                    e.printStackTrace();
                 }
             } else {
                 setOpacity(0.0);
                 controller.lazyInitialize();
                 GameModel.getObserverRegistry().notifyChange(controller);
                 IS_INITIALIZED.put(name, true);
-                getChildren().add(screen); // No one else been displayed, then just show
+                getChildren().add(screen); // Nothing displayed, then just show
                 Timeline fadeIn = new Timeline(
-                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                        new KeyFrame(new Duration(2500), new KeyValue(opacity, 1.0)));
+                        new KeyFrame(Duration.ZERO,
+                                new KeyValue(opacity, 0.0)),
+                        new KeyFrame(new Duration(2500),
+                                new KeyValue(opacity, 1.0)));
                 fadeIn.play();
             }
             return true;
@@ -196,12 +207,11 @@ public class ScreensController extends StackPane {
         }
     }
 
-    // This method will remove the screen with the given name from the collection of screens
     /**
      * Remove the screen with the given name from the collection of screens.
      *
-     * @param name the name of the screen to be removed
-     * @return Whether or not the screen being removed existed in the first place
+     * @param name The name of the screen to be removed
+     * @return Whether or not the screen being removed existed initially
      */
     public boolean unloadScreen(String name) {
         if (SCREENS.remove(name) == null) {
@@ -212,6 +222,7 @@ public class ScreensController extends StackPane {
         }
     }
 
+    @Override
     public String toString() {
         String str = "";
         for (String s : SCREENS.keySet()) {

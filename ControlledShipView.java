@@ -5,26 +5,34 @@ import spacetrader.items.Ship;
 
 /**
  * Controller that displays a controlled ship.
- * 
- * @author Administrator
+ * @author Team TYN
  */
 public class ControlledShipView extends ShipView {
 
+    /**
+     * 
+     */
     public enum ControlType {
-
         PIRATE
     };
+    /**
+     * 
+     */
     private ShipController controller;
+    /**
+     * 
+     */
     private ShipView target;
 
     /**
      * The constructor for this class.
-     * 
-     * @param model 3D mesh that goes on the ship.
-     * @param ship the ship's data stored in a ship object.
-     * @param type The type of controlled ship.
+     *
+     * @param model 3D mesh that goes on the ship
+     * @param ship The ship's data stored in a ship object
+     * @param type The type of controlled ship
      */
-    public ControlledShipView(Mesh model, Ship ship, ControlType type) {
+    public ControlledShipView(final Mesh model, final Ship ship,
+            final ControlType type) {
         super(model, ship);
 
         switch (type) {

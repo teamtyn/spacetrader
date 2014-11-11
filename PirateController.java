@@ -1,21 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package spacetrader;
 
 /**
  *
- * @author Administrator
+ * @author Team TYN
  */
 public class PirateController implements ShipController {
-
+    /**
+     * 
+     */
     private ControlledShipView shipView;
+    /**
+     * 
+     */
     private boolean turning;
 
-    public PirateController(ControlledShipView sV) {
-        shipView = sV;
+    /**
+     * 
+     * @param sView 
+     */
+    public PirateController(final ControlledShipView sView) {
+        shipView = sView;
     }
 
     @Override

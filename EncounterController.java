@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package spacetrader;
 
 import java.net.URL;
@@ -20,33 +15,61 @@ import javafx.scene.layout.Pane;
 /**
  * FXML Controller class
  *
- * @author Administrator
+ * @author Team TYN
  */
 public class EncounterController extends AnimationTimer implements Initializable, ControlledScreen {
-
+    /**
+     * 
+     */
     private ScreensController parentController;
+    /**
+     * 
+     */
     private EncounterSubScene encounterSubScene;
-
+    /**
+     * 
+     */
     private SubScene subScene;
+    /**
+     * 
+     */
     private ShipView playerShip;
+    /**
+     * 
+     */
     private ControlledShipView enemyShip;
+    /**
+     * 
+     */
     private PerspectiveCamera camera;
 
     @FXML
     private Pane subScenePane;
 
+    /**
+     * 
+     */
     private boolean wDown;
+    /**
+     * 
+     */
     private boolean aDown;
+    /**
+     * 
+     */
     private boolean sDown;
+    /**
+     * 
+     */
     private boolean dDown;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(final URL url, final ResourceBundle rBundle) {
         //TODO
     }
 
     @Override
-    public void handle(long now) {
+    public void handle(final long now) {
         if (wDown) {
             sDown = false;
             playerShip.applyForce(1);
@@ -70,8 +93,8 @@ public class EncounterController extends AnimationTimer implements Initializable
     }
 
     @Override
-    public void setScreenParent(ScreensController parentController) {
-        this.parentController = parentController;
+    public void setScreenParent(final ScreensController aParentController) {
+        parentController = aParentController;
     }
 
     @Override
@@ -116,8 +139,8 @@ public class EncounterController extends AnimationTimer implements Initializable
         subScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
             @Override
-            public void handle(KeyEvent event) {
-                KeyCode keyCode = event.getCode();
+            public void handle(final KeyEvent event) {
+                final KeyCode keyCode = event.getCode();
                 switch (keyCode) {
                     case W:
                         wDown = false;

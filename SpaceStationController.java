@@ -31,9 +31,8 @@ import spacetrader.items.Weapon.WeaponType;
 import spacetrader.player.Player;
 
 /**
- * FXML Controller class for SpaceStation
- *
- * @author Purcell7
+ * FXML Controller class for SpaceStation.
+ * @author Team TYN
  */
 public class SpaceStationController implements Initializable, ControlledScreen {
 

@@ -8,41 +8,44 @@ import javafx.fxml.Initializable;
 import spacetrader.persist.Persistence;
 
 /**
- * @author TYN
- * @version 1.0
+ * 
+ * @author Team TYN
  */
 public class MenuController implements Initializable, ControlledScreen {
-
+    /**
+     * 
+     */
     private ScreensController parentController;
 
     @FXML
-    private void startButtonAction(ActionEvent event) {
+    private void startButtonAction(final ActionEvent event) {
         parentController.setScreen("SkillSetup");
     }
 
     @FXML
-    private void loadButtonAction(ActionEvent event) {
+    private void loadButtonAction(final ActionEvent event) {
         if (Persistence.loadGame()) {
             parentController.setScreen("UniverseMap");
         }
     }
 
     @FXML
-    private void exitButtonAction(ActionEvent event) {
+    private void exitButtonAction(final ActionEvent event) {
         System.exit(0);
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(final URL url, final ResourceBundle rBundle) {
         // TODO
     }
 
     @Override
     public void lazyInitialize() {
+        // TODO
     }
 
     @Override
-    public void setScreenParent(ScreensController parentController) {
-        this.parentController = parentController;
+    public void setScreenParent(final ScreensController aParentController) {
+        parentController = aParentController;
     }
 }
