@@ -6,16 +6,42 @@ import spacetrader.star_system.Planet.Environment;
 
 /**
  * A color gradient stores a set of colors in a tree map, keying with
- * corresponding heights. 
+ * corresponding heights. The height value of each color is with respect to a
+ * sea level, where -1 is the lowest point, 0 is at sea level, and 1 is the
+ * highest point.
+ *
  * @author Team TYN
  */
-public class ColorGradient {
+public final class ColorGradient {
+
+    /**
+     * The tree map used to sort the colors.
+     */
     private TreeMap<Float, Color> colors;
+    /**
+     * The sea level.
+     */
     private float seaLevel;
 
-    public ColorGradient(final float aSeaLevel, final Environment scheme) {
+    /**
+     * Constructs a color gradient with an empty tree map.
+     *
+     * @param sL The sea level.
+     */
+    public ColorGradient(final float sL) {
         colors = new TreeMap<>();
-        seaLevel = aSeaLevel;
+        seaLevel = sL;
+    }
+
+    /**
+     * Constructs a default color gradient based on an environment.
+     *
+     * @param sL The seal level.
+     * @param scheme The environment used for defining the color scheme.
+     */
+    public ColorGradient(final float sL, final Environment scheme) {
+        colors = new TreeMap<>();
+        seaLevel = sL;
 
         switch (scheme) {
             case EARTH:
@@ -62,18 +88,32 @@ public class ColorGradient {
                 colors.put(0.5f, Color.rgb(28, 12, 12));
                 colors.put(1f, Color.rgb(253, 245, 255));
                 break;
-            case ROCKY:
+            default:
                 colors.put(-1f, Color.rgb(41, 22, 10));
                 colors.put(1f, Color.rgb(145, 145, 145));
                 break;
         }
     }
 
-    public void addColor(float value, Color color) {
+    /**
+     * Adds a color to the color tree map.
+     *
+     * @param value A height value.
+     * @param color The color to be added.
+     */
+    public void addColor(final float value, final Color color) {
         colors.put(value, color);
     }
 
-    public Color getColor(float value) {
+    /**
+     * Calculates an interpolated color given a value corresponding to an
+     * absolute height (not with respect to sea level). This value should range
+     * from 0 to 1;
+     *
+     * @param value The arbitrary value.
+     * @return The interpolated color.
+     */
+    public Color getColor(final float value) {
         float height = value;
         if (seaLevel > 0 && seaLevel < 1) {
             if (height >= seaLevel) {
