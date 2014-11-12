@@ -5,13 +5,14 @@ import spacetrader.GameModel;
 import spacetrader.market.MarketPlace;
 
 /**
- * Planet is defined by its government, resource level,
- *     circumstance, and tech level.
- * It has the physical characteristics of color, orbit distance, and size
+ * Planet is defined by its government, resource level, circumstance, and tech
+ * level. It has the physical characteristics of color, orbit distance, and size
  * It also knows whether or not the player is currently there
+ *
  * @author Team TYN
  */
 public class Planet implements Serializable {
+
     /**
      * The lower bound for a planet with an earth environment.
      */
@@ -52,6 +53,22 @@ public class Planet implements Serializable {
      * The upper bound for a planet with an alien environment.
      */
     private static final float ALIEN_SEA_HIGH = 0.1f;
+    /**
+     * The maximum axial tilt.
+     */
+    private static final double MAX_AXIAL_TILT = 45;
+    /**
+     * Lower bound of axial speed.
+     */
+    private static final double AXIAL_SPEED_LOW = 0.05;
+    /**
+     * Upper bound of axial speed.
+     */
+    private static final double AXIAL_SPEED_HIGH = 0.15;
+    /**
+     * Factor multiplied by the orbit distance to computer orbit speed.
+     */
+    private static final double DISTANCE_FACTOR = 20;
 
     /**
      * An enum representing all possible environments for a planet.
@@ -87,6 +104,7 @@ public class Planet implements Serializable {
      * An enum representing all possible resource levels for a planet.
      */
     public enum ResourceLevel {
+
         NOSPECIALRESOURCES, MINERALRICH, MINERALPOOR,
         DESERT, LOTSOFWATER, RICHSOIL,
         POORSOIL, RICHFAUNA, LIFELESS,
@@ -98,6 +116,7 @@ public class Planet implements Serializable {
      * An enum representing all possible tech levels for a planet.
      */
     public enum TechLevel {
+
         PREAGRICULTURAL, AGRICULTURAL,
         MEDIEVAL, RENAISSANCE,
         EARLYINDUSTRIAL, INDUSTRIAL,
@@ -162,8 +181,8 @@ public class Planet implements Serializable {
     private final MarketPlace market;
 
     /**
-     * No arg constructor that Ryan is using for his JUnit test.
-     * DO NOT USE IN ACTUAL GAME!
+     * No arg constructor that Ryan is using for his JUnit test. DO NOT USE IN
+     * ACTUAL GAME!
      */
     public Planet() {
         size = 0;
@@ -186,6 +205,7 @@ public class Planet implements Serializable {
 
     /**
      * Constructor for a planet.
+     *
      * @param aOrbitDistance The radius of the planet's orbit
      * @param aSize The radius of the planet
      */
@@ -261,17 +281,19 @@ public class Planet implements Serializable {
         government = new Government();
         name = PlanetNames.getName(government);
         market = new MarketPlace(this);
-        axialTilt = 45 * GameModel.getRandom().nextDouble();
-        axialSpeed = 0.15 * GameModel.getRandom().nextDouble() + 0.05;
-        orbitSpeed = Math.sqrt(1 / (20 * orbitDistance));
+        axialTilt = MAX_AXIAL_TILT * GameModel.getRandom().nextDouble();
+        axialSpeed = AXIAL_SPEED_HIGH * GameModel.getRandom().nextDouble()
+                + AXIAL_SPEED_LOW;
+        orbitSpeed = Math.sqrt(1 / (DISTANCE_FACTOR * orbitDistance));
         seed = GameModel.getRandom().nextLong();
     }
 
     /**
-     * 
-     * @param <T>
-     * @param values
-     * @return 
+     * Chooses one of the given values.
+     *
+     * @param <T> The type of the options.
+     * @param values The given values.
+     * @return One of the given values.
      */
     private <T> T choose(final T... values) {
         return values[GameModel.getRandom().nextInt(values.length)];
@@ -279,6 +301,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the size of the planet.
+     *
      * @return The size of the planet
      */
     public final double getSize() {
@@ -287,6 +310,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the orbit distance of the planet.
+     *
      * @return The orbit distance of the planet
      */
     public final double getOrbitDistance() {
@@ -295,6 +319,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the orbit speed of the planet.
+     *
      * @return The orbit speed of the planet
      */
     public final double getOrbitSpeed() {
@@ -303,6 +328,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the axial tilt of the planet.
+     *
      * @return The axial tilt of the planet
      */
     public final double getAxialTilt() {
@@ -311,6 +337,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the axial speed of the planet.
+     *
      * @return The axial speed of the planet
      */
     public final double getAxialSpeed() {
@@ -319,6 +346,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the seed of the planet.
+     *
      * @return The seed of the planet
      */
     public final long getSeed() {
@@ -327,6 +355,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the sea level of the planet.
+     *
      * @return The sea level of the planet
      */
     public final float getSeaLevel() {
@@ -335,6 +364,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the name of the planet.
+     *
      * @return The name of the planet
      */
     public final String getName() {
@@ -343,6 +373,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the government of the planet.
+     *
      * @return The government of the planet
      */
     public final Government getGovernment() {
@@ -351,6 +382,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the environment of the planet.
+     *
      * @return The environment of the planet
      */
     public final Environment getEnvironment() {
@@ -359,6 +391,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the resource level of the planet.
+     *
      * @return The resource level of the planet
      */
     public final ResourceLevel getResourceLevel() {
@@ -367,6 +400,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the resource level of the planet.
+     *
      * @return The resource level of the planet
      */
     public final int getResourceLevelOrdinality() {
@@ -375,6 +409,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the tech level of the planet.
+     *
      * @return The tech level of the planet
      */
     public final TechLevel getTechLevel() {
@@ -383,6 +418,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the tech level ordinality of the planet.
+     *
      * @return The tech level ordinality of the planet
      */
     public final int getTechLevelOrdinality() {
@@ -391,6 +427,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the circumstance of the planet.
+     *
      * @return The circumstance of the planet
      */
     public final Circumstance getCircumstance() {
@@ -399,6 +436,7 @@ public class Planet implements Serializable {
 
     /**
      * Getter for the market of the planet.
+     *
      * @return The market of the planet
      */
     public final MarketPlace getMarket() {
@@ -407,6 +445,7 @@ public class Planet implements Serializable {
 
     /**
      * Setter for the tech level of the planet.
+     *
      * @param aTechLevel The new tech level for the planet
      */
     public final void setTechLevel(final TechLevel aTechLevel) {
