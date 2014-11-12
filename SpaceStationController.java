@@ -292,9 +292,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         }
         for (Weapon weapon : player.getShip().getWeapons()) {
             if (weapon != null) {
-                player.addMoney(weapon.getType().cost / 2);
+                player.addMoney(weapon.getCost() / 2);
                 System.out.println("Excess weapon sold for: "
-                        + weapon.getType().cost / 2);
+                        + weapon.getCost() / 2);
             }
         }
         for (int i = 0; i < player.getShip().getShields().length; i++) {
@@ -463,14 +463,14 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     gadgetNameLabel1.setText("Damage ");
                     gadgetNameLabel2.setText("Rate of Fire");
                     gadgetValueLabel1.setText(Integer.toString(
-                            selectedWeapon.getType().damage));
+                            selectedWeapon.getDamage()));
                     gadgetValueLabel2.setText(Integer.toString(
-                            selectedWeapon.getType().rateOfFire));
+                            selectedWeapon.getRateOfFire()));
                     gadgetCostLabel.setText(Integer.toString(
-                            selectedWeapon.getType().cost));
+                            selectedWeapon.getCost()));
                     gadgetPicture.getChildren().clear();
                     Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(selectedWeapon.getType().color.getColor());
+                    myGadgetPicture.setFill(selectedWeapon.getColor());
                     gadgetPicture.getChildren().add(myGadgetPicture);
                 }
             });
@@ -581,16 +581,16 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                         gadgetNameLabel1.setText("Damage ");
                         gadgetNameLabel2.setText("Rate of Fire");
                         gadgetValueLabel1.setText(Integer.toString(
-                                selectedWeapon.getType().damage));
+                                selectedWeapon.getDamage()));
                         gadgetValueLabel2.setText(Integer.toString(
-                                selectedWeapon.getType().rateOfFire));
+                                selectedWeapon.getRateOfFire()));
                         gadgetCostLabel.setText(Integer.toString(
-                                (selectedWeapon.getType().cost / 2)));
+                                (selectedWeapon.getCost() / 2)));
                         gadgetPicture.getChildren().clear();
                         final Rectangle myGadgetPicture
                                 = new Rectangle(100, 10, 100, 100);
                         myGadgetPicture.setFill(
-                                selectedWeapon.getType().color.getColor());
+                                selectedWeapon.getColor());
                         gadgetPicture.getChildren().add(myGadgetPicture);
                         gadgetIndex = row.getParent().
                                 getChildrenUnmodifiable().indexOf(row);
@@ -735,7 +735,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         switch (currentGadgetType) {
             case "Weapon":
                 if (confirmationGadgetField.getText().trim().equals(
-                        Integer.toString(selectedWeapon.getType().cost))) {
+                        Integer.toString(selectedWeapon.getCost()))) {
                     shipDialogueField.setText("");
                     confirmationGadgetField.setText("");
                     buyWeapon();
@@ -773,9 +773,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     private void sellGadgetButtonAction(ActionEvent event) {
         switch (currentGadgetType) {
             case "My Weapon":
-                player.addMoney(selectedWeapon.getType().cost / 2);
+                player.addMoney(selectedWeapon.getCost() / 2);
                 shipDialogueField.setText("Weapon sold for "
-                        + selectedWeapon.getType().cost / 2);
+                        + selectedWeapon.getCost() / 2);
                 player.getShip().removeWeapon(gadgetIndex);
                 updatePlayerWeapons();
                 gadgetIndex = -1;
@@ -814,13 +814,13 @@ public class SpaceStationController implements Initializable, ControlledScreen {
      *     the player's ship
      */
     public void buyWeapon() {
-        if (player.getMoney() >= selectedWeapon.getType().cost) {
-            player.subtractMoney(selectedWeapon.getType().cost);
+        if (player.getMoney() >= selectedWeapon.getCost()) {
+            player.subtractMoney(selectedWeapon.getCost());
             if (player.getShip().addWeapon(selectedWeapon)) {
                 shipDialogueField.setText("Purchase complete");
             } else {
                 shipDialogueField.setText("Purchase failed, cost refunded");
-                player.addMoney(selectedWeapon.getType().cost);
+                player.addMoney(selectedWeapon.getCost());
             }
         } else {
             shipDialogueField.setText("Not enough money");

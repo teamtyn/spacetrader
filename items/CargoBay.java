@@ -5,11 +5,13 @@ import java.util.HashMap;
 import spacetrader.market.TradeGood;
 
 /**
- * A CargoBay is defined by its capacity, current size,
- *     and contents (which are TradeGoods).
+ * A CargoBay is defined by its capacity, current size, and contents (which are
+ * TradeGoods).
+ *
  * @author Team TYN
  */
 public class CargoBay implements Serializable {
+
     /**
      * The capacity of the cargo bay.
      */
@@ -25,6 +27,7 @@ public class CargoBay implements Serializable {
 
     /**
      * Constructor for a cargo bay.
+     *
      * @param aCapacity The capacity of the cargo bay
      */
     public CargoBay(final int aCapacity) {
@@ -51,13 +54,14 @@ public class CargoBay implements Serializable {
 
     /**
      * Add as many goods as possible up to specified quantity.
+     *
      * @param goodName The good to be stored in the cargo bay
-     * @param quantityRequested The quantity to be ideally
-     *     stored in the cargo bay
+     * @param quantityRequested The quantity to be ideally stored in the cargo
+     * bay
      * @return The number of goods added
      */
-    public final int addTradeGood(final String goodName,
-            final int quantityRequested) {
+    public int addTradeGood(
+            final String goodName, final int quantityRequested) {
         int quantity = quantityRequested;
         if (quantity > 0) {
             if ((quantity + currentSize) > capacity) {
@@ -76,11 +80,15 @@ public class CargoBay implements Serializable {
 
     /**
      * Remove as many goods as possible up to specified quantity.
+     *
      * @param goodName The good to be removed from the cargo bay
-     * @param quantity The quantity to be ideally removed from the cargo bay
+     * @param quantityRequested The quantity to be ideally removed from the
+     * cargo bay
      * @return The number of goods removed
      */
-    public final int removeTradeGood(final String goodName, int quantity) {
+    public int removeTradeGood(
+            final String goodName, final int quantityRequested) {
+        int quantity = quantityRequested;
         if (quantity > goods.get(goodName)) {
             quantity = goods.get(goodName);
         }
@@ -91,6 +99,7 @@ public class CargoBay implements Serializable {
 
     /**
      * Getter for the goods of the cargo bay.
+     *
      * @return The goods of the cargo bay
      */
     public final HashMap<String, Integer> getGoods() {
@@ -99,6 +108,7 @@ public class CargoBay implements Serializable {
 
     /**
      * Getter for the capacity of the cargo bay.
+     *
      * @return The capacity of the cargo bay
      */
     public final int getCapacity() {
@@ -107,6 +117,7 @@ public class CargoBay implements Serializable {
 
     /**
      * Getter for the current size of the cargo bay.
+     *
      * @return The current size of the cargo bay
      */
     public final int getCurrentSize() {
@@ -115,6 +126,7 @@ public class CargoBay implements Serializable {
 
     /**
      * Only to be used as a convenience when player upgrades their cargo bay.
+     *
      * @param aCapacity The new capacity of the cargo bay
      */
     public final void setCapacity(final int aCapacity) {
