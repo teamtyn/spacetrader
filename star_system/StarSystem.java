@@ -52,29 +52,17 @@ public class StarSystem implements Serializable {
      */
     private static final int MAX_STAR_SIZE = 15;
     /**
-     * The max r value of a star.
+     * The red value of a star.
      */
-    private static final int MAX_RED = 56;
+    private static final int RED = 240;
     /**
-     * The min r value of a star.
+     * The green value of a star.
      */
-    private static final int MIN_RED = 200;
+    private static final int GREEN = 255;
     /**
-     * The max r value of a star.
+     * The blue value of a star.
      */
-    private static final int MAX_BLUE = 106;
-    /**
-     * The min r value of a star.
-     */
-    private static final int MIN_BLUE = 150;
-    /**
-     * The max r value of a star.
-     */
-    private static final int MAX_GREEN = 25;
-    /**
-     * The min r value of a star.
-     */
-    private static final int MIN_GREEN = 20;
+    private static final int BLUE = 100;
     /**
      * The initial minimum distance between planets.
      */
@@ -99,10 +87,7 @@ public class StarSystem implements Serializable {
                 MAX_STAR_SIZE - MIN_STAR_SIZE) + MIN_STAR_SIZE;
         planets[GameModel.getRandom().nextInt(planets.length - 1)].setTechLevel(
                 Planet.TechLevel.HIGHTECH);
-        color = new SerializableColor(Color.rgb(
-                GameModel.getRandom().nextInt(MAX_RED) + MIN_RED,
-                GameModel.getRandom().nextInt(MAX_BLUE) + MIN_BLUE,
-                GameModel.getRandom().nextInt(MAX_GREEN)));
+        color = new SerializableColor(Color.rgb(RED, GREEN, BLUE));
     }
 
     /**

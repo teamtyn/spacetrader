@@ -222,6 +222,18 @@ public class TradeGood implements Serializable {
             mhl = amhl;
             name = aname;
         }
+        
+        public String getName() {
+            return name;
+        }
+        
+        public int getMtlp() {
+            return mtlp;
+        }
+        
+        public int getMtlu() {
+            return mtlu;
+        }
     };
 
     /**

@@ -33,10 +33,10 @@ public class MarketPlace implements Serializable {
         for (TradeGood.GoodType type : TradeGood.GoodType.values()) {
             TradeGood newGood = new TradeGood(type, planet);
             goods.add(newGood);
-            if (type.mtlp <= planet.getTechLevelOrdinality()) {
+            if (type.getMtlp() <= planet.getTechLevelOrdinality()) {
                 buyable.add(newGood);
             }
-            if (type.mtlu <= planet.getTechLevelOrdinality()) {
+            if (type.getMtlu() <= planet.getTechLevelOrdinality()) {
                 sellable.add(newGood);
             }
         }

@@ -214,7 +214,7 @@ public class MarketController implements
      */
     public final void buy(final TradeGood good) {
         if (player.getMoney() > good.getPrice()) {
-            if (player.getShip().storeTradeGood(good.getType().name, 1) > 0) {
+            if (player.getShip().storeTradeGood(good.getType().getName(), 1) > 0) {
                 player.setMoney(player.getMoney() - good.getPrice());
                 market.changeQuantity(good, -1);
             } else {
@@ -239,7 +239,7 @@ public class MarketController implements
      * @param good The good to be sold
      */
     public final void sell(final TradeGood good) {
-        if (player.getShip().removeTradeGood(good.getType().name, 1) > 0) {
+        if (player.getShip().removeTradeGood(good.getType().getName(), 1) > 0) {
             player.setMoney(player.getMoney() + good.getPrice());
             market.changeQuantity(good, 1);
         }
@@ -317,7 +317,7 @@ public class MarketController implements
          */
         public GoodsRow(final TradeGood good, final boolean isABuyRow,
                 final boolean isDisabled, final boolean notAllowedHere) {
-            this.getChildren().add(new Label(good.getType().name));
+            this.getChildren().add(new Label(good.getType().getName()));
             Label quantityLabel;
             Button button;
             if (isABuyRow) {
@@ -325,7 +325,7 @@ public class MarketController implements
                 button = new BuyButton(good);
             } else {
                 quantityLabel = new Label("x"
-                        + cargoBay.getGoods().get(good.getType().name));
+                        + cargoBay.getGoods().get(good.getType().getName()));
                 button = new SellButton(good);
             }
             this.getChildren().add(quantityLabel);
@@ -337,19 +337,19 @@ public class MarketController implements
 
                 @Override
                 public void handle(final MouseEvent event) {
-                    generateChart(good.getType().name, good.getPrice());
+                    generateChart(good.getType().getName(), good.getPrice());
                     if (notAllowedHere && isABuyRow) {
-                        priceField.setText(good.getType().name
+                        priceField.setText(good.getType().getName()
                                 + " cannot be bought here due to "
                                 + player.getPlanet().getName()
                                 + "'s tech level being too low.");
                     } else if (notAllowedHere && !isABuyRow) {
-                        priceField.setText(good.getType().name
+                        priceField.setText(good.getType().getName()
                                 + " cannot be sold here due to "
                                 + player.getPlanet().getName()
                                 + "'s tech level being too low.");
                     } else {
-                        priceField.setText(good.getType().name
+                        priceField.setText(good.getType().getName()
                                 + " costs "
                                 + good.getPrice()
                                 + " per unit.");
@@ -398,7 +398,7 @@ public class MarketController implements
                     isDisabled = true;
                 }
                 if (!isABuyList && cargoBay.getGoods()
-                        .get(good.getType().name) <= 0) {
+                        .get(good.getType().getName()) <= 0) {
                     isDisabled = true;
                 }
                 if (isABuyList && !market.getBuyable().contains(good)) {

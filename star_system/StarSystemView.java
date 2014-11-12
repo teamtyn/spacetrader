@@ -5,7 +5,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import javafx.scene.PointLight;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import spacetrader.GameModel;
@@ -204,9 +203,9 @@ public final class StarSystemView extends Sphere {
     }
 
     /**
-     *
-     * @param width
-     * @param height
+     * Updates all planet textures.
+     * @param width The desired width.
+     * @param height The desired height.
      */
     public void updateTextures(final int width, final int height) {
         ExecutorService es = Executors.newSingleThreadExecutor(
@@ -227,7 +226,7 @@ public final class StarSystemView extends Sphere {
     }
 
     /**
-     *
+     * Increments orbits.
      */
     public void incrementOrbits() {
         for (PlanetView planet : planetViews) {
