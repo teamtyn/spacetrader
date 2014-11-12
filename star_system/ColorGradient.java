@@ -5,7 +5,8 @@ import javafx.scene.paint.Color;
 import spacetrader.star_system.Planet.Environment;
 
 /**
- *
+ * A color gradient stores a set of colors in a tree map, keying with
+ * corresponding heights. 
  * @author Team TYN
  */
 public class ColorGradient {
