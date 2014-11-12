@@ -143,7 +143,7 @@ public class TradeGood implements Serializable {
          */
         private final int ttp;
         /**
-         * The base price of the good
+         * The base price of the good.
          */
         private final int basePrice;
         /**
