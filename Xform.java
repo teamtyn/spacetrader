@@ -7,252 +7,315 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
 /**
- * 
+ * An Xform is a transformation group designed for three dimensional
+ * transformations.
+ *
  * @author Team TYN
  */
 public class Xform extends Group {
 
+    /**
+     * Specifies order of rotation transforms.
+     */
     public enum RotateOrder {
-        XYZ, XZY, YXZ, YZX, ZXY, ZYX
+        /**
+         * Indicates a rotation order of XYZ.
+         */
+        XYZ,
+        /**
+         * Indicates a rotation order of XZY.
+         */
+        XZY,
+        /**
+         * Indicates a rotation order of YXZ.
+         */
+        YXZ,
+        /**
+         * Indicates a rotation order of YZX.
+         */
+        YZX,
+        /**
+         * Indicates a rotation order of ZXY.
+         */
+        ZXY,
+        /**
+         * Indicates a rotation order of ZYX.
+         */
+        ZYX
     }
 
-    private final Translate translate = new Translate();
+    /**
+     * The translate for this Xform.
+     */
+    private final Translate t = new Translate();
+    /**
+     * The x axis rotation for this Xform.
+     */
     private final Rotate rx = new Rotate();
-
     {
         rx.setAxis(Rotate.X_AXIS);
     }
+    /**
+     * The y axis rotation for this Xform.
+     */
     private final Rotate ry = new Rotate();
-
     {
         ry.setAxis(Rotate.Y_AXIS);
     }
+    /**
+     * The z axis rotation for this Xform.
+     */
     private final Rotate rz = new Rotate();
-
     {
         rz.setAxis(Rotate.Z_AXIS);
     }
+    /**
+     * The scale for this Xform.
+     */
     private final Scale s = new Scale();
 
     /**
-     * 
+     * Constructs an Xform with rotation order XYZ.
      */
     public Xform() {
         super();
-        getTransforms().addAll(translate, rz, ry, rx, s);
+        getTransforms().addAll(t, rz, ry, rx, s);
     }
 
     /**
-     * 
-     * @param rotateOrder 
+     * Constructs an Xform with the specified rotation order.
+     *
+     * @param rotateOrder The rotation order.
      */
-    public Xform(RotateOrder rotateOrder) {
+    public Xform(final RotateOrder rotateOrder) {
         super();
-        // choose the order of rotations based on the rotateOrder
         switch (rotateOrder) {
             case XYZ:
-                getTransforms().addAll(translate, rz, ry, rx, s);
+                getTransforms().addAll(t, rz, ry, rx, s);
                 break;
             case XZY:
-                getTransforms().addAll(translate, ry, rz, rx, s);
+                getTransforms().addAll(t, ry, rz, rx, s);
                 break;
             case YXZ:
-                getTransforms().addAll(translate, rz, rx, ry, s);
+                getTransforms().addAll(t, rz, rx, ry, s);
                 break;
             case YZX:
-                getTransforms().addAll(translate, rx, rz, ry, s);
+                getTransforms().addAll(t, rx, rz, ry, s);
                 break;
             case ZXY:
-                getTransforms().addAll(translate, ry, rx, rz, s);
+                getTransforms().addAll(t, ry, rx, rz, s);
                 break;
-            case ZYX:
-                getTransforms().addAll(translate, rx, ry, rz, s);
+            default:
+                getTransforms().addAll(t, rx, ry, rz, s);
                 break;
         }
     }
 
     /**
-     * 
-     * @param x
-     * @param y
-     * @param z 
+     * Sets all three components of the translation.
+     *
+     * @param x The x component of the translation.
+     * @param y the y component of the translation.
+     * @param z The z component of the translation.
      */
-    public final void setTranslate(final double x,
-            final double y, final double z) {
-        translate.setX(x);
-        translate.setY(y);
-        translate.setZ(z);
+    public final void setTranslate(
+            final double x, final double y, final double z) {
+        t.setX(x);
+        t.setY(y);
+        t.setZ(z);
     }
 
     /**
-     * 
-     * @param x
-     * @param y 
+     * Sets the x and y components of the translation.
+     *
+     * @param x The x component of the translation.
+     * @param y The y component of the translation.
      */
     public final void setTranslate(final double x, final double y) {
-        translate.setX(x);
-        translate.setY(y);
+        t.setX(x);
+        t.setY(y);
     }
 
     /**
-     * 
-     * @param x 
+     * Sets the x component of the translation.
+     *
+     * @param x The x component of the translation.
      */
-    public final void setTx(double x) {
-        translate.setX(x);
+    public final void setTx(final double x) {
+        t.setX(x);
     }
 
     /**
-     * 
-     * @param y 
+     * Sets the y component of the translation.
+     *
+     * @param y The y component of the translation.
      */
-    public final void setTy(double y) {
-        translate.setY(y);
+    public final void setTy(final double y) {
+        t.setY(y);
     }
 
     /**
-     * 
-     * @param z 
+     * Sets the z component of the translation.
+     *
+     * @param z The z component of the translation.
      */
-    public final void setTz(double z) {
-        translate.setZ(z);
+    public final void setTz(final double z) {
+        t.setZ(z);
     }
 
     /**
-     * 
-     * @return 
+     * Gets the x component of the translation.
+     *
+     * @return The x component of the translation.
      */
     public final double getTx() {
-        return translate.getTx();
+        return t.getTx();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the y component of the translation.
+     *
+     * @return The y component of the translation.
      */
     public final double getTy() {
-        return translate.getTy();
+        return t.getTy();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the z component of the translation.
+     *
+     * @return The z component of the translation.
      */
     public final double getTz() {
-        return translate.getTz();
+        return t.getTz();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the x translate property.
+     *
+     * @return The x translate property.
      */
     public final DoubleProperty xProperty() {
-        return translate.xProperty();
+        return t.xProperty();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the y translate property.
+     *
+     * @return The y translate property.
      */
     public final DoubleProperty yProperty() {
-        return translate.yProperty();
+        return t.yProperty();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the z translate property.
+     *
+     * @return The z translate property.
      */
     public final DoubleProperty zProperty() {
-        return translate.zProperty();
+        return t.zProperty();
     }
 
     /**
-     * 
-     * @param x
-     * @param y
-     * @param z 
+     * Sets the x, y, and z rotations.
+     *
+     * @param x The x rotation.
+     * @param y The y rotation.
+     * @param z The z rotation.
      */
-    public final void setRotate(final double x, final double y, final double z) {
+    public final void setRotate(
+            final double x, final double y, final double z) {
         rx.setAngle(x);
         ry.setAngle(y);
         rz.setAngle(z);
     }
 
     /**
-     * 
-     * @param x 
+     * Sets the x rotation.
+     *
+     * @param x The x rotation.
      */
     public final void setRx(final double x) {
         rx.setAngle(x);
     }
 
     /**
-     * 
-     * @param y 
+     * Sets the y rotation.
+     *
+     * @param y The y rotation.
      */
     public final void setRy(final double y) {
         ry.setAngle(y);
     }
 
     /**
-     * 
-     * @param z 
+     * Sets the z rotation.
+     *
+     * @param z The z rotation.
      */
     public final void setRz(final double z) {
         rz.setAngle(z);
     }
 
     /**
-     * 
-     * @return 
+     * Gets the x rotation.
+     *
+     * @return The x rotation.
      */
     public final double getRx() {
         return rx.getAngle();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the y rotation.
+     *
+     * @return The y rotation.
      */
     public final double getRy() {
         return ry.getAngle();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the z rotation.
+     *
+     * @return The z rotation.
      */
     public final double getRz() {
         return rz.getAngle();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the x rotation property.
+     *
+     * @return The x rotation property.
      */
     public final DoubleProperty rxProperty() {
         return rx.angleProperty();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the y rotation property.
+     *
+     * @return The y rotation property.
      */
     public final DoubleProperty ryProperty() {
         return ry.angleProperty();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the z rotation property.
+     *
+     * @return The z rotation property.
      */
     public final DoubleProperty rzProperty() {
         return rz.angleProperty();
     }
 
     /**
-     * 
-     * @param scaleFactor 
+     * Sets the scale of this Xform.
+     *
+     * @param scaleFactor The scale factor.
      */
     public final void setScale(final double scaleFactor) {
         s.setX(scaleFactor);
@@ -261,10 +324,11 @@ public class Xform extends Group {
     }
 
     /**
-     * 
-     * @param x
-     * @param y
-     * @param z 
+     * Sets the x, y, and z components of the scale.
+     *
+     * @param x The x component of the scale.
+     * @param y The y component of the scale.
+     * @param z The z component of the scale.
      */
     public final void setScale(final double x, final double y, final double z) {
         s.setX(x);
@@ -273,84 +337,92 @@ public class Xform extends Group {
     }
 
     /**
-     * 
-     * @param x 
+     * Sets the x component of the scale.
+     *
+     * @param x The x component of the scale.
      */
     public final void setSx(final double x) {
         s.setX(x);
     }
 
     /**
-     * 
-     * @param y 
+     * Sets the y component of the scale.
+     *
+     * @param y The y component of the scale.
      */
     public final void setSy(final double y) {
         s.setY(y);
     }
 
     /**
-     * 
-     * @param z 
+     * Sets the z component of the scale.
+     *
+     * @param z The z component of the scale.
      */
     public final void setSz(final double z) {
         s.setZ(z);
     }
 
     /**
-     * 
-     * @return 
+     * Gets the x component of the scale.
+     * @return The x component of the scale.
      */
     public final double getSx() {
         return s.getX();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the y component of the scale.
+     *
+     * @return The y component of the scale.
      */
     public final double getSy() {
         return s.getY();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the z component of the scale.
+     *
+     * @return the z component of the scale.
      */
     public final double getSz() {
         return s.getZ();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the x scale property.
+     *
+     * @return The x scale property.
      */
     public final DoubleProperty sxProperty() {
         return s.xProperty();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the y scale property.
+     *
+     * @return The y scale property.
      */
     public final DoubleProperty syProperty() {
         return s.yProperty();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the z scale property.
+     *
+     * @return The z scale ptoperty.
      */
     public final DoubleProperty szProperty() {
         return s.zProperty();
     }
 
     /**
-     * 
+     * Resets the Xform to default values.
      */
-    public void reset() {
-        translate.setX(0.0);
-        translate.setY(0.0);
-        translate.setZ(0.0);
+    public final void reset() {
+        t.setX(0.0);
+        t.setY(0.0);
+        t.setZ(0.0);
         rx.setAngle(0.0);
         ry.setAngle(0.0);
         rz.setAngle(0.0);

@@ -417,6 +417,7 @@ public class NoiseGenerator {
                         default:
                             noiseBuffer[j][i] =
                                     (float) Math.abs(noiseBuffer[j][i]);
+                            break;
                     }
                 }
             }
