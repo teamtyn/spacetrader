@@ -14,38 +14,43 @@ import spacetrader.Xform;
 import spacetrader.Xform.RotateOrder;
 
 /**
- * 
+ * A star system view is a visual representation of a star system. System views
+ * are automatically placed in a hierarchy of transformation Xform that allow
+ * for easy manipulation of their relative positions.
+ *
  * @author Team TYN
  */
 public final class StarSystemView extends Sphere {
+
     /**
-     * 
+     * The star system represented by this system view.
      */
     private final StarSystem system;
     /**
-     * 
+     * The planet views within the planet level Xform of this system view.
      */
     private final ArrayList<PlanetView> planetViews;
     /**
-     * 
+     * The system level Xform.
      */
     private final Xform systemXform;
     /**
-     * 
+     * The planet level Xform.
      */
     private final Xform planetsXform;
     /**
-     * 
+     * The light emitted by the represented system's star.
      */
     private final PointLight light;
     /**
-     * 
+     * The star material.
      */
     private final PhongMaterial material;
 
     /**
-     * 
-     * @param aSystem 
+     * Constructs a star system view object given a star system.
+     *
+     * @param aSystem The system to be represented by this star system view.
      */
     public StarSystemView(final StarSystem aSystem) {
         super(aSystem.getSize());
@@ -56,16 +61,19 @@ public final class StarSystemView extends Sphere {
         light = new PointLight();
         light.setLightOn(false);
         material = new PhongMaterial();
-        setMaterial(new PhongMaterial(Color.rgb(240, 255, 100)));
+        setMaterial(new PhongMaterial(system.getColor()));
+
         systemXform.setTranslate(system.getCoordinateX(),
                 system.getCoordinateY());
         systemXform.setRotate(180 * GameModel.getRandom().nextDouble(),
                 180 * GameModel.getRandom().nextDouble(), 0);
+
         for (Planet planet : system.getPlanets()) {
             PlanetView planetView = new PlanetView(planet);
             planetsXform.getChildren().add(planetView.getOrbitXform());
             planetViews.add(planetView);
         }
+
         systemXform.getChildren().addAll(this, planetsXform, light);
         light.getScope().add(planetsXform);
         UniverseMapSubScene.AMBIENT.getScope().add(planetsXform);
@@ -77,6 +85,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the star system associated with this star system view.
+     *
      * @return The star system associated with this star system view
      */
     public StarSystem getSystem() {
@@ -85,6 +94,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the planet views associated with this star system view.
+     *
      * @return The planet views associated with this star system view
      */
     public ArrayList<PlanetView> getPlanetViews() {
@@ -93,6 +103,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Tests whether this planet is already contained.
+     *
      * @param planet To be tested for containment
      * @return Whether the planet views contains this planet
      */
@@ -102,6 +113,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the system x form associated with this star system view.
+     *
      * @return The system x form associated with this star system view
      */
     public Xform getSystemXform() {
@@ -110,6 +122,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the planets x form associated with this star system view.
+     *
      * @return The planets x form associated with this star system view
      */
     public Xform getPlanetsXform() {
@@ -118,6 +131,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the x associated with this star system view.
+     *
      * @return The x associated with this star system view
      */
     public double getX() {
@@ -126,6 +140,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the y associated with this star system view.
+     *
      * @return The y associated with this star system view
      */
     public double getY() {
@@ -134,6 +149,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the z associated with this star system view.
+     *
      * @return The z associated with this star system view
      */
     public double getZ() {
@@ -142,6 +158,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the rx associated with this star system view.
+     *
      * @return The rx associated with this star system view
      */
     public double getRx() {
@@ -150,6 +167,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the ry associated with this star system view.
+     *
      * @return The ry associated with this star system view
      */
     public double getRy() {
@@ -158,6 +176,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the rz associated with this star system view.
+     *
      * @return The rz associated with this star system view
      */
     public double getRz() {
@@ -166,6 +185,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Delegates to the setLightOn() method of light.
+     *
      * @param on Whether to turn the light on or not
      */
     public void setLightOn(final boolean on) {
@@ -191,22 +211,22 @@ public final class StarSystemView extends Sphere {
     }
 
     /**
-     * 
+     *
      * @param width
-     * @param height 
+     * @param height
      */
     public void updateTextures(final int width, final int height) {
         ExecutorService es = Executors.newSingleThreadExecutor(
                 new ThreadFactory() {
 
-            @Override
-            public Thread newThread(final Runnable runnable) {
-                Thread thread =
-                        Executors.defaultThreadFactory().newThread(runnable);
-                thread.setDaemon(true);
-                return thread;
-            }
-        });
+                    @Override
+                    public Thread newThread(final Runnable runnable) {
+                        Thread thread
+                        = Executors.defaultThreadFactory().newThread(runnable);
+                        thread.setDaemon(true);
+                        return thread;
+                    }
+                });
         for (PlanetView planet : planetViews) {
             planet.updateTextures(width, height, es);
         }
@@ -214,7 +234,7 @@ public final class StarSystemView extends Sphere {
     }
 
     /**
-     * 
+     *
      */
     public void incrementOrbits() {
         for (PlanetView planet : planetViews) {

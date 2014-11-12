@@ -132,59 +132,59 @@ public class TradeGood implements Serializable {
          * Minimum Tech Level to produce this good
          *     (You can't buy on planets below this level).
          */
-        public int mtlp;
+        private final int mtlp;
         /**
          * Minimum Tech Level to use this good
          *     (You can't sell on planets below this level).
          */
-        public int mtlu;
+        private final int mtlu;
         /**
          * Tech Level which produces the most of this good.
          */
-        public int ttp;
+        private final int ttp;
         /**
          * The base price of the good
          */
-        public int basePrice;
+        private final int basePrice;
         /**
          * The base quantity of the good.
          */
-        public int baseQuantity;
+        private final int baseQuantity;
         /**
          * Price increase per tech level.
          */
-        public int ipl;
+        private final int ipl;
         /**
          * Maximum percentage that the price can vary above or below the base.
          */
-        public int var;
+        private final int var;
         /**
          * Radical price increase event, when this event happens on a planet,
          *     the price may increase astronomically.
          */
-        public int ie;
+        private final int ie;
         /**
          * When this condition is present, the good is cheap.
          */
-        public int cr;
+        private final int cr;
         /**
          * When this condition is present, the good is expensive.
          */
-        public int er;
+        private final int er;
         /**
          * Minimum price offered in space trade with random trader
          *     (not on a planet).
          */
-        public int mtl;
+        private final int mtl;
         /**
          * Maximum price offered in space trade with random trader
          *     (not on a planet).
          */
-        public int mhl;
+        private final int mhl;
         /**
          * The name of the good.
          */
-        public String name;
+        private final String name;
 
         /**
          * Constructor for the predefined good types.
