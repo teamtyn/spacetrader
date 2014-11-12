@@ -39,6 +39,10 @@ public class Player extends AbstractCrewMember {
      * The money that the player has.
      */
     private int money;
+    /**
+     * The money that the player starts with.
+     */
+    private static final int STARTING_MONEY = 1000;
 
     /**
      * The constructor for the Player class.
@@ -49,7 +53,7 @@ public class Player extends AbstractCrewMember {
         coord = new Point(0, 0);
         ship = new Ship(Ship.ShipType.Gnat);
         ship.addEngine(new Engine());
-        money = 10000;
+        money = STARTING_MONEY;
     }
 
     /**
