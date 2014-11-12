@@ -167,7 +167,7 @@ public class StarSystem implements Serializable {
         final double deltaY = other.getCoordinateY() - coordinates.getY();
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
-    
+
     /**
      * Getter for the system distance of the star system.
      * @return the boolean indicating whether or not the system has the player

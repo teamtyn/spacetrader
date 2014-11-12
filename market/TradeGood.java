@@ -228,40 +228,40 @@ public class TradeGood implements Serializable {
         }
 
         /**
-         *
-         * @return
+         * Getter for the name variable.
+         * @return the name of the good
          */
         public String getName() {
             return name;
         }
 
         /**
-         *
-         * @return
+         * Getter for the mtlp variable.
+         * @return the mtlp for the good
          */
         public int getMtlp() {
             return mtlp;
         }
 
         /**
-         *
-         * @return
+         * Getter for the mtlu variable.
+         * @return the mtlu for the good
          */
         public int getMtlu() {
             return mtlu;
         }
 
         /**
-         *
-         * @return
+         * Getter for the mhl variable.
+         * @return the mhl for the good
          */
         public int getMhl() {
             return mhl;
         }
 
         /**
-         *
-         * @return
+         * Getter for the mtl variable.
+         * @return the mtl for the good
          */
         public int getMtl() {
             return mtl;
