@@ -304,9 +304,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         }
         for (Shield shield : player.getShip().getShields()) {
             if (shield != null) {
-                player.addMoney(shield.getType().cost / 2);
+                player.addMoney(shield.getCost() / 2);
                 System.out.println("Excess shield sold for: "
-                        + shield.getType().cost / 2);
+                        + shield.getCost() / 2);
             }
         }
         for (int i = 0; i < player.getShip().getEngines().length; i++) {
@@ -507,12 +507,12 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     gadgetValueLabel2.setText(Integer.toString(
                             selectedShield.getRechargeRate()));
                     gadgetCostLabel.setText(Integer.toString(
-                            selectedShield.getType().cost));
+                            selectedShield.getCost()));
                     gadgetPicture.getChildren().clear();
                     final Rectangle myGadgetPicture
                             = new Rectangle(100, 10, 100, 100);
                     myGadgetPicture.setFill(
-                            selectedShield.getType().color.getColor());
+                            selectedShield.getColor());
                     gadgetPicture.getChildren().add(myGadgetPicture);
                 }
             });
@@ -633,12 +633,12 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                         gadgetValueLabel2.setText(Integer.toString(
                                 selectedShield.getRechargeRate()));
                         gadgetCostLabel.setText(Integer.toString(
-                                (selectedShield.getType().cost / 2)));
+                                (selectedShield.getCost() / 2)));
                         gadgetPicture.getChildren().clear();
                         final Rectangle myGadgetPicture
                                 = new Rectangle(100, 10, 100, 100);
                         myGadgetPicture.setFill(
-                                selectedShield.getType().color.getColor());
+                                selectedShield.getColor());
                         gadgetPicture.getChildren().add(myGadgetPicture);
                         gadgetIndex = row.getParent()
                                 .getChildrenUnmodifiable().indexOf(row);
@@ -746,7 +746,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 break;
             case "Shield":
                 if (confirmationGadgetField.getText().trim().equals(
-                        Integer.toString(selectedShield.getType().cost))) {
+                        Integer.toString(selectedShield.getCost()))) {
                     shipDialogueField.setText("");
                     confirmationGadgetField.setText("");
                     buyShield();
@@ -783,8 +783,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 break;
             case "My Shield":
                 shipDialogueField.setText("Shield sold for "
-                        + selectedShield.getType().cost / 2);
-                player.addMoney(selectedShield.getType().cost / 2);
+                        + selectedShield.getCost() / 2);
+                player.addMoney(selectedShield.getCost() / 2);
                 player.getShip().removeShield(gadgetIndex);
                 updatePlayerShields();
                 gadgetIndex = -1;
@@ -836,13 +836,13 @@ public class SpaceStationController implements Initializable, ControlledScreen {
      *     the player's ship  
      */
     public void buyShield() {
-        if (player.getMoney() >= selectedShield.getType().cost) {
-            player.subtractMoney(selectedShield.getType().cost);
+        if (player.getMoney() >= selectedShield.getCost()) {
+            player.subtractMoney(selectedShield.getCost());
             if (player.getShip().addShield(selectedShield)) {
                 shipDialogueField.setText("Purchase complete");
             } else {
                 shipDialogueField.setText("Purchase failed, cost refunded");
-                player.addMoney(selectedShield.getType().cost);
+                player.addMoney(selectedShield.getCost());
             }
         } else {
             shipDialogueField.setText("Not enough money");

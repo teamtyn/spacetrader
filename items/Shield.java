@@ -4,27 +4,19 @@ import java.io.Serializable;
 import javafx.scene.paint.Color;
 import spacetrader.ui.SerializableColor;
 
-
 /**
  * Shield is a class used to protect ships from taking direct damage.
  *
  * @author Team TYN
  */
 public class Shield implements Serializable {
+
     /**
-     * 
+     * How much damage the shield can take at present.
      */
     private int strength;
     /**
-     * 
-     */
-    private int rechargeRate;
-    /**
-     * 
-     */
-    private String name;
-    /**
-     * 
+     * The type of the shield.
      */
     private ShieldType type;
 
@@ -34,72 +26,72 @@ public class Shield implements Serializable {
     public enum ShieldType {
 
         /**
-         *  Cheapest shield available.
+         * Cheapest shield available.
          */
         Kite(100, 10, 100, new SerializableColor(Color.RED), "Kite"),
         /**
-         *  Basic shield that favors strength.
+         * Basic shield that favors strength.
          */
         Heater(125, 10, 300, new SerializableColor(Color.GREEN), "Heater"),
         /**
-         *  Basic shield that favors recharge rate.
+         * Basic shield that favors recharge rate.
          */
         Targe(100, 15, 300, new SerializableColor(Color.PINK), "Targe"),
         /**
-         *  Basic shield with very low strength and high recharge rate.
+         * Basic shield with very low strength and high recharge rate.
          */
         Buckler(25, 25, 300, new SerializableColor(Color.AQUA), "Buckler"),
         /**
-         *  Basic shield with high strength but doesn't recharge.
+         * Basic shield with high strength but doesn't recharge.
          */
         Ishlangu(400, 0, 300, new SerializableColor(Color.WHITE), "Ishlangu"),
         /**
-         *  Advanced shield that favors recharge rate.
+         * Advanced shield that favors recharge rate.
          */
         Hoplon(200, 25, 500, new SerializableColor(Color.DARKKHAKI), "Hoplon"),
         /**
-         *  Advanced shield that favors strength.
+         * Advanced shield that favors strength.
          */
         Riot(250, 20, 500, new SerializableColor(Color.BLACK), "Riot"),
         /**
-         *  Advanced shield that heavily favors strength.
+         * Advanced shield that heavily favors strength.
          */
         BatterSea(400, 5, 500, new SerializableColor(Color.DARKGOLDENROD),
                 "BatterSea"),
         /**
-         *  Epic shield that heavily favors strength.
+         * Epic shield that heavily favors strength.
          */
         Scutum(500, 10, 1000, new SerializableColor(Color.DARKRED), "Scutum"),
         /**
-         *  The legendary shield of the god Zeus.
+         * The legendary shield of the god Zeus.
          */
         Aegis(500, 25, 2500, new SerializableColor(Color.YELLOW), "Aegis"),
         /**
-         *  The legendary shield that protects the horses that pull the sun.
+         * The legendary shield that protects the horses that pull the sun.
          */
         Svalinn(1000, 10, 2500, new SerializableColor(Color.BLUEVIOLET),
                 "Svalinn");
 
         /**
-         * 
+         * How much damage the shield can take.
          */
-        public final int shieldStrength;
+        private final int shieldStrength;
         /**
-         * 
+         * How fast the shield replenishes its strength.
          */
-        public final int rechargeRate;
+        private final int rechargeRate;
         /**
-         * 
+         * How much the shield costs.
          */
-        public final int cost;
+        private final int cost;
         /**
-         * 
+         * The name of the shield.
          */
-        public final String name;
+        private final String name;
         /**
-         * 
+         * The color of the shield.
          */
-        public final SerializableColor color;
+        private final SerializableColor color;
 
         /**
          * Constructor for ShieldType.
@@ -107,8 +99,8 @@ public class Shield implements Serializable {
          * @param aShieldStrength The strength of this type of shield.
          * @param aRechargeRate The recharge rate of this type of shield.
          * @param aCost The base cost for this type of shield.
-         * @param aColor The color used to distinguish this shield
-         *     type from the others.
+         * @param aColor The color used to distinguish this shield type from the
+         * others.
          * @param aName The string representation of the shield type.
          */
         ShieldType(final int aShieldStrength, final int aRechargeRate,
@@ -128,10 +120,8 @@ public class Shield implements Serializable {
      * @param aType The shield type of the shield
      */
     public Shield(final ShieldType aType) {
-        strength = aType.shieldStrength;
-        rechargeRate = aType.rechargeRate;
         type = aType;
-        name = aType.name;
+        strength = type.shieldStrength;
     }
 
     /**
@@ -149,7 +139,7 @@ public class Shield implements Serializable {
      * @return the recharge rate of the shield.
      */
     public int getRechargeRate() {
-        return rechargeRate;
+        return type.rechargeRate;
     }
 
     /**
@@ -159,13 +149,13 @@ public class Shield implements Serializable {
      * @return the current strength of the shield.
      */
     public int recharge(final int time) {
-        strength += rechargeRate * time;
+        strength += type.rechargeRate * time;
         return strength;
     }
 
     /**
-     * Damages the shield by a certain amount, all damage is
-     *     blocked even if overflow.
+     * Damages the shield by a certain amount, all damage is blocked even if
+     * overflow.
      *
      * @param damage the amount of damage being dealt to the shield.
      * @return the current strength of the shield.
@@ -184,14 +174,27 @@ public class Shield implements Serializable {
      * @return The name of the shield.
      */
     public String getName() {
-        return name;
+        return type.name;
     }
 
     /**
-     * 
-     * @return 
+     * @return the type of the shield
      */
     public ShieldType getType() {
         return type;
+    }
+
+    /**
+     * @return the color of the shield
+     */
+    public Color getColor() {
+        return type.color.getColor();
+    }
+
+    /**
+     * @return the cost of the shield
+     */
+    public int getCost() {
+        return type.cost;
     }
 }
