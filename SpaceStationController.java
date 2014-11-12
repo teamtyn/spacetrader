@@ -316,7 +316,7 @@ public final class SpaceStationController
      */
     private FadeTransition ft;
     /**
-     *  The screen controller.
+     * The screen controller.
      */
     private ScreensController parentController;
     /**
@@ -347,6 +347,7 @@ public final class SpaceStationController
      * Dimension of squares used to represent things.
      */
     private static final int RECT_LENGTH = 25;
+
     /**
      * Determines which fuel buttons should currently be disabled.Maintains the.
      * progress bar and labels associated with fuel.
@@ -363,8 +364,8 @@ public final class SpaceStationController
     }
 
     /**
-     * Sets up the My Ship panel with the appropriate info.
-     * Picture is currently a colored rectangle.
+     * Sets up the My Ship panel with the appropriate info. Picture is currently
+     * a colored rectangle.
      */
     public void myShipStats() {
         myHullStrength.setText(Integer.toString(myShip.getHull()));
@@ -610,7 +611,7 @@ public final class SpaceStationController
 
     /**
      * Shows you the available weapons.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML

@@ -14,43 +14,44 @@ import spacetrader.Xform;
 import spacetrader.Xform.RotateOrder;
 
 /**
- * 
+ *
  * @author Team TYN
  */
 public final class StarSystemView extends Sphere {
+
     /**
-     * 
+     *
      */
     private final StarSystem system;
     /**
-     * 
+     *
      */
     private final ArrayList<PlanetView> planetViews;
     /**
-     * 
+     *
      */
     private final Xform systemXform;
     /**
-     * 
+     *
      */
     private final Xform planetsXform;
     /**
-     * 
+     *
      */
     private final PointLight light;
     /**
-     * 
+     *
      */
     private final PhongMaterial material;
 
     /**
-     * 
-     * @param aSystem 
+     *
+     * @param aSystem
      */
     public StarSystemView(final StarSystem aSystem) {
         super(aSystem.getSize());
         system = aSystem;
-        planetViews = new ArrayList<>(system.getPlanets().length);
+        planetViews = new ArrayList<PlanetView>(system.getPlanets().length);
         systemXform = new Xform(RotateOrder.ZYX);
         planetsXform = new Xform();
         light = new PointLight();
@@ -77,6 +78,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the star system associated with this star system view.
+     *
      * @return The star system associated with this star system view
      */
     public StarSystem getSystem() {
@@ -85,6 +87,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the planet views associated with this star system view.
+     *
      * @return The planet views associated with this star system view
      */
     public ArrayList<PlanetView> getPlanetViews() {
@@ -93,6 +96,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Tests whether this planet is already contained.
+     *
      * @param planet To be tested for containment
      * @return Whether the planet views contains this planet
      */
@@ -102,6 +106,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the system x form associated with this star system view.
+     *
      * @return The system x form associated with this star system view
      */
     public Xform getSystemXform() {
@@ -110,6 +115,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the planets x form associated with this star system view.
+     *
      * @return The planets x form associated with this star system view
      */
     public Xform getPlanetsXform() {
@@ -118,6 +124,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the x associated with this star system view.
+     *
      * @return The x associated with this star system view
      */
     public double getX() {
@@ -126,6 +133,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the y associated with this star system view.
+     *
      * @return The y associated with this star system view
      */
     public double getY() {
@@ -134,6 +142,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the z associated with this star system view.
+     *
      * @return The z associated with this star system view
      */
     public double getZ() {
@@ -142,6 +151,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the rx associated with this star system view.
+     *
      * @return The rx associated with this star system view
      */
     public double getRx() {
@@ -150,6 +160,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the ry associated with this star system view.
+     *
      * @return The ry associated with this star system view
      */
     public double getRy() {
@@ -158,6 +169,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Gets the rz associated with this star system view.
+     *
      * @return The rz associated with this star system view
      */
     public double getRz() {
@@ -166,6 +178,7 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Delegates to the setLightOn() method of light.
+     *
      * @param on Whether to turn the light on or not
      */
     public void setLightOn(final boolean on) {
@@ -191,22 +204,22 @@ public final class StarSystemView extends Sphere {
     }
 
     /**
-     * 
+     *
      * @param width
-     * @param height 
+     * @param height
      */
     public void updateTextures(final int width, final int height) {
         ExecutorService es = Executors.newSingleThreadExecutor(
                 new ThreadFactory() {
 
-            @Override
-            public Thread newThread(final Runnable runnable) {
-                Thread thread =
-                        Executors.defaultThreadFactory().newThread(runnable);
-                thread.setDaemon(true);
-                return thread;
-            }
-        });
+                    @Override
+                    public Thread newThread(final Runnable runnable) {
+                        Thread thread
+                        = Executors.defaultThreadFactory().newThread(runnable);
+                        thread.setDaemon(true);
+                        return thread;
+                    }
+                });
         for (PlanetView planet : planetViews) {
             planet.updateTextures(width, height, es);
         }
@@ -214,7 +227,7 @@ public final class StarSystemView extends Sphere {
     }
 
     /**
-     * 
+     *
      */
     public void incrementOrbits() {
         for (PlanetView planet : planetViews) {

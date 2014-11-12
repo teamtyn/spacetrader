@@ -27,8 +27,8 @@ public class MarketPlace implements Serializable {
      * @param planet The planet that that market is on
      */
     public MarketPlace(final Planet planet) {
-        goods = new ArrayList<>();
-        buyable = new ArrayList<>();
+        goods = new ArrayList<TradeGood>();
+        buyable = new ArrayList<TradeGood>();
         sellable = new ArrayList<>();
         for (TradeGood.GoodType type : TradeGood.GoodType.values()) {
             TradeGood newGood = new TradeGood(type, planet);

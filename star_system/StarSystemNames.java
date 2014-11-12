@@ -14,7 +14,7 @@ public final class StarSystemNames {
     /**
      * The list of all the possible names for star systems.
      */
-    private static final List<String> NAME_LIST = new ArrayList<>();
+    private static final List<String> NAME_LIST = new ArrayList<String>();
 
     static {
         NAME_LIST.add("Acamar");

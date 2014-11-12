@@ -84,7 +84,7 @@ public final class Government implements Serializable {
     public Government() {
         type = Type
                 .values()[GameModel.getRandom().nextInt(Type.values().length)];
-        leaders = new HashMap<>();
+        leaders = new HashMap<Type, String>();
         //setUpLeaderMap();
         //leader = leaders.get(type);
         leader = "THE PEOPLE";

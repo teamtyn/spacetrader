@@ -66,7 +66,8 @@ public class TradeGood implements Serializable {
     private static final Map<Government.Type, Double> GOVERNMENT_PRICE;
 
     static {
-        Map<Government.Type, Double> govPrice = new HashMap<>();
+        Map<Government.Type, Double> govPrice =
+                new HashMap<Government.Type, Double>();
         govPrice.put(Government.Type.ANARCHY, 1.5);
         govPrice.put(Government.Type.ARISTOCRACY, 1.0);
         govPrice.put(Government.Type.CAPITALIST, 1.0);
