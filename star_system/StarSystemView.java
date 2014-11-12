@@ -45,7 +45,8 @@ public final class StarSystemView extends Sphere {
 
     /**
      * Constructs a star system view object given a star system.
-     * @param aSystem aSystem The system to be represented by this star system view
+     * @param aSystem aSystem The system to be
+     * represented by this star system view
      */
     public StarSystemView(final StarSystem aSystem) {
         super(aSystem.getSize());

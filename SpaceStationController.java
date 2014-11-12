@@ -54,6 +54,14 @@ public final class SpaceStationController
      * The size of "pictures" of items.
      */
     private static final int PICTURE_SIZE = 100;
+    /**
+     * A CSS styling option for a certain color.
+     */
+    private static final String CSS_COLOR_1 = "-fx-background-color: #FFFFFF;";
+    /**
+     * A CSS styling option for a certain color.
+     */
+    private static final String CSS_COLOR_2 = "-fx-background-color: #EEEEEE;";
 
     /**
      * Pane that stores ship ui.
@@ -69,7 +77,7 @@ public final class SpaceStationController
      * Button to buy new ship.
      */
     @FXML
-    private Button buyShip;
+    private Button buyShipButton;
     /**
      * Field to confirm new purchases.
      */
@@ -409,13 +417,13 @@ public final class SpaceStationController
     public void updateShip() {
         if (otherShip.getType() == myShip.getType()) {
             shipDialogueField.setText("You already own this type of ship!");
-            buyShip.setDisable(true);
+            buyShipButton.setDisable(true);
         } else if (otherShip.getType().getCost() > player.getMoney()) {
             shipDialogueField.setText("You cannot afford this ship!");
-            buyShip.setDisable(true);
+            buyShipButton.setDisable(true);
         } else {
             shipDialogueField.setText("");
-            buyShip.setDisable(false);
+            buyShipButton.setDisable(false);
         }
         myShipStats();
         otherShipStats();
@@ -525,12 +533,12 @@ public final class SpaceStationController
                         public void handle(final MouseEvent mouseEvent) {
                             otherShip = new Ship(type);
                             for (Node node : shipList.getChildren()) {
-                                node.setStyle("-fx-background-color: #FFFFFF;");
+                                node.setStyle(CSS_COLOR_1);
                             }
-                            row.setStyle("-fx-background-color: #EEEEEE;");
+                            row.setStyle(CSS_COLOR_2);
                             row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
                             row.setLayoutY(mult * LABEL_HEIGHT);
-                            buyShip.setDisable(false);
+                            buyShipButton.setDisable(false);
                             updateShip();
                         }
                     });
@@ -633,7 +641,7 @@ public final class SpaceStationController
                             currentGadgetType = "Weapon";
                             selectedWeapon = new Weapon(type);
                             resetSelected();
-                            row.setStyle("-fx-background-color: #EEEEEE;");
+                            row.setStyle(CSS_COLOR_2);
                             row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
                             row.setLayoutY(mult * LABEL_HEIGHT);
                             gadgetNameLabel1.setText("Damage ");
@@ -680,7 +688,7 @@ public final class SpaceStationController
                             currentGadgetType = "Shield";
                             selectedShield = new Shield(type);
                             resetSelected();
-                            row.setStyle("-fx-background-color: #EEEEEE;");
+                            row.setStyle(CSS_COLOR_2);
                             row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
                             row.setLayoutY(mult * LABEL_HEIGHT);
                             gadgetNameLabel1.setText("Strength ");
@@ -727,7 +735,7 @@ public final class SpaceStationController
                             currentGadgetType = "Engine";
                             selectedEngine = new Engine(type);
                             resetSelected();
-                            row.setStyle("-fx-background-color: #EEEEEE;");
+                            row.setStyle(CSS_COLOR_2);
                             row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
                             row.setLayoutY(mult * LABEL_HEIGHT);
                             gadgetNameLabel1.setText("Acceleration ");
@@ -769,7 +777,7 @@ public final class SpaceStationController
                                 currentGadgetType = "My Weapon";
                                 selectedWeapon = weapon;
                                 resetSelected();
-                                row.setStyle("-fx-background-color: #EEEEEE;");
+                                row.setStyle(CSS_COLOR_2);
                                 gadgetNameLabel1.setText("Damage ");
                                 gadgetNameLabel2.setText("Rate of Fire");
                                 gadgetValueLabel1.setText(Integer.toString(
@@ -819,7 +827,7 @@ public final class SpaceStationController
                                 currentGadgetType = "My Shield";
                                 selectedShield = shield;
                                 resetSelected();
-                                row.setStyle("-fx-background-color: #EEEEEE;");
+                                row.setStyle(CSS_COLOR_2);
                                 gadgetNameLabel1.setText("Strength ");
                                 gadgetNameLabel2.setText("Recharge Rate");
                                 gadgetValueLabel1.setText(Integer.toString(
@@ -868,7 +876,7 @@ public final class SpaceStationController
                                 currentGadgetType = "My Engine";
                                 selectedEngine = engine;
                                 resetSelected();
-                                row.setStyle("-fx-background-color: #EEEEEE;");
+                                row.setStyle(CSS_COLOR_2);
                                 gadgetNameLabel1.setText("Acceleration ");
                                 gadgetNameLabel2.setText("Fuel Efficiency");
                                 gadgetValueLabel1.setText(Integer.toString(
@@ -905,16 +913,16 @@ public final class SpaceStationController
      */
     private void resetSelected() {
         for (Node node : gadgetList.getChildren()) {
-            node.setStyle("-fx-background-color: #FFFFFF;");
+            node.setStyle(CSS_COLOR_1);
         }
         for (Node node : gadgetWeaponsViewer.getChildren()) {
-            node.setStyle("-fx-background-color: #FFFFFF;");
+            node.setStyle(CSS_COLOR_1);
         }
         for (Node node : gadgetShieldsViewer.getChildren()) {
-            node.setStyle("-fx-background-color: #FFFFFF;");
+            node.setStyle(CSS_COLOR_1);
         }
         for (Node node : gadgetEnginesViewer.getChildren()) {
-            node.setStyle("-fx-background-color: #FFFFFF;");
+            node.setStyle(CSS_COLOR_1);
         }
     }
 

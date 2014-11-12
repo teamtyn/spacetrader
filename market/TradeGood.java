@@ -12,21 +12,23 @@ import spacetrader.star_system.Planet;
  * A trade good has many properties, most importantly a price and quantity.
  *
  * TechLevel -- {PREAGRICULTURAL [0], AGRICULTURAL [1], MEDIEVAL [2],
- * RENAISSANCE [3], EARLYINDUSTRIAL [4], INDUSTRIAL [5],
- * POSTINDUSTRIAL [6],HIGHTECH [7]};
+ * RENAISSANCE [3], EARLYINDUSTRIAL [4], INDUSTRIAL [5], POSTINDUSTRIAL
+ * [6],HIGHTECH [7]};
  *
  * ResourceLevel -- {NOSPECIALRESOURCES [0], MINERALRICH [1], MINERALPOOR [2],
  * DESERT [3], LOTSOFWATER [4], RICHSOIL [5], POORSOIL [6], RICHFAUNA [7],
- * LIFELESS [8], WEIRDMUSHROOMS [9], LOTSOFHERBS [10],
- * ARTISTIC [11], WARLIKE [12]};
+ * LIFELESS [8], WEIRDMUSHROOMS [9], LOTSOFHERBS [10], ARTISTIC [11], WARLIKE
+ * [12]};
  *
  * Circumstance -- {NONE [0], DROUGHT [1], COLD [2], CROPFAIL [3], WAR [4],
  * BOREDOM [5], PLAGUE [6], LACKOFWORKERS [7]};
  *
  * If IE, CR, or ER == -1, it means that condition is never present
+ *
  * @author Team TYN
  */
 public class TradeGood implements Serializable {
+
     /**
      * The price multiplier if the ER condition is met.
      */
@@ -66,8 +68,8 @@ public class TradeGood implements Serializable {
     private static final Map<Government.Type, Double> GOVERNMENT_PRICE;
 
     static {
-        Map<Government.Type, Double> govPrice =
-                new HashMap<Government.Type, Double>();
+        Map<Government.Type, Double> govPrice
+                = new HashMap<Government.Type, Double>();
         govPrice.put(Government.Type.ANARCHY, 1.5);
         govPrice.put(Government.Type.ARISTOCRACY, 1.0);
         govPrice.put(Government.Type.CAPITALIST, 1.0);
@@ -87,6 +89,7 @@ public class TradeGood implements Serializable {
      * The set of all predefined types of goods available in the universe.
      */
     public enum GoodType {
+
         /**
          * The good type of water.
          */
@@ -130,13 +133,13 @@ public class TradeGood implements Serializable {
         Robots(6, 4, 7, 5000, 10, -150, 100, 7, -1, -1, 3500, 5000, "Robots");
 
         /**
-         * Minimum Tech Level to produce this good
-         *     (You can't buy on planets below this level).
+         * Minimum Tech Level to produce this good (You can't buy on planets
+         * below this level).
          */
         private final int mtlp;
         /**
-         * Minimum Tech Level to use this good
-         *     (You can't sell on planets below this level).
+         * Minimum Tech Level to use this good (You can't sell on planets below
+         * this level).
          */
         private final int mtlu;
         /**
@@ -161,7 +164,7 @@ public class TradeGood implements Serializable {
         private final int var;
         /**
          * Radical price increase event, when this event happens on a planet,
-         *     the price may increase astronomically.
+         * the price may increase astronomically.
          */
         private final int ie;
         /**
@@ -173,13 +176,13 @@ public class TradeGood implements Serializable {
          */
         private final int er;
         /**
-         * Minimum price offered in space trade with random trader
-         *     (not on a planet).
+         * Minimum price offered in space trade with random trader (not on a
+         * planet).
          */
         private final int mtl;
         /**
-         * Maximum price offered in space trade with random trader
-         *     (not on a planet).
+         * Maximum price offered in space trade with random trader (not on a
+         * planet).
          */
         private final int mhl;
         /**
@@ -189,6 +192,7 @@ public class TradeGood implements Serializable {
 
         /**
          * Constructor for the predefined good types.
+         *
          * @param amtlp MTLP for this good type.
          * @param amtlu MTLU for this good type.
          * @param attp TTP for this good type.
@@ -222,21 +226,43 @@ public class TradeGood implements Serializable {
             mhl = amhl;
             name = aname;
         }
-        
+
+        /**
+         *
+         * @return
+         */
         public String getName() {
             return name;
         }
-        
+
+        /**
+         *
+         * @return
+         */
         public int getMtlp() {
             return mtlp;
         }
-        
+
+        /**
+         *
+         * @return
+         */
         public int getMtlu() {
             return mtlu;
         }
+
+        /**
+         *
+         * @return
+         */
         public int getMhl() {
             return mhl;
         }
+
+        /**
+         *
+         * @return
+         */
         public int getMtl() {
             return mtl;
         }
@@ -244,6 +270,7 @@ public class TradeGood implements Serializable {
 
     /**
      * Creates a trade good and calculates its price and quantity.
+     *
      * @param aType A good type to create
      * @param aPlanet A planet to create the good on
      */
@@ -256,6 +283,7 @@ public class TradeGood implements Serializable {
 
     /**
      * Calculates the price of the good.
+     *
      * @return The price of this good in this specific situation
      */
     public final int calcPrice() {
@@ -276,6 +304,7 @@ public class TradeGood implements Serializable {
 
     /**
      * Converts from a good name to a good type.
+     *
      * @param name The name to be translated to a good type
      * @return The GoodType associated with this name
      */
@@ -291,7 +320,8 @@ public class TradeGood implements Serializable {
 
     /**
      * Quantity is currently predicated on the government multipliers (all 1),
-     *     and a simplistic stab at supply and demand from the price ratio.
+     * and a simplistic stab at supply and demand from the price ratio.
+     *
      * @return The quantity of this good available in this specific situation
      */
     public final int calcQuantity() {
@@ -304,6 +334,7 @@ public class TradeGood implements Serializable {
 
     /**
      * Gets the price of the good.
+     *
      * @return The price of the good
      */
     public final int getPrice() {
@@ -312,6 +343,7 @@ public class TradeGood implements Serializable {
 
     /**
      * Gets the quantity of the good.
+     *
      * @return The quantity of the good
      */
     public final int getQuantity() {
@@ -320,6 +352,7 @@ public class TradeGood implements Serializable {
 
     /**
      * Gets the type of the good.
+     *
      * @return The type of the good
      */
     public final GoodType getType() {
@@ -328,6 +361,7 @@ public class TradeGood implements Serializable {
 
     /**
      * Sets the quantity of the good.
+     *
      * @param newQuantity The new quantity of the good
      */
     public final void setQuantity(final int newQuantity) {
@@ -337,6 +371,7 @@ public class TradeGood implements Serializable {
 
     /**
      * Sets the price of the good.
+     *
      * @param newPrice The new price of the good
      */
     public final void setPrice(final int newPrice) {

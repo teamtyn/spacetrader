@@ -84,6 +84,10 @@ public class UniverseMapController extends AnimationTimer
      * The upper bound of the camera zoom in planet level scope.
      */
     private static final double PLANET_ZOOM_HIGH = -17;
+    /**
+     * The String used to describe Unknown planets.
+     */
+    private static final String UNKNOWN_STRING = "Unknown";
 
     /**
      * The pane that holds the three dimensional subscene.
@@ -546,14 +550,14 @@ public class UniverseMapController extends AnimationTimer
 
         if (player.knowsPlanet(planet.getPlanet())) {
             planetField.setText(planet.getPlanet().getName());
-            governmentField.setText("" + planet.getPlanet().getGovernment());
-            techLevelField.setText("" + planet.getPlanet().getTechLevel());
-            resourceField.setText("" + planet.getPlanet().getResourceLevel());
+            governmentField.setText(planet.getPlanet().getGovernment() + " ");
+            techLevelField.setText(planet.getPlanet().getTechLevel() + " ");
+            resourceField.setText(planet.getPlanet().getResourceLevel() + " ");
         } else {
-            planetField.setText("Unknown");
-            governmentField.setText("Unknown");
-            techLevelField.setText("Unknown");
-            resourceField.setText("Unknown");
+            planetField.setText(UNKNOWN_STRING);
+            governmentField.setText(UNKNOWN_STRING);
+            techLevelField.setText(UNKNOWN_STRING);
+            resourceField.setText(UNKNOWN_STRING);
         }
     }
 
