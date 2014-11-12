@@ -193,7 +193,7 @@ public class Planet implements Serializable {
          */
         POSTINDUSTRIAL,
         /**
-         * SPACE AND LASERS
+         * SPACE AND LASERS.
          */
         HIGHTECH
     };

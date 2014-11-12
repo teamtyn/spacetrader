@@ -234,6 +234,12 @@ public class TradeGood implements Serializable {
         public int getMtlu() {
             return mtlu;
         }
+        public int getMhl() {
+            return mhl;
+        }
+        public int getMtl() {
+            return mtl;
+        }
     };
 
     /**

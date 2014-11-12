@@ -5,7 +5,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import javafx.scene.PointLight;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import spacetrader.GameModel;
@@ -57,7 +56,7 @@ public final class StarSystemView extends Sphere {
         light = new PointLight();
         light.setLightOn(false);
         material = new PhongMaterial();
-        setMaterial(new PhongMaterial(Color.rgb(240, 255, 100)));
+        setMaterial(new PhongMaterial(system.getColor()));
         systemXform.setTranslate(system.getCoordinateX(),
                 system.getCoordinateY());
         systemXform.setRotate(180 * GameModel.getRandom().nextDouble(),

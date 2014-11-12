@@ -34,7 +34,7 @@ public class StarSystem implements Serializable {
     /**
      * Whether or not the star system holds the player currently.
      */
-    public boolean hasPlayer;
+    private boolean hasPlayer;
     /**
      * The minimum number of planets per system.
      */
@@ -166,6 +166,14 @@ public class StarSystem implements Serializable {
         final double deltaX = other.getCoordinateX() - coordinates.getX();
         final double deltaY = other.getCoordinateY() - coordinates.getY();
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+    
+    /**
+     * Getter for the system distance of the star system.
+     * @return the boolean indicating whether or not the system has the player
+     */
+    public final boolean ishasPlayer() {
+        return hasPlayer;
     }
 
     @Override
