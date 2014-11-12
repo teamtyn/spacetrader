@@ -44,7 +44,7 @@ public class SpaceTrader extends Application {
      * The main method of the application.
      * @param args The array of String arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 }

@@ -45,4 +45,9 @@ public final class MercenaryNames {
     public static String getName() {
         return NAMES.get(GameModel.getRandom().nextInt(NAMES.size()));
     }
+        /**
+     * Prevent instantiation.
+     */
+    private MercenaryNames() {
+    }
 }

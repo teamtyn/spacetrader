@@ -344,6 +344,10 @@ public final class SpaceStationController
      */
     private int rectangleLength;
     /**
+     * Dimension of squares used to represent things.
+     */
+    private static final int RECT_LENGTH = 25;
+    /**
      * Determines which fuel buttons should currently be disabled.Maintains the.
      * progress bar and labels associated with fuel.
      */
@@ -592,9 +596,10 @@ public final class SpaceStationController
     private void initializeGadgets() {
         shipDialogueField.setText("");
         gadgetShipViewer.getChildren().removeAll();
-        rectangleLength = 25;
+        rectangleLength = RECT_LENGTH;
         Rectangle shipPicture
-                = new Rectangle(rectangleLength, rectangleLength, PICTURE_SIZE, PICTURE_SIZE);
+                = new Rectangle(rectangleLength,
+                        rectangleLength, PICTURE_SIZE, PICTURE_SIZE);
         shipPicture.setFill(myShip.getType().getColor());
         gadgetShipViewer.getChildren().add(shipPicture);
 

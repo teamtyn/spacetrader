@@ -35,7 +35,54 @@ public class StarSystem implements Serializable {
      * Whether or not the star system holds the player currently.
      */
     public boolean hasPlayer;
-
+    /**
+     * The minimum number of planets per system.
+     */
+    private static final int MIN_PLANETS = 4;
+    /**
+     * The maximum number of planets per system.
+     */
+    private static final int MAX_PLANETS = 10;
+    /**
+     * The minimum size of a star.
+     */
+    private static final int MIN_STAR_SIZE = 5;
+    /**
+     * The maximum number of planets per system.
+     */
+    private static final int MAX_STAR_SIZE = 15;
+    /**
+     * The max r value of a star.
+     */
+    private static final int MAX_RED = 56;
+    /**
+     * The min r value of a star.
+     */
+    private static final int MIN_RED = 200;
+    /**
+     * The max r value of a star.
+     */
+    private static final int MAX_BLUE = 106;
+    /**
+     * The min r value of a star.
+     */
+    private static final int MIN_BLUE = 150;
+    /**
+     * The max r value of a star.
+     */
+    private static final int MAX_GREEN = 25;
+    /**
+     * The min r value of a star.
+     */
+    private static final int MIN_GREEN = 20;
+    /**
+     * The initial minimum distance between planets.
+     */
+    private static final int MIN_DISTANCE = 20;
+    /**
+     * The initial remaining distance between planets.
+     */
+    private static final int REM_DISTANCE = 80;
     /**
      * Constructor for a StarSystem.
      * @param aName The name of the star system
@@ -45,17 +92,17 @@ public class StarSystem implements Serializable {
         name = aName;
         coordinates = aCoordinates;
         hasPlayer = false;
-        planets = new Planet[GameModel.getRandom().nextInt(6) + 4];
+        planets = new Planet[GameModel.getRandom().nextInt(
+                MAX_PLANETS - MIN_PLANETS) + MIN_PLANETS];
         setOrbits();
-        size = GameModel.getRandom().nextInt(10) + 5;
-        // TODO: REMOVE THIS. Leaving in for now because fixing it
-        //    before demo 7 isn't worth it. -Ryan
+        size = GameModel.getRandom().nextInt(
+                MAX_STAR_SIZE - MIN_STAR_SIZE) + MIN_STAR_SIZE;
         planets[GameModel.getRandom().nextInt(planets.length - 1)].setTechLevel(
                 Planet.TechLevel.HIGHTECH);
         color = new SerializableColor(Color.rgb(
-                GameModel.getRandom().nextInt(56) + 200,
-                GameModel.getRandom().nextInt(106) + 150,
-                GameModel.getRandom().nextInt(25)));
+                GameModel.getRandom().nextInt(MAX_RED) + MIN_RED,
+                GameModel.getRandom().nextInt(MAX_BLUE) + MIN_BLUE,
+                GameModel.getRandom().nextInt(MAX_GREEN)));
     }
 
     /**
@@ -102,11 +149,11 @@ public class StarSystem implements Serializable {
      * Method to set the orbit distances for all the planets in the system.
      */
     public final void setOrbits() {
-        double minDist = 20;
-        double remDist = 80;
+        double minDist = MIN_DISTANCE;
+        double remDist = REM_DISTANCE;
         for (int i = 0; i < planets.length; i++) {
-            final double planetSize = 2 *
-                    GameModel.getRandom().nextDouble() + 1;
+            final double planetSize = 2
+                    * GameModel.getRandom().nextDouble() + 1;
             final double offset = (planets.length - i != 0)
                     ? remDist / (2 * (planets.length - i)) : remDist / 2;
             double distance = minDist + planetSize + offset + (offset / 3)

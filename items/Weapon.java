@@ -9,7 +9,7 @@ import spacetrader.ui.SerializableColor;
  *
  * @author Team TYN
  */
-public class Weapon implements Serializable {
+public final class Weapon implements Serializable {
 
     /**
      * The type of this instance of weapon.

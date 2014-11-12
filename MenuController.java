@@ -69,7 +69,8 @@ public class MenuController implements Initializable, ControlledScreen {
      * @param aParentController the parent controller
      */
     @Override
-    public final void setScreenParent(final ScreensController aParentController) {
+    public final void setScreenParent(
+            final ScreensController aParentController) {
         parentController = aParentController;
     }
 }
