@@ -11,41 +11,42 @@ import spacetrader.ui.SerializableColor;
  *
  * @author Team TYN
  */
-public class Ship implements Serializable {
+public final class Ship implements Serializable {
+
     /**
-     * 
+     * The type of the ship.
      */
-    public ShipType type;
+    private final ShipType type;
     /**
-     * 
+     * The shields installed in the ship.
      */
     private final Shield[] shields;
     /**
-     * 
+     * The weapons installed in the ship.
      */
     private final Weapon[] weapons;
     /**
-     * 
+     * The engines installed in the ship.
      */
     private final Engine[] engines;
     /**
-     * 
+     * The ship's crew members.
      */
     private final AbstractCrewMember[] crew;
     /**
-     * 
+     * The ship's cargo bay.
      */
     private final CargoBay cargoBay;
     /**
-     * 
+     * The number of crew members.
      */
     private int crewNumber;
     /**
-     * 
+     * The current hull strength.
      */
     private int hull;
     /**
-     * 
+     * The current fuel level.
      */
     private double fuel;
 
@@ -53,7 +54,7 @@ public class Ship implements Serializable {
      * The enum used to store values constant across all ships of a type.
      */
     public enum ShipType {
-        
+
         /**
          * A very cheap ship with almost no capabilities.
          */
@@ -75,7 +76,8 @@ public class Ship implements Serializable {
          */
         Bumblebee(100, 200, 1, 2, 20, 2, 7, 750, Color.YELLOW),
         /**
-         * A ship specialized to take lots of cargo long distances, then get robbed.
+         * A ship specialized to take lots of cargo long distances, then get
+         * robbed.
          */
         Beetle(100, 1000, 1, 0, 50, 3, 10, 1000, Color.PURPLE),
         /**
@@ -96,39 +98,39 @@ public class Ship implements Serializable {
         Wasp(500, 300, 2, 4, 35, 4, 50, 5000, Color.ALICEBLUE);
 
         /**
-         * 
+         * The maximum hull strength.
          */
         private int hullStrength;
         /**
-         * 
+         * The maximum fuel capacity.
          */
         private final double fuelCapacity;
         /**
-         * 
+         * The maximum number of weapons installed.
          */
         private int weaponSlots;
         /**
-         * 
+         * The maximum number of shields installed.
          */
         private int shieldSlots;
         /**
-         * 
+         * The maximum number of engines installed.
          */
         private int engineSlots;
         /**
-         * 
+         * The maximum number of cargo bays installed.
          */
         private int cargoBaySlots;
         /**
-         * 
+         * The maximum number of crew members.
          */
         private int crewSlots;
         /**
-         * 
+         * The cost of the ship.
          */
         private final int cost;
         /**
-         * 
+         * The color associated with the ship.
          */
         private final SerializableColor color;
 
@@ -194,6 +196,13 @@ public class Ship implements Serializable {
         crewNumber = 0;
         hull = type.hullStrength;
         fuel = 0;
+    }
+
+    /**
+     * @return the type
+     */
+    public ShipType getType() {
+        return type;
     }
 
     /**
@@ -263,7 +272,7 @@ public class Ship implements Serializable {
 
     /**
      * Adder for crew members.
-     * 
+     *
      * @param cm the crew member to add.
      * @return whether or not the add succeeded.
      */
@@ -351,7 +360,7 @@ public class Ship implements Serializable {
 
     /**
      * Getter for the number of weapon slots.
-     * 
+     *
      * @return the number of weapon slots.
      */
     public int getWeaponSlots() {
@@ -403,6 +412,9 @@ public class Ship implements Serializable {
         return cargoBay;
     }
 
+    /**
+     * @return the maximum number of installed cargo bays
+     */
     public int getCargoBaySlots() {
         return cargoBay.getCapacity();
     }
@@ -473,7 +485,7 @@ public class Ship implements Serializable {
      * @param damage the amount of damage to be done.
      * @return the remaining hull strength.
      */
-    public int takeDamage(int damage) {
+    public int takeDamage(final int damage) {
         // Shields???
         if (hull - damage >= 0) {
             hull -= damage;
@@ -493,7 +505,7 @@ public class Ship implements Serializable {
      * @param repairs the amount of damage to be undone.
      * @return the current hull strength.
      */
-    public int repairHull(int repairs) {
+    public int repairHull(final int repairs) {
         hull += repairs;
         if (hull >= type.hullStrength) {
             hull = type.hullStrength;
@@ -508,7 +520,7 @@ public class Ship implements Serializable {
      * @param quantity the amount of trade goods to be added.
      * @return the number of goods successfully added.
      */
-    public int storeTradeGood(String goodName, int quantity) {
+    public int storeTradeGood(final String goodName, final int quantity) {
         return cargoBay.addTradeGood(goodName, quantity);
     }
 
@@ -519,7 +531,7 @@ public class Ship implements Serializable {
      * @param quantity the amount of trade goods to be removed.
      * @return the number of goods successfully removed.
      */
-    public int removeTradeGood(String goodName, int quantity) {
+    public int removeTradeGood(final String goodName, final int quantity) {
         return cargoBay.removeTradeGood(goodName, quantity);
     }
 

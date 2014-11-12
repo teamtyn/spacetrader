@@ -219,10 +219,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         myShieldSlots.setText(Integer.toString(myShip.getShieldSlots()));
         myEngineSlots.setText(Integer.toString(myShip.getWeaponSlots()));
         myCargoBaySlots.setText(Integer.toString(myShip.getCargoBaySlots()));
-        myShipValue.setText(Integer.toString(myShip.type.getCost()));
+        myShipValue.setText(Integer.toString(myShip.getType().getCost()));
         myShipPicturePane.getChildren().removeAll();
         final Rectangle myShipPicture = new Rectangle(100, 10, 100, 100);
-        myShipPicture.setFill(myShip.type.getColor());
+        myShipPicture.setFill(myShip.getType().getColor());
         myShipPicturePane.getChildren().add(myShipPicture);
     }
 
@@ -231,7 +231,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
      * Picture is currently a colored rectangle, TODO: Get Josh's 3D ship
      */
     public void otherShipStats() {
-        otherShipLabel.setText(otherShip.type.name());
+        otherShipLabel.setText(otherShip.getType().name());
         hullStrength.setText(Integer.toString(otherShip.getHull()));
         fuelCapacity.setText(Double.toString(otherShip.getFuelCapacity()));
         weaponSlots.setText(Integer.toString(otherShip.getWeaponSlots()));
@@ -240,9 +240,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         cargoBaySlots.setText(Integer.toString(otherShip.getCargoBaySlots()));
         otherShipPicturePane.getChildren().removeAll();
         final Rectangle otherShipPicture = new Rectangle(100, 10, 100, 100);
-        otherShipPicture.setFill(otherShip.type.getColor());
+        otherShipPicture.setFill(otherShip.getType().getColor());
         otherShipPicturePane.getChildren().add(otherShipPicture);
-        shipCost.setText(Integer.toString(otherShip.type.getCost()));
+        shipCost.setText(Integer.toString(otherShip.getType().getCost()));
     }
 
     /**
@@ -251,10 +251,10 @@ public class SpaceStationController implements Initializable, ControlledScreen {
      * Calls the methods to keep myShip and otherShip up to date
      */
     public void updateShip() {
-        if (otherShip.type == myShip.type) {
+        if (otherShip.getType() == myShip.getType()) {
             shipDialogueField.setText("You already own this type of ship!");
             buyShip.setDisable(true);
-        } else if (otherShip.type.getCost() > player.getMoney()) {
+        } else if (otherShip.getType().getCost() > player.getMoney()) {
             shipDialogueField.setText("You cannot afford this ship!");
             buyShip.setDisable(true);
         } else {
@@ -271,12 +271,12 @@ public class SpaceStationController implements Initializable, ControlledScreen {
      *     then resets all variables after giving the player their new ship
      */
     public void buyShip() {
-        player.subtractMoney(otherShip.type.getCost());
-        player.addMoney(myShip.type.getCost());
+        player.subtractMoney(otherShip.getType().getCost());
+        player.addMoney(myShip.getType().getCost());
         transferParts();
         player.setShip(otherShip);
         myShip = otherShip;
-        otherShip = new Ship(otherShip.type);
+        otherShip = new Ship(otherShip.getType());
     }
 
     /**
@@ -430,7 +430,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         shipDialogueField.setText("");
         gadgetShipViewer.getChildren().removeAll();
         Rectangle shipPicture = new Rectangle(25, 25, 100, 100);
-        shipPicture.setFill(myShip.type.getColor());
+        shipPicture.setFill(myShip.getType().getColor());
         gadgetShipViewer.getChildren().add(shipPicture);
 
         updatePlayerWeapons();
@@ -719,7 +719,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     @FXML
     private void buyShipButtonAction(ActionEvent event) {
         if (confirmationField.getText().trim().equals(
-                Integer.toString(otherShip.type.getCost()))) {
+                Integer.toString(otherShip.getType().getCost()))) {
             shipDialogueField.setText("");
             confirmationField.setText("");
             buyShip();
