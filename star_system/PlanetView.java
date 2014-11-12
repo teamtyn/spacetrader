@@ -294,14 +294,14 @@ public class PlanetView extends Sphere {
     private void initTextures(final PhongMaterial material) {
         generateNoise.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
-            public void handle(WorkerStateEvent event) {
+            public void handle(final WorkerStateEvent event) {
                 generateDiffuse.setExecutor(null);
             }
         });
 
         generateDiffuse.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
-            public void handle(WorkerStateEvent event) {
+            public void handle(final WorkerStateEvent event) {
                 material.setDiffuseMap((Image) event.getSource().getValue());
                 generateDiffuse.setExecutor(null);
                 if (!generateNormal.isRunning()) {

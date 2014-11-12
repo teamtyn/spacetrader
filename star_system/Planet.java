@@ -13,10 +13,74 @@ import spacetrader.market.MarketPlace;
  */
 public class Planet implements Serializable {
     /**
+     * The lower bound for a planet with an earth environment.
+     */
+    private static final float EARTH_SEA_LOW = 0.01f;
+    /**
+     * The upper bound for a planet with an earth environment.
+     */
+    private static final float EARTH_SEA_HIGH = 0.2f;
+    /**
+     * The lower bound for a planet with a lava environment.
+     */
+    private static final float LAVA_SEA_LOW = 0.005f;
+    /**
+     * The upper bound for a planet with an lava environment.
+     */
+    private static final float LAVA_SEA_HIGH = 0.07f;
+    /**
+     * The lower bound for a planet with an ice environment.
+     */
+    private static final float ICE_SEA_LOW = 0.01f;
+    /**
+     * The upper bound for a planet with an ice environment.
+     */
+    private static final float ICE_SEA_HIGH = 0.2f;
+    /**
+     * The lower bound for a planet with an desert environment.
+     */
+    private static final float DESERT_SEA_LOW = 0.001f;
+    /**
+     * The upper bound for a planet with an desert environment.
+     */
+    private static final float DESERT_SEA_HIGH = 0.005f;
+    /**
+     * The lower bound for a planet with an alien environment.
+     */
+    private static final float ALIEN_SEA_LOW = 0.01f;
+    /**
+     * The upper bound for a planet with an alien environment.
+     */
+    private static final float ALIEN_SEA_HIGH = 0.1f;
+
+    /**
      * An enum representing all possible environments for a planet.
      */
     public enum Environment {
-        EARTH, LAVA, ICE, DESERT, ALIEN, ROCKY
+        /**
+         * An earth environment.
+         */
+        EARTH,
+        /**
+         * A lava environment.
+         */
+        LAVA,
+        /**
+         * An ice environment.
+         */
+        ICE,
+        /**
+         * A desert environment.
+         */
+        DESERT,
+        /**
+         * An alien environment.
+         */
+        ALIEN,
+        /**
+         * A rocky environment.
+         */
+        ROCKY
     };
 
     /**
@@ -130,7 +194,8 @@ public class Planet implements Serializable {
                 GameModel.getRandom().nextInt(Environment.values().length)];
         switch (environment) {
             case EARTH:
-                seaLevel = 0.2f * GameModel.getRandom().nextFloat() + 0.01f;
+                seaLevel = EARTH_SEA_HIGH * GameModel.getRandom().nextFloat()
+                        + EARTH_SEA_LOW;
                 resourceLevel = choose(
                         ResourceLevel.MINERALRICH,
                         ResourceLevel.LOTSOFWATER,
@@ -139,7 +204,8 @@ public class Planet implements Serializable {
                         ResourceLevel.LOTSOFHERBS);
                 break;
             case LAVA:
-                seaLevel = 0.07f * GameModel.getRandom().nextFloat() + 0.005f;
+                seaLevel = LAVA_SEA_HIGH * GameModel.getRandom().nextFloat()
+                        + LAVA_SEA_LOW;
                 resourceLevel = choose(
                         ResourceLevel.NOSPECIALRESOURCES,
                         ResourceLevel.MINERALRICH,
@@ -148,7 +214,8 @@ public class Planet implements Serializable {
                         ResourceLevel.LIFELESS);
                 break;
             case ICE:
-                seaLevel = 0.2f * GameModel.getRandom().nextFloat() + 0.01f;
+                seaLevel = ICE_SEA_HIGH * GameModel.getRandom().nextFloat()
+                        + ICE_SEA_LOW;
                 resourceLevel = choose(
                         ResourceLevel.NOSPECIALRESOURCES,
                         ResourceLevel.LOTSOFWATER,
@@ -157,7 +224,8 @@ public class Planet implements Serializable {
                         ResourceLevel.LIFELESS);
                 break;
             case DESERT:
-                seaLevel = 0.005f * GameModel.getRandom().nextFloat() + 0.001f;
+                seaLevel = DESERT_SEA_HIGH * GameModel.getRandom().nextFloat()
+                        + DESERT_SEA_LOW;
                 resourceLevel = choose(
                         ResourceLevel.NOSPECIALRESOURCES,
                         ResourceLevel.DESERT,
@@ -165,7 +233,8 @@ public class Planet implements Serializable {
                         ResourceLevel.LIFELESS);
                 break;
             case ALIEN:
-                seaLevel = 0.1f * GameModel.getRandom().nextFloat() + 0.01f;
+                seaLevel = ALIEN_SEA_HIGH * GameModel.getRandom().nextFloat()
+                        + ALIEN_SEA_LOW;
                 resourceLevel = choose(
                         ResourceLevel.MINERALRICH,
                         ResourceLevel.LOTSOFWATER,
