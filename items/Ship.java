@@ -486,12 +486,16 @@ public final class Ship implements Serializable {
      * @return the remaining hull strength.
      */
     public int takeDamage(final int damage) {
-        // Shields???
-        if (hull - damage >= 0) {
-            hull -= damage;
-        } else {
-            hull = 0;
+        int damageRemaining = damage;
+        for (Shield s : shields) {
+            if (s != null) {
+                if (s.getStrength() >= damageRemaining) {
+                    s.doDamage(damageRemaining);
+                    damageRemaining = 0;
+                }
+            }
         }
+        hull = Math.max(hull - damageRemaining, 0);
         if (hull == 0) {
             System.out.println("YOU DEAD");
             // Kertsplode
