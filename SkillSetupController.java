@@ -24,6 +24,23 @@ import spacetrader.player.Skill;
  * @version 1.0
  */
 public class SkillSetupController implements Initializable, ControlledScreen {
+    /**
+     * Acts as the initial value of the progress bars among other things.
+     */
+    private static final int AVG_VALUE = 10;
+    /**
+     * The maximum that a progress bar can fill (in other words, it is the
+     *     maximum that can be allotted to one skill.
+     */
+    private static final int BAR_MAX = 30;
+    /**
+     * The maximum number of total points the player can allot.
+     */
+    private static final int MAX_POINTS = 75;
+    /**
+     * The current total points the player has alloted.
+     */
+    private static final int TOTAL_POINTS = 50;
 
     @FXML
     private Button minus0;
@@ -83,68 +100,56 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     private TextField nameField;
 
     /**
-     * 
+     * Holds all of the plus buttons.
      */
     private final Map<String, Integer> plusButtonMap = new HashMap<>(5);
     /**
-     * 
+     * Holds all of the minus buttons.
      */
     private final Map<String, Integer> minusButtonMap = new HashMap<>(5);
 
     /**
-     * 
+     * The player who is acquiring skills.
      */
-    public static Player player;
+    private static Player player;
     /**
-     * 
+     * Holds all of the skill labels.
      */
     private Label[] labelArray;
     /**
-     * 
+     * Holds all of the skill points labels.
      */
     private Label[] pointLabelArray;
     /**
-     * 
+     * Holds all of the actual minus buttons.
      */
     private Button[] minusButtonArray;
     /**
-     * 
+     * Holds all of the actual plus buttons.
      */
     private Button[] plusButtonArray;
     /**
-     * 
+     * Holds all of the skill progress bars.
      */
     private ProgressBar[] barsArray;
     /**
-     * 
+     * Holds all of the skill points.
      */
     private Integer[] skillPointArray;
     /**
-     * 
-     */
-    private final int avgValue;
-    /**
-     * 
-     */
-    private final int barMax;
-    /**
-     * 
-     */
-    private final int maxPts;
-    /**
-     * 
+     * The total skill points of all the player's skills currently.
      */
     private int totalPts;
     /**
-     * 
+     * The number of skills, used as a convenience and shorthand.
      */
     private int len;
     /**
-     * 
+     * The parent controller of this controller.
      */
     private ScreensController parentController;
     /**
-     * 
+     * The list of the player's skills.
      */
     private List<Skill> skillList;
 
@@ -154,14 +159,11 @@ public class SkillSetupController implements Initializable, ControlledScreen {
      */
     public SkillSetupController() {
         player = new Player();
-        avgValue = 10;
-        barMax = 30;
-        maxPts = 75;
-        totalPts = 50;
+        totalPts = TOTAL_POINTS;
     }
 
     @Override
-    public void initialize(final URL url, final ResourceBundle rBundle) {
+    public final void initialize(final URL url, final ResourceBundle rBundle) {
         plusButtonArray = new Button[]{plus0, plus1, plus2, plus3, plus4};
         minusButtonArray = new Button[]{minus0, minus1, minus2, minus3, minus4};
         pointLabelArray = new Label[]{points0, points1, points2,
@@ -181,7 +183,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
 
     /**
      * Synchronizes Player's skills with the GUI for skill selection.
-     */ 
+     */
     private void updatePlayerSkills() {
         for (int i = 0; i < len; i++) {
             player.getSkills().get(skillList.get(i).getType()).setValue(
@@ -190,7 +192,8 @@ public class SkillSetupController implements Initializable, ControlledScreen {
     }
 
     @Override
-    public void setScreenParent(final ScreensController aParentController) {
+    public final void setScreenParent(
+            final ScreensController aParentController) {
         parentController = aParentController;
     }
 
@@ -208,7 +211,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
      */
     private void addToSkill(final int index) {
         int skillPoints = skillPointArray[index];
-        if ((skillPoints < barMax) && (totalPts < maxPts)) {
+        if ((skillPoints < BAR_MAX) && (totalPts < MAX_POINTS)) {
             skillPoints++;
             totalPts++;
         }
@@ -237,8 +240,8 @@ public class SkillSetupController implements Initializable, ControlledScreen {
      * Keeps totalBar and totalLabel up to date.
      */
     private void updateTotalDisplays() {
-        totalBar.setProgress((float) (maxPts - totalPts) / maxPts);
-        totalLabel.setText(Integer.toString(maxPts - totalPts));
+        totalBar.setProgress((float) (MAX_POINTS - totalPts) / MAX_POINTS);
+        totalLabel.setText(Integer.toString(MAX_POINTS - totalPts));
     }
 
     /**
@@ -262,13 +265,13 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         }
         skillPointArray = new Integer[len];
         for (int i = 0; i < len; i++) {
-            skillPointArray[i] = avgValue;
+            skillPointArray[i] = AVG_VALUE;
         }
         for (int i = 0; i < len; i++) {
             plusButtonMap.put(plusButtonArray[i].getId(), i);
             minusButtonMap.put(minusButtonArray[i].getId(), i);
-            updateProgressBar(i, avgValue);
-            updatePointLabel(i, avgValue);
+            updateProgressBar(i, AVG_VALUE);
+            updatePointLabel(i, AVG_VALUE);
         }
     }
 
@@ -289,25 +292,35 @@ public class SkillSetupController implements Initializable, ControlledScreen {
      * @param points the points in that bar.
      */
     private void updateProgressBar(final int index, final int points) {
-        barsArray[index].setProgress((float) points / barMax);
+        barsArray[index].setProgress((float) points / BAR_MAX);
         updateTotalDisplays();
     }
 
-    // All button handlers from here on out
-    // No idea how to javadoc these, because FXML - DAVID
+    /**
+     * Defines the response to the cancel button.
+     * @param event The cancel button being pressed
+     */
     @FXML
-    private void cancelButtonAction(ActionEvent event) {
+    private void cancelButtonAction(final ActionEvent event) {
         parentController.setScreen("Menu");
     }
 
+    /**
+     * Defines the response to the reset button.
+     * @param event The reset button being pressed
+     */
     @FXML
-    private void resetButtonAction(ActionEvent event) {
+    private void resetButtonAction(final ActionEvent event) {
         nameField.setText("");
         setUpControls();
     }
 
+    /**
+     * Defines the response to the done button.
+     * @param event The done button being pressed
+     */
     @FXML
-    private void doneButtonAction(ActionEvent event) {
+    private void doneButtonAction(final ActionEvent event) {
         String name = nameField.getText();
         if (name != null && !name.trim().equals("")) {
             player.setName(nameField.getText());
@@ -331,16 +344,23 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         parentController.setScreen("UniverseMap");
     }
 
+    /**
+     * Defines the response to a plus button.
+     * @param event A plus button being pressed
+     */
     @FXML
-    private void plusButtonAction(ActionEvent event) {
+    private void plusButtonAction(final ActionEvent event) {
         Node n = (Node) event.getSource();
         addToSkill(plusButtonMap.get(n.getId()));
     }
 
+    /**
+     * Defines the response a minus button.
+     * @param event A minus button being pressed
+     */
     @FXML
-    private void minusButtonAction(ActionEvent event) {
+    private void minusButtonAction(final ActionEvent event) {
         Node n = (Node) event.getSource();
         subtractFromSkill(minusButtonMap.get(n.getId()));
     }
-
 }
