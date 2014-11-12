@@ -9,6 +9,9 @@ import spacetrader.GameModel;
  * @author Team TYN
  */
 public final class MercenaryNames {
+    /**
+     * The list of possible names for mercenaries.
+     */
     private static final List<String> NAMES = new ArrayList();
 
     static {

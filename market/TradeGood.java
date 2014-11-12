@@ -9,6 +9,8 @@ import spacetrader.star_system.Government;
 import spacetrader.star_system.Planet;
 
 /**
+ * A trade good has many properties, most importantly a price and quantity.
+ *
  * TechLevel -- {PREAGRICULTURAL [0], AGRICULTURAL [1], MEDIEVAL [2],
  * RENAISSANCE [3], EARLYINDUSTRIAL [4], INDUSTRIAL [5],
  * POSTINDUSTRIAL [6],HIGHTECH [7]};
@@ -268,7 +270,6 @@ public class TradeGood implements Serializable {
         return found;
     }
 
-    // TODO: Allow different quantities upon initialization
     /**
      * Quantity is currently predicated on the government multipliers (all 1),
      *     and a simplistic stab at supply and demand from the price ratio.
