@@ -130,6 +130,14 @@ public class StarSystem implements Serializable {
     }
 
     /**
+     * Getter for the color of the star system.
+     * @return The color of the star system
+     */
+    public final Color getColor() {
+        return color.getColor();
+    }
+
+    /**
      * Getter for the X coordinate of the star system.
      * @return The X coordinate of the star system
      */
