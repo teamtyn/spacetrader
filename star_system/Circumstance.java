@@ -39,8 +39,39 @@ public class Circumstance implements Serializable {
      * The set of predefined types of a potential circumstance.
      */
     public enum Type {
-        NONE, DROUGHT, COLD, CROPFAIL, WAR,
-        BOREDOM, PLAGUE, LACKOFWORKERS
+
+        /**
+         * Everything is fine.
+         */
+        NONE,
+        /**
+         * No water.
+         */
+        DROUGHT,
+        /**
+         * It is cold.
+         */
+        COLD,
+        /**
+         * No food.
+         */
+        CROPFAIL,
+        /**
+         * People killing people.
+         */
+        WAR,
+        /**
+         * Nothing to do.
+         */
+        BOREDOM,
+        /**
+         * Sick people and death.
+         */
+        PLAGUE,
+        /**
+         * No people to do things.
+         */
+        LACKOFWORKERS
     };
 
     /**
