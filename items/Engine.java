@@ -9,7 +9,7 @@ import spacetrader.ui.SerializableColor;
  *
  * @author Team TYN
  */
-public class Engine implements Serializable {
+public final class Engine implements Serializable {
 
     /**
      * The type of this particular engine.

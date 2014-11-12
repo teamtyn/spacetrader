@@ -10,7 +10,7 @@ import spacetrader.market.TradeGood;
  *
  * @author Team TYN
  */
-public class CargoBay implements Serializable {
+public final class CargoBay implements Serializable {
 
     /**
      * The capacity of the cargo bay.
@@ -39,7 +39,7 @@ public class CargoBay implements Serializable {
     /**
      * Initializes the quantities in the cargo bay to zero.
      */
-    public final void setUpMap() {
+    public void setUpMap() {
         goods.put("Water", 0);
         goods.put("Furs", 0);
         goods.put("Food", 0);
@@ -102,7 +102,7 @@ public class CargoBay implements Serializable {
      *
      * @return The goods of the cargo bay
      */
-    public final HashMap<String, Integer> getGoods() {
+    public HashMap<String, Integer> getGoods() {
         return goods;
     }
 
@@ -111,7 +111,7 @@ public class CargoBay implements Serializable {
      *
      * @return The capacity of the cargo bay
      */
-    public final int getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
@@ -120,7 +120,7 @@ public class CargoBay implements Serializable {
      *
      * @return The current size of the cargo bay
      */
-    public final int getCurrentSize() {
+    public int getCurrentSize() {
         return currentSize;
     }
 
@@ -129,12 +129,12 @@ public class CargoBay implements Serializable {
      *
      * @param aCapacity The new capacity of the cargo bay
      */
-    public final void setCapacity(final int aCapacity) {
+    public void setCapacity(final int aCapacity) {
         capacity = aCapacity;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         final StringBuilder str = new StringBuilder("Cargo bay contents: \n");
         for (String goodName : goods.keySet()) {
             str.append(goodName);

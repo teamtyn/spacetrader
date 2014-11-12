@@ -9,7 +9,7 @@ import spacetrader.ui.SerializableColor;
  *
  * @author Team TYN
  */
-public class Shield implements Serializable {
+public final class Shield implements Serializable {
 
     /**
      * How much damage the shield can take at present.
@@ -18,7 +18,7 @@ public class Shield implements Serializable {
     /**
      * The type of the shield.
      */
-    private ShieldType type;
+    private final ShieldType type;
 
     /**
      * The enum used to store values constant across all shields of a type.
