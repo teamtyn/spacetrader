@@ -164,51 +164,51 @@ public final class SpaceStationController
     private TextField confirmationGadgetField;
 
     /**
-     *
+     * Player's ship.
      */
     private Ship myShip;
     /**
-     *
+     * Ship being considered for purchase.
      */
     private Ship otherShip;
     /**
-     *
+     * Cose of fuel.
      */
     private final int fuelCost = 10;
     /**
-     *
+     * Fuel that we are attempting to add.
      */
     private double tempFuel;
     /**
-     *
+     * The player.
      */
     private Player player;
     /**
-     *
+     * Fancy effects.
      */
     private FadeTransition ft;
     /**
-     *
+     *  The screen controller.
      */
     private ScreensController parentController;
     /**
-     *
+     * The current type of gadgets being looked at.
      */
     private String currentGadgetType;
     /**
-     *
+     * Current weapon being looked at.
      */
     private Weapon selectedWeapon;
     /**
-     *
+     * Current shield being looked at.
      */
     private Shield selectedShield;
     /**
-     *
+     * Current engine being looked at.
      */
     private Engine selectedEngine;
     /**
-     *
+     * Used to determine where the gadget is in the array.
      */
     private int gadgetIndex;
 
@@ -303,8 +303,6 @@ public final class SpaceStationController
      * Transfers parts from player's old ship to new ship upon purchase.
      */
     public void transferParts() {
-        // TODO: Account for new ship not being able to fit any
-        //     of these things, esp. goods
         for (int i = 0; i < player.getShip().getWeapons().length; i++) {
             if (otherShip.addWeapon(player.getShip().getWeapons()[i])) {
                 player.getShip().removeWeapon(i);
@@ -358,7 +356,6 @@ public final class SpaceStationController
         }
     }
 
-    // Sets up the fade transition specifications
     @Override
     public void initialize(final URL url, final ResourceBundle rBundle) {
         ft = new FadeTransition(
@@ -369,9 +366,6 @@ public final class SpaceStationController
         ft.setCycleCount(2);
     }
 
-    /**
-     *
-     */
     @Override
     public void lazyInitialize() {
         player = GameModel.getPlayer();
@@ -409,18 +403,32 @@ public final class SpaceStationController
         gadgetPane.setVisible(false);
     }
 
-    // All button handlers below here
+    /**
+     * Returns to the universe map.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void backButtonAction(final ActionEvent event) {
         parentController.setScreen("UniverseMap");
     }
 
+    /**
+     * Does nothing right now.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void viewPlayerCardButtonAction(final ActionEvent event) {
         // TODO
         //parentController.setScreen("PlayerCard");
     }
 
+    /**
+     * Toggles between parts and ships.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void shopForPartsButtonAction(final ActionEvent event) {
         if (shipPane.isVisible()) {
@@ -447,6 +455,9 @@ public final class SpaceStationController
         }
     }
 
+    /**
+     * Sets up the gadget buying pane
+     */
     private void initializeGadgets() {
         shipDialogueField.setText("");
         gadgetShipViewer.getChildren().removeAll();
@@ -460,6 +471,11 @@ public final class SpaceStationController
         updatePlayerEngines();
     }
 
+    /**
+     * Shows you the available weapons.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void viewWeapons(final ActionEvent event) {
         gadgetTypeLabel.setText("Weapons");
@@ -501,6 +517,11 @@ public final class SpaceStationController
         }
     }
 
+    /**
+     * Shows you the available shields.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void viewShields(final ActionEvent event) {
         gadgetTypeLabel.setText("Shields");
@@ -543,6 +564,11 @@ public final class SpaceStationController
         }
     }
 
+    /**
+     * Shows you the available engines.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void viewEngines(final ActionEvent event) {
         gadgetTypeLabel.setText("Engines");
@@ -586,6 +612,9 @@ public final class SpaceStationController
         }
     }
 
+    /**
+     * updates the display of player weapons.
+     */
     private void updatePlayerWeapons() {
         gadgetWeaponsViewer.getChildren().clear();
         for (Weapon weapon : player.getShip().getWeapons()) {
@@ -633,7 +662,7 @@ public final class SpaceStationController
     }
 
     /**
-     *
+     * updates the display of player shields.
      */
     private void updatePlayerShields() {
         gadgetShieldsViewer.getChildren().clear();
@@ -682,6 +711,9 @@ public final class SpaceStationController
         }
     }
 
+    /**
+     * updates the display of player engines.
+     */
     private void updatePlayerEngines() {
         gadgetEnginesViewer.getChildren().clear();
         for (Engine engine : player.getShip().getEngines()) {
@@ -730,7 +762,7 @@ public final class SpaceStationController
     }
 
     /**
-     *
+     * resets the ui of all elements.
      */
     private void resetSelected() {
         for (Node node : gadgetList.getChildren()) {
@@ -747,6 +779,11 @@ public final class SpaceStationController
         }
     }
 
+    /**
+     * Buys a new ship.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void buyShipButtonAction(final ActionEvent event) {
         if (confirmationField.getText().trim().equals(
@@ -762,6 +799,11 @@ public final class SpaceStationController
         }
     }
 
+    /**
+     * Buys a new gadget.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void buyGadgetButtonAction(final ActionEvent event) {
         switch (currentGadgetType) {
@@ -802,6 +844,11 @@ public final class SpaceStationController
         }
     }
 
+    /**
+     * Sells a gadget.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void sellGadgetButtonAction(final ActionEvent event) {
         switch (currentGadgetType) {
@@ -903,6 +950,11 @@ public final class SpaceStationController
         moneyLabel.setText(Integer.toString(player.getMoney()));
     }
 
+    /**
+     * Confirms purchase of fuel.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void confirmFuelButtonAction(final ActionEvent event) {
         final int newFuel = (int) (tempFuel - player.getShip().getFuel());
@@ -915,12 +967,22 @@ public final class SpaceStationController
         updateFuel();
     }
 
+    /**
+     * Cancels purchase of fuel.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void cancelFuelButtonAction(final ActionEvent event) {
         tempFuel = player.getShip().getFuel();
         updateFuel();
     }
 
+    /**
+     * Fills up your fuel tank.
+     * 
+     * @param event the event that triggers this method.
+     */
     @FXML
     private void fillFuelButtonAction(final ActionEvent event) {
         final int potentialNewFuel = (int) (player.getShip().getFuelCapacity()
