@@ -13,7 +13,7 @@ import spacetrader.ui.Point;
  * The class representing the Player of the game.
  * @author Team TYN
  */
-public class Player extends AbstractCrewMember {
+public final class Player extends AbstractCrewMember {
     /**
      * The list of planets that the player knows.
      */
@@ -58,51 +58,51 @@ public class Player extends AbstractCrewMember {
 
     /**
      * Setter for the money variable.
-     * @param money the player's money
+     * @param newMoney the player's money
      */
-    public void setMoney(int money) {
-        this.money = money;
+    public void setMoney(final int newMoney) {
+        money = newMoney;
     }
 
     /**
      * Subtracts an integer amount from money.
      * @param withdrawal the amount of money to subtract
      */
-    public void subtractMoney(int withdrawal) {
+    public void subtractMoney(final int withdrawal) {
         money -= withdrawal;
     }
 
     /**
      * Subtracts money from the player and, if the player doesn't have enough
      * money, subtracts all of the player's money.
-     * @param money
+     * @param withdrawal the amount of money attempting to remove
      * @return the amount of money ultimately removed
      */
-        public int attemptToSubtractMoney(int money) {
-        int removed = money;
-        if (money > this.money) {
+        public int attemptToSubtractMoney(final int withdrawal) {
+        int removed = withdrawal;
+        if (withdrawal > this.money) {
             removed = this.money;
             this.money = 0;
         } else {
-            this.money -= money;
+            this.money -= withdrawal;
         }
         return removed;
     }
 
     /**
      * Add specified amount of money.
-     * @param money the amount of money to add
+     * @param cashflow the amount of money to add
      */
-        public void addMoney(int money) {
-        this.money += money;
+        public void addMoney(final int cashflow) {
+        money += cashflow;
     }
 
     /**
      * Setter for the name variable.
      * @param newName the player's new name
      */
-        public void setName(String newName) {
-        this.name = newName;
+        public void setName(final String newName) {
+        name = newName;
     }
 
     // Setter for the list of skills
@@ -111,7 +111,7 @@ public class Player extends AbstractCrewMember {
      * Setter for the skills variable.
      * @param newSkills the new Map of Skills for the player
      */
-        public void setSkillList(Map<String, Skill> newSkills) {
+     public void setSkillList(final Map<String, Skill> newSkills) {
         skills = newSkills;
     }
 
@@ -120,7 +120,7 @@ public class Player extends AbstractCrewMember {
      * @param type the type of skill to set
      * @param value the new value of this skill
      */
-        public void setSkill(String type, int value) {
+        public void setSkill(final String type, final int value) {
         Skill found = skills.get(type);
         found.setValue(value);
         skills.put(type, found);
@@ -128,44 +128,44 @@ public class Player extends AbstractCrewMember {
 
     /**
      * Returns whether or not the player knows the specified planet.
-     * @param planet the planet whose known status is being requested
+     * @param aPlanet the planet whose known status is being requested
      * @return whether the planet is known
      */
-    public boolean knowsPlanet(Planet planet) {
-        return knownPlanets.contains(planet);
+    public boolean knowsPlanet(final Planet aPlanet) {
+        return knownPlanets.contains(aPlanet);
     }
 
     /**
      * Setter for the ship variable.
-     * @param ship the player's ship
+     * @param newShip the player's ship
      */
-    public void setShip(Ship ship) {
-        this.ship = ship;
+    public void setShip(final Ship newShip) {
+        ship = newShip;
     }
 
     /**
      * Setter for coordinates.
      * @param newLoc the new location of the player
      */
-        public void setCoordinates(Point newLoc) {
+        public void setCoordinates(final Point newLoc) {
         coord = newLoc;
     }
 
     /**
      * Setter for the system.
-     * @param system the new system that the player is in
+     * @param newSystem the new system that the player is in
      */
-    public void setSystem(StarSystem system) {
-        this.system = system;
+    public void setSystem(final StarSystem newSystem) {
+        system = newSystem;
     }
 
     /**
      * Setter for the planet.
-     * @param planet the planet that the player is currently visiting
+     * @param newPlanet the planet that the player is currently visiting
      */
-    public void setPlanet(Planet planet) {
-        this.planet = planet;
-        knownPlanets.add(planet);
+    public void setPlanet(final Planet newPlanet) {
+        planet = newPlanet;
+        knownPlanets.add(newPlanet);
     }
 
     /**
@@ -173,7 +173,7 @@ public class Player extends AbstractCrewMember {
      * @param type the type of skill to be increased
      * @param value the new value of the skill
      */
-    public void increaseSkill(String type, int value) {
+    public void increaseSkill(final String type, final int value) {
         Skill found = skills.get(type);
         found.increaseValue(value);
         skills.put(type, found);
