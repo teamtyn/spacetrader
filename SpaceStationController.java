@@ -32,9 +32,28 @@ import spacetrader.player.Player;
 
 /**
  * FXML Controller class for SpaceStation.
+ *
  * @author Team TYN
  */
-public class SpaceStationController implements Initializable, ControlledScreen {
+public final class SpaceStationController
+        implements Initializable, ControlledScreen {
+
+    /**
+     * The length of fade transitions.
+     */
+    private static final int FADE_DURATION = 1000;
+    /**
+     * The width of information labels.
+     */
+    private static final int LABEL_WIDTH = 200;
+    /**
+     * The height of information labels.
+     */
+    private static final int LABEL_HEIGHT = 25;
+    /**
+     * The size of "pictures" of items.
+     */
+    private static final int PICTURE_SIZE = 100;
 
     @FXML
     private Pane shipPane;
@@ -145,57 +164,57 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     private TextField confirmationGadgetField;
 
     /**
-     * 
+     *
      */
     private Ship myShip;
     /**
-     * 
+     *
      */
     private Ship otherShip;
     /**
-     * 
+     *
      */
     private final int fuelCost = 10;
     /**
-     * 
+     *
      */
     private double tempFuel;
     /**
-     * 
+     *
      */
     private Player player;
     /**
-     * 
+     *
      */
     private FadeTransition ft;
     /**
-     * 
+     *
      */
     private ScreensController parentController;
     /**
-     * 
+     *
      */
     private String currentGadgetType;
     /**
-     * 
+     *
      */
     private Weapon selectedWeapon;
     /**
-     * 
+     *
      */
     private Shield selectedShield;
     /**
-     * 
+     *
      */
     private Engine selectedEngine;
     /**
-     * 
+     *
      */
     private int gadgetIndex;
 
     /**
-     * Determines which fuel buttons should currently be disabled.
-     * Maintains the progress bar and labels associated with fuel
+     * Determines which fuel buttons should currently be disabled. Maintains the
+     * progress bar and labels associated with fuel
      */
     public void updateFuel() {
         fuelProgress.setProgress(tempFuel / player.getShip().getFuelCapacity());
@@ -209,8 +228,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Sets up the My Ship panel with the appropriate info.
-     * Picture is currently a colored rectangle, TODO: Get Josh's 3D ship
+     * Sets up the My Ship panel with the appropriate info. Picture is currently
+     * a colored rectangle, TODO: Get Josh's 3D ship
      */
     public void myShipStats() {
         myHullStrength.setText(Integer.toString(myShip.getHull()));
@@ -221,14 +240,15 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         myCargoBaySlots.setText(Integer.toString(myShip.getCargoBaySlots()));
         myShipValue.setText(Integer.toString(myShip.getType().getCost()));
         myShipPicturePane.getChildren().removeAll();
-        final Rectangle myShipPicture = new Rectangle(100, 10, 100, 100);
+        final Rectangle myShipPicture
+                = new Rectangle(100, 10, PICTURE_SIZE, PICTURE_SIZE);
         myShipPicture.setFill(myShip.getType().getColor());
         myShipPicturePane.getChildren().add(myShipPicture);
     }
 
     /**
-     * Sets up the Other Ship panel with the appropriate info.
-     * Picture is currently a colored rectangle, TODO: Get Josh's 3D ship
+     * Sets up the Other Ship panel with the appropriate info. Picture is
+     * currently a colored rectangle, TODO: Get Josh's 3D ship
      */
     public void otherShipStats() {
         otherShipLabel.setText(otherShip.getType().name());
@@ -239,16 +259,16 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         engineSlots.setText(Integer.toString(otherShip.getEngineSlots()));
         cargoBaySlots.setText(Integer.toString(otherShip.getCargoBaySlots()));
         otherShipPicturePane.getChildren().removeAll();
-        final Rectangle otherShipPicture = new Rectangle(100, 10, 100, 100);
+        final Rectangle otherShipPicture
+                = new Rectangle(100, 10, PICTURE_SIZE, PICTURE_SIZE);
         otherShipPicture.setFill(otherShip.getType().getColor());
         otherShipPicturePane.getChildren().add(otherShipPicture);
         shipCost.setText(Integer.toString(otherShip.getType().getCost()));
     }
 
     /**
-     * Informs the user if they are not allowed to buy the currently
-     *     selected ship.
-     * Calls the methods to keep myShip and otherShip up to date
+     * Informs the user if they are not allowed to buy the currently selected
+     * ship. Calls the methods to keep myShip and otherShip up to date
      */
     public void updateShip() {
         if (otherShip.getType() == myShip.getType()) {
@@ -266,9 +286,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Handles purchase of a ship.
-     * Subtracts/Adds money from/to the player, transfers the parts, and
-     *     then resets all variables after giving the player their new ship
+     * Handles purchase of a ship. Subtracts/Adds money from/to the player,
+     * transfers the parts, and then resets all variables after giving the
+     * player their new ship
      */
     public void buyShip() {
         player.subtractMoney(otherShip.getType().getCost());
@@ -341,7 +361,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     // Sets up the fade transition specifications
     @Override
     public void initialize(final URL url, final ResourceBundle rBundle) {
-        ft = new FadeTransition(Duration.millis(1000), fuelDialogueField);
+        ft = new FadeTransition(
+                Duration.millis(FADE_DURATION), fuelDialogueField);
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.setAutoReverse(true);
@@ -364,25 +385,25 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             final int mult = type.ordinal();
             final HBox row = new HBox();
             final Label label = new Label(type.name());
-            label.setPrefSize(200, 25);
+            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             row.addEventHandler(MouseEvent.MOUSE_CLICKED,
                     new EventHandler<MouseEvent>() {
 
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    otherShip = new Ship(type);
-                    for (Node node : shipList.getChildren()) {
-                        node.setStyle("-fx-background-color: #FFFFFF;");
-                    }
-                    row.setStyle("-fx-background-color: #EEEEEE;");
-                    row.setPrefSize(200, 25);
-                    row.setLayoutY(mult * 25);
-                    buyShip.setDisable(false);
-                    updateShip();
-                }
-            });
+                        @Override
+                        public void handle(final MouseEvent mouseEvent) {
+                            otherShip = new Ship(type);
+                            for (Node node : shipList.getChildren()) {
+                                node.setStyle("-fx-background-color: #FFFFFF;");
+                            }
+                            row.setStyle("-fx-background-color: #EEEEEE;");
+                            row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                            row.setLayoutY(mult * LABEL_HEIGHT);
+                            buyShip.setDisable(false);
+                            updateShip();
+                        }
+                    });
             shipList.getChildren().add(row);
         }
         gadgetPane.setVisible(false);
@@ -390,18 +411,18 @@ public class SpaceStationController implements Initializable, ControlledScreen {
 
     // All button handlers below here
     @FXML
-    private void backButtonAction(ActionEvent event) {
+    private void backButtonAction(final ActionEvent event) {
         parentController.setScreen("UniverseMap");
     }
 
     @FXML
-    private void viewPlayerCardButtonAction(ActionEvent event) {
+    private void viewPlayerCardButtonAction(final ActionEvent event) {
         // TODO
         //parentController.setScreen("PlayerCard");
     }
 
     @FXML
-    private void shopForPartsButtonAction(ActionEvent event) {
+    private void shopForPartsButtonAction(final ActionEvent event) {
         if (shipPane.isVisible()) {
             shipPane.setVisible(false);
             gadgetPane.setVisible(true);
@@ -429,7 +450,8 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     private void initializeGadgets() {
         shipDialogueField.setText("");
         gadgetShipViewer.getChildren().removeAll();
-        Rectangle shipPicture = new Rectangle(25, 25, 100, 100);
+        Rectangle shipPicture
+                = new Rectangle(25, 25, PICTURE_SIZE, PICTURE_SIZE);
         shipPicture.setFill(myShip.getType().getColor());
         gadgetShipViewer.getChildren().add(shipPicture);
 
@@ -439,125 +461,127 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     @FXML
-    private void viewWeapons(ActionEvent event) {
+    private void viewWeapons(final ActionEvent event) {
         gadgetTypeLabel.setText("Weapons");
         gadgetList.getChildren().clear();
         for (WeaponType type : WeaponType.values()) {
             int mult = type.ordinal();
             HBox row = new HBox();
             Label label = new Label(type.name());
-            label.setPrefSize(200, 25);
+            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             row.addEventHandler(MouseEvent.MOUSE_CLICKED,
                     new EventHandler<MouseEvent>() {
 
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    currentGadgetType = "Weapon";
-                    selectedWeapon = new Weapon(type);
-                    resetSelected();
-                    row.setStyle("-fx-background-color: #EEEEEE;");
-                    row.setPrefSize(200, 25);
-                    row.setLayoutY(mult * 25);
-                    gadgetNameLabel1.setText("Damage ");
-                    gadgetNameLabel2.setText("Rate of Fire");
-                    gadgetValueLabel1.setText(Integer.toString(
-                            selectedWeapon.getDamage()));
-                    gadgetValueLabel2.setText(Integer.toString(
-                            selectedWeapon.getRateOfFire()));
-                    gadgetCostLabel.setText(Integer.toString(
-                            selectedWeapon.getCost()));
-                    gadgetPicture.getChildren().clear();
-                    Rectangle myGadgetPicture = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(selectedWeapon.getColor());
-                    gadgetPicture.getChildren().add(myGadgetPicture);
-                }
-            });
+                        @Override
+                        public void handle(final MouseEvent mouseEvent) {
+                            currentGadgetType = "Weapon";
+                            selectedWeapon = new Weapon(type);
+                            resetSelected();
+                            row.setStyle("-fx-background-color: #EEEEEE;");
+                            row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                            row.setLayoutY(mult * LABEL_HEIGHT);
+                            gadgetNameLabel1.setText("Damage ");
+                            gadgetNameLabel2.setText("Rate of Fire");
+                            gadgetValueLabel1.setText(Integer.toString(
+                                            selectedWeapon.getDamage()));
+                            gadgetValueLabel2.setText(Integer.toString(
+                                            selectedWeapon.getRateOfFire()));
+                            gadgetCostLabel.setText(Integer.toString(
+                                            selectedWeapon.getCost()));
+                            gadgetPicture.getChildren().clear();
+                            Rectangle myGadgetPicture = new Rectangle(
+                                    100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                            myGadgetPicture.setFill(selectedWeapon.getColor());
+                            gadgetPicture.getChildren().add(myGadgetPicture);
+                        }
+                    });
             gadgetList.getChildren().add(row);
         }
     }
 
     @FXML
-    private void viewShields(ActionEvent event) {
+    private void viewShields(final ActionEvent event) {
         gadgetTypeLabel.setText("Shields");
         gadgetList.getChildren().clear();
         for (ShieldType type : ShieldType.values()) {
             final int mult = type.ordinal();
             final HBox row = new HBox();
             final Label label = new Label(type.name());
-            label.setPrefSize(200, 25);
+            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             row.addEventHandler(MouseEvent.MOUSE_CLICKED,
                     new EventHandler<MouseEvent>() {
 
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    currentGadgetType = "Shield";
-                    selectedShield = new Shield(type);
-                    resetSelected();
-                    row.setStyle("-fx-background-color: #EEEEEE;");
-                    row.setPrefSize(200, 25);
-                    row.setLayoutY(mult * 25);
-                    gadgetNameLabel1.setText("Strength ");
-                    gadgetNameLabel2.setText("Recharge Rate");
-                    gadgetValueLabel1.setText(Integer.toString(
-                            selectedShield.getStrength()));
-                    gadgetValueLabel2.setText(Integer.toString(
-                            selectedShield.getRechargeRate()));
-                    gadgetCostLabel.setText(Integer.toString(
-                            selectedShield.getCost()));
-                    gadgetPicture.getChildren().clear();
-                    final Rectangle myGadgetPicture
-                            = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(
-                            selectedShield.getColor());
-                    gadgetPicture.getChildren().add(myGadgetPicture);
-                }
-            });
+                        @Override
+                        public void handle(final MouseEvent mouseEvent) {
+                            currentGadgetType = "Shield";
+                            selectedShield = new Shield(type);
+                            resetSelected();
+                            row.setStyle("-fx-background-color: #EEEEEE;");
+                            row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                            row.setLayoutY(mult * LABEL_HEIGHT);
+                            gadgetNameLabel1.setText("Strength ");
+                            gadgetNameLabel2.setText("Recharge Rate");
+                            gadgetValueLabel1.setText(Integer.toString(
+                                            selectedShield.getStrength()));
+                            gadgetValueLabel2.setText(Integer.toString(
+                                            selectedShield.getRechargeRate()));
+                            gadgetCostLabel.setText(Integer.toString(
+                                            selectedShield.getCost()));
+                            gadgetPicture.getChildren().clear();
+                            final Rectangle myGadgetPicture = new Rectangle(
+                                    100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                            myGadgetPicture.setFill(
+                                    selectedShield.getColor());
+                            gadgetPicture.getChildren().add(myGadgetPicture);
+                        }
+                    });
             gadgetList.getChildren().add(row);
         }
     }
 
     @FXML
-    private void viewEngines(ActionEvent event) {
+    private void viewEngines(final ActionEvent event) {
         gadgetTypeLabel.setText("Engines");
         gadgetList.getChildren().clear();
         for (EngineType type : EngineType.values()) {
             final int mult = type.ordinal();
             final HBox row = new HBox();
             final Label label = new Label(type.name());
-            label.setPrefSize(200, 25);
+            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             row.addEventHandler(MouseEvent.MOUSE_CLICKED,
                     new EventHandler<MouseEvent>() {
 
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    currentGadgetType = "Engine";
-                    selectedEngine = new Engine(type);
-                    resetSelected();
-                    row.setStyle("-fx-background-color: #EEEEEE;");
-                    row.setPrefSize(200, 25);
-                    row.setLayoutY(mult * 25);
-                    gadgetNameLabel1.setText("Acceleration ");
-                    gadgetNameLabel2.setText("Fuel Efficiency");
-                    gadgetValueLabel1.setText(Integer.toString(
-                            selectedEngine.getAcceleration()));
-                    gadgetValueLabel2.setText(Integer.toString(
-                            selectedEngine.getFuelEfficiency()));
-                    gadgetCostLabel.setText(Integer.toString(
-                            selectedEngine.getCost()));
-                    gadgetPicture.getChildren().clear();
-                    final Rectangle myGadgetPicture
-                            = new Rectangle(100, 10, 100, 100);
-                    myGadgetPicture.setFill(
-                            selectedEngine.getColor());
-                    gadgetPicture.getChildren().add(myGadgetPicture);
-                }
-            });
+                        @Override
+                        public void handle(final MouseEvent mouseEvent) {
+                            currentGadgetType = "Engine";
+                            selectedEngine = new Engine(type);
+                            resetSelected();
+                            row.setStyle("-fx-background-color: #EEEEEE;");
+                            row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                            row.setLayoutY(mult * LABEL_HEIGHT);
+                            gadgetNameLabel1.setText("Acceleration ");
+                            gadgetNameLabel2.setText("Fuel Efficiency");
+                            gadgetValueLabel1.setText(Integer.toString(
+                                            selectedEngine.getAcceleration()));
+                            gadgetValueLabel2.setText(Integer.toString(
+                                            selectedEngine
+                                            .getFuelEfficiency()));
+                            gadgetCostLabel.setText(Integer.toString(
+                                            selectedEngine.getCost()));
+                            gadgetPicture.getChildren().clear();
+                            final Rectangle myGadgetPicture = new Rectangle(
+                                    100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                            myGadgetPicture.setFill(
+                                    selectedEngine.getColor());
+                            gadgetPicture.getChildren().add(myGadgetPicture);
+                        }
+                    });
             gadgetList.getChildren().add(row);
         }
     }
@@ -572,34 +596,36 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 row.addEventHandler(MouseEvent.MOUSE_CLICKED,
                         new EventHandler<MouseEvent>() {
 
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        currentGadgetType = "My Weapon";
-                        selectedWeapon = weapon;
-                        resetSelected();
-                        row.setStyle("-fx-background-color: #EEEEEE;");
-                        gadgetNameLabel1.setText("Damage ");
-                        gadgetNameLabel2.setText("Rate of Fire");
-                        gadgetValueLabel1.setText(Integer.toString(
-                                selectedWeapon.getDamage()));
-                        gadgetValueLabel2.setText(Integer.toString(
-                                selectedWeapon.getRateOfFire()));
-                        gadgetCostLabel.setText(Integer.toString(
-                                (selectedWeapon.getCost() / 2)));
-                        gadgetPicture.getChildren().clear();
-                        final Rectangle myGadgetPicture
-                                = new Rectangle(100, 10, 100, 100);
-                        myGadgetPicture.setFill(
-                                selectedWeapon.getColor());
-                        gadgetPicture.getChildren().add(myGadgetPicture);
-                        gadgetIndex = row.getParent().
+                            @Override
+                            public void handle(final MouseEvent mouseEvent) {
+                                currentGadgetType = "My Weapon";
+                                selectedWeapon = weapon;
+                                resetSelected();
+                                row.setStyle("-fx-background-color: #EEEEEE;");
+                                gadgetNameLabel1.setText("Damage ");
+                                gadgetNameLabel2.setText("Rate of Fire");
+                                gadgetValueLabel1.setText(Integer.toString(
+                                                selectedWeapon.getDamage()));
+                                gadgetValueLabel2.setText(Integer.toString(
+                                                selectedWeapon
+                                                .getRateOfFire()));
+                                gadgetCostLabel.setText(Integer.toString(
+                                                selectedWeapon.getCost() / 2));
+                                gadgetPicture.getChildren().clear();
+                                final Rectangle myGadgetPicture = new Rectangle(
+                                        100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                                myGadgetPicture.setFill(
+                                        selectedWeapon.getColor());
+                                gadgetPicture
+                                .getChildren().add(myGadgetPicture);
+                                gadgetIndex = row.getParent().
                                 getChildrenUnmodifiable().indexOf(row);
-                    }
-                });
+                            }
+                        });
             } else {
                 label = new Label("Empty slot");
             }
-            label.setPrefSize(200, 25);
+            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             gadgetWeaponsViewer.getChildren().add(row);
@@ -607,7 +633,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * 
+     *
      */
     private void updatePlayerShields() {
         gadgetShieldsViewer.getChildren().clear();
@@ -620,34 +646,36 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 row.addEventHandler(MouseEvent.MOUSE_CLICKED,
                         new EventHandler<MouseEvent>() {
 
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        currentGadgetType = "My Shield";
-                        selectedShield = shield;
-                        resetSelected();
-                        row.setStyle("-fx-background-color: #EEEEEE;");
-                        gadgetNameLabel1.setText("Strength ");
-                        gadgetNameLabel2.setText("Recharge Rate");
-                        gadgetValueLabel1.setText(Integer.toString(
-                                selectedShield.getStrength()));
-                        gadgetValueLabel2.setText(Integer.toString(
-                                selectedShield.getRechargeRate()));
-                        gadgetCostLabel.setText(Integer.toString(
-                                (selectedShield.getCost() / 2)));
-                        gadgetPicture.getChildren().clear();
-                        final Rectangle myGadgetPicture
-                                = new Rectangle(100, 10, 100, 100);
-                        myGadgetPicture.setFill(
-                                selectedShield.getColor());
-                        gadgetPicture.getChildren().add(myGadgetPicture);
-                        gadgetIndex = row.getParent()
+                            @Override
+                            public void handle(final MouseEvent mouseEvent) {
+                                currentGadgetType = "My Shield";
+                                selectedShield = shield;
+                                resetSelected();
+                                row.setStyle("-fx-background-color: #EEEEEE;");
+                                gadgetNameLabel1.setText("Strength ");
+                                gadgetNameLabel2.setText("Recharge Rate");
+                                gadgetValueLabel1.setText(Integer.toString(
+                                                selectedShield.getStrength()));
+                                gadgetValueLabel2.setText(Integer.toString(
+                                                selectedShield
+                                                .getRechargeRate()));
+                                gadgetCostLabel.setText(Integer.toString(
+                                                selectedShield.getCost() / 2));
+                                gadgetPicture.getChildren().clear();
+                                final Rectangle myGadgetPicture = new Rectangle(
+                                        100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                                myGadgetPicture.setFill(
+                                        selectedShield.getColor());
+                                gadgetPicture
+                                .getChildren().add(myGadgetPicture);
+                                gadgetIndex = row.getParent()
                                 .getChildrenUnmodifiable().indexOf(row);
-                    }
-                });
+                            }
+                        });
             } else {
                 label = new Label("Empty slot");
             }
-            label.setPrefSize(200, 25);
+            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             gadgetShieldsViewer.getChildren().add(row);
@@ -664,34 +692,37 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 row.addEventHandler(MouseEvent.MOUSE_CLICKED,
                         new EventHandler<MouseEvent>() {
 
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        currentGadgetType = "My Engine";
-                        selectedEngine = engine;
-                        resetSelected();
-                        row.setStyle("-fx-background-color: #EEEEEE;");
-                        gadgetNameLabel1.setText("Acceleration ");
-                        gadgetNameLabel2.setText("Fuel Efficiency");
-                        gadgetValueLabel1.setText(Integer.toString(
-                                selectedEngine.getAcceleration()));
-                        gadgetValueLabel2.setText(Integer.toString(
-                                selectedEngine.getFuelEfficiency()));
-                        gadgetCostLabel.setText(Integer.toString(
-                                (selectedEngine.getCost() / 2)));
-                        gadgetPicture.getChildren().clear();
-                        final Rectangle myGadgetPicture
-                                = new Rectangle(100, 10, 100, 100);
-                        myGadgetPicture.setFill(
-                                selectedEngine.getColor());
-                        gadgetPicture.getChildren().add(myGadgetPicture);
-                        gadgetIndex = row.getParent()
+                            @Override
+                            public void handle(final MouseEvent mouseEvent) {
+                                currentGadgetType = "My Engine";
+                                selectedEngine = engine;
+                                resetSelected();
+                                row.setStyle("-fx-background-color: #EEEEEE;");
+                                gadgetNameLabel1.setText("Acceleration ");
+                                gadgetNameLabel2.setText("Fuel Efficiency");
+                                gadgetValueLabel1.setText(Integer.toString(
+                                                selectedEngine
+                                                .getAcceleration()));
+                                gadgetValueLabel2.setText(Integer.toString(
+                                                selectedEngine
+                                                .getFuelEfficiency()));
+                                gadgetCostLabel.setText(Integer.toString(
+                                                selectedEngine.getCost() / 2));
+                                gadgetPicture.getChildren().clear();
+                                final Rectangle myGadgetPicture = new Rectangle(
+                                        100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                                myGadgetPicture.setFill(
+                                        selectedEngine.getColor());
+                                gadgetPicture
+                                .getChildren().add(myGadgetPicture);
+                                gadgetIndex = row.getParent()
                                 .getChildrenUnmodifiable().indexOf(row);
-                    }
-                });
+                            }
+                        });
             } else {
                 label = new Label("Empty slot");
             }
-            label.setPrefSize(200, 25);
+            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
             label.setAlignment(Pos.CENTER);
             row.getChildren().add(label);
             gadgetEnginesViewer.getChildren().add(row);
@@ -699,7 +730,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * 
+     *
      */
     private void resetSelected() {
         for (Node node : gadgetList.getChildren()) {
@@ -717,7 +748,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     @FXML
-    private void buyShipButtonAction(ActionEvent event) {
+    private void buyShipButtonAction(final ActionEvent event) {
         if (confirmationField.getText().trim().equals(
                 Integer.toString(otherShip.getType().getCost()))) {
             shipDialogueField.setText("");
@@ -726,12 +757,13 @@ public class SpaceStationController implements Initializable, ControlledScreen {
             updateFuel();
             updateShip();
         } else {
-            shipDialogueField.setText("Please confirm the price of your new ship.");
+            shipDialogueField
+                    .setText("Please confirm the price of your new ship.");
         }
     }
 
     @FXML
-    private void buyGadgetButtonAction(ActionEvent event) {
+    private void buyGadgetButtonAction(final ActionEvent event) {
         switch (currentGadgetType) {
             case "Weapon":
                 if (confirmationGadgetField.getText().trim().equals(
@@ -766,11 +798,12 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                             + "price of your new engine.");
                 }
                 break;
+            default:
         }
     }
 
     @FXML
-    private void sellGadgetButtonAction(ActionEvent event) {
+    private void sellGadgetButtonAction(final ActionEvent event) {
         switch (currentGadgetType) {
             case "My Weapon":
                 player.addMoney(selectedWeapon.getCost() / 2);
@@ -808,10 +841,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Purchases a weapon.
-     * Checks to see if the player has enough money for the weapon
-     * If so, removes the money from the player and adds the weapon to
-     *     the player's ship
+     * Purchases a weapon. Checks to see if the player has enough money for the
+     * weapon If so, removes the money from the player and adds the weapon to
+     * the player's ship
      */
     public void buyWeapon() {
         if (player.getMoney() >= selectedWeapon.getCost()) {
@@ -830,10 +862,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Purchases a shield.
-     * Checks to see if the player has enough money for the shield
-     * If so, removes the money from the player and adds the shield to
-     *     the player's ship  
+     * Purchases a shield. Checks to see if the player has enough money for the
+     * shield If so, removes the money from the player and adds the shield to
+     * the player's ship
      */
     public void buyShield() {
         if (player.getMoney() >= selectedShield.getCost()) {
@@ -852,10 +883,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     /**
-     * Purchases an engine.
-     * Checks to see if the player has enough money for the engine
-     * If so, removes the money from the player and adds the engine to
-     *     the player's ship
+     * Purchases an engine. Checks to see if the player has enough money for the
+     * engine If so, removes the money from the player and adds the engine to
+     * the player's ship
      */
     public void buyEngine() {
         if (player.getMoney() >= selectedEngine.getCost()) {
@@ -874,7 +904,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     @FXML
-    private void confirmFuelButtonAction(ActionEvent event) {
+    private void confirmFuelButtonAction(final ActionEvent event) {
         final int newFuel = (int) (tempFuel - player.getShip().getFuel());
         fuelDialogueField.setText("Purchased " + newFuel + " gallons of fuel.");
         if (ft != null) {
@@ -886,13 +916,13 @@ public class SpaceStationController implements Initializable, ControlledScreen {
     }
 
     @FXML
-    private void cancelFuelButtonAction(ActionEvent event) {
+    private void cancelFuelButtonAction(final ActionEvent event) {
         tempFuel = player.getShip().getFuel();
         updateFuel();
     }
 
     @FXML
-    private void fillFuelButtonAction(ActionEvent event) {
+    private void fillFuelButtonAction(final ActionEvent event) {
         final int potentialNewFuel = (int) (player.getShip().getFuelCapacity()
                 - player.getShip().getFuel());
         final int canAffordFuel = player.getMoney() / fuelCost;
