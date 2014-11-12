@@ -474,7 +474,7 @@ public class UniverseMapController extends AnimationTimer
                     }
                 } else if (selectedSystem != null) {
                     camera.setTranslateZ(Math.min(camera.getTranslateZ()
-                            - camera.getTranslateZ() * event.getDeltaY()
+                            + camera.getTranslateZ() * event.getDeltaY()
                                     / UniverseMapSubScene.UNIVERSE_ZOOM,
                             SYSTEM_ZOOM_LOW));
                     if (camera.getTranslateZ() < SYSTEM_ZOOM_HIGH) {
@@ -490,7 +490,7 @@ public class UniverseMapController extends AnimationTimer
                 } else {
                     camera.setTranslateZ(
                             Math.max(Math.min(camera.getTranslateZ()
-                                    - camera.getTranslateZ() * event.getDeltaY()
+                                    + camera.getTranslateZ() * event.getDeltaY()
                                             / UniverseMapSubScene.UNIVERSE_ZOOM,
                                     UNIVERSE_ZOOM_LOW), UNIVERSE_ZOOM_HIGH));
                 }
