@@ -55,111 +55,239 @@ public final class SpaceStationController
      */
     private static final int PICTURE_SIZE = 100;
 
+    /**
+     * Pane that stores ship ui.
+     */
     @FXML
     private Pane shipPane;
+    /**
+     * Pane that stores gadget ui.
+     */
     @FXML
     private Pane gadgetPane;
-
+    /**
+     * Button to buy new ship.
+     */
     @FXML
     private Button buyShip;
+    /**
+     * Field to confirm new purchases.
+     */
     @FXML
     private TextField confirmationField;
+    /**
+     * List of ships.
+     */
     @FXML
     private VBox shipList;
+    /**
+     * Label that displays player money.
+     */
     @FXML
     private Label moneyLabel;
+    /**
+     * Shows dialog for players.
+     */
     @FXML
     private Label shipDialogueField;
+    /**
+     * Fuel Dialog field.
+     */
     @FXML
     private Label fuelDialogueField;
+    /**
+     * Button to view player card.
+     */
     @FXML
     private Button viewPlayerCardButton;
+    /**
+     * Button to switch between ship and gadget.
+     */
     @FXML
     private Button shopForPartsButton;
-
+    /**
+     * How much fuel your ship has.
+     */
     @FXML
     private ProgressBar fuelProgress;
+    /**
+     * Shows how much fuel your ship has.
+     */
     @FXML
     private Label fuelLabel;
+    /**
+     * Cost of fuel.
+     */
     @FXML
     private Label fuelCostLabel;
+    /**
+     * Cancels fuel purchase.
+     */
     @FXML
     private Button cancelFuelButton;
+    /**
+     * Buys enough to fill ship.
+     */
     @FXML
     private Button fillFuelButton;
+    /**
+     * Confirms purchase of fuel.
+     */
     @FXML
     private Button confirmFuelButton;
-
+    /**
+     * Data about other ship.
+     */
     @FXML
     private Label otherShipLabel;
+    /**
+     * Picture of other ship.
+     */
     @FXML
     private Pane otherShipPicturePane;
+    /**
+     * hull of other ship.
+     */
     @FXML
     private Label hullStrength;
+    /**
+     * fuel cap of other ship.
+     */
     @FXML
     private Label fuelCapacity;
+    /**
+     * weapon slots of other ship.
+     */
     @FXML
     private Label weaponSlots;
+    /**
+     * shields of other ship.
+     */
     @FXML
     private Label shieldSlots;
+    /**
+     * engines of other ship.
+     */
     @FXML
     private Label engineSlots;
+    /**
+     * cargo of other ship.
+     */
     @FXML
     private Label cargoBaySlots;
+    /**
+     * cost of other ship.
+     */
     @FXML
     private Label shipCost;
-
+    /**
+     * Picture of my ship.
+     */
     @FXML
     private Pane myShipPicturePane;
+    /**
+     * hull of my ship.
+     */
     @FXML
     private Label myHullStrength;
+    /**
+     * fuel of my ship.
+     */
     @FXML
     private Label myFuelCapacity;
+    /**
+     * weapons of my ship.
+     */
     @FXML
     private Label myWeaponSlots;
+    /**
+     * shields of my ship.
+     */
     @FXML
     private Label myShieldSlots;
+    /**
+     * engines of my ship.
+     */
     @FXML
     private Label myEngineSlots;
+    /**
+     * cargo bays of my ship.
+     */
     @FXML
     private Label myCargoBaySlots;
+    /**
+     * value of my ship.
+     */
     @FXML
     private Label myShipValue;
-
+    /**
+     * shows gadgets on ship.
+     */
     @FXML
     private Pane gadgetShipViewer;
+    /**
+     * shows weapons on ship.
+     */
     @FXML
     private VBox gadgetWeaponsViewer;
+    /**
+     * shows shields on ship.
+     */
     @FXML
     private VBox gadgetShieldsViewer;
+    /**
+     * shows engines on ship.
+     */
     @FXML
     private VBox gadgetEnginesViewer;
+    /**
+     * view weapons.
+     */
     @FXML
     private Button gadgetWeaponsButton;
-    @FXML
-    private Button gadgetShieldsButton;
-    @FXML
-    private Button gadgetEnginessButton;
-    @FXML
-    private Pane gadgetDetailsPane;
+    /**
+     * list of gadgets.
+     */
     @FXML
     private VBox gadgetList;
-    @FXML
-    private Button gadgetBuyButton;
+    /**
+     * picture of gadgets.
+     */
     @FXML
     private Pane gadgetPicture;
+    /**
+     * type of gadget.
+     */
     @FXML
     private Label gadgetTypeLabel;
+    /**
+     * name 1 of gadget.
+     */
     @FXML
     private Label gadgetNameLabel1;
+    /**
+     * name 2 of gadget.
+     */
     @FXML
     private Label gadgetNameLabel2;
+    /**
+     * value 1 of gadget.
+     */
     @FXML
     private Label gadgetValueLabel1;
+    /**
+     * value 2 of gadget.
+     */
     @FXML
     private Label gadgetValueLabel2;
+    /**
+     * cost of gadget.
+     */
     @FXML
     private Label gadgetCostLabel;
+    /**
+     * confrmation field for gadget.
+     */
     @FXML
     private TextField confirmationGadgetField;
 
@@ -211,10 +339,13 @@ public final class SpaceStationController
      * Used to determine where the gadget is in the array.
      */
     private int gadgetIndex;
-
     /**
-     * Determines which fuel buttons should currently be disabled. Maintains the
-     * progress bar and labels associated with fuel
+     * Dimension of squares used to represent things.
+     */
+    private int rectangleLength;
+    /**
+     * Determines which fuel buttons should currently be disabled.Maintains the.
+     * progress bar and labels associated with fuel.
      */
     public void updateFuel() {
         fuelProgress.setProgress(tempFuel / player.getShip().getFuelCapacity());
@@ -228,8 +359,8 @@ public final class SpaceStationController
     }
 
     /**
-     * Sets up the My Ship panel with the appropriate info. Picture is currently
-     * a colored rectangle, TODO: Get Josh's 3D ship
+     * Sets up the My Ship panel with the appropriate info.
+     * Picture is currently a colored rectangle.
      */
     public void myShipStats() {
         myHullStrength.setText(Integer.toString(myShip.getHull()));
@@ -247,8 +378,8 @@ public final class SpaceStationController
     }
 
     /**
-     * Sets up the Other Ship panel with the appropriate info. Picture is
-     * currently a colored rectangle, TODO: Get Josh's 3D ship
+     * Sets up the Other Ship panel with the appropriate info. Picture is.
+     * currently a colored rectangle.
      */
     public void otherShipStats() {
         otherShipLabel.setText(otherShip.getType().name());
@@ -405,7 +536,7 @@ public final class SpaceStationController
 
     /**
      * Returns to the universe map.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -415,7 +546,7 @@ public final class SpaceStationController
 
     /**
      * Does nothing right now.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -426,7 +557,7 @@ public final class SpaceStationController
 
     /**
      * Toggles between parts and ships.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -456,13 +587,14 @@ public final class SpaceStationController
     }
 
     /**
-     * Sets up the gadget buying pane
+     * Sets up the gadget buying pane.
      */
     private void initializeGadgets() {
         shipDialogueField.setText("");
         gadgetShipViewer.getChildren().removeAll();
+        rectangleLength = 25;
         Rectangle shipPicture
-                = new Rectangle(25, 25, PICTURE_SIZE, PICTURE_SIZE);
+                = new Rectangle(rectangleLength, rectangleLength, PICTURE_SIZE, PICTURE_SIZE);
         shipPicture.setFill(myShip.getType().getColor());
         gadgetShipViewer.getChildren().add(shipPicture);
 
@@ -508,7 +640,8 @@ public final class SpaceStationController
                                             selectedWeapon.getCost()));
                             gadgetPicture.getChildren().clear();
                             Rectangle myGadgetPicture = new Rectangle(
-                                    100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                                    rectangleLength + rectangleLength, 10,
+                                    PICTURE_SIZE, PICTURE_SIZE);
                             myGadgetPicture.setFill(selectedWeapon.getColor());
                             gadgetPicture.getChildren().add(myGadgetPicture);
                         }
@@ -519,7 +652,7 @@ public final class SpaceStationController
 
     /**
      * Shows you the available shields.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -566,7 +699,7 @@ public final class SpaceStationController
 
     /**
      * Shows you the available engines.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -781,7 +914,7 @@ public final class SpaceStationController
 
     /**
      * Buys a new ship.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -801,7 +934,7 @@ public final class SpaceStationController
 
     /**
      * Buys a new gadget.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -846,7 +979,7 @@ public final class SpaceStationController
 
     /**
      * Sells a gadget.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -888,9 +1021,9 @@ public final class SpaceStationController
     }
 
     /**
-     * Purchases a weapon. Checks to see if the player has enough money for the
-     * weapon If so, removes the money from the player and adds the weapon to
-     * the player's ship
+     * Purchases a weapon. Checks to see if the player has enough money for the.
+     * weapon If so, removes the money from the player and adds the weapon to.
+     * the player's ship.
      */
     public void buyWeapon() {
         if (player.getMoney() >= selectedWeapon.getCost()) {
@@ -909,9 +1042,9 @@ public final class SpaceStationController
     }
 
     /**
-     * Purchases a shield. Checks to see if the player has enough money for the
-     * shield If so, removes the money from the player and adds the shield to
-     * the player's ship
+     * Purchases a shield. Checks to see if the player has enough money for the.
+     * shield If so, removes the money from the player and adds the shield to.
+     * the player's ship.
      */
     public void buyShield() {
         if (player.getMoney() >= selectedShield.getCost()) {
@@ -930,9 +1063,9 @@ public final class SpaceStationController
     }
 
     /**
-     * Purchases an engine. Checks to see if the player has enough money for the
-     * engine If so, removes the money from the player and adds the engine to
-     * the player's ship
+     * Purchases an engine. Checks to see if the player has enough money for.
+     * the engine If so, removes the money from the player and adds the engine.
+     * to the player's ship.
      */
     public void buyEngine() {
         if (player.getMoney() >= selectedEngine.getCost()) {
@@ -952,7 +1085,7 @@ public final class SpaceStationController
 
     /**
      * Confirms purchase of fuel.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -969,7 +1102,7 @@ public final class SpaceStationController
 
     /**
      * Cancels purchase of fuel.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
@@ -980,7 +1113,7 @@ public final class SpaceStationController
 
     /**
      * Fills up your fuel tank.
-     * 
+     *
      * @param event the event that triggers this method.
      */
     @FXML
