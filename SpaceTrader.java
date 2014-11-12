@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * 
+ * Main application class that sets up the view components.
  * @author Team TYN
  */
 public class SpaceTrader extends Application {
@@ -21,7 +21,7 @@ public class SpaceTrader extends Application {
     public static final int SCREEN_HEIGHT = 720;
 
     @Override
-    public void start(final Stage stage) {
+    public final void start(final Stage stage) {
         final ScreensController mainContainer = new ScreensController();
         GameModel.initialize(stage);
         mainContainer.loadScreen("Menu", "Menu.fxml");
