@@ -10,22 +10,11 @@ import spacetrader.ui.SerializableColor;
  * @author Team TYN
  */
 public class Engine implements Serializable {
+
     /**
-     * 
+     * The type of this particular engine.
      */
     private final EngineType type;
-    /**
-     * 
-     */
-    private final int acceleration;
-    /**
-     * 
-     */
-    private final int fuelEfficiency;
-    /**
-     * 
-     */
-    private final String name;
 
     /**
      * The enum used to store values constant across all engines of a type.
@@ -63,49 +52,49 @@ public class Engine implements Serializable {
          */
         Shetland(20, 25, 500, new SerializableColor(Color.RED), "Shetland"),
         /**
-         *  Advanced engine that heavily favors acceleration.
+         * Advanced engine that heavily favors acceleration.
          */
         Tawleed(50, 10, 500, new SerializableColor(Color.RED), "Tawleed"),
         /**
-         *  Epic engine that heavily favors efficiency.
+         * Epic engine that heavily favors efficiency.
          */
         Yakut(10, 250, 2500, new SerializableColor(Color.GOLD), "Yakut"),
         /**
-         *  Epic engine that heavily favors acceleration.
+         * Epic engine that heavily favors acceleration.
          */
         Unicorn(250, 10, 2500, new SerializableColor(Color.GOLD), "Unicorn");
 
         /**
-         * 
+         * How fast the engine gets fast.
          */
-        public final int acceleration;
+        private final int acceleration;
         /**
-         * 
+         * How efficiently the engine consumes fuel when traveling.
          */
-        public final int fuelEfficiency;
+        private final int fuelEfficiency;
         /**
-         * 
+         * The cost of the engine.
          */
-        public final int cost;
+        private final int cost;
         /**
-         * 
+         * The name of the engine.
          */
-        public final String name;
+        private final String name;
         /**
-         * 
+         * The color associated with the engine.
          */
-        public final SerializableColor color;
+        private final SerializableColor color;
 
         /**
          * Constructor for EngineType.
          *
-         * @param aAcceleration The rate of change in velocity
-         *     due to the engine.
-         * @param aFuelEfficiency The rate at which fuel is burnt to
-         *     travel distances.
+         * @param aAcceleration The rate of change in velocity due to the
+         * engine.
+         * @param aFuelEfficiency The rate at which fuel is burnt to travel
+         * distances.
          * @param aCost The base cost for this type of engine.
-         * @param aColor The color used to distinguish this engine
-         *     type from the others.
+         * @param aColor The color used to distinguish this engine type from the
+         * others.
          * @param aName The string representation of the name type.
          */
         EngineType(final int aAcceleration, final int aFuelEfficiency,
@@ -120,14 +109,11 @@ public class Engine implements Serializable {
     };
 
     /**
-     * No argument constructor for Shield,
-     *     creates a Hackney engine (lowest level).
+     * No argument constructor for Shield, creates a Hackney engine (lowest
+     * level).
      */
     public Engine() {
-        this.type = EngineType.Hackney;
-        this.acceleration = type.acceleration;
-        this.fuelEfficiency = type.fuelEfficiency;
-        this.name = type.name;
+        this(EngineType.Hackney);
     }
 
     /**
@@ -137,9 +123,6 @@ public class Engine implements Serializable {
      */
     public Engine(final EngineType aType) {
         type = aType;
-        acceleration = aType.acceleration;
-        fuelEfficiency = aType.fuelEfficiency;
-        name = aType.name;
     }
 
     /**
@@ -148,7 +131,7 @@ public class Engine implements Serializable {
      * @return The engine's acceleration.
      */
     public int getAcceleration() {
-        return acceleration;
+        return type.acceleration;
     }
 
     /**
@@ -157,7 +140,14 @@ public class Engine implements Serializable {
      * @return The engine's fuel efficiency.
      */
     public int getFuelEfficiency() {
-        return fuelEfficiency;
+        return type.fuelEfficiency;
+    }
+
+    /**
+     * @return the cost of the engine
+     */
+    public int getCost() {
+        return type.cost;
     }
 
     /**
@@ -175,11 +165,18 @@ public class Engine implements Serializable {
      * @return The engine's engine name.
      */
     public String getName() {
-        return name;
+        return type.name;
+    }
+
+    /**
+     * @return the color of the engine
+     */
+    public Color getColor() {
+        return type.color.getColor();
     }
 
     @Override
     public String toString() {
-        return name;
+        return getName();
     }
 }

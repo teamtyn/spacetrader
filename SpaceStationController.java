@@ -316,9 +316,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
         }
         for (Engine engine : player.getShip().getEngines()) {
             if (engine != null) {
-                player.addMoney(engine.getType().cost / 2);
+                player.addMoney(engine.getCost() / 2);
                 System.out.println("Excess weapon sold for: "
-                        + engine.getType().cost / 2);
+                        + engine.getCost() / 2);
             }
         }
         boolean hasEngine = false;
@@ -545,16 +545,16 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                     gadgetNameLabel1.setText("Acceleration ");
                     gadgetNameLabel2.setText("Fuel Efficiency");
                     gadgetValueLabel1.setText(Integer.toString(
-                            selectedEngine.getType().acceleration));
+                            selectedEngine.getAcceleration()));
                     gadgetValueLabel2.setText(Integer.toString(
-                            selectedEngine.getType().fuelEfficiency));
+                            selectedEngine.getFuelEfficiency()));
                     gadgetCostLabel.setText(Integer.toString(
-                            selectedEngine.getType().cost));
+                            selectedEngine.getCost()));
                     gadgetPicture.getChildren().clear();
                     final Rectangle myGadgetPicture
                             = new Rectangle(100, 10, 100, 100);
                     myGadgetPicture.setFill(
-                            selectedEngine.getType().color.getColor());
+                            selectedEngine.getColor());
                     gadgetPicture.getChildren().add(myGadgetPicture);
                 }
             });
@@ -677,12 +677,12 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                         gadgetValueLabel2.setText(Integer.toString(
                                 selectedEngine.getFuelEfficiency()));
                         gadgetCostLabel.setText(Integer.toString(
-                                (selectedEngine.getType().cost / 2)));
+                                (selectedEngine.getCost() / 2)));
                         gadgetPicture.getChildren().clear();
                         final Rectangle myGadgetPicture
                                 = new Rectangle(100, 10, 100, 100);
                         myGadgetPicture.setFill(
-                                selectedEngine.getType().color.getColor());
+                                selectedEngine.getColor());
                         gadgetPicture.getChildren().add(myGadgetPicture);
                         gadgetIndex = row.getParent()
                                 .getChildrenUnmodifiable().indexOf(row);
@@ -757,7 +757,7 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 break;
             case "Engine":
                 if (confirmationGadgetField.getText().trim().equals(
-                        Integer.toString(selectedEngine.getType().cost))) {
+                        Integer.toString(selectedEngine.getCost()))) {
                     shipDialogueField.setText("");
                     confirmationGadgetField.setText("");
                     buyEngine();
@@ -791,9 +791,9 @@ public class SpaceStationController implements Initializable, ControlledScreen {
                 currentGadgetType = "None";
                 break;
             case "My Engine":
-                player.addMoney(selectedEngine.getType().cost / 2);
+                player.addMoney(selectedEngine.getCost() / 2);
                 shipDialogueField.setText("Engine sold for "
-                        + selectedEngine.getType().cost / 2);
+                        + selectedEngine.getCost() / 2);
                 player.getShip().removeEngine(gadgetIndex);
                 updatePlayerEngines();
                 gadgetIndex = -1;
@@ -858,13 +858,13 @@ public class SpaceStationController implements Initializable, ControlledScreen {
      *     the player's ship
      */
     public void buyEngine() {
-        if (player.getMoney() >= selectedEngine.getType().cost) {
-            player.subtractMoney(selectedEngine.getType().cost);
+        if (player.getMoney() >= selectedEngine.getCost()) {
+            player.subtractMoney(selectedEngine.getCost());
             if (player.getShip().addEngine(selectedEngine)) {
                 shipDialogueField.setText("Purchase complete");
             } else {
                 shipDialogueField.setText("Purchase failed, cost refunded");
-                player.addMoney(selectedEngine.getType().cost);
+                player.addMoney(selectedEngine.getCost());
             }
         } else {
             shipDialogueField.setText("Not enough money");
