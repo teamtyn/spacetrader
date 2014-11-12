@@ -56,7 +56,8 @@ public class CargoBay implements Serializable {
      *     stored in the cargo bay
      * @return The number of goods added
      */
-    public int addTradeGood(String goodName, int quantityRequested) {
+    public final int addTradeGood(final String goodName,
+            final int quantityRequested) {
         int quantity = quantityRequested;
         if (quantity > 0) {
             if ((quantity + currentSize) > capacity) {
@@ -79,7 +80,7 @@ public class CargoBay implements Serializable {
      * @param quantity The quantity to be ideally removed from the cargo bay
      * @return The number of goods removed
      */
-    public int removeTradeGood(final String goodName, int quantity) {
+    public final int removeTradeGood(final String goodName, int quantity) {
         if (quantity > goods.get(goodName)) {
             quantity = goods.get(goodName);
         }
@@ -116,7 +117,7 @@ public class CargoBay implements Serializable {
      * Only to be used as a convenience when player upgrades their cargo bay.
      * @param aCapacity The new capacity of the cargo bay
      */
-    public void setCapacity(final int aCapacity) {
+    public final void setCapacity(final int aCapacity) {
         capacity = aCapacity;
     }
 

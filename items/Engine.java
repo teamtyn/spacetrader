@@ -6,7 +6,7 @@ import spacetrader.ui.SerializableColor;
 
 /**
  * Engine is a class used to propel ships around the universe.
- * 
+ *
  * @author Team TYN
  */
 public class Engine implements Serializable {
