@@ -34,71 +34,74 @@ public class MarketController implements
         Initializable, ControlledScreen, Observer<ControlledScreen> {
 
     /**
-     * 
+     * The VBox which will house all of this market's buyable goods.
      */
     @FXML
     private VBox buyGoodsVBox;
     /**
-     * 
+     * The pane which holds the pricing chart.
      */
     @FXML
     private AnchorPane chartPane;
     /**
-     * 
+     * The VBox which will house all of this market's sellable goods.
      */
     @FXML
     private VBox sellGoodsVBox;
     /**
-     * 
+     * A label that displays the available cargo space left.
      */
     @FXML
     private Label cargoLabel;
     /**
-     * 
+     * A label that displays the player's current money available.
      */
     @FXML
     private Label moneyLabel;
     /**
-     * 
+     * A field to display messages to the user about why certain goods cannot
+     *     be purchased among other things.
      */
     @FXML
     private Label dialogueField;
     /**
-     * 
+     * A field that displays the price of the good currently being inspected.
      */
     @FXML
     private Label priceField;
 
     /**
-     * 
+     * The parent controller of this controller.
      */
     private ScreensController parentController;
     /**
-     * 
+     * The backing market of this market GUI.
      */
-    public static MarketPlace market;
+    private static MarketPlace market;
     /**
-     * 
+     * A fade transition to temporarily display messages to the player.
      */
     private FadeTransition ft;
     /**
-     * 
+     * The list of goods which are buyable on this planet
+     *     (via tech level restrictions).
      */
     private GoodsList buyList;
     /**
-     * 
+     * The list of goods which are sellable on this planet
+     *     (via tech level restrictions).
      */
     private GoodsList sellList;
     /**
-     * 
+     * The player that is visiting this market.
      */
     private Player player;
     /**
-     * 
+     * The goods quantities and prices specific to this planet's situation.
      */
     private ArrayList<TradeGood> goods;
     /**
-     * 
+     * The player's cargo bay which will house goods they buy.
      */
     private CargoBay cargoBay;
 
@@ -107,7 +110,7 @@ public class MarketController implements
      */
     private static final int CHART_DAYS_TO_DISPLAY = 5;
     /**
-     * 
+     * The chart's random price multiplier.
      */
     private static final int CHART_RANDOM_PRICE_MULTIPLIER = 3;
     /**
