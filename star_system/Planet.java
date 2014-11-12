@@ -105,11 +105,58 @@ public class Planet implements Serializable {
      */
     public enum ResourceLevel {
 
-        NOSPECIALRESOURCES, MINERALRICH, MINERALPOOR,
-        DESERT, LOTSOFWATER, RICHSOIL,
-        POORSOIL, RICHFAUNA, LIFELESS,
-        WEIRDMUSHROOMS, LOTSOFHERBS,
-        ARTISTIC, WARLIKE
+        /**
+         * Nothing special.
+         */
+        NOSPECIALRESOURCES,
+        /**
+         * Lots of minerals.
+         */
+        MINERALRICH,
+        /**
+         * Not a lot of minerals.
+         */
+        MINERALPOOR,
+        /**
+         * No water.
+         */
+        DESERT,
+        /**
+         * Lots of water.
+         */
+        LOTSOFWATER,
+        /**
+         * Good for growing plants.
+         */
+        RICHSOIL,
+        /**
+         * Not good for plants.
+         */
+        POORSOIL,
+        /**
+         * Lots of plants.
+         */
+        RICHFAUNA,
+        /**
+         * Everything is dead.
+         */
+        LIFELESS,
+        /**
+         * Weird mushrooms?
+         */
+        WEIRDMUSHROOMS,
+        /**
+         * Lots of herbs.
+         */
+        LOTSOFHERBS,
+        /**
+         * Lots of artsy stuff.
+         */
+        ARTISTIC,
+        /**
+         * WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR.
+         */
+        WARLIKE
     };
 
     /**
@@ -117,10 +164,38 @@ public class Planet implements Serializable {
      */
     public enum TechLevel {
 
-        PREAGRICULTURAL, AGRICULTURAL,
-        MEDIEVAL, RENAISSANCE,
-        EARLYINDUSTRIAL, INDUSTRIAL,
-        POSTINDUSTRIAL, HIGHTECH
+        /**
+         * Uggg ugg kill with rock.
+         */
+        PREAGRICULTURAL,
+        /**
+         * Domesticated plants and animals.
+         */
+        AGRICULTURAL,
+        /**
+         * Basic social structures.
+         */
+        MEDIEVAL,
+        /**
+         * Starting to learn how to science.
+         */
+        RENAISSANCE,
+        /**
+         * Starting to make cool stuff.
+         */
+        EARLYINDUSTRIAL,
+        /**
+         * Making some basic cool stuff.
+         */
+        INDUSTRIAL,
+        /**
+         * Cool stuff has been made.
+         */
+        POSTINDUSTRIAL,
+        /**
+         * SPACE AND LASERS
+         */
+        HIGHTECH
     };
 
     /**
