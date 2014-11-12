@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import javafx.scene.PointLight;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import spacetrader.GameModel;
@@ -19,33 +20,33 @@ import spacetrader.Xform.RotateOrder;
 public final class StarSystemView extends Sphere {
 
     /**
-     *
+     * The star system represented by this system view.
      */
     private final StarSystem system;
     /**
-     *
+     * The planet views within the planet level Xform of this system view.
      */
     private final ArrayList<PlanetView> planetViews;
     /**
-     *
+     * The system level Xform.
      */
     private final Xform systemXform;
     /**
-     *
+     * The planet level Xform.
      */
     private final Xform planetsXform;
     /**
-     *
+     * The light emitted by the represented system's star.
      */
     private final PointLight light;
     /**
-     *
+     * The star material.
      */
     private final PhongMaterial material;
 
     /**
-     *
-     * @param aSystem
+     * Constructs a star system view object given a star system.
+     * @param aSystem aSystem The system to be represented by this star system view
      */
     public StarSystemView(final StarSystem aSystem) {
         super(aSystem.getSize());
