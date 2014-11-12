@@ -34,7 +34,7 @@ public class CargoBay implements Serializable {
     }
 
     /**
-     * 
+     * Initializes the quantities in the cargo bay to zero.
      */
     public final void setUpMap() {
         goods.put("Water", 0);
