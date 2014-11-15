@@ -68,12 +68,11 @@ public class EncounterSubScene {
         subScene.setFill(Color.BLACK);
 
         final ObjModelImporter objImp = new ObjModelImporter();
-        final URL modelUrl = getClass().getResource("ship2.obj");
-        objImp.read(modelUrl);
-        final MeshView[] shipModel = objImp.getImport();
-        playerShip = new ShipView(shipModel[0].getMesh(),
+        ModelLoader loader = new ModelLoader("ship2.obj");
+        loader.load(false);
+        playerShip = new ShipView(loader.getMesh(),
                 GameModel.getPlayer().getShip());
-        enemyShip = new ControlledShipView(shipModel[0].getMesh(),
+        enemyShip = new ControlledShipView(loader.getMesh(),
                 GameModel.getPlayer().getShip(), ControlType.PIRATE);
         enemyShip.setTarget(playerShip);
         final Xform enemyXform = enemyShip.getMainXform();
