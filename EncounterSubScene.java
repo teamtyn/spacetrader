@@ -1,6 +1,5 @@
 package spacetrader;
 
-import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import java.net.URL;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
@@ -67,7 +66,6 @@ public class EncounterSubScene {
                 SceneAntialiasing.BALANCED);
         subScene.setFill(Color.BLACK);
 
-        final ObjModelImporter objImp = new ObjModelImporter();
         ModelLoader loader = new ModelLoader("ship2.obj");
         loader.load(false);
         playerShip = new ShipView(loader.getMesh(),
