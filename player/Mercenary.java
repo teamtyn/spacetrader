@@ -20,6 +20,7 @@ public class Mercenary extends AbstractCrewMember {
     public Mercenary() {
         super();
         this.name = MercenaryNames.getName();
+        generateSkills();
     }
 
     /**
@@ -31,6 +32,7 @@ public class Mercenary extends AbstractCrewMember {
     public Mercenary(String suffix) {
         super();
         this.name = MercenaryNames.getName() + " of " + suffix;
+        generateSkills();
     }
     
     private void generateSkills() {

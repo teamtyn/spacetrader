@@ -2,11 +2,11 @@ package spacetrader;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -18,8 +18,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import spacetrader.player.AbstractCrewMember;
 import spacetrader.player.Mercenary;
 import spacetrader.player.Player;
+import spacetrader.player.Skill;
 
 public class MercenaryShopController implements Initializable, ControlledScreen {
 
@@ -51,12 +53,13 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
     private Player player;
     private ScreensController parentController;
     private List<Mercenary> mercs;
+    private VBox detailList;
     
     @Override
     public void setScreenParent(ScreensController aParentController) {
         parentController = aParentController;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ft = new FadeTransition(Duration.millis(1000), dialogueField);
@@ -74,8 +77,14 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
     
     private void display() {
         mercs = generateMercs();
+        setup();
         updateMercList();
         updateCrewList();
+    }
+    
+    private void setup() {
+        detailList = new VBox();
+        mercDetailsPane.getChildren().add(detailList);
     }
     
     private ArrayList<Mercenary> generateMercs() {
@@ -88,12 +97,29 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
     }
     
     private void updateMercList() {
+        mercList.getChildren().clear();
         MercList ml = new MercList(mercs);
         mercList.getChildren().add(ml.vBox);
     }
     
     private void updateCrewList() {
-        
+        System.out.println("updating crew list!");
+        currentCrewList.getChildren().clear();
+        AbstractCrewMember[] acme = player.getShip().getCrew();
+        ArrayList<Mercenary> crewMercs = new ArrayList<>();
+        for(int i = 0; i < acme.length; i++) {
+            if(acme[i] instanceof Mercenary)
+                crewMercs.add((Mercenary) acme[i]);
+        }
+        MercList cl = new MercList(crewMercs);
+        currentCrewList.getChildren().add(cl.vBox);
+    }
+    
+    private void hireMercenary(Mercenary merc) {
+        if(!player.getShip().addCrewMember(merc)) {
+            System.out.println("You can't jam any more crew members in there!");
+        }
+        updateCrewList();
     }
     
     @FXML
@@ -103,7 +129,7 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
 
     @FXML
     void backButtonAction(ActionEvent event) {
-
+        parentController.setScreen("UniverseMap");
     }
     
     /**
@@ -119,14 +145,15 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
             listMercs(array);
         }
 
-        
         public final void listMercs(List<Mercenary> mercs) {
             for (Mercenary merc : mercs) {
-                MercenaryShopController.MercsRow row = new MercenaryShopController.MercsRow(merc);
-                this.addChild(row);
+                if(merc != null) {
+                    MercenaryShopController.MercsRow row = new MercenaryShopController.MercsRow(merc);
+                
+                    this.addChild(row);
+                }
             }
         }
-
         public void addChild(Node node) {
             vBox.getChildren().add(node);
         }
@@ -144,17 +171,24 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
 
                 specialty = new Label("x" + merc.getSpecialty());
                 button = new Button("Hire");
+                            button.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    hireMercenary(merc);
+                                }
+                            });
             this.getChildren().add(specialty);
             this.getChildren().add(button);
             this.setOnMouseEntered((MouseEvent event) -> {
-                mercDetailsPane.getChildren().add(new Label(merc.getSkills().toString()));
+                detailList.getChildren().clear();
+                detailList.getChildren().add(new Label(merc.getName().toString()));
+                for(Skill skill: merc.getSkills().values()) {
+                    detailList.getChildren().add(new Label(skill.toString()));
+                }
             });
             this.setId("mercs-row");
             this.setAlignment(Pos.CENTER_RIGHT);
             this.setSpacing(30);
         }
     }
-    
-
-
 }

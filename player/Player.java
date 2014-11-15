@@ -22,6 +22,7 @@ public class Player extends AbstractCrewMember {
         knownPlanets = new ArrayList<>();
         coord = new Point(0, 0);
         ship = new Ship(Ship.ShipType.Gnat);
+        ship.addCrewMember(this);
         ship.addEngine(new Engine());
         money = 10000;
     }
@@ -74,8 +75,9 @@ public class Player extends AbstractCrewMember {
         return knownPlanets.contains(planet);
     }
 
-    public void setShip(Ship ship) {
-        this.ship = ship;
+    public void setShip(Ship aShip) {
+        ship = aShip;
+        ship.addCrewMember((AbstractCrewMember)this);
     }
 
     // Setter for coordinates

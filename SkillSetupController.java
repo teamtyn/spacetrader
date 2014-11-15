@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.scene.Node;
+import spacetrader.items.Ship;
 
 /**
  * FXML Controller class
@@ -246,7 +247,6 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         System.out.println(closingMessage.toString());
         GameModel.setPlayer(player);
         GameModel.generateSystems();
-
         parentController.setScreen("UniverseMap");
     }
 

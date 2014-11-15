@@ -1,5 +1,6 @@
 package spacetrader;
 
+import java.io.File;
 import spacetrader.observer.Observer;
 import spacetrader.market.MarketPlace;
 import java.net.URL;
@@ -24,6 +25,9 @@ import javafx.util.Duration;
 import spacetrader.items.CargoBay;
 import spacetrader.market.TradeGood;
 import spacetrader.player.Player;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 /**
  * FXML Controller for the generation of a market
@@ -47,6 +51,8 @@ public class MarketController implements
     private Label dialogueField;
     @FXML
     private Label priceField;
+    @FXML
+    private MediaView mediaView;
 
     private ScreensController parentController;
     public static MarketPlace market;
@@ -56,6 +62,9 @@ public class MarketController implements
     private Player player;
     private ArrayList<TradeGood> goods;
     private CargoBay cargoBay;
+    
+    private Media media;
+    private MediaPlayer mediaPlayer;
 
     @Override
     public void setScreenParent(ScreensController parentController) {
@@ -70,12 +79,24 @@ public class MarketController implements
         ft.setToValue(1);
         ft.setAutoReverse(true);
         ft.setCycleCount(2);
+        String workingDir = System.getProperty("user.dir");
+        System.out.println(workingDir);
+        File file = new File(workingDir, "/src/spacetrader/m.mp4");
+        media = new Media(file.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        //mediaPlayer.setAutoPlay(true);
+        //mediaPlayer.setCycleCount(10);
+        mediaView.setMediaPlayer(mediaPlayer);
     }
 
     @Override
     public void lazyInitialize() {
         player = GameModel.getPlayer();
         GameModel.getObserverRegistry().registerObserver(this);
+        //mediaPlayer.pause();
+        mediaPlayer.play();
+        mediaPlayer.setMute(true);
+        mediaPlayer.setRate(.25);
         display();
     }
 
@@ -84,6 +105,7 @@ public class MarketController implements
      * the good lists
      */
     public void display() {
+        mediaPlayer.play();
         market = player.getPlanet().getMarket();
         goods = market.getGoods();
         cargoBay = player.getShip().getCargoBay();
@@ -104,6 +126,7 @@ public class MarketController implements
 
     @FXML
     private void backButtonAction(ActionEvent event) {
+        mediaPlayer.pause();
         parentController.setScreen("UniverseMap");
     }
 

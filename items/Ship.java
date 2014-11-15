@@ -107,7 +107,7 @@ public class Ship implements Serializable {
         shields = new Shield[type.shieldSlots];
         weapons = new Weapon[type.weaponSlots];
         engines = new Engine[type.engineSlots];
-        crew = new Mercenary[type.crewSlots];
+        crew = new AbstractCrewMember[type.crewSlots];
         cargoBay = new CargoBay(type.cargoBaySlots);
         crewNumber = 0;
         hull = type.hullStrength;
@@ -150,7 +150,7 @@ public class Ship implements Serializable {
     }
 
     /**
-     * Adder for a new engine
+     * Adder for a new engine.
      *
      * @param newEngine the new engine to be added
      * @return whether or not the add succeeded
