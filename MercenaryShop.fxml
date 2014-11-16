@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.MercenaryShopController">
+   <children>
+   <Pane layoutY="599.0" prefHeight="120.0" prefWidth="960.0" style="-fx-background-color: grey;">
+      <children>
+         <HBox alignment="CENTER_LEFT" layoutX="220.0" prefHeight="120.0" prefWidth="320.0" spacing="40.0">
+            <children>
+               <Button fx:id="viewPlayerCardButton" mnemonicParsing="false" onAction="#viewPlayerCardButtonAction" prefWidth="110.0" text="View Player Card">
+                  <HBox.margin>
+                     <Insets left="30.0" />
+                  </HBox.margin>
+               </Button>
+            </children>
+         </HBox>
+         <VBox layoutX="20.0" prefHeight="120.0" prefWidth="180.0">
+            <children>
+               <HBox prefHeight="120.0" prefWidth="180.0">
+                  <children>
+                     <Label prefHeight="120.0" prefWidth="90.0" text="Money:">
+                        <font>
+                           <Font size="18.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="moneyLabel" prefHeight="120.0" prefWidth="90.0">
+                        <font>
+                           <Font size="18.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
+         <ScrollPane layoutX="550.0" layoutY="10.0" prefHeight="100.0" prefWidth="400.0">
+            <content>
+               <VBox prefHeight="80.0" prefWidth="380.0">
+                  <children>
+                     <Label fx:id="shipDialogueField" prefHeight="40.0" prefWidth="380.0">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="dialogueField" prefHeight="40.0" prefWidth="380.0">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+            </content>
+            </ScrollPane>
+      </children>
+   </Pane>
+      <Pane fx:id="gadgetPane" prefHeight="599.0" prefWidth="960.0" style="-fx-background-color: black;">
+         <children>
+            <Pane layoutX="14.0" layoutY="16.0" prefHeight="573.0" prefWidth="400.0" style="-fx-background-color: grey;">
+               <children>
+                  <VBox fx:id="mercList" layoutX="42.0" layoutY="61.0" prefHeight="250.0" prefWidth="320.0" style="-fx-background-color: white;" />
+                  <Label layoutX="109.0" layoutY="14.0" text="Mercenaries">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+                  <Pane fx:id="mercDetailsPane" layoutX="40.0" layoutY="322.0" prefHeight="191.0" prefWidth="320.0" style="-fx-background-color: white;" />
+               </children>
+            </Pane>
+            <Pane layoutX="436.0" layoutY="16.0" prefHeight="573.0" prefWidth="510.0" style="-fx-background-color: grey;">
+               <children>
+                  <Label fx:id="gadgetTypeLabel" layoutX="249.0" layoutY="14.0">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+                  <VBox fx:id="currentCrewList" layoutX="95.0" layoutY="57.0" prefHeight="457.0" prefWidth="320.0" style="-fx-background-color: white;" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="6.0" prefHeight="47.0" prefWidth="320.0" text="Current Crew" textAlignment="CENTER">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="GO BACK" />
+         </children></Pane>
+   </children>
+</AnchorPane>

@@ -337,7 +337,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
             closingMessage.append(skill.getType()).append(" - ")
                     .append(skill.getValue()).append("\n");
         }
-        System.out.println(closingMessage.toString());
+        //System.out.println(closingMessage.toString());
         GameModel.setPlayer(player);
         GameModel.generateSystems();
 

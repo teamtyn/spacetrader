@@ -540,7 +540,7 @@ public class UniverseMapController extends AnimationTimer
         if (player.getPlanet() == planet.getPlanet()) {
             travelButton.setDisable(true);
             marketButton.setDisable(false);
-            //mercenaryButton.setDisable(false);
+            mercenaryButton.setDisable(false);
             if (player.getPlanet().getTechLevel() == TechLevel.HIGHTECH) {
                 spaceStationButton.setDisable(false);
             }
@@ -607,7 +607,7 @@ public class UniverseMapController extends AnimationTimer
      */
     @FXML
     private void mercenaryButtonAction(final ActionEvent event) {
-        parentController.setScreen("SpaceStation");
+        parentController.setScreen("MercenaryShop");
     }
 
     /**

@@ -52,6 +52,7 @@ public final class Player extends AbstractCrewMember {
         knownPlanets = new ArrayList<>();
         coord = new Point(0, 0);
         ship = new Ship(Ship.ShipType.Gnat);
+        ship.addCrewMember(this);
         ship.addEngine(new Engine());
         money = STARTING_MONEY;
     }

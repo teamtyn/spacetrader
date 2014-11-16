@@ -65,4 +65,8 @@ public class Skill implements Serializable {
     public final void increaseValue(final int moreValue) {
         this.value += moreValue;
     }
+    @Override
+    public String toString() {
+        return "" + this.getType() + " : " + this.getValue();
+    }
 }

@@ -1,5 +1,7 @@
 package spacetrader.player;
 
+import spacetrader.GameModel;
+
 /**
  * The Mercenary class represents mercenaries that the Player is able to hire.
  * As a crew member, they have skills just like the player, and these
@@ -8,6 +10,7 @@ package spacetrader.player;
  * @author Team TYN
  */
 public class Mercenary extends AbstractCrewMember {
+    private String specialty;
 
     /**
      * The no arg constructor for Mercenary.
@@ -17,6 +20,7 @@ public class Mercenary extends AbstractCrewMember {
     public Mercenary() {
         super();
         this.name = MercenaryNames.getName();
+        generateSkills();
     }
 
     /**
@@ -27,5 +31,21 @@ public class Mercenary extends AbstractCrewMember {
     public Mercenary(final String suffix) {
         super();
         this.name = MercenaryNames.getName() + " of " + suffix;
+    }
+    private void generateSkills() {
+        Skill maxSkill = new Skill("No specialty");
+        maxSkill.setValue(0);
+        
+        for(Skill skill: skills.values()) {
+            skill.setValue(GameModel.getRandom().nextInt(5));
+            if(skill.getValue() > maxSkill.getValue()) {
+                maxSkill = skill;
+            }
+        }
+        specialty = maxSkill.getType();
+    }
+    
+    public String getSpecialty() {
+        return specialty;
     }
 }

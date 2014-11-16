@@ -191,7 +191,7 @@ public final class Ship implements Serializable {
         shields = new Shield[type.shieldSlots];
         weapons = new Weapon[type.weaponSlots];
         engines = new Engine[type.engineSlots];
-        crew = new Mercenary[type.crewSlots];
+        crew = new AbstractCrewMember[type.crewSlots];
         cargoBay = new CargoBay(type.cargoBaySlots);
         crewNumber = 0;
         hull = type.hullStrength;
