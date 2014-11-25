@@ -1,6 +1,7 @@
 package spacetrader.player;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,4 +70,5 @@ public abstract class AbstractCrewMember implements Serializable {
     public final String getName() {
         return name;
     }
+
 }

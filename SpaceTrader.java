@@ -29,6 +29,7 @@ public class SpaceTrader extends Application {
         mainContainer.loadScreen("UniverseMap", "UniverseMap.fxml");
         mainContainer.loadScreen("Market", "Market.fxml");
         mainContainer.loadScreen("SpaceStation", "SpaceStation.fxml");
+        mainContainer.loadScreen("MercenaryShop", "MercenaryShop.fxml");
         mainContainer.loadScreen("Encounter", "Encounter.fxml");
         mainContainer.loadScreen("MercenaryShop", "MercenaryShop.fxml");
         mainContainer.setScreen("Menu");

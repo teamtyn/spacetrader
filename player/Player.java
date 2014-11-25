@@ -138,10 +138,11 @@ public final class Player extends AbstractCrewMember {
 
     /**
      * Setter for the ship variable.
-     * @param newShip the player's ship
+     * @param aShip the player's ship
      */
-    public void setShip(final Ship newShip) {
-        ship = newShip;
+    public void setShip(Ship aShip) {
+        ship = aShip;
+        ship.addCrewMember((AbstractCrewMember)this);
     }
 
     /**

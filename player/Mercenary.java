@@ -1,5 +1,7 @@
 package spacetrader.player;
 
+
+import java.util.ArrayList;
 import spacetrader.GameModel;
 
 /**
@@ -31,7 +33,9 @@ public class Mercenary extends AbstractCrewMember {
     public Mercenary(final String suffix) {
         super();
         this.name = MercenaryNames.getName() + " of " + suffix;
+        generateSkills();
     }
+    
     private void generateSkills() {
         Skill maxSkill = new Skill("No specialty");
         maxSkill.setValue(0);
@@ -48,4 +52,5 @@ public class Mercenary extends AbstractCrewMember {
     public String getSpecialty() {
         return specialty;
     }
+
 }
