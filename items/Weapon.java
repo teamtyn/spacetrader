@@ -22,6 +22,10 @@ public final class Weapon implements Serializable {
     public enum WeaponType {
 
         /**
+         * Null object.
+         */
+        EmptySlot(0, 0, 0, new SerializableColor(Color.WHITE), "Empty Slot"),
+        /**
          * Cheapest weapon available.
          */
         Gladius(10, 10, 100, new SerializableColor(Color.GREEN), "Gladius"),

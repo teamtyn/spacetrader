@@ -22,6 +22,10 @@ public final class Engine implements Serializable {
     public enum EngineType {
 
         /**
+         * Null object.
+         */
+        EmptySlot(0, 0, 0, new SerializableColor(Color.WHITE), "Empty Slot"),
+        /**
          * Cheapest engine type.
          */
         Hackney(10, 10, 100, new SerializableColor(Color.GREEN), "Hackney"),

@@ -627,40 +627,42 @@ public final class SpaceStationController
         gadgetTypeLabel.setText("Weapons");
         gadgetList.getChildren().clear();
         for (WeaponType type : WeaponType.values()) {
-            int mult = type.ordinal();
-            HBox row = new HBox();
-            Label label = new Label(type.name());
-            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
-            label.setAlignment(Pos.CENTER);
-            row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new EventHandler<MouseEvent>() {
+            if(type != WeaponType.EmptySlot){
+                int mult = type.ordinal();
+                HBox row = new HBox();
+                Label label = new Label(type.name());
+                label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                label.setAlignment(Pos.CENTER);
+                row.getChildren().add(label);
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                        new EventHandler<MouseEvent>() {
 
-                        @Override
-                        public void handle(final MouseEvent mouseEvent) {
-                            currentGadgetType = "Weapon";
-                            selectedWeapon = new Weapon(type);
-                            resetSelected();
-                            row.setStyle(CSS_COLOR_2);
-                            row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
-                            row.setLayoutY(mult * LABEL_HEIGHT);
-                            gadgetNameLabel1.setText("Damage ");
-                            gadgetNameLabel2.setText("Rate of Fire");
-                            gadgetValueLabel1.setText(Integer.toString(
-                                            selectedWeapon.getDamage()));
-                            gadgetValueLabel2.setText(Integer.toString(
-                                            selectedWeapon.getRateOfFire()));
-                            gadgetCostLabel.setText(Integer.toString(
-                                            selectedWeapon.getCost()));
-                            gadgetPicture.getChildren().clear();
-                            Rectangle myGadgetPicture = new Rectangle(
-                                    rectangleLength + rectangleLength, 10,
-                                    PICTURE_SIZE, PICTURE_SIZE);
-                            myGadgetPicture.setFill(selectedWeapon.getColor());
-                            gadgetPicture.getChildren().add(myGadgetPicture);
-                        }
-                    });
-            gadgetList.getChildren().add(row);
+                            @Override
+                            public void handle(final MouseEvent mouseEvent) {
+                                currentGadgetType = "Weapon";
+                                selectedWeapon = new Weapon(type);
+                                resetSelected();
+                                row.setStyle(CSS_COLOR_2);
+                                row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                                row.setLayoutY(mult * LABEL_HEIGHT);
+                                gadgetNameLabel1.setText("Damage ");
+                                gadgetNameLabel2.setText("Rate of Fire");
+                                gadgetValueLabel1.setText(Integer.toString(
+                                                selectedWeapon.getDamage()));
+                                gadgetValueLabel2.setText(Integer.toString(
+                                                selectedWeapon.getRateOfFire()));
+                                gadgetCostLabel.setText(Integer.toString(
+                                                selectedWeapon.getCost()));
+                                gadgetPicture.getChildren().clear();
+                                Rectangle myGadgetPicture = new Rectangle(
+                                        rectangleLength + rectangleLength, 10,
+                                        PICTURE_SIZE, PICTURE_SIZE);
+                                myGadgetPicture.setFill(selectedWeapon.getColor());
+                                gadgetPicture.getChildren().add(myGadgetPicture);
+                            }
+                        });
+                gadgetList.getChildren().add(row);
+            }
         }
     }
 
@@ -674,40 +676,42 @@ public final class SpaceStationController
         gadgetTypeLabel.setText("Shields");
         gadgetList.getChildren().clear();
         for (ShieldType type : ShieldType.values()) {
-            final int mult = type.ordinal();
-            final HBox row = new HBox();
-            final Label label = new Label(type.name());
-            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
-            label.setAlignment(Pos.CENTER);
-            row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new EventHandler<MouseEvent>() {
+            if(type != ShieldType.EmptySlot){
+                final int mult = type.ordinal();
+                final HBox row = new HBox();
+                final Label label = new Label(type.name());
+                label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                label.setAlignment(Pos.CENTER);
+                row.getChildren().add(label);
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                        new EventHandler<MouseEvent>() {
 
-                        @Override
-                        public void handle(final MouseEvent mouseEvent) {
-                            currentGadgetType = "Shield";
-                            selectedShield = new Shield(type);
-                            resetSelected();
-                            row.setStyle(CSS_COLOR_2);
-                            row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
-                            row.setLayoutY(mult * LABEL_HEIGHT);
-                            gadgetNameLabel1.setText("Strength ");
-                            gadgetNameLabel2.setText("Recharge Rate");
-                            gadgetValueLabel1.setText(Integer.toString(
-                                            selectedShield.getStrength()));
-                            gadgetValueLabel2.setText(Integer.toString(
-                                            selectedShield.getRechargeRate()));
-                            gadgetCostLabel.setText(Integer.toString(
-                                            selectedShield.getCost()));
-                            gadgetPicture.getChildren().clear();
-                            final Rectangle myGadgetPicture = new Rectangle(
-                                    100, 10, PICTURE_SIZE, PICTURE_SIZE);
-                            myGadgetPicture.setFill(
-                                    selectedShield.getColor());
-                            gadgetPicture.getChildren().add(myGadgetPicture);
-                        }
-                    });
-            gadgetList.getChildren().add(row);
+                            @Override
+                            public void handle(final MouseEvent mouseEvent) {
+                                currentGadgetType = "Shield";
+                                selectedShield = new Shield(type);
+                                resetSelected();
+                                row.setStyle(CSS_COLOR_2);
+                                row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                                row.setLayoutY(mult * LABEL_HEIGHT);
+                                gadgetNameLabel1.setText("Strength ");
+                                gadgetNameLabel2.setText("Recharge Rate");
+                                gadgetValueLabel1.setText(Integer.toString(
+                                                selectedShield.getStrength()));
+                                gadgetValueLabel2.setText(Integer.toString(
+                                                selectedShield.getRechargeRate()));
+                                gadgetCostLabel.setText(Integer.toString(
+                                                selectedShield.getCost()));
+                                gadgetPicture.getChildren().clear();
+                                final Rectangle myGadgetPicture = new Rectangle(
+                                        100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                                myGadgetPicture.setFill(
+                                        selectedShield.getColor());
+                                gadgetPicture.getChildren().add(myGadgetPicture);
+                            }
+                        });
+                gadgetList.getChildren().add(row);
+            }
         }
     }
 
@@ -721,41 +725,43 @@ public final class SpaceStationController
         gadgetTypeLabel.setText("Engines");
         gadgetList.getChildren().clear();
         for (EngineType type : EngineType.values()) {
-            final int mult = type.ordinal();
-            final HBox row = new HBox();
-            final Label label = new Label(type.name());
-            label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
-            label.setAlignment(Pos.CENTER);
-            row.getChildren().add(label);
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new EventHandler<MouseEvent>() {
+            if(type != EngineType.EmptySlot){
+                final int mult = type.ordinal();
+                final HBox row = new HBox();
+                final Label label = new Label(type.name());
+                label.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                label.setAlignment(Pos.CENTER);
+                row.getChildren().add(label);
+                row.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                        new EventHandler<MouseEvent>() {
 
-                        @Override
-                        public void handle(final MouseEvent mouseEvent) {
-                            currentGadgetType = "Engine";
-                            selectedEngine = new Engine(type);
-                            resetSelected();
-                            row.setStyle(CSS_COLOR_2);
-                            row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
-                            row.setLayoutY(mult * LABEL_HEIGHT);
-                            gadgetNameLabel1.setText("Acceleration ");
-                            gadgetNameLabel2.setText("Fuel Efficiency");
-                            gadgetValueLabel1.setText(Integer.toString(
-                                            selectedEngine.getAcceleration()));
-                            gadgetValueLabel2.setText(Integer.toString(
-                                            selectedEngine
-                                            .getFuelEfficiency()));
-                            gadgetCostLabel.setText(Integer.toString(
-                                            selectedEngine.getCost()));
-                            gadgetPicture.getChildren().clear();
-                            final Rectangle myGadgetPicture = new Rectangle(
-                                    100, 10, PICTURE_SIZE, PICTURE_SIZE);
-                            myGadgetPicture.setFill(
-                                    selectedEngine.getColor());
-                            gadgetPicture.getChildren().add(myGadgetPicture);
-                        }
-                    });
-            gadgetList.getChildren().add(row);
+                            @Override
+                            public void handle(final MouseEvent mouseEvent) {
+                                currentGadgetType = "Engine";
+                                selectedEngine = new Engine(type);
+                                resetSelected();
+                                row.setStyle(CSS_COLOR_2);
+                                row.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+                                row.setLayoutY(mult * LABEL_HEIGHT);
+                                gadgetNameLabel1.setText("Acceleration ");
+                                gadgetNameLabel2.setText("Fuel Efficiency");
+                                gadgetValueLabel1.setText(Integer.toString(
+                                                selectedEngine.getAcceleration()));
+                                gadgetValueLabel2.setText(Integer.toString(
+                                                selectedEngine
+                                                .getFuelEfficiency()));
+                                gadgetCostLabel.setText(Integer.toString(
+                                                selectedEngine.getCost()));
+                                gadgetPicture.getChildren().clear();
+                                final Rectangle myGadgetPicture = new Rectangle(
+                                        100, 10, PICTURE_SIZE, PICTURE_SIZE);
+                                myGadgetPicture.setFill(
+                                        selectedEngine.getColor());
+                                gadgetPicture.getChildren().add(myGadgetPicture);
+                            }
+                        });
+                gadgetList.getChildren().add(row);
+            }
         }
     }
 
