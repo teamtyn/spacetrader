@@ -310,11 +310,11 @@ public class UniverseMapController extends AnimationTimer
             System.out.println(ex);
         }
     }
-
+    
     /**
      * Plays sounds.
      */
-    private void playSound() {
+    public static void playSound() {
       try {
         AudioPlayer.player.start(audioStream);
       } catch (Exception ex) {
