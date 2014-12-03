@@ -1,5 +1,7 @@
 package spacetrader;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ import spacetrader.star_system.Planet.TechLevel;
 import spacetrader.star_system.PlanetView;
 import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemView;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  * FXML Controller class for the UniverseMap.
@@ -275,6 +279,22 @@ public class UniverseMapController extends AnimationTimer
         handleHighlight();
         handleMouse();
         start();
+        playSound();
+    }
+
+    private void playSound() {
+      try {
+        String workingDir = System.getProperty("user.dir");
+        String SOUND_FILENAME = "/src/spacetrader/Kalimba.wav";
+        InputStream inputStream = new FileInputStream(workingDir + SOUND_FILENAME);
+        System.out.println(inputStream);
+        AudioStream audioStream = new AudioStream(inputStream);
+        System.out.println(audioStream);
+        AudioPlayer.player.start(audioStream);
+      }
+      catch (Exception ex) {
+          System.out.println(ex);
+      }
     }
 
     @Override
