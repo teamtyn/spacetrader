@@ -282,17 +282,17 @@ public class UniverseMapController extends AnimationTimer
         playSound();
     }
 
+    /**
+     * Plays sounds.
+     */
     private void playSound() {
       try {
         String workingDir = System.getProperty("user.dir");
-        String SOUND_FILENAME = "/src/spacetrader/Kalimba.wav";
-        InputStream inputStream = new FileInputStream(workingDir + SOUND_FILENAME);
-        System.out.println(inputStream);
+        String soundFile = "/src/spacetrader/Kalimba.wav";
+        InputStream inputStream = new FileInputStream(workingDir + soundFile);
         AudioStream audioStream = new AudioStream(inputStream);
-        System.out.println(audioStream);
         AudioPlayer.player.start(audioStream);
-      }
-      catch (Exception ex) {
+      } catch (Exception ex) {
           System.out.println(ex);
       }
     }
