@@ -17,9 +17,11 @@ import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Sphere;
@@ -89,6 +91,11 @@ public class UniverseMapController extends AnimationTimer
      */
     private static final String UNKNOWN_STRING = "Unknown";
 
+    /**
+     * The AnchorPane that holds the entire scene.
+     */
+    @FXML
+    private AnchorPane parent;
     /**
      * The pane that holds the three dimensional subscene.
      */
@@ -163,6 +170,22 @@ public class UniverseMapController extends AnimationTimer
      */
     @FXML
     private Button saveButton;
+    
+     @FXML
+    private Button cpuButton;
+
+    @FXML
+    private Label playerDayField;
+
+    @FXML
+    private Label playerFuelField;
+    
+    @FXML
+    private Label playerCargoSpaceField;
+    
+   
+        
+    
 
     /**
      * The tentative selection.
@@ -252,6 +275,7 @@ public class UniverseMapController extends AnimationTimer
                         new KeyValue(infoPane.translateYProperty(), 0)
                 )
         );
+        
     }
 
     @Override
@@ -610,6 +634,20 @@ public class UniverseMapController extends AnimationTimer
         parentController.setScreen("MercenaryShop");
     }
 
+    /**
+     * The event handler for the mercenary button.
+     *
+     * @param event The event fired when the button is pressed.
+     */
+    @FXML
+    private void cpuButtonAction(final ActionEvent event) {
+       System.out.println(parent);
+       
+       //System.out.println(ComputerController.openCPUView());
+       subScenePane = ComputerController.openCPUView(subScenePane);
+       //parent.getChildren().add();
+    }
+    
     /**
      * The event handler for the save button.
      *
