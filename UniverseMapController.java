@@ -235,6 +235,11 @@ public class UniverseMapController extends AnimationTimer
      * The y position of the mouse when a mouse event is fired.
      */
     private double mousePosY;
+    
+    /**
+     * The audio stream that plays our awesome music.
+     */
+    private static AudioStream audioStream;
 
     @Override
     public final void initialize(final URL url, final ResourceBundle rb) {
@@ -256,6 +261,9 @@ public class UniverseMapController extends AnimationTimer
                         new KeyValue(infoPane.translateYProperty(), 0)
                 )
         );
+        
+        loadSound();
+
     }
 
     @Override
@@ -281,16 +289,33 @@ public class UniverseMapController extends AnimationTimer
         start();
         playSound();
     }
+    /**
+     * Loads sounds.
+     */
+    private void loadSound() {
+      try {
+        String workingDir = System.getProperty("user.dir");
+        String soundFile = "/src/spacetrader/Kalimba.wav";
+        InputStream inputStream = new FileInputStream(workingDir + soundFile);
+        audioStream = new AudioStream(inputStream);
+      } catch (Exception ex) {
+          System.out.println(ex);
+      }
+    }
+    
+    public static void stopSound() {
+        try {
+        audioStream.close();
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
+    }
 
     /**
      * Plays sounds.
      */
     private void playSound() {
       try {
-        String workingDir = System.getProperty("user.dir");
-        String soundFile = "/src/spacetrader/Kalimba.wav";
-        InputStream inputStream = new FileInputStream(workingDir + soundFile);
-        AudioStream audioStream = new AudioStream(inputStream);
         AudioPlayer.player.start(audioStream);
       } catch (Exception ex) {
           System.out.println(ex);
@@ -599,6 +624,8 @@ public class UniverseMapController extends AnimationTimer
         updateSystemInfo(selectedSystem);
         updatePlanetInfo(selectedPlanet);
     }
+    
+    
 
     /**
      * The event handler for the market button.
