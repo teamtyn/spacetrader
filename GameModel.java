@@ -10,7 +10,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import spacetrader.observer.ObserverRegistry;
 import spacetrader.player.Player;
 import spacetrader.star_system.StarSystem;
@@ -108,6 +114,7 @@ public final class GameModel implements Serializable {
     public static void initialize(final Stage aStage) {
         state = new GameModel();
         GameModel.stage = aStage;
+        GameModel.stage = modifyStageToQuitMusic(GameModel.stage);
     }
 
     /**
@@ -222,5 +229,17 @@ public final class GameModel implements Serializable {
     private static int calculateFuzziness() {
         return RANDOM.nextInt(SYSTEM_SPACING_FUZZINESS)
                 - SYSTEM_SPACING_FUZZINESS / 2;
+    }
+    
+    private static Stage modifyStageToQuitMusic(Stage stage) {
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        
+            public void handle(final WindowEvent event) {
+                //Stage init
+                System.out.println("close request");
+                UniverseMapController.stopSound();
+            }
+        });
+        return stage;
     }
 }

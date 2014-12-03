@@ -2,6 +2,9 @@ package spacetrader.items;
 
 import java.io.Serializable;
 import javafx.scene.paint.Color;
+import spacetrader.items.Engine.EngineType;
+import spacetrader.items.Shield.ShieldType;
+import spacetrader.items.Weapon.WeaponType;
 import spacetrader.player.AbstractCrewMember;
 import spacetrader.player.Mercenary;
 import spacetrader.ui.SerializableColor;
@@ -189,8 +192,23 @@ public final class Ship implements Serializable {
     public Ship(final ShipType aType) {
         type = aType;
         shields = new Shield[type.shieldSlots];
+        for (int i = 0; i < shields.length; i++) {
+            if (shields[i] == null) {
+                shields[i] = new Shield(ShieldType.EmptySlot);
+            }
+        }
         weapons = new Weapon[type.weaponSlots];
+        for (int i = 0; i < weapons.length; i++) {
+            if (weapons[i] == null) {
+                weapons[i] = new Weapon(WeaponType.EmptySlot);
+            }
+        }
         engines = new Engine[type.engineSlots];
+        for (int i = 0; i < engines.length; i++) {
+            if (engines[i] == null) {
+                engines[i] = new Engine(EngineType.EmptySlot);
+            }
+        }
         crew = new AbstractCrewMember[type.crewSlots];
         cargoBay = new CargoBay(type.cargoBaySlots);
         crewNumber = 0;
@@ -214,7 +232,9 @@ public final class Ship implements Serializable {
     public boolean addShield(final Shield newShield) {
         boolean success = false;
         for (int i = 0; i < shields.length; i++) {
-            if (shields[i] == null && !success) {
+            if (shields[i] == null 
+                    || shields[i].getType() == ShieldType.EmptySlot 
+                    && !success) {
                 shields[i] = newShield;
                 success = true;
             }
@@ -231,7 +251,9 @@ public final class Ship implements Serializable {
     public boolean addWeapon(final Weapon newWeapon) {
         boolean success = false;
         for (int i = 0; i < weapons.length; i++) {
-            if (weapons[i] == null && !success) {
+            if (weapons[i] == null || 
+                    weapons[i].getType() == WeaponType.EmptySlot 
+                    && !success) {
                 weapons[i] = newWeapon;
                 success = true;
             }
@@ -248,7 +270,9 @@ public final class Ship implements Serializable {
     public boolean addEngine(final Engine newEngine) {
         boolean success = false;
         for (int i = 0; i < engines.length; i++) {
-            if (engines[i] == null && !success) {
+            if (engines[i] == null
+                    || engines[i].getType() == EngineType.EmptySlot
+                    && !success) {
                 engines[i] = newEngine;
                 success = true;
             }
@@ -296,7 +320,7 @@ public final class Ship implements Serializable {
         Shield removed = null;
         if (position < shields.length) {
             removed = shields[position];
-            shields[position] = null;
+            shields[position] = new Shield(ShieldType.EmptySlot);
         }
         return removed;
     }
@@ -311,7 +335,7 @@ public final class Ship implements Serializable {
         Weapon removed = null;
         if (position < weapons.length) {
             removed = weapons[position];
-            weapons[position] = null;
+            weapons[position] = new Weapon(WeaponType.EmptySlot);
         }
         return removed;
     }
@@ -326,7 +350,7 @@ public final class Ship implements Serializable {
         Engine removed = null;
         if (position < engines.length) {
             removed = engines[position];
-            engines[position] = null;
+            engines[position] = new Engine(EngineType.EmptySlot);
         }
         return removed;
     }

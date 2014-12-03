@@ -26,6 +26,10 @@ public final class Shield implements Serializable {
     public enum ShieldType {
 
         /**
+         * Null object.
+         */
+        EmptySlot(0, 0, 0, new SerializableColor(Color.WHITE), "Empty Slot"),
+        /**
          * Cheapest shield available.
          */
         Kite(100, 10, 100, new SerializableColor(Color.RED), "Kite"),

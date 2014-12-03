@@ -1,5 +1,7 @@
 package spacetrader;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -33,6 +35,8 @@ import spacetrader.star_system.Planet.TechLevel;
 import spacetrader.star_system.PlanetView;
 import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemView;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  * FXML Controller class for the UniverseMap.
@@ -254,6 +258,11 @@ public class UniverseMapController extends AnimationTimer
      * The y position of the mouse when a mouse event is fired.
      */
     private double mousePosY;
+    
+    /**
+     * The audio stream that plays our awesome music.
+     */
+    private static AudioStream audioStream;
 
     @Override
     public final void initialize(final URL url, final ResourceBundle rb) {
@@ -276,6 +285,9 @@ public class UniverseMapController extends AnimationTimer
                 )
         );
         
+        loadSound();
+
+
     }
 
     @Override
@@ -299,6 +311,39 @@ public class UniverseMapController extends AnimationTimer
         handleHighlight();
         handleMouse();
         start();
+        playSound();
+    }
+    /**
+     * Loads sounds.
+     */
+    private void loadSound() {
+      try {
+        String workingDir = System.getProperty("user.dir");
+        String soundFile = "/src/spacetrader/Kalimba.wav";
+        InputStream inputStream = new FileInputStream(workingDir + soundFile);
+        audioStream = new AudioStream(inputStream);
+      } catch (Exception ex) {
+          System.out.println(ex);
+      }
+    }
+    
+    public static void stopSound() {
+        try {
+        audioStream.close();
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
+    }
+    
+    /**
+     * Plays sounds.
+     */
+    public static void playSound() {
+      try {
+        AudioPlayer.player.start(audioStream);
+      } catch (Exception ex) {
+          System.out.println(ex);
+      }
     }
 
     @Override
@@ -603,6 +648,8 @@ public class UniverseMapController extends AnimationTimer
         updateSystemInfo(selectedSystem);
         updatePlanetInfo(selectedPlanet);
     }
+    
+    
 
     /**
      * The event handler for the market button.

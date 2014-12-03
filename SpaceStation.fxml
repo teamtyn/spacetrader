@@ -302,7 +302,7 @@
                <HBox alignment="CENTER" layoutY="290.0" prefHeight="50.0" prefWidth="300.0" spacing="10.0">
                   <children>
                      <TextField fx:id="confirmationField" />
-                     <Button fx:id="buyShip" mnemonicParsing="false" onAction="#buyShipButtonAction" prefHeight="30.0" prefWidth="66.0" text="Buy Ship" />
+                     <Button fx:id="buyShipButton" mnemonicParsing="false" onAction="#buyShipButtonAction" prefHeight="30.0" prefWidth="66.0" text="Buy Ship" />
                   </children>
                </HBox>
             </children>
