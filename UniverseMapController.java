@@ -2,6 +2,7 @@ package spacetrader;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.Thread.State;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
 import javafx.scene.input.ScrollEvent;
@@ -331,6 +331,15 @@ public class UniverseMapController extends AnimationTimer
         try {
         audioStream.close();
         } catch(Exception ex) {
+            System.out.println(ex);
+        }
+    }
+    
+    
+    public static void muteSound() {
+        try {
+            AudioPlayer.player.stop(audioStream);
+        } catch (Exception ex) {
             System.out.println(ex);
         }
     }
@@ -688,10 +697,10 @@ public class UniverseMapController extends AnimationTimer
      */
     @FXML
     private void cpuButtonAction(final ActionEvent event) {
-       System.out.println(parent);
+       //System.out.println(parent);
        
        //System.out.println(ComputerController.openCPUView());
-       subScenePane = ComputerController.openCPUView(subScenePane);
+       parent = (AnchorPane)ComputerController.openCPUView((Pane)parent);
        //parent.getChildren().add();
     }
     
