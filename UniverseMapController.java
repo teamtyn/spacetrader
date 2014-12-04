@@ -311,7 +311,6 @@ public class UniverseMapController extends AnimationTimer
         handleHighlight();
         handleMouse();
         start();
-        playSound();
     }
     /**
      * Loads sounds.

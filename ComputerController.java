@@ -6,30 +6,69 @@
 
 package spacetrader;
 
-import javafx.beans.binding.Bindings;
+//import com.gtranslate.Audio;
+import com.gtranslate.Audio;
+import com.gtranslate.Language;
+import java.io.InputStream;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 /**
  *
  * @author Local Clayton
  */
 public class ComputerController {
     private static Pane currParent;
+    private static String name = GameModel.getPlayer().getName();
+    private static String introduction = "Hello Captain " + name + ", I am COMPUTER. It is really nice to meet you.";
+    private static boolean newb = true;
+    private static String response = "Yes, Captain " + name + "?";
     public static Pane openCPUView(Pane parent) {
         currParent = parent;
         System.out.println(parent);
         modifyParent(parent);
         StackPane view = setUpView();
+//        Stage stage = new Stage(StageStyle.UNDECORATED);
+//            stage.setTitle("COMPUTER");
+//            stage.setScene(new Scene(view, 450, 450));
+//            stage.show();
+            
+            
         parent.getChildren().add(view);
+        Audio audio = Audio.getInstance();
+        try{
+        
+        //This is really quite fun. VIETNAMESE is a good one.
+        InputStream sound;
+            if(newb) {
+            sound  = audio.getAudio(introduction, Language.KOREAN);
+            newb = false;
+        } else {
+        sound  = audio.getAudio(response, Language.KOREAN);
+        }
+        Task speak = new Task() {
+            
+            @Override protected Object call() throws Exception {
+                audio.play(sound);
+                return new Object();
+            }
+        };
+        new Thread(speak).start();
+        
+        //audio.play(sound);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
         return parent;
     }
     
@@ -84,8 +123,7 @@ public class ComputerController {
     
     public static void propogateElementsInBox(VBox box, StackPane stack) {
         box.getChildren().clear();
-        box.getChildren().add(new Label("HELLO CAPTAIN " 
-                + GameModel.getPlayer().getName() + ", I AM COMPUTER."));
+        box.getChildren().add(new Label(introduction));
         box.getChildren().add(createMuteButton());
         box.getChildren().add(createBackButton(stack));
     }
@@ -120,7 +158,7 @@ public class ComputerController {
             super("MUSIC");
             muteHandler = createMuteHandler(this);
             unMuteHandler = createUnMuteHandler(this);
-            this.setOnAction(createMuteHandler(this));
+            this.setOnAction(createUnMuteHandler(this));
         }
         
         private EventHandler<ActionEvent> createMuteHandler(MuteButton butt) {
