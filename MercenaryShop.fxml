@@ -79,13 +79,13 @@
                         <Font size="29.0" />
                      </font>
                   </Label>
-                  <VBox fx:id="currentCrewList" layoutX="95.0" layoutY="57.0" prefHeight="457.0" prefWidth="320.0" style="-fx-background-color: white;" />
+                  <VBox fx:id="currentCrewList" layoutX="95.0" layoutY="57.0" prefHeight="375.0" prefWidth="320.0" style="-fx-background-color: white;" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="6.0" prefHeight="47.0" prefWidth="320.0" text="Current Crew" textAlignment="CENTER">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Label>
-                  <Label fx:id="crewSkillLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="511.0" prefHeight="62.0" prefWidth="320.0" textAlignment="CENTER" />
+                  <Label fx:id="crewSkillLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="440.0" prefHeight="120.0" prefWidth="408.0" style="-fx-background-color: black; -fx-border-color: green; -fx-text-fill: green; -fx-font-weight: bold; -fx-font-family: monospace;" text="TEST" textAlignment="CENTER" />
                </children>
             </Pane>
          <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="GO BACK" />

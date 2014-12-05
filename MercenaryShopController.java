@@ -123,9 +123,11 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
     
     private void hireMercenary(Mercenary merc) {
         if(!player.getShip().addCrewMember(merc)) {
-            System.out.println("You can't jam any more crew members in there!");
+            shipDialogueField.setText("You can't jam any more crew members in there!");
         } else {
             mercs.remove(merc);
+            shipDialogueField.setText("Welcome to the squad " + merc.getName());
+
         }
 
         updateMercList();

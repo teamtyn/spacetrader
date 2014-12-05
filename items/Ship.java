@@ -639,6 +639,16 @@ public final class Ship implements Serializable {
         return string;
     }
     
+    public int calculateDamage() {
+        float originalDamage = this.getWeapons()[0].getDamage();
+        float damageMultiplier = calculateDamageMultiplier();
+        return (int)(originalDamage * damageMultiplier);
+    }
+    
+    private float calculateDamageMultiplier() {
+       return 1.0f + (this.getShipSkillValue("fighting") / 60.0f);
+    }
+    
     public int getShipSkillValue(String skill) {
         return generateSkills().get(skill).getValue();
     }

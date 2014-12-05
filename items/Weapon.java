@@ -32,7 +32,7 @@ public final class Weapon implements Serializable {
         /**
          * Basic weapon that favors damage.
          */
-        Spatha(30, 10, 300, new SerializableColor(Color.BLUE), "Spatha"),
+        Spatha(10, 10, 300, new SerializableColor(Color.BLUE), "Spatha"),
         /**
          * Basic weapon that favors rate of fire.
          */
@@ -44,24 +44,24 @@ public final class Weapon implements Serializable {
         /**
          * Advanced weapon that is roughly balanced.
          */
-        Kampilan(25, 20, 500, new SerializableColor(Color.RED), "Kampilan"),
+        Kampilan(15, 20, 500, new SerializableColor(Color.RED), "Kampilan"),
         /**
          * Advanced weapon that very heavily favors rate of fire.
          */
-        Scimitar(1, 500, 500, new SerializableColor(Color.RED), "Scimitar"),
+        Scimitar(5, 500, 500, new SerializableColor(Color.RED), "Scimitar"),
         /**
          * Advanced weapon that very heavily favors damage.
          */
-        Claymore(500, 1, 500, new SerializableColor(Color.RED), "Claymore"),
+        Claymore(30, 1, 500, new SerializableColor(Color.RED), "Claymore"),
         /**
          * The legendary sword wielded by Charlemagne.
          */
-        Joyeuse(100, 25, 2500, new SerializableColor(Color.GOLD), "Joyeuse"),
+        Joyeuse(20, 25, 2500, new SerializableColor(Color.GOLD), "Joyeuse"),
         /**
          * The legendary sword used to crown polish kings for centuries.
          */
         Szczerbiec(
-                250, 10, 2500, new SerializableColor(Color.GOLD), "Szczerbiec");
+                25, 10, 2500, new SerializableColor(Color.GOLD), "Szczerbiec");
 
         /**
          * How much damage this weapon does per shot.

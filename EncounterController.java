@@ -212,7 +212,7 @@ public class EncounterController extends AnimationTimer implements Initializable
                     
                     if (!hit.getShip().equals(playerShip.getShip())) {
                         if (hit.getShip().getHull() > 0) {
-                            hit.getShip().takeDamage(ship.getShip().getWeapons()[0].getDamage());
+                            hit.getShip().takeDamage(playerShip.getShip().calculateDamage());
                         } else {
                             stop();
                             EncounterSubScene.AMBIENT.getScope().clear();

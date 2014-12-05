@@ -150,11 +150,25 @@ public class ComputerController {
     
     public static void propogateElementsInBox(VBox box, StackPane stack) {
         box.getChildren().clear();
-        box.getChildren().add(new Label(getQuote()));
+        box.getChildren().add(createTopLabel());
         box.getChildren().add(createMuteButton());
         box.getChildren().add(createVoiceButton());
         box.getChildren().add(createSaveButton());
         box.getChildren().add(createBackButton(stack));
+    }
+    
+    private static Label createTopLabel() {
+        Label label = new Label(getQuote());
+        label.setMinHeight(200);
+        label.setMinWidth(200);
+        label.setAlignment(Pos.TOP_CENTER);
+        label.setStyle("-fx-background-color: black");
+        label.setStyle("-fx-boarder-color: green");
+        label.setStyle("-fx-text-fill: green");
+        label.setStyle("-fx-font-wight: bold");
+        label.setStyle("-fx-font-family: monospace");
+        label.applyCss();
+        return label;
     }
     
     private static Button createSaveButton() {
@@ -192,7 +206,7 @@ public class ComputerController {
                     closeCPUView(stackPane);
                 } else if (command.equals("hello")) {
                     sayString("Ohh, hello Captain " + name + "!");
-                } else if (command.equals("stop")) {
+                } else if (command.equals("mute")) {
                     UniverseMapController.muteSound();
                 } else if(command.equals("save")) {
                     Persistence.saveGame();
