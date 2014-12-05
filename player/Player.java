@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import spacetrader.items.Engine;
 import spacetrader.items.Ship;
+import spacetrader.items.Weapon;
 import spacetrader.star_system.Planet;
 import spacetrader.star_system.StarSystem;
 import spacetrader.ui.Point;
@@ -52,6 +53,7 @@ public final class Player extends AbstractCrewMember {
         knownPlanets = new ArrayList<>();
         coord = new Point(0, 0);
         ship = new Ship(Ship.ShipType.Gnat);
+        ship.addWeapon(new Weapon(Weapon.WeaponType.Szczerbiec));
         ship.addCrewMember(this);
         ship.addEngine(new Engine());
         money = STARTING_MONEY;

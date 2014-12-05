@@ -6,4 +6,4 @@
 
 grammar hello;
 
-public <command> = (exit | play | save | hello | mute);
+public <command> = (exit | play | hello | save | mute);
