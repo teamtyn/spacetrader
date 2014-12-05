@@ -596,9 +596,10 @@ public class NoiseGenerator {
         
         boolean cancelled = false;
         float max = 0;
-        int octaves = octaveCap;//Math.min((int) (
-//                Math.log(1 / (baseFreq * increment))
-//                        / Math.log(lacunarity)), octaveCap);
+        int octaves = Math.min((int) (
+                Math.log(1 / (baseFreq * increment))
+                        / Math.log(lacunarity)), octaveCap);
+        System.out.println(octaves);
         float[][] buffer = new float[subdivisions + 1][subdivisions + 1];
         noiseLoop:
         for (int j = 0; j < buffer.length; j++) {
@@ -664,7 +665,6 @@ public class NoiseGenerator {
                 }
             }
         }
-        System.out.println(mesh.getTexCoords());
         
         if (!cancelled) {
             meshLoop:
@@ -689,7 +689,7 @@ public class NoiseGenerator {
         
         MeshView meshView = new MeshView(mesh);
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(getChunkTex(256, buffer));
+        material.setDiffuseMap(getChunkTex(128, buffer));
         meshView.setMaterial(material);
         return meshView;
     }
@@ -709,13 +709,13 @@ public class NoiseGenerator {
                 if (wi == 0 && wj == 0) {
                     value = buffer[(int) vj][(int) vi];
                 } else if (wi == 0) {
-                    value = (float) (wj * buffer[(int) vj][(int) vi] + (1 - wj) * buffer[(int) vj + 1][(int) vi]);
+                    value = (float) ((1 - wj) * buffer[(int) vj][(int) vi] + wj * buffer[(int) vj + 1][(int) vi]);
                 } else if (wj == 0) {
-                    value = (float) (wi * buffer[(int) vj][(int) vi] + (1 - wi) * buffer[(int) vj][(int) vi + 1]);
+                    value = (float) ((1- wi) * buffer[(int) vj][(int) vi] + wi * buffer[(int) vj][(int) vi + 1]);
                 } else {
-                    double h1 = wi * buffer[(int) vj][(int) vi] + (1 - wi) * buffer[(int) vj][(int) vi + 1];
-                    double h2 = wi * buffer[(int) vj + 1][(int) vi] + (1 - wi) * buffer[(int) vj + 1][(int) vi + 1];
-                    value = (float) (wj * h1 + (1 - wj) * h2);
+                    double h1 = (1 - wi) * buffer[(int) vj][(int) vi] + wi * buffer[(int) vj][(int) vi + 1];
+                    double h2 = (1 - wi) * buffer[(int) vj + 1][(int) vi] + wi * buffer[(int) vj + 1][(int) vi + 1];
+                    value = (float) ((1 - wj) * h1 + wj * h2);
                 }
                 writer.setColor(i, j, textures.getPixel(i, j, value));
             }

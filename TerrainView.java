@@ -15,6 +15,9 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.MeshView;
 import spacetrader.star_system.NoiseGenerator;
 import spacetrader.star_system.Planet;
@@ -52,7 +55,7 @@ public class TerrainView extends Xform {
     /**
      * The number of subdivisions for a chunk.
      */
-    private static final int CHUNK_SUBDIVISIONS = 16;
+    private static final int CHUNK_SUBDIVISIONS = 32;
 
     private NoiseGenerator noise;
     private HashMap<Point2D, Service> loadMap;
@@ -79,7 +82,6 @@ public class TerrainView extends Xform {
 
     public void setFocus(Point2D f) {
         if (!focus.equals(f)) {
-            System.out.println(f.getX() + " " + f.getY());
             focus = f;
             checkLoaded();
         }

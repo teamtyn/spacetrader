@@ -28,9 +28,9 @@ public class EncounterSubScene extends SubScene{
             Color.rgb(20, 20, 20));
     public static final PointLight SUN = new PointLight();
     static {
-        SUN.setTranslateX(-50);
-        SUN.setTranslateY(-50);
-        SUN.setTranslateZ(-1000);
+        SUN.setTranslateX(-500000);
+        SUN.setTranslateY(-100000);
+        SUN.setTranslateZ(-1000000);
     }
 
     private final ShipView playerShip;
@@ -56,7 +56,7 @@ public class EncounterSubScene extends SubScene{
         root.getChildren().add(playerShip.getMainXform());
         
         terrain = new TerrainView(new Planet(0, 0));
-        terrain.setTranslateZ(150);
+        terrain.setTranslateZ(250);
         otherShips = new ArrayList<>();
         debris = new ArrayList<>();
         
@@ -67,14 +67,6 @@ public class EncounterSubScene extends SubScene{
             otherShips.add(other);
             root.getChildren().add(other.getMainXform());
         }
-
-        final Box test = new Box(500, 500, 1);
-        test.setTranslateZ(50);
-        final PhongMaterial testMaterial = new PhongMaterial(Color.BLUE);
-        testMaterial.setDiffuseMap(
-                new Image(getClass().getResource("test.png").toExternalForm()));
-        test.setMaterial(testMaterial);
-        SUN.getScope().add(test);
 
         camera = new PerspectiveCamera(true);
         camera.setFieldOfView(45);
