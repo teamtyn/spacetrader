@@ -341,7 +341,7 @@ public class SkillSetupController implements Initializable, ControlledScreen {
         //System.out.println(closingMessage.toString());
         GameModel.setPlayer(player);
         GameModel.generateSystems();
-        parentController.setScreen("Encounter");
+        parentController.setScreen("UniverseMap");
     }
 
     /**

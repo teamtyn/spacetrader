@@ -6,7 +6,6 @@
 
 package spacetrader;
 
-//import com.gtranslate.Audio;
 import com.gtranslate.Audio;
 import com.gtranslate.Language;
 import java.io.InputStream;
@@ -20,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import spacetrader.persist.Persistence;
 import spacetrader.voice.VoiceRecognizer;
 /**
  *
@@ -31,11 +31,14 @@ public class ComputerController {
     private static String introduction = "Hello Captain " + name + ", I am COMPUTER. It is really nice to meet you.";
     private static boolean newb = true;
     private static String response = "Yes, Captain " + name + "?";
+    private static StackPane stackPane;
+    private static Button voiceButton;
     public static Pane openCPUView(Pane parent) {
         currParent = parent;
         System.out.println(parent);
         modifyParent(parent);
         StackPane view = setUpView();
+        stackPane = view;
 //        Stage stage = new Stage(StageStyle.UNDECORATED);
 //            stage.setTitle("COMPUTER");
 //            stage.setScene(new Scene(view, 450, 450));
@@ -43,17 +46,16 @@ public class ComputerController {
             
             
         parent.getChildren().add(view);
+        sayString(getQuote());
         Audio audio = Audio.getInstance();
         try{
         
         //This is really quite fun. VIETNAMESE is a good one.
         InputStream sound;
-            if(newb) {
-            sound  = audio.getAudio(introduction, Language.ENGLISH);
+
+            sound  = audio.getAudio(getQuote(), Language.ENGLISH);
             newb = false;
-        } else {
-        sound  = audio.getAudio(response, Language.KOREAN);
-        }
+
         Task speak = new Task() {
             
             @Override protected Object call() throws Exception {
@@ -68,6 +70,25 @@ public class ComputerController {
             System.out.println(ex);
         }
         return parent;
+    }
+    
+    public static void sayString(String string) {
+        Audio audio = Audio.getInstance();
+        try{
+            InputStream sound;
+            sound  = audio.getAudio(string, Language.ENGLISH);
+            Task speak = new Task() {
+
+                @Override protected Object call() throws Exception {
+                        audio.play(sound);
+                        return new Object();
+                }
+            };
+        new Thread(speak).start();
+        } catch (Exception ex) {
+                System.out.println(ex);
+        }
+        
     }
     
     public static void closeCPUView(StackPane stack) {
@@ -133,19 +154,58 @@ public class ComputerController {
         box.getChildren().add(createMuteButton());
         box.getChildren().add(createBackButton(stack));
         box.getChildren().add(createVoiceButton());
+        box.getChildren().add(createSaveButton());
+    }
+    
+    private static Button createSaveButton() {
+        Button saveButton = new Button("SAVE");
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(final ActionEvent event) {
+                    Persistence.saveGame();
+            }
+        });
+        return saveButton;
     }
     
     private static Button createVoiceButton() {
-        Button voiceButton = new Button("VOICE");
+        voiceButton = new Button("VOICE");
         voiceButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {
-                System.out.println(VoiceRecognizer.recognizeVoice());
+                disableVoiceButton();
+                String command = VoiceRecognizer.recognizeVoice();
+                voiceCommand(command);
+
+                
             }
         });
         return voiceButton;
     }
     
+    private static void voiceCommand(String command) {
+                enableVoiceButton();
+                System.out.println(command);
+                if(command.equals("play")) {
+                    UniverseMapController.playSound();
+                } else if (command.equals("back")) {
+                    closeCPUView(stackPane);
+                } else if (command.equals("hello")) {
+                    sayString("Ohh, hello Captain " + name + "!");
+                } else if (command.equals("stop")) {
+                    UniverseMapController.muteSound();
+                } else if(command.equals("save")) {
+                    Persistence.saveGame();
+                }
+    }
+    public static void disableVoiceButton() {
+        voiceButton.setDisable(true);
+    }
+    
+    public static void enableVoiceButton() {
+        voiceButton.setDisable(false);
+    }
+
     public static VBox establishBoxProperties(VBox box) {
         box.setAlignment(Pos.CENTER);
         //box.setCenterShape(true);

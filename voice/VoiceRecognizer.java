@@ -10,15 +10,14 @@ import edu.cmu.sphinx.frontend.util.Microphone;
 import edu.cmu.sphinx.recognizer.Recognizer;
 import edu.cmu.sphinx.result.Result;
 import edu.cmu.sphinx.util.props.ConfigurationManager;
-import java.util.Timer;
-import java.util.TimerTask;
 import javafx.concurrent.Task;
+import spacetrader.ComputerController;
 
 public class VoiceRecognizer {
     private static Microphone microphone;
     private static edu.cmu.sphinx.recognizer.Recognizer recognizer;
     private static boolean listen = true;
-    private static boolean timer = false;
+    private static boolean timer = true;
     private static Thread voiceThread;
     public static void load() {
         
@@ -31,8 +30,8 @@ public class VoiceRecognizer {
             System.out.println("Cannot start microphone.");
             recognizer.deallocate();
             return;
+//        } else { microphone.stopRecording();}
         }
-        
         //voiceThread = createThreadToRecognizeVoice();
 
     }
@@ -42,34 +41,28 @@ public class VoiceRecognizer {
     }
     
     public static String recognizeVoice() {
-            //System.out.println("Start speaking...");    
-            String stringResult = " ~.~.~.~ ";
-            Result result = recognizer.recognize();
-            while(timer) {
-                result = recognizer.recognize();
-            }
-            stringResult = result.getBestFinalResultNoFiller();
-//            if (result != null) {
-//                //System.out.println("You said: " + result.getBestFinalResultNoFiller());
-//                stringResult = result.getBestFinalResultNoFiller();
-//            } else {
-//                //System.out.println("I can't hear what you said.");
-//            }
+        String stringResult = "";
+
+
             timer = true;
+
+                while(timer) {
+
+                    Result result = recognizer.recognize();
+                    if(result != null) {
+                        timer = false;
+                        stringResult = result.getBestFinalResultNoFiller();
+                    }
+                }
+ 
+
+
             return stringResult;
     }
     
-    private static Timer createTimer() {
-        Timer timer = new Timer();
-        timer.schedule(new RemindTask(), (long)1000);
-        return timer;
+    public static boolean isVoiceRecognitionRunning() {
+        return recognizer.getState() == Recognizer.State.RECOGNIZING;
     }
-    
-    public static class RemindTask extends TimerTask {
-    public void run() {
-        timer = false;
-    }
-  }
 
     public static void quitVoiceRecognition() {
         if(recognizer.getState() == Recognizer.State.ALLOCATED) {

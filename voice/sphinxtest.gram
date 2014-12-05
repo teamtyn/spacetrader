@@ -6,8 +6,4 @@
 
 grammar hello;
 
-
-
-public <open> = computer;
-
-public <command> = [exit | sing];
+public <command> = (back | play | save | hello | stop);
