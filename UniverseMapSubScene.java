@@ -1,6 +1,7 @@
 package spacetrader;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -212,8 +213,7 @@ public class UniverseMapSubScene extends SubScene {
      * @param root The root of this subscene.
      */
     private void buildSystems(final Group root) {
-        StarSystem[] systems = GameModel.getSystems();
-        for (StarSystem system : systems) {
+        for (StarSystem system : GameModel.getUniverse()) {
             StarSystemView systemView = new StarSystemView(system);
             root.getChildren().add(systemView.getSystemXform());
             systemViews.add(systemView);

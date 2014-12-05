@@ -6,22 +6,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import spacetrader.observer.ObserverRegistry;
 import spacetrader.player.Player;
-import spacetrader.star_system.StarSystem;
-import spacetrader.star_system.StarSystemNames;
-import spacetrader.ui.Point;
+import spacetrader.star_system.Universe;
 
 /**
  * Acts as the singleton for the game, holding all the state.
@@ -78,9 +69,9 @@ public final class GameModel implements Serializable {
      */
     private Player player;
     /**
-     * All the systems that make up the universe.
+     * The universe in which the player trades.
      */
-    private StarSystem[] systems;
+    private Universe universe;
 
     /**
      * Prevents instantiation outside of the class.
@@ -167,8 +158,8 @@ public final class GameModel implements Serializable {
      *
      * @return The array of star system in the Universe
      */
-    public static StarSystem[] getSystems() {
-        return state.systems;
+    public static Universe getUniverse() {
+        return state.universe;
     }
 
     /**
@@ -205,35 +196,14 @@ public final class GameModel implements Serializable {
      * the Universe
      */
     public static void generateSystems() {
-        List<Point> positions = new ArrayList<>();
-        for (int x = 0; x <= UNIVERSE_WIDTH; x += SYSTEM_SPACING) {
-            for (int y = 0; y <= UNIVERSE_HEIGHT; y += SYSTEM_SPACING) {
-                positions.add(new Point(
-                        x + calculateFuzziness(), y + calculateFuzziness()));
-            }
-        }
-        Collections.shuffle(positions, RANDOM);
-
-        state.systems = new StarSystem[SYSTEM_COUNT];
-        for (int i = 0; i < state.systems.length; i++) {
-            state.systems[i] = new StarSystem(
-                    StarSystemNames.getName(), positions.remove(0));
-        }
-        state.player.setSystem(state.systems[0]);
+        state.universe = Universe.create();
+        state.player.setSystem(state.universe.iterator().next());
         state.player.setPlanet(state.player.getSystem().getPlanets()[0]);
     }
 
-    /**
-     * @return A random fuzzy number by which to vary spacing.
-     */
-    private static int calculateFuzziness() {
-        return RANDOM.nextInt(SYSTEM_SPACING_FUZZINESS)
-                - SYSTEM_SPACING_FUZZINESS / 2;
-    }
-    
     private static Stage modifyStageToQuitMusic(Stage stage) {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-        
+
             public void handle(final WindowEvent event) {
                 //Stage init
                 System.out.println("close request");
