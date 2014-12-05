@@ -188,7 +188,7 @@ public class ComputerController {
                 System.out.println(command);
                 if(command.equals("play")) {
                     UniverseMapController.playSound();
-                } else if (command.equals("back")) {
+                } else if (command.equals("exit")) {
                     closeCPUView(stackPane);
                 } else if (command.equals("hello")) {
                     sayString("Ohh, hello Captain " + name + "!");
