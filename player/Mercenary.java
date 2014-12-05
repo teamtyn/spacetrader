@@ -52,5 +52,4 @@ public class Mercenary extends AbstractCrewMember {
     public String getSpecialty() {
         return specialty;
     }
-
 }

@@ -1,6 +1,7 @@
 package spacetrader.items;
 
 import java.io.Serializable;
+import java.util.Random;
 import javafx.scene.paint.Color;
 import spacetrader.items.Engine.EngineType;
 import spacetrader.items.Shield.ShieldType;
@@ -94,11 +95,11 @@ public final class Ship implements Serializable {
         /**
          * The ultimate in long distance hauling from safety.
          */
-        Termite(500, 1000, 3, 1, 60, 4, 50, 5000, Color.WHITE),
+        Termite(500, 1000, 3, 1, 60, 4, 20, 5000, Color.WHITE),
         /**
          * The ultimate in killing things and taking their stuff.
          */
-        Wasp(500, 300, 2, 4, 35, 4, 50, 5000, Color.ALICEBLUE);
+        Wasp(500, 300, 2, 4, 35, 4, 20, 5000, Color.ALICEBLUE);
 
         /**
          * The maximum hull strength.
@@ -214,6 +215,37 @@ public final class Ship implements Serializable {
         crewNumber = 0;
         hull = type.hullStrength;
         fuel = 0;
+    }
+
+    /**
+     * MAKE A RANDOM SHIP.
+     * @param difficulty
+     * @return the random ship.
+     */
+    public static Ship randomShip(int difficulty){
+        Random random = new Random();
+        Ship newShip = new Ship(ShipType.values()[random.nextInt(
+                                                  ShipType.values().length)]);
+
+        for(int i=0; i<newShip.getWeaponSlots() ; i++){
+            newShip.addWeapon(new Weapon(WeaponType.values()[random.nextInt(
+                                                  WeaponType.values().length)]));
+        }
+        for(int i=0; i<newShip.getShieldSlots() ; i++){
+            newShip.addShield(new Shield(ShieldType.values()[random.nextInt(
+                                                  ShieldType.values().length)]));
+        }
+        for(int i=0; i<newShip.getEngineSlots() ; i++){
+            newShip.addEngine(new Engine(EngineType.values()[random.nextInt(
+                                                  EngineType.values().length)]));
+        }
+        
+        for(int i=0; i<newShip.getCrewSlots(); i++){
+            newShip.addCrewMember(new Mercenary());
+        }
+        
+        System.out.println(newShip.toString());
+        return newShip;
     }
 
     /**
@@ -577,5 +609,26 @@ public final class Ship implements Serializable {
      */
     public void emptyFuel() {
         fuel = 0;
+    }
+    
+    public String toString(){
+        String toString = this.getType().name();
+        toString += "\nWeapons: ";
+        for(Weapon weapon : weapons){
+            toString += "\n" + weapon.toString();
+        }
+        toString += "\nShileds: ";
+        for(Shield shield : shields){
+            toString += "\n" + shield.toString();
+        }
+        toString += "\nEngines: ";
+        for(Engine engine : engines){
+            toString += "\n" + engine.toString();
+        }
+        toString += "\nCrew: ";
+        for(AbstractCrewMember crew : crew){
+            toString += "\n" + crew.getName();
+        }
+        return toString;
     }
 }

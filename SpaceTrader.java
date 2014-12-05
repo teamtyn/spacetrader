@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import spacetrader.items.Ship;
 
 /**
  * Main application class that sets up the view components.
@@ -33,7 +34,9 @@ public class SpaceTrader extends Application {
         mainContainer.loadScreen("Encounter", "Encounter.fxml");
         mainContainer.loadScreen("MercenaryShop", "MercenaryShop.fxml");
         mainContainer.setScreen("Menu");
-
+        
+        Ship.randomShip(3);
+        
         final Group root = new Group();
         root.getChildren().addAll(mainContainer);
 
