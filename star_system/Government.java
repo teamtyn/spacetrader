@@ -146,7 +146,7 @@ public final class Government implements Serializable {
 
     @Override
     public String toString() {
-        String str = "Government Type: " + type + "\nLeader: " + leader;
+        String str = type + "\nLeader: " + leader;
         return str;
     }
 }

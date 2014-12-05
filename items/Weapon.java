@@ -24,44 +24,44 @@ public final class Weapon implements Serializable {
         /**
          * Null object.
          */
-        EmptySlot(0, 10, 0, new SerializableColor(Color.WHITE), "Empty Slot"),
+        EmptySlot(0, 30, 0, new SerializableColor(Color.WHITE), "Empty Slot"),
         /**
          * Cheapest weapon available.
          */
-        Gladius(10, 10, 100, new SerializableColor(Color.GREEN), "Gladius"),
+        Gladius(10, 30, 100, new SerializableColor(Color.GREEN), "Gladius"),
         /**
          * Basic weapon that favors damage.
          */
-        Spatha(10, 10, 300, new SerializableColor(Color.BLUE), "Spatha"),
+        Spatha(15, 30, 300, new SerializableColor(Color.BLUE), "Spatha"),
         /**
          * Basic weapon that favors rate of fire.
          */
-        Katana(10, 30, 301, new SerializableColor(Color.BLUE), "Katana"),
+        Katana(10, 10, 301, new SerializableColor(Color.BLUE), "Katana"),
         /**
          * Basic weapon that heavily favors rate of fire.
          */
-        Rapier(5, 60, 300, new SerializableColor(Color.BLUE), "Rapier"),
+        Rapier(5, 5, 300, new SerializableColor(Color.BLUE), "Rapier"),
         /**
          * Advanced weapon that is roughly balanced.
          */
-        Kampilan(15, 20, 500, new SerializableColor(Color.RED), "Kampilan"),
+        Kampilan(15, 10, 500, new SerializableColor(Color.RED), "Kampilan"),
         /**
          * Advanced weapon that very heavily favors rate of fire.
          */
-        Scimitar(5, 500, 500, new SerializableColor(Color.RED), "Scimitar"),
+        Scimitar(5, 5, 500, new SerializableColor(Color.RED), "Scimitar"),
         /**
          * Advanced weapon that very heavily favors damage.
          */
-        Claymore(30, 1, 500, new SerializableColor(Color.RED), "Claymore"),
+        Claymore(35, 60, 500, new SerializableColor(Color.RED), "Claymore"),
         /**
          * The legendary sword wielded by Charlemagne.
          */
-        Joyeuse(20, 25, 2500, new SerializableColor(Color.GOLD), "Joyeuse"),
+        Joyeuse(20, 10, 2500, new SerializableColor(Color.GOLD), "Joyeuse"),
         /**
          * The legendary sword used to crown polish kings for centuries.
          */
         Szczerbiec(
-                25, 10, 2500, new SerializableColor(Color.GOLD), "Szczerbiec");
+                25, 15, 2500, new SerializableColor(Color.GOLD), "Szczerbiec");
 
         /**
          * How much damage this weapon does per shot.

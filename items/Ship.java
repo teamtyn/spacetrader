@@ -57,6 +57,8 @@ public final class Ship implements Serializable {
      */
     private double fuel;
     
+    private Map<String, Skill> skills;
+    
 
     /**
      * The enum used to store values constant across all ships of a type.
@@ -219,6 +221,7 @@ public final class Ship implements Serializable {
         crewNumber = 0;
         hull = type.hullStrength;
         fuel = 0;
+        skills = generateSkills();
     }
 
     /**
@@ -341,6 +344,7 @@ public final class Ship implements Serializable {
         if (crewNumber < getCrewSlots()) {
             crew[crewNumber] = cm;
             crewNumber++;
+            skills = generateSkills();
             success = true;
         }
         return success;
@@ -624,7 +628,6 @@ public final class Ship implements Serializable {
         skills.put("engineering", new Skill("engineering"));
         for(AbstractCrewMember acme: crew) {
             if(acme != null) {
-                System.out.println(skills.toString());
                 skills = combineSkillMap(skills, acme.getSkills());
             }
         }
@@ -650,7 +653,7 @@ public final class Ship implements Serializable {
     }
     
     public int getShipSkillValue(String skill) {
-        return generateSkills().get(skill).getValue();
+        return skills.get(skill).getValue();
     }
     
     public Map<String, Skill> combineSkillMap(Map<String, Skill> map1, Map<String, Skill> map2) {
