@@ -122,16 +122,19 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
     }
     
     private void hireMercenary(Mercenary merc) {
-        if(!player.getShip().addCrewMember(merc)) {
-            shipDialogueField.setText("You can't jam any more crew members in there!");
-        } else {
-            mercs.remove(merc);
-            shipDialogueField.setText("Welcome to the squad " + merc.getName());
+        if(player.getSkill("charming").getValue() > 9) {
 
-        }
+            if(!player.getShip().addCrewMember(merc)) {
+                shipDialogueField.setText("You can't jam any more crew members in there!");
+            } else {
+                mercs.remove(merc);
+                shipDialogueField.setText("Welcome to the squad " + merc.getName());
 
-        updateMercList();
-        updateCrewList();
+            }
+
+            updateMercList();
+            updateCrewList();
+        } else { shipDialogueField.setText("You aren't charming enough to hire mercenaries!"); }
     }
     
     @FXML
