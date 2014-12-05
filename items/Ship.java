@@ -1,6 +1,8 @@
 package spacetrader.items;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import javafx.scene.paint.Color;
 import spacetrader.items.Engine.EngineType;
@@ -8,6 +10,7 @@ import spacetrader.items.Shield.ShieldType;
 import spacetrader.items.Weapon.WeaponType;
 import spacetrader.player.AbstractCrewMember;
 import spacetrader.player.Mercenary;
+import spacetrader.player.Skill;
 import spacetrader.ui.SerializableColor;
 
 /**
@@ -53,6 +56,7 @@ public final class Ship implements Serializable {
      * The current fuel level.
      */
     private double fuel;
+    
 
     /**
      * The enum used to store values constant across all ships of a type.
@@ -609,6 +613,45 @@ public final class Ship implements Serializable {
      */
     public void emptyFuel() {
         fuel = 0;
+    }
+    
+    public Map<String, Skill> generateSkills() {
+        Map<String, Skill> skills = new HashMap<String, Skill>();
+        skills.put("piloting", new Skill("piloting"));
+        skills.put("fighting", new Skill("fighting"));
+        skills.put("trading", new Skill("trading"));
+        skills.put("charming", new Skill("charming"));
+        skills.put("engineering", new Skill("engineering"));
+        for(AbstractCrewMember acme: crew) {
+            if(acme != null) {
+                System.out.println(skills.toString());
+                skills = combineSkillMap(skills, acme.getSkills());
+            }
+        }
+        return skills;
+    }
+    
+    public String listShipSkillValues() {
+        String string = "";
+        for (Skill skill: generateSkills().values()) {
+            string = string + skill.getType() + " : " + skill.getValue() + "\n";
+        }
+        return string;
+    }
+    
+    public int getShipSkillValue(String skill) {
+        return generateSkills().get(skill).getValue();
+    }
+    
+    public Map<String, Skill> combineSkillMap(Map<String, Skill> map1, Map<String, Skill> map2) {
+        Map<String, Skill> newMap = map1;
+        for(Object object : map1.values()) {
+             Skill skill = (Skill) object;
+             skill.combineSkills((Skill)map2.get((skill.getType())));
+            newMap.get(skill.getType()).setValue(skill.getValue());
+        }
+        return newMap;
+        
     }
     
     public String toString(){

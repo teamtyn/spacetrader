@@ -26,6 +26,9 @@ import spacetrader.player.Skill;
 public class MercenaryShopController implements Initializable, ControlledScreen {
 
     @FXML
+    private Label crewSkillLabel;
+    
+    @FXML
     private Label dialogueField;
 
     @FXML
@@ -114,12 +117,18 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
         }
         MercList cl = new MercList(crewMercs);
         currentCrewList.getChildren().add(cl.vBox);
+        player.getShip().generateSkills();
+        crewSkillLabel.setText(player.getShip().listShipSkillValues());
     }
     
     private void hireMercenary(Mercenary merc) {
         if(!player.getShip().addCrewMember(merc)) {
             System.out.println("You can't jam any more crew members in there!");
+        } else {
+            mercs.remove(merc);
         }
+
+        updateMercList();
         updateCrewList();
     }
     

@@ -38,7 +38,7 @@ public abstract class AbstractCrewMember implements Serializable {
      */
     public AbstractCrewMember(final String newName) {
         name = newName;
-        skills = new HashMap();
+        skills = new HashMap<String, Skill>();
         skills.put("piloting", new Skill("piloting"));
         skills.put("fighting", new Skill("fighting"));
         skills.put("trading", new Skill("trading"));

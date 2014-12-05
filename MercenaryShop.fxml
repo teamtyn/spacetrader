@@ -85,6 +85,7 @@
                         <Font size="32.0" />
                      </font>
                   </Label>
+                  <Label fx:id="crewSkillLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="511.0" prefHeight="62.0" prefWidth="320.0" textAlignment="CENTER" />
                </children>
             </Pane>
          <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="GO BACK" />
