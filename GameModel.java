@@ -22,6 +22,7 @@ import spacetrader.player.Player;
 import spacetrader.star_system.StarSystem;
 import spacetrader.star_system.StarSystemNames;
 import spacetrader.ui.Point;
+import spacetrader.voice.VoiceRecognizer;
 
 /**
  * Acts as the singleton for the game, holding all the state.
@@ -115,6 +116,7 @@ public final class GameModel implements Serializable {
         state = new GameModel();
         GameModel.stage = aStage;
         GameModel.stage = modifyStageToQuitMusic(GameModel.stage);
+        VoiceRecognizer.load();
     }
 
     /**
@@ -238,6 +240,7 @@ public final class GameModel implements Serializable {
                 //Stage init
                 System.out.println("close request");
                 UniverseMapController.stopSound();
+                VoiceRecognizer.quitVoiceRecognition();
             }
         });
         return stage;

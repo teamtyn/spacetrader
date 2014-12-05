@@ -14,15 +14,13 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import spacetrader.voice.VoiceRecognizer;
 /**
  *
  * @author Local Clayton
@@ -51,7 +49,7 @@ public class ComputerController {
         //This is really quite fun. VIETNAMESE is a good one.
         InputStream sound;
             if(newb) {
-            sound  = audio.getAudio(introduction, Language.KOREAN);
+            sound  = audio.getAudio(introduction, Language.ENGLISH);
             newb = false;
         } else {
         sound  = audio.getAudio(response, Language.KOREAN);
@@ -86,27 +84,29 @@ public class ComputerController {
     
     private static StackPane createStackPane() {
         StackPane stack = new StackPane();
-        stack.minHeight((currParent.getLayoutBounds().getHeight()/ 2));
-        stack.minWidth((currParent.getLayoutBounds().getWidth()/ 2));
+        stack.minHeight((currParent.getLayoutBounds().getHeight()));
+        stack.minWidth((currParent.getLayoutBounds().getWidth()));
         stack.maxHeight(Double.MAX_VALUE);
         stack.maxWidth(Double.MAX_VALUE);
-        stack.setLayoutX((currParent.getLayoutBounds().getWidth() / 4));
-        stack.setLayoutY((currParent.getLayoutBounds().getHeight() / 4));
-        stack.setStyle("-fx-background-color: rgb(0,3,80)");
+        //stack.setLayoutX((currParent.getLayoutBounds().getWidth() / 4));
+        //stack.setLayoutY((currParent.getLayoutBounds().getHeight() / 4));
+        //stack.setStyle("-fx-background-color: rgb(0,3,80)");
 
         return stack;
     }
 
     
     private static Rectangle createRectangle() {
-        Rectangle box = new Rectangle((currParent.getLayoutBounds().getWidth() / 2),
-                (currParent.getLayoutBounds().getHeight() / 2));
+        Rectangle box = new Rectangle((currParent.getLayoutBounds().getWidth()),
+                (currParent.getLayoutBounds().getHeight()));
         box.maxHeight(Double.MAX_VALUE);
         box.maxWidth(Double.MAX_VALUE);
-        box.setLayoutX((currParent.getLayoutBounds().getWidth()) - (box.getWidth() / 2));
-        box.setLayoutY((currParent.getLayoutBounds().getHeight()) - (box.getHeight() / 2));
-        box.setStyle("-fx-background-color: rgb(50,3,80)");
+        //box.setLayoutX((currParent.getLayoutBounds().getWidth()) - (box.getWidth() / 2));
+        //box.setLayoutY((currParent.getLayoutBounds().getHeight()) - (box.getHeight() / 2));
+        //box.setStyle("-fx-background-color: rgb(50,3,80)");
         box.setStyle("-fx-border-color: rgb(100,100,100)");
+        box.setStyle("-fx-opacity: 0.95");
+        //box.setId("cpu");
 //        box.styleProperty().bind(Bindings
 //            .concat("-fx-background-radius:200;"));
         
@@ -121,11 +121,29 @@ public class ComputerController {
         return box;
     }
     
+    private static String getQuote() {
+        if(newb) {
+            return introduction;
+        } else return response;
+    }
+    
     public static void propogateElementsInBox(VBox box, StackPane stack) {
         box.getChildren().clear();
-        box.getChildren().add(new Label(introduction));
+        box.getChildren().add(new Label(getQuote()));
         box.getChildren().add(createMuteButton());
         box.getChildren().add(createBackButton(stack));
+        box.getChildren().add(createVoiceButton());
+    }
+    
+    private static Button createVoiceButton() {
+        Button voiceButton = new Button("VOICE");
+        voiceButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(final ActionEvent event) {
+                System.out.println(VoiceRecognizer.recognizeVoice());
+            }
+        });
+        return voiceButton;
     }
     
     public static VBox establishBoxProperties(VBox box) {
@@ -136,13 +154,13 @@ public class ComputerController {
         box.minWidth(600);
         box.setLayoutX((currParent.getLayoutBounds().getWidth()/ 2) - (box.getWidth() / 2));
         box.setLayoutY((currParent.getLayoutBounds().getHeight()/ 2) - (box.getHeight() / 2));
-        box.setStyle("-fx-background-color: rgb(0,3,80)");
+        //box.setStyle("-fx-background-color: rgb(0,3,80)");
         return box;
 
     }
     
     public static void modifyParent(Pane parent) {
-        //parent.setEffect(new BoxBlur());
+//        parent.setEffect(new BoxBlur());
         //parent.setPickOnBounds(true);
         //parent.setMouseTransparent(true);
     }
