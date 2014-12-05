@@ -121,11 +121,11 @@ public class PlanetView extends Sphere {
         axisXform = new Xform();
         final PhongMaterial material = new PhongMaterial();
         setMaterial(material);
-        final ColorGradient colors = new ColorGradient(
+        final ColorGradient colors = ColorGradient.factory(
                 planet.getSeaLevel(), planet.getEnvironment());
 
         noise = new NoiseGenerator(planet.getSeed(), BASE_FREQ, BASE_AMP,
-                LACUNARITY, GAIN, OCTAVE_CAP, NoiseMode.SQUARE, colors);
+                LACUNARITY, GAIN, OCTAVE_CAP, NoiseMode.SQUARE, colors, null);
         noise.initNoiseBuffer(WIDTH_LOW, HEIGHT_LOW);
         noise.addOctaves();
         material.setDiffuseMap(noise.getDiffuse());
