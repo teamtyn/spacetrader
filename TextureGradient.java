@@ -60,6 +60,10 @@ public class TextureGradient {
                 tg.addTexture(120f, "stone.png");
                 tg.addTexture(200f, "snow.jpg");
                 break;
+            default:
+                tg.addTexture(5f, "rocky.jpg");
+                tg.addTexture(100f, "marble.jpg");
+                break;
         }
         
         return tg;

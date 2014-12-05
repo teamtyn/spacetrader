@@ -659,7 +659,16 @@ public class UniverseMapController extends AnimationTimer
      */
     @FXML
     private void marketButtonAction(final ActionEvent event) {
-        parentController.setScreen("Market");
+        if (selectedPlanet.getPlanet().getTechLevel() == TechLevel.HIGHTECH) {
+            parentController.setScreen("Encounter");
+        } else {
+            int num = GameModel.getRandom().nextInt(4);
+            if (num == 0) {
+                parentController.setScreen("Encounter");
+            } else {
+                parentController.setScreen("Market");
+            }
+        }
     }
 
     /**

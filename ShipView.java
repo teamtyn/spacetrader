@@ -33,10 +33,10 @@ public class ShipView extends MeshView {
     private double dy;
     private double dTheta;
     private double power;
-    private double maxSpeed;
     private double maxRotationSpeed;
     private double handling;
     private double mass;
+    private int fireTimer;
 
     /**
      * 
@@ -79,16 +79,16 @@ public class ShipView extends MeshView {
 
         mass = 50;
         handling = 0.3;
-        maxSpeed = 2;
         maxRotationSpeed = 2;
+        fireTimer = ship.getWeapons()[0].getRateOfFire();
 
         shipXform.getChildren().addAll(this, shield);
         mainXform.getChildren().addAll(shipXform, bulletXform);
     }
 
     public void applyForce(final double force) {
-        dx += (force / 50) * Math.cos(Math.toRadians(shipXform.getRz()));
-        dy += (force / 50) * Math.sin(Math.toRadians(shipXform.getRz()));
+        dx += (ship.getEngines()[0].getAcceleration() * force / 50) * Math.cos(Math.toRadians(shipXform.getRz()));
+        dy += (ship.getEngines()[0].getAcceleration() * force / 50) * Math.sin(Math.toRadians(shipXform.getRz()));
     }
 
     public void applyTorque(final double torque) {
@@ -99,24 +99,29 @@ public class ShipView extends MeshView {
     }
     
     public void fire() {
-        Xform trajectory = new Xform();
-        trajectory.setTx(shipXform.getTx());
-        trajectory.setTy(shipXform.getTy());
-        trajectory.setRz(shipXform.getRz());
-        TriangleMesh bulletMesh = new TriangleMesh();
-        bulletMesh.getPoints().addAll(
-                0.0f, 0.0f, (float) shipXform.getTz(),
-                50.0f, 0.0f, (float) shipXform.getTz());
-        bulletMesh.getTexCoords().addAll(0f, 0f);
-        bulletMesh.getFaces().addAll(0, 0, 0, 0, 1, 0);
-        MeshView bullet = new MeshView(bulletMesh);
-        bullet.setMaterial(new PhongMaterial(Color.rgb(240, 255, 100)));
-        bullet.setDrawMode(DrawMode.LINE);
-        bullet.setCullFace(CullFace.NONE);
-        bullet.setTranslateX(-50);
-        bullets.put(bullet, true);
-        trajectory.getChildren().add(bullet);
-        bulletXform.getChildren().add(trajectory);
+        if (fireTimer <= 0) {
+            fireTimer = ship.getWeapons()[0].getRateOfFire();
+            Xform trajectory = new Xform();
+            trajectory.setTx(shipXform.getTx());
+            trajectory.setTy(shipXform.getTy());
+            trajectory.setRz(shipXform.getRz());
+            TriangleMesh bulletMesh = new TriangleMesh();
+            bulletMesh.getPoints().addAll(
+                    0.0f, 0.0f, (float) shipXform.getTz(),
+                    50.0f, 0.0f, (float) shipXform.getTz());
+            bulletMesh.getTexCoords().addAll(0f, 0f);
+            bulletMesh.getFaces().addAll(0, 0, 0, 0, 1, 0);
+            MeshView bullet = new MeshView(bulletMesh);
+            bullet.setMaterial(new PhongMaterial(Color.rgb(240, 255, 100)));
+            bullet.setDrawMode(DrawMode.LINE);
+            bullet.setCullFace(CullFace.NONE);
+            bullet.setTranslateX(-50);
+            bullets.put(bullet, true);
+            trajectory.getChildren().add(bullet);
+            bulletXform.getChildren().add(trajectory);
+        } else {
+            fireTimer--;
+        }
     }
     
     public boolean hitShield() {
@@ -134,7 +139,6 @@ public class ShipView extends MeshView {
         if (Math.abs(dTheta) > 0) {
             dTheta -= Math.min(Math.signum(dTheta) * (handling / 25), Math.signum(dTheta) * dTheta);
         }
-
         shipXform.setTranslate(shipXform.getTx() + dx, shipXform.getTy() + dy);
         shipXform.setRz(shipXform.getRz() + dTheta);
         shipXform.setRx(10 * dTheta);

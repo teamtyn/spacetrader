@@ -24,7 +24,7 @@ public final class Weapon implements Serializable {
         /**
          * Null object.
          */
-        EmptySlot(0, 0, 0, new SerializableColor(Color.WHITE), "Empty Slot"),
+        EmptySlot(0, 10, 0, new SerializableColor(Color.WHITE), "Empty Slot"),
         /**
          * Cheapest weapon available.
          */

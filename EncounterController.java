@@ -20,13 +20,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Sphere;
 import javafx.scene.shape.TriangleMesh;
+import spacetrader.observer.Observer;
 
 /**
  * FXML Controller class
  *
  * @author Team TYN
  */
-public class EncounterController extends AnimationTimer implements Initializable, ControlledScreen {
+public class EncounterController extends AnimationTimer implements Initializable, ControlledScreen, Observer<ControlledScreen> {
     private ScreensController parentController;
     private EncounterSubScene subScene;
     private ShipView playerShip;
@@ -98,14 +99,7 @@ public class EncounterController extends AnimationTimer implements Initializable
 
     @Override
     public void lazyInitialize() {
-        subScene = new EncounterSubScene(new Group(), SpaceTrader.SCREEN_WIDTH, SpaceTrader.SCREEN_HEIGHT, 1);
-        playerShip = subScene.getPlayerShip();
-        otherShips = subScene.getOtherShips();
-        terrain = subScene.getTerrain();
-        debris = subScene.getDebris();
-        subScenePane.getChildren().add(subScene);
-        handleKeyboard();
-        start();
+        GameModel.getObserverRegistry().registerObserver(this);
     }
 
     /**
@@ -204,7 +198,6 @@ public class EncounterController extends AnimationTimer implements Initializable
                 if (t <= 1) {
                     ((TriangleMesh) bullet.getMesh()).getPoints().set(3, (float) t * 50);
                     ship.getBullets().put(bullet, false);
-                    Sphere testHit = new Sphere(2);
                     double x = t * (bx2 - bx1) + bx1;
                     double y = t * (by2 - by1) + by1;
 
@@ -217,6 +210,17 @@ public class EncounterController extends AnimationTimer implements Initializable
                     
                     double bounceAngle = sign * Math.toDegrees(Math.acos(dot(hitVecX, hitVecY, bVecX, bVecY)));
                     
+                    if (!hit.getShip().equals(playerShip.getShip())) {
+                        if (hit.getShip().getHull() > 0) {
+                            hit.getShip().takeDamage(ship.getShip().getWeapons()[0].getDamage());
+                        } else {
+                            stop();
+                            EncounterSubScene.AMBIENT.getScope().clear();
+                            EncounterSubScene.SUN.getScope().clear();
+                            EncounterSubScene.NO_SHADE.getScope().clear();
+                            parentController.setScreen("Market");
+                        }
+                    }
                     hit.hitShield();
                     Debris d = new Debris(x, y, hit.getDx(), hit.getDy(), hitAngle + bounceAngle, Color.WHITE);
                     debris.add(d);
@@ -261,5 +265,19 @@ public class EncounterController extends AnimationTimer implements Initializable
     
     private static double dot(double x1, double y1, double x2, double y2) {
         return x1 * x2 + y1 * y2;
+    }
+
+    @Override
+    public void notifyChange(ControlledScreen changedObject) {
+        if (this.equals(changedObject)) {
+            subScene = new EncounterSubScene(new Group(), SpaceTrader.SCREEN_WIDTH, SpaceTrader.SCREEN_HEIGHT, 1);
+            playerShip = subScene.getPlayerShip();
+            otherShips = subScene.getOtherShips();
+            terrain = subScene.getTerrain();
+            debris = subScene.getDebris();
+            subScenePane.getChildren().add(subScene);
+            handleKeyboard();
+            start();
+        }
     }
 }

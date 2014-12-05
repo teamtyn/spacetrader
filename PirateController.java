@@ -28,8 +28,12 @@ public class PirateController implements ShipController {
         double angle = shipView.angleToTarget();
         if (Math.abs(angle) < 0.01) {
             turning = false;
-        } else if (Math.abs(angle) > 0.2) {
+        } else if (Math.abs(angle) > 0.3) {
             turning = true;
+        }
+        
+        if (Math.abs(angle) < 0.2 && distance < 200) {
+            shipView.fire();
         }
         if (shipView.angleToTarget() > 0 && turning) {
             shipView.applyTorque(1);

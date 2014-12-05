@@ -28,45 +28,45 @@ public final class Engine implements Serializable {
         /**
          * Cheapest engine type.
          */
-        Hackney(10, 10, 100, new SerializableColor(Color.GREEN), "Hackney"),
+        Hackney(2, 10, 100, new SerializableColor(Color.GREEN), "Hackney"),
         /**
          * Basic engine that greatly favors acceleration.
          */
-        Lipizzaner(30, 10, 300, new SerializableColor(Color.BLUE),
+        Lipizzaner(2, 10, 300, new SerializableColor(Color.BLUE),
                 "Lipizzaner"),
         /**
          * Basic engine that greatly favors efficiency.
          */
-        Marwari(10, 30, 300, new SerializableColor(Color.BLUE), "Marwari"),
+        Marwari(3, 30, 300, new SerializableColor(Color.BLUE), "Marwari"),
         /**
          * Better engine that slightly favors efficiency.
          */
-        Malopolski(15, 20, 300, new SerializableColor(Color.BLUE),
+        Malopolski(3, 20, 300, new SerializableColor(Color.BLUE),
                 "Malopolski"),
         /**
          * Better engine that slightly favors acceleration.
          */
-        Galiceno(20, 15, 300, new SerializableColor(Color.BLUE), "Galiceño"),
+        Galiceno(4, 15, 300, new SerializableColor(Color.BLUE), "Galiceño"),
         /**
          * Advanced engine that slightly favors acceleration.
          */
-        Kampilan(25, 20, 500, new SerializableColor(Color.RED), "Kampilan"),
+        Kampilan(4, 20, 500, new SerializableColor(Color.RED), "Kampilan"),
         /**
          * Advanced engine that slightly favors efficiency.
          */
-        Shetland(20, 25, 500, new SerializableColor(Color.RED), "Shetland"),
+        Shetland(4, 25, 500, new SerializableColor(Color.RED), "Shetland"),
         /**
          * Advanced engine that heavily favors acceleration.
          */
-        Tawleed(50, 10, 500, new SerializableColor(Color.RED), "Tawleed"),
+        Tawleed(5, 10, 500, new SerializableColor(Color.RED), "Tawleed"),
         /**
          * Epic engine that heavily favors efficiency.
          */
-        Yakut(10, 250, 2500, new SerializableColor(Color.GOLD), "Yakut"),
+        Yakut(3, 250, 2500, new SerializableColor(Color.GOLD), "Yakut"),
         /**
          * Epic engine that heavily favors acceleration.
          */
-        Unicorn(250, 10, 2500, new SerializableColor(Color.GOLD), "Unicorn");
+        Unicorn(3, 10, 2500, new SerializableColor(Color.GOLD), "Unicorn");
 
         /**
          * How fast the engine gets fast.

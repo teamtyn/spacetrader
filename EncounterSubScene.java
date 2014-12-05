@@ -16,6 +16,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.MeshView;
 import spacetrader.ControlledShipView.ControlType;
+import spacetrader.items.Ship;
 import spacetrader.star_system.Planet;
 
 /**
@@ -59,7 +60,7 @@ public class EncounterSubScene extends SubScene{
         
         for(int i = 0; i < enemyCount; i++) {
             ControlledShipView other = new ControlledShipView(loader.getMesh(),
-                GameModel.getPlayer().getShip(), ControlType.PIRATE);
+                Ship.randomShip(1), ControlType.PIRATE);
             other.setTarget(playerShip);
             otherShips.add(other);
             root.getChildren().add(other.getMainXform());
