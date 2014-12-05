@@ -49,25 +49,27 @@ public class TerrainView extends Xform {
      */
     private static final int OCTAVE_CAP = 15;
     /**
-     * The size of each terrain chunk.
-     */
-    private static final int CHUNK_SIZE = 256;
-    /**
      * The number of subdivisions for a chunk.
      */
     private static final int CHUNK_SUBDIVISIONS = 32;
+    /**
+     * The texture resolution for a chunk.
+     */
+    private static final int RESOLUTION = 128;
 
     private NoiseGenerator noise;
     private HashMap<Point2D, Service> loadMap;
     private Point2D focus;
+    private int chunkSize;
     private ExecutorService execute;
     
-    public TerrainView(Planet planet) {
-        final TextureGradient textures = TextureGradient.factory(Planet.Environment.EARTH);
+    public TerrainView(Planet planet, int cS) {
+        final TextureGradient textures = TextureGradient.factory(planet.getEnvironment());
         noise = new NoiseGenerator(planet.getSeed(), BASE_FREQ, BASE_AMP,
                 LACUNARITY, GAIN, OCTAVE_CAP, NoiseGenerator.NoiseMode.SQUARE, null, textures);
         loadMap = new HashMap<>();
         focus = new Point2D(0, 0);
+        chunkSize = cS;
         execute = Executors.newFixedThreadPool(5, new ThreadFactory() {
                 @Override
                 public Thread newThread(final Runnable runnable) {
@@ -94,7 +96,7 @@ public class TerrainView extends Xform {
                 if (loadMap.get(point) == null ) {
                     LoadChunkService loadChunk = new LoadChunkService();
                     loadChunk.point = point;
-                    loadChunk.size = CHUNK_SIZE;
+                    loadChunk.size = chunkSize;
                     loadChunk.subdivisions = CHUNK_SUBDIVISIONS;
                     loadChunk.setExecutor(execute);
                     initChunkLoader(loadChunk);
@@ -112,6 +114,10 @@ public class TerrainView extends Xform {
                 getChildren().add((MeshView) event.getSource().getValue());
             }
         });
+    }
+    
+    public int getChunkSize() {
+        return chunkSize;
     }
 
     /**
@@ -177,7 +183,7 @@ public class TerrainView extends Xform {
 
                 @Override
                 protected MeshView call() throws Exception {
-                    return noise.getChunk(point, size, subdivisions);
+                    return noise.getChunk(point, size, subdivisions, RESOLUTION);
                 }
         }
     }

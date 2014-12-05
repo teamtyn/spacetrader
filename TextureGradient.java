@@ -36,6 +36,29 @@ public class TextureGradient {
                 tg.addTexture(5f, "grass.jpg");
                 tg.addTexture(25f, "dirt.jpg");
                 tg.addTexture(125f, "stone.png");
+                tg.addTexture(175f, "snow.jpg");
+                break;
+            case LAVA:
+                tg.addTexture(2f, "lavaRock.jpg");
+                tg.addTexture(10f, "blackRock.jpg");
+                tg.addTexture(25f, "darkGrayRock.jpg");
+                tg.addTexture(125f, "lightGrayRock.png");
+                break;
+            case ICE:
+                tg.addTexture(5f, "snow.jpg");
+                tg.addTexture(25f, "stone.png");
+                tg.addTexture(125f, "ice.jpg");
+                tg.addTexture(175, "snow.jpg");
+                break;
+            case DESERT:
+                tg.addTexture(5f, "sand.jpg");
+                tg.addTexture(25f, "sandstone.jpg");
+                tg.addTexture(175f, "sand.jpg");
+                break;
+            case ALIEN:
+                tg.addTexture(5f, "alien.jpg");
+                tg.addTexture(120f, "stone.png");
+                tg.addTexture(200f, "snow.jpg");
                 break;
         }
         

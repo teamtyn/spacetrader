@@ -590,7 +590,7 @@ public class NoiseGenerator {
      * Generates a terrain chunk. This operation ignores the noise buffer and
      * creates its own temporary buffer.
      */
-    public final MeshView getChunk(Point2D point, int size, int subdivisions) {
+    public final MeshView getChunk(Point2D point, int size, int subdivisions, int resolution) {
         TriangleMesh mesh = new TriangleMesh();
         int increment = size / subdivisions;
         
@@ -599,7 +599,6 @@ public class NoiseGenerator {
         int octaves = Math.min((int) (
                 Math.log(1 / (baseFreq * increment))
                         / Math.log(lacunarity)), octaveCap);
-        System.out.println(octaves);
         float[][] buffer = new float[subdivisions + 1][subdivisions + 1];
         noiseLoop:
         for (int j = 0; j < buffer.length; j++) {
@@ -689,7 +688,7 @@ public class NoiseGenerator {
         
         MeshView meshView = new MeshView(mesh);
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(getChunkTex(128, buffer));
+        material.setDiffuseMap(getChunkTex(resolution, buffer));
         meshView.setMaterial(material);
         return meshView;
     }

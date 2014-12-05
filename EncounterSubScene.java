@@ -47,15 +47,12 @@ public class EncounterSubScene extends SubScene{
 
         ModelLoader loader = new ModelLoader("ship2.obj");
         loader.load(false);
-        System.out.println(loader.getMesh().getPoints());
-        System.out.println(loader.getMesh().getTexCoords());
-        System.out.println(loader.getMesh().getFaces());
         
         playerShip = new ShipView(loader.getMesh(),
                 GameModel.getPlayer().getShip());
         root.getChildren().add(playerShip.getMainXform());
         
-        terrain = new TerrainView(new Planet(0, 0));
+        terrain = new TerrainView(GameModel.getPlayer().getPlanet(), 256);
         terrain.setTranslateZ(250);
         otherShips = new ArrayList<>();
         debris = new ArrayList<>();

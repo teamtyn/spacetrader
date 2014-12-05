@@ -88,7 +88,7 @@ public class EncounterController extends AnimationTimer implements Initializable
             other.update();
         }
         playerShip.update();
-        terrain.setFocus(new Point2D(Math.floor(playerShip.getX() / 256), Math.floor(playerShip.getY() / 256)));
+        terrain.setFocus(new Point2D(Math.floor(playerShip.getX() / terrain.getChunkSize()), Math.floor(playerShip.getY() / terrain.getChunkSize())));
     }
 
     @Override
