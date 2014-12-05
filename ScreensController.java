@@ -179,9 +179,7 @@ public final class ScreensController extends StackPane {
                 GameModel.getObserverRegistry().notifyChange(controller);
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
-                        new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent event) {
+                        new KeyFrame(new Duration(1000), (ActionEvent event) -> {
                             getChildren().remove(0); // Remove the displayed
                             getChildren().add(0, screen); // Add the screen
                             Timeline fadeIn = new Timeline(
@@ -191,8 +189,7 @@ public final class ScreensController extends StackPane {
                                             TRANSITION_DURATION),
                                             new KeyValue(opacity, 1.0)));
                             fadeIn.play();
-                        }
-                        }, new KeyValue(opacity, 0.0)));
+                }, new KeyValue(opacity, 0.0)));
                 fade.play();
                 try {
                     GameModel.save(new ByteArrayOutputStream());

@@ -2,10 +2,18 @@ package spacetrader.star_system;
 
 import java.util.Arrays;
 import java.util.Random;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.CullFace;
+import javafx.scene.shape.DrawMode;
+import javafx.scene.shape.MeshView;
+import javafx.scene.shape.Sphere;
+import javafx.scene.shape.TriangleMesh;
+import spacetrader.TextureGradient;
 
 /**
  * A noise generator is used to generate textures for a planet view. A noise
@@ -39,7 +47,15 @@ public class NoiseGenerator {
          */
         ABS
     };
-
+    
+    /**
+     * Skew factor for 2D simplex.
+     */
+    private static final double F2 = 0.5*(Math.sqrt(3.0)-1.0);
+    /**
+     * Unskew factor for 2D simplex.
+     */
+    private static final double G2 = (3.0-Math.sqrt(3.0))/6.0;
     /**
      * Skew factor for simplex.
      */
@@ -52,6 +68,10 @@ public class NoiseGenerator {
      * Factor used to calculate the contribution for each corner of a simplex.
      */
     private static final double CONTRIBUTION_FACTOR = 0.5;
+    /**
+     * Factor used to normalize individual noise values in 2D.
+     */
+    private static final double NORMALIZE_FACTOR_2D = 70.0;
     /**
      * Factor used to normalize individual noise values.
      */
@@ -121,6 +141,10 @@ public class NoiseGenerator {
      */
     private final ColorGradient colors;
     /**
+     * The texture gradient used for chunk textures.
+     */
+    private final TextureGradient textures;
+    /**
      * The noise buffer for this noise generator.
      */
     private float[][] noiseBuffer;
@@ -144,10 +168,11 @@ public class NoiseGenerator {
      * @param oC The maximum number of octaves to run.
      * @param m The type of post processing to use.
      * @param c The color gradient to use for diffuse map calculation.
+     * @param t Th texture gradient to use for chunk textures.
      */
     public NoiseGenerator(final long seed, final double bF, final double bA,
             final double l, final double g, final int oC, final NoiseMode m,
-            final ColorGradient c) { //All parameters are necessary.
+            final ColorGradient c, final TextureGradient t) { //All parameters are necessary.
         Random r = new Random(seed);
         perm = Arrays.copyOf(SUPPLY, 2 * SUPPLY_LENGTH);
         for (int i = 0; i < SUPPLY_LENGTH; i++) {
@@ -167,6 +192,7 @@ public class NoiseGenerator {
         octaveCap = oC;
         mode = m;
         colors = c;
+        textures = t;
     }
 
     /**
@@ -196,6 +222,65 @@ public class NoiseGenerator {
     private static double dot(final Grad g, final double x, final double y,
             final double z) {
         return g.x * x + g.y * y + g.z * z;
+    }
+    
+    /**
+     * A two dimensional noise function. Based on the paper found here:
+     * http://webstaff.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf
+     *
+     * @param xin The x coordinate of the sample point.
+     * @param yin The y coordinate of the sample point.
+     * @return The noise value at the point (x, y).
+     */
+    public double noise2D(double xin, double yin) {
+        double n0, n1, n2;
+        double s = (xin + yin) * F2;
+        int i = fastfloor(xin + s);
+        int j = fastfloor(yin + s);
+        double t = (i + j) * G2;
+        double X0 = i - t;
+        double Y0 = j - t;
+        double x0 = xin - X0;
+        double y0 = yin - Y0;
+        int i1, j1;
+        if(x0 > y0) {
+            i1 = 1;
+            j1 = 0;
+        } else {
+            i1 = 0;
+            j1 = 1;
+        }
+        double x1 = x0 - i1 + G2;
+        double y1 = y0 - j1 + G2;
+        double x2 = x0 - 1.0 + 2.0 * G2;
+        double y2 = y0 - 1.0 + 2.0 * G2;
+        int ii = i & (SUPPLY_LENGTH - 1);
+        int jj = j & (SUPPLY_LENGTH - 1);
+        int gi0 = permMod12[perm[ii + perm[jj]]];
+        int gi1 = permMod12[perm[ii + i1 + perm[jj + j1]]];
+        int gi2 = permMod12[perm[ii + 1 + perm[jj + 1]]];
+        double t0 = CONTRIBUTION_FACTOR - x0 * x0 - y0 * y0;
+        if(t0 < 0) {
+            n0 = 0.0;
+        } else {
+            t0 *= t0;
+            n0 = t0 * t0 * dot(GTAB[gi0], x0, y0, 0);
+        }
+        double t1 = CONTRIBUTION_FACTOR - x1 * x1 - y1 * y1;
+        if(t1 < 0) {
+            n1 = 0.0;
+        } else {
+            t1 *= t1;
+            n1 = t1 * t1 * dot(GTAB[gi1], x1, y1, 0);
+        }
+        double t2 = CONTRIBUTION_FACTOR - x2 * x2 - y2 * y2;
+        if(t2 < 0) {
+            n2 = 0.0;
+        } else {
+            t2 *= t2;
+            n2 = t2 * t2 * dot(GTAB[gi2], x2, y2, 0);
+        }
+        return NORMALIZE_FACTOR_2D * (n0 + n1 + n2);
     }
 
     /**
@@ -496,6 +581,143 @@ public class NoiseGenerator {
                 dy = (1 + dy / mag) / 2.0;
                 dz = (1 + dz / mag) / 2.0;
                 writer.setColor(i, j, Color.color(dx, dy, dz));
+            }
+        }
+        return img;
+    }
+    
+    /**
+     * Generates a terrain chunk. This operation ignores the noise buffer and
+     * creates its own temporary buffer.
+     */
+    public final MeshView getChunk(Point2D point, int size, int subdivisions) {
+        TriangleMesh mesh = new TriangleMesh();
+        int increment = size / subdivisions;
+        
+        boolean cancelled = false;
+        float max = 0;
+        int octaves = octaveCap;//Math.min((int) (
+//                Math.log(1 / (baseFreq * increment))
+//                        / Math.log(lacunarity)), octaveCap);
+        float[][] buffer = new float[subdivisions + 1][subdivisions + 1];
+        noiseLoop:
+        for (int j = 0; j < buffer.length; j++) {
+            for (int i = 0; i < buffer[0].length; i++) {
+                if (Thread.interrupted()) {
+                    cancelled = true;
+                    break noiseLoop;
+                }
+
+                double x = (size * point.getX() + i * increment) * baseFreq;
+                double y = (size * point.getY() + j * increment) * baseFreq;
+                
+                float noiseSum = 0;
+                double amplitude = baseAmp;
+                for (int k = 1; k < octaves; k++) {
+                    noiseSum += noise2D(x, y) * amplitude;
+                    x *= lacunarity;
+                    y *= lacunarity;
+                    amplitude *= gain;
+                }
+                buffer[j][i] += noiseSum;
+                if (Math.abs(buffer[j][i]) > max) {
+                    max = Math.abs(buffer[j][i]);
+                }
+           }
+        }
+
+        if (!cancelled) {
+            processLoop:
+            for (int j = 0; j < buffer.length; j++) {
+                for (int i = 0; i < buffer[0].length; i++) {
+                    if (Thread.interrupted()) {
+                        cancelled = true;
+                        break processLoop;
+                    }
+                    switch (mode) {
+                        case NONE:
+                            buffer[j][i] =
+                                    (1 + buffer[j][i]) / 2.0f;
+                            break;
+                        case SQUARE:
+                            buffer[j][i] =
+                                    (float) Math.pow(buffer[j][i], 2);
+                            break;
+                        case CUBE:
+                            buffer[j][i] =
+                                    (1 + (float) Math.pow(
+                                            buffer[j][i], 3)) / 2.0f;
+                            break;
+                        default:
+                            buffer[j][i] =
+                                    (float) Math.abs(buffer[j][i]);
+                            break;
+                    }
+                    mesh.getPoints().addAll(
+                            (float) (size * point.getX() + increment * i),
+                            (float) (size * point.getY() + increment * j),
+                            -buffer[j][i]);
+                    mesh.getTexCoords().addAll(
+                            (float) increment * i / size,
+                            (float) increment * j / size
+                    );
+                }
+            }
+        }
+        System.out.println(mesh.getTexCoords());
+        
+        if (!cancelled) {
+            meshLoop:
+            for (int j = 0; j < buffer.length - 1; j++) {
+                for (int i = 0; i < buffer[0].length - 1; i++) {
+                    if (Thread.interrupted()) {
+                        cancelled = true;
+                        break meshLoop;
+                    }
+                    mesh.getFaces().addAll(
+                            (subdivisions + 1) * j + i, (subdivisions + 1) * j + i,
+                            (subdivisions + 1) * (j + 1) + i, (subdivisions + 1) * (j + 1) + i,
+                            (subdivisions + 1) * (j + 1) + (i + 1), (subdivisions + 1) * (j + 1) + (i + 1),
+                            (subdivisions + 1) * j + i, (subdivisions + 1) * j + i,
+                            (subdivisions + 1) * (j + 1) + (i + 1), (subdivisions + 1) * (j + 1) + (i + 1),
+                            (subdivisions + 1) * j + (i + 1), (subdivisions + 1) * j + (i + 1)
+                    );
+                            
+                }
+            }
+        }
+        
+        MeshView meshView = new MeshView(mesh);
+        PhongMaterial material = new PhongMaterial();
+        material.setDiffuseMap(getChunkTex(256, buffer));
+        meshView.setMaterial(material);
+        return meshView;
+    }
+    
+    private Image getChunkTex(int resolution, float[][] buffer) {
+        WritableImage img = new WritableImage(resolution, resolution);
+        PixelWriter writer = img.getPixelWriter();
+        double increment = resolution / (buffer.length - 1);
+        for (int j = 0; j < resolution; j++) {
+            for (int i = 0; i < resolution; i++) {
+                double vi = i / increment;
+                double vj = j / increment;
+                double wi = vi - (int) vi;
+                double wj = vj - (int) vj;
+                
+                float value = 0;
+                if (wi == 0 && wj == 0) {
+                    value = buffer[(int) vj][(int) vi];
+                } else if (wi == 0) {
+                    value = (float) (wj * buffer[(int) vj][(int) vi] + (1 - wj) * buffer[(int) vj + 1][(int) vi]);
+                } else if (wj == 0) {
+                    value = (float) (wi * buffer[(int) vj][(int) vi] + (1 - wi) * buffer[(int) vj][(int) vi + 1]);
+                } else {
+                    double h1 = wi * buffer[(int) vj][(int) vi] + (1 - wi) * buffer[(int) vj][(int) vi + 1];
+                    double h2 = wi * buffer[(int) vj + 1][(int) vi] + (1 - wi) * buffer[(int) vj + 1][(int) vi + 1];
+                    value = (float) (wj * h1 + (1 - wj) * h2);
+                }
+                writer.setColor(i, j, textures.getPixel(i, j, value));
             }
         }
         return img;
