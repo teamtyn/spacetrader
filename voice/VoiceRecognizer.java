@@ -36,6 +36,20 @@ public class VoiceRecognizer {
 
     }
     
+    public static void prepare() {
+        ConfigurationManager cm = new ConfigurationManager(VoiceRecognizer.class.getResource("spacetrader.config.xml"));
+
+        recognizer = (edu.cmu.sphinx.recognizer.Recognizer) cm.lookup("recognizer");
+        recognizer.allocate();
+        microphone = (Microphone) cm.lookup("microphone");
+//        if (!microphone.startRecording()) {
+//            System.out.println("Cannot start microphone.");
+//            recognizer.deallocate();
+//            return;
+//        } else { microphone.stopRecording();}
+//        }
+    }
+    
     public static void setListen(boolean newListen) {
         listen = newListen;
     }
@@ -55,8 +69,7 @@ public class VoiceRecognizer {
                     }
                 }
  
-
-
+            
             return stringResult;
     }
     
