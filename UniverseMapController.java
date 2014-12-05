@@ -169,12 +169,7 @@ public class UniverseMapController extends AnimationTimer
      */
     @FXML
     private Button mercenaryButton;
-    /**
-     * The save button.
-     */
-    @FXML
-    private Button saveButton;
-    
+
      @FXML
     private Button cpuButton;
 
@@ -188,8 +183,6 @@ public class UniverseMapController extends AnimationTimer
     private Label playerCargoSpaceField;
     
    
-        
-    
 
     /**
      * The tentative selection.
@@ -701,15 +694,5 @@ public class UniverseMapController extends AnimationTimer
        //System.out.println(ComputerController.openCPUView());
        parent = (AnchorPane)ComputerController.openCPUView((Pane)parent);
        //parent.getChildren().add();
-    }
-    
-    /**
-     * The event handler for the save button.
-     *
-     * @param event The event fired when the button is pressed.
-     */
-    @FXML
-    private void saveButtonAction(final ActionEvent event) {
-        Persistence.saveGame();
     }
 }

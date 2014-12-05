@@ -152,9 +152,9 @@ public class ComputerController {
         box.getChildren().clear();
         box.getChildren().add(new Label(getQuote()));
         box.getChildren().add(createMuteButton());
-        box.getChildren().add(createBackButton(stack));
         box.getChildren().add(createVoiceButton());
         box.getChildren().add(createSaveButton());
+        box.getChildren().add(createBackButton(stack));
     }
     
     private static Button createSaveButton() {

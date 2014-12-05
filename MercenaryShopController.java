@@ -99,6 +99,7 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
     private void updateMercList() {
         mercList.getChildren().clear();
         MercList ml = new MercList(mercs);
+        ml.addHireButtons();
         mercList.getChildren().add(ml.vBox);
     }
     
@@ -157,28 +158,29 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
         public void addChild(Node node) {
             vBox.getChildren().add(node);
         }
+        public void addHireButtons() {
+            //Node node = this.vBox.getChildren().get(0);
+            for (Node child: this.vBox.getChildren()) {
+                MercenaryShopController.MercsRow row = (MercenaryShopController.MercsRow) child;
+                row.getChildren().add(createHireButton(row.getMerc()));
+            }
+
+        }
     }
     
     /**
      * MercsRow is a HBox that contains two labels and a buy/sell button
      */
     private class MercsRow extends HBox {
-
-        public MercsRow(Mercenary merc) {
+        private Mercenary merc;
+        public MercsRow(Mercenary aMerc) {
+            merc = aMerc;
             this.getChildren().add(new Label(merc.getName()));
             Label specialty;
             Button button;
 
-                specialty = new Label("x" + merc.getSpecialty());
-                button = new Button("Hire");
-                            button.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                    hireMercenary(merc);
-                                }
-                            });
+                specialty = new Label(merc.getSpecialty());
             this.getChildren().add(specialty);
-            this.getChildren().add(button);
             this.setOnMouseEntered((MouseEvent event) -> {
                 detailList.getChildren().clear();
                 detailList.getChildren().add(new Label(merc.getName().toString()));
@@ -190,5 +192,20 @@ public class MercenaryShopController implements Initializable, ControlledScreen 
             this.setAlignment(Pos.CENTER_RIGHT);
             this.setSpacing(30);
         }
+        
+        private Mercenary getMerc() {
+            return merc;
+        }
+    }
+    
+    private Button createHireButton(Mercenary merc) {
+        Button button = new Button("Hire");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                hireMercenary(merc);
+            }
+        });
+        return button;
     }
 }

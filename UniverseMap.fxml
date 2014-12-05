@@ -116,7 +116,6 @@
       <Button fx:id="spaceStationButton" disable="true" mnemonicParsing="false" onAction="#spaceStationButtonAction" text="Space Station" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="64.0" />
       <Button fx:id="marketButton" disable="true" mnemonicParsing="false" onAction="#marketButtonAction" text="Market" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0" />
       <Button fx:id="mercenaryButton" disable="true" layoutX="834.0" layoutY="107.0" mnemonicParsing="false" onAction="#mercenaryButtonAction" text="Mercenaries-R-Us" />
-      <Button fx:id="saveButton" layoutX="901.0" layoutY="150.0" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" />
       <Button fx:id="cpuButton" layoutX="60.0" layoutY="645.0" mnemonicParsing="false" onAction="#cpuButtonAction" prefHeight="57.0" prefWidth="148.0" text="COMPUTER">
          <font>
             <Font size="22.0" />
